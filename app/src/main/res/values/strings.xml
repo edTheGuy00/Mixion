@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">Mixion</string>
+    <string name="feed">Feed</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="asksteem">AskSteem</string>
+    <string name="dtube">DTube</string>
+
+    <string-array name="feed_type">
+        <item>Trending</item>
+        <item>Hot</item>
+        <item>New</item>
+        <item>Promoted</item>
+    </string-array>
+
+    <string-array name="topics">
+        <item>steem</item>
+        <item>photography</item>
+        <item>steemit</item>
+        <item>art</item>
+        <item>introduceyourself</item>
+        <item>kr</item>
+        <item>bitcoin</item>
+        <item>android</item>
+        <item>blog</item>
+        <item>travel</item>
+        <item>cryptocurrency</item>
+        <item>life</item>
+        <item>story</item>
+        <item>news</item>
+        <item>food</item>
+        <item>spanish</item>
+        <item>cn</item>
+        <item>nature</item>
+        <item>writing</item>
+        <item>funny</item>
+        <item>colorchallenge</item>
+        <item>money</item>
+        <item>coding</item>
+        <item>mixion</item>
+        <item>health</item>
+        <item>music</item>
+        <item>poetry</item>
+        <item>contest</item>
+        <item>science</item>
+        <item>video</item>
+        <item>indonesia</item>
+        <item>photo</item>
+        <item>love</item>
+        <item>politics</item>
+        <item>blockchain</item>
+        <item>crypto</item>
+        <item>aceh</item>
+        <item>deutsch</item>
+        <item>technology</item>
+        <item>dtube</item>
+        <item>philosophy</item>
+        <item>meme</item>
+        <item>introducemyself</item>
+        <item>history</item>
+        <item>fun</item>
+        <item>animals</item>
+        <item>gaming</item>
+        <item>sports</item>
+        <item>homesteading</item>
+        <item>new</item>
+        <item>myanmar</item>
+        <item>drawing</item>
+    </string-array>
+</resources>

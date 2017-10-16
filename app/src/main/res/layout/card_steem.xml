@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/discussion_card"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        app:cardElevation="3dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/steem_title"
+                android:text="Title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/info_linLayout"
+                android:layout_below="@+id/steem_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/time_ago"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="timeago"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="by"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3dp"
+                    android:id="@+id/author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Author"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:layout_marginStart="3dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="in" />
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/preview_image"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/info_linLayout"
+                android:layout_width="170dp"
+                android:layout_height="150dp"
+                android:src="@drawable/steem_logo"/>
+
+            <TextView
+                android:layout_marginStart="4dp"
+                android:id="@+id/steem_body"
+                android:text="Aloen fiensienvodsinvodsinvsd vodsinv  vds vds vds vds vds v ds vds vds v dsv sd vsd v dsv ds vds v dsvosdinvsd vsdvsdinvods vodsi vodsi vods vodsinvsodi vods vodsivodsivods vodsinvodsivsod vodsi vodsivodsinvsod vodsi vods ivodsi vodsi vodsi vosdi vosdi voids vosd iv"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/info_linLayout"
+                android:layout_toEndOf="@id/preview_image"
+                android:ellipsize="end"
+                android:maxLines="9"
+                android:layout_width="wrap_content"
+                android:layout_above="@+id/container_linearlay"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/container_linearlay"
+                android:layout_below="@id/preview_image"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/upvote_button"/>
+
+                <TextView
+                    android:id="@+id/payout"
+                    android:layout_marginStart="3dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_upvote_arrow"/>
+
+                <TextView
+                    android:id="@+id/votes_count"
+                    android:layout_marginStart="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_comments" />
+
+                <TextView
+                    android:id="@+id/replies_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

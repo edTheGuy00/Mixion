@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.taskail.mixion.MainActivity">
+
+    <include layout="@layout/top_action_bar"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_below="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <at.grabner.circleprogress.CircleProgressView
+        android:id="@+id/circleProgress"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        app:cpv_autoTextSize="true"
+        app:cpv_barColor="@color/colorPrimary"
+        app:cpv_barWidth="15dp"
+        app:cpv_innerContourSize="0dp"
+        app:cpv_showTextInSpinningMode="true"
+        app:cpv_textMode="Text"
+        app:cpv_outerContourSize="0dp"
+        app:cpv_rimColor="@color/circular_light"
+        app:cpv_rimWidth="15dp"
+        app:cpv_seekMode="false"
+        app:cpv_spinColor="@color/colorPrimary"
+        app:cpv_textColor="@color/colorPrimaryDark"/>
+
+</RelativeLayout>
