@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.taskail.mixion.MainActivity">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/top_action_bar"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/top_action_bar"/>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_below="@+id/top_bar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,7 +27,7 @@
         android:id="@+id/circleProgress"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         app:cpv_autoTextSize="true"
         app:cpv_barColor="@color/colorPrimary"
         app:cpv_barWidth="15dp"
@@ -34,4 +41,4 @@
         app:cpv_spinColor="@color/colorPrimary"
         app:cpv_textColor="@color/colorPrimaryDark"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

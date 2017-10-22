@@ -11,10 +11,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
+import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.bumptech.glide.Glide;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.GetTimeAgo;
+import com.taskail.mixion.utils.MixionApolloApplication;
 import com.taskail.mixion.utils.StringManipulator;
 
 import at.grabner.circleprogress.CircleProgressView;
@@ -22,6 +28,7 @@ import br.tiagohm.markdownview.MarkdownView;
 import br.tiagohm.markdownview.css.styles.Github;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 /**Created by ed on 10/6/17.
@@ -34,19 +41,20 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private CompositeDisposable disposable = new CompositeDisposable();
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(BASE_URL).create(SteemAPI.class);
 
-    private SteemDiscussion steemDiscussion;
     StringManipulator stringManipulator;
     private RecyclerView mRecyclerView;
     private Context mContext = DiscussionDetailsActivity.this;
     private TextView title, author, category, payout, votesCount, repliesCount, timeAgo;
     private CircleProgressView mCirProg;
 
+    private MixionApolloApplication application;
 
     private MarkdownView markdownView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion_details);
+        application = (MixionApolloApplication) getApplication();
         ImageView menu = findViewById(R.id.menu_img);
         initWidgets();
         ImageView toolbarImage = findViewById(R.id.logo);
@@ -78,7 +86,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
             Log.d(TAG, "handleBundle: bundle not mepty");
 
-            steemDiscussion = (SteemDiscussion) bundle.getSerializable("data");
+            SteemDiscussion steemDiscussion = (SteemDiscussion) bundle.getSerializable("data");
             if (steemDiscussion != null) {
 
                 title.setText(steemDiscussion.getTitle());
@@ -103,13 +111,43 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private void loadData(String author, String link){
         startLoadingProgress();
 
-        disposable.add(steemApi.getContent(author, link)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+        ApolloCall<GetSingleDiscussionQuery.Data> discussionData = application.apolloClient()
+                .query(new GetSingleDiscussionQuery(author, link))
+                .responseFetcher(ApolloResponseFetchers.NETWORK_ONLY);
+
+        disposable.add(Rx2Apollo.from(discussionData)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeWith(new DisposableObserver<Response<GetSingleDiscussionQuery.Data>>() {
+            @Override public void onNext(Response<GetSingleDiscussionQuery.Data> dataResponse) {
+                handleResponse(dataResponse.data());
+            }
+
+            @Override public void onError(Throwable e) {
+                firstServerErrorHandler(author, link);
+            }
+
+            @Override public void onComplete() {
+                stopLoadingProgress();
+            }
+        }));
     }
 
-    private void handleResponse(SteemDiscussion steemDiscussion) {
+    private void handleResponse(GetSingleDiscussionQuery.Data responseData){
+        final GetSingleDiscussionQuery.Post post = responseData.post();
+        if (post != null){
+            title.setText(post.title());
+            author.setText(post.author());
+            category.setText(post.category());
+            payout.setText(post.pending_payout_value());
+            votesCount.setText(String.valueOf(post.net_votes()));
+            repliesCount.setText(String.valueOf(post.children()));
+            timeAgo.setText(GetTimeAgo.getlongtoago(post.created()));
+            markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(post.body()).toString());
+        }
+    }
+
+    private void handleSecondResponse(SteemDiscussion steemDiscussion) {
 
         title.setText(steemDiscussion.getTitle());
         author.setText(steemDiscussion.getAuthor());
@@ -122,14 +160,12 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(steemDiscussion.getBody()).toString());
 
         stopLoadingProgress();
-
-        Log.d(TAG, "handleResponse: " + steemDiscussion.getAuthor());
-
     }
 
-    private void handleError(Throwable throwable) {
+    private void handleError(Throwable e) {
         setError();
-        Log.d(TAG, "handleError: " + throwable.getMessage());
+        Log.e(TAG, e.getMessage(), e);
+        Toast.makeText(mContext, "Unable to Load", Toast.LENGTH_SHORT).show();
     }
 
     private void startLoadingProgress(){
@@ -143,8 +179,16 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         mCirProg.setVisibility(View.GONE);
     }
 
-    private void setError(){
+    private void firstServerErrorHandler(String author, String link){
+        Toast.makeText(mContext, "Server Error, retrying different server", Toast.LENGTH_SHORT).show();
 
+        disposable.add(steemApi.getContent(author, link)
+         .observeOn(AndroidSchedulers.mainThread())
+         .subscribeOn(Schedulers.io())
+         .subscribe(this::handleSecondResponse,this::handleError));
+    }
+
+    private void setError(){
         mCirProg.stopSpinning();
         mCirProg.setBarColor(Color.RED);
         mCirProg.setText("ERROR");

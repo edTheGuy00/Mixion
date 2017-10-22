@@ -16,6 +16,7 @@ import com.taskail.mixion.utils.FragmentLifecycle;
 
 public class ProfileFragment extends Fragment implements FragmentLifecycle{
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class ProfileFragment extends Fragment implements FragmentLifecycle{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     @Override

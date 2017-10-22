@@ -77,8 +77,6 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         mCirProg = view.findViewById(R.id.circleProgress);
         ImageView askSteemImage = view.findViewById(R.id.askseem_logo);
         Glide.with(this).asDrawable().load(R.drawable.ask_steem_logo).into(askSteemImage);
-        ImageView toolbarImage = view.findViewById(R.id.logo);
-        Glide.with(this).asDrawable().load(R.drawable.ask_steem).into(toolbarImage);
 
         scrollView = view.findViewById(R.id.askScrollView);
         seachRelativeLayout = view.findViewById(R.id.search_bar);

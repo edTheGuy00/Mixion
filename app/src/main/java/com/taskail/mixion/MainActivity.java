@@ -5,10 +5,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
-import com.taskail.mixion.adapters.SectionsStatePagerAdapter;
-import com.taskail.mixion.adapters.TabPagerAdapter;
+import com.taskail.mixion.adapters.PagerAdapter;
 import com.taskail.mixion.fragments.DTubeFragment;
 import com.taskail.mixion.fragments.FeedFragment;
 import com.taskail.mixion.fragments.AskSteemFragment;
@@ -17,19 +19,21 @@ import com.taskail.mixion.utils.BottomNavigationViewHelper;
 import com.taskail.mixion.utils.FragmentLifecycle;
 import com.taskail.mixion.utils.LockableViewPager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FeedFragment.OnHide, FeedFragment.OnShow {
+    private static final String TAG = "MainActivity";
 
     private LockableViewPager viewPager;
-    //private TabPagerAdapter pagerAdapter;
-    private SectionsStatePagerAdapter pagerAdapter;
+    private PagerAdapter pagerAdapter;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         viewPager = findViewById(R.id.container);
-        pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         setViewPager();
         startBottomNavView();
@@ -38,15 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setViewPager(){
 
-        pagerAdapter.addFragment(new FeedFragment(), "FeedFragment");
-        pagerAdapter.addFragment(new AskSteemFragment(), "AskSteem");
-        pagerAdapter.addFragment(new DTubeFragment(), "Dtube");
-        pagerAdapter.addFragment(new ProfileFragment(), "Profile");
+        pagerAdapter.addFragment(new FeedFragment());
+        pagerAdapter.addFragment(new AskSteemFragment());
+        pagerAdapter.addFragment(new DTubeFragment());
+        pagerAdapter.addFragment(new ProfileFragment());
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
         viewPager.setSwipeable(false);
-
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startBottomNavView(){
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -103,6 +105,20 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+
+    @Override
+    public void onHideBNV() {
+
+        bottomNavigationView.animate().translationY(bottomNavigationView.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+
+    }
+
+    @Override
+    public void onShowBNV() {
+
+        bottomNavigationView.animate().translationY(0).setInterpolator(new AccelerateInterpolator(2));
 
     }
 }

@@ -122,6 +122,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
 
                         Log.d(TAG, "onTouch: Logging " );
                         listener.onCardClicked(position);
+
                     case MotionEvent.ACTION_CANCEL:
                         ObjectAnimator downAnim = ObjectAnimator.ofFloat(view, "translationZ", 20);
                         downAnim.setDuration(200);
@@ -133,7 +134,6 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                 return false;
 
         });
-
     }
 
     public interface CardClickListener{

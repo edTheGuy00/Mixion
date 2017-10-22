@@ -1,5 +1,6 @@
 package com.taskail.mixion.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,9 +38,6 @@ import at.grabner.circleprogress.CircleProgressView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**Created by ed on 9/30/17.
  */
@@ -47,9 +45,20 @@ import retrofit2.Response;
 public class FeedFragment extends Fragment implements FragmentLifecycle, DiscussionsAdapter.CardClickListener {
     private static final String TAG = "FeedFragment";
 
+    public interface OnHide{
+        void onHideBNV();
+    }
+
+    public interface OnShow{
+        void onShowBNV();
+    }
+
+    private OnHide hideBnv;
+    private OnShow showBvn;
+
+
     private static final String BASE_URL = "https://api.steemjs.com/";
 
-    Call<SteemDiscussion[]> retrofitCall;
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(BASE_URL).create(SteemAPI.class);
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -65,6 +74,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     private CircleProgressView mCirProg;
     private ProgressBar loadMoreProgress;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private boolean isVisible = true;
 
     @Nullable
     @Override
@@ -95,6 +105,18 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
             }
             @Override
             public void scrollAction(int dx, int dy) {
+
+                if (dy > 0 && isVisible){
+
+                    Log.d(TAG, "scrollAction: hiding ");
+                    isVisible = false;
+                    hideBnv.onHideBNV();
+                } else if (dy < 0 && !isVisible){
+
+                    Log.d(TAG, "scrollAction: showing ");
+                    isVisible = true;
+                    showBvn.onShowBNV();
+                }
 
                 //hide the FAB
 
@@ -288,45 +310,6 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         setOnFailure();
     }
 
-
-    private Callback<SteemDiscussion[]> dataCallBack = new Callback<SteemDiscussion[]>() {
-        @Override
-        public void onResponse(Call<SteemDiscussion[]> call, Response<SteemDiscussion[]> response) {
-            //mAdapter.setDiscussion(feedDiscussionsIntoAdapter(response), FeedFragment.this);
-        }
-        @Override
-        public void onFailure(Call<SteemDiscussion[]> call, Throwable t) {
-            Log.d(TAG, "onFailure: Failed" + t.getCause());
-            isLoading = false;
-            setOnFailure();
-        }
-    };
-
-    private List<SteemDiscussion> feedDiscussionsIntoAdapter(Response<SteemDiscussion[]> response){
-
-        if (!isPaginated) {
-            discussionFromResponse = new ArrayList<>();
-        }
-        final SteemDiscussion[] responseData = response.body();
-        if (responseData == null){
-            return Collections.emptyList();
-        }
-
-        if (!isPaginated) {
-            Collections.addAll(discussionFromResponse, responseData);
-        } else {
-            Collections.addAll(discussionFromResponse, Arrays.copyOfRange(responseData, 1, loadCount));
-        }
-        isLoading = false;
-
-        if (isPaginated){
-            mAdapter.notifyItemRangeInserted(beginToLoadAt, discussionFromResponse.size());
-        }
-
-        stopLoadingProgress();
-        return discussionFromResponse;
-    }
-
     private void startLoadingProgress(){
         mCirProg.setVisibility(View.VISIBLE);
         mCirProg.setValue(50);
@@ -401,5 +384,15 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         intent.putExtras(discussionBundle);
         getActivity().startActivity(intent);
         
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        hideBnv = (OnHide) getActivity();
+
+        showBvn = (OnShow) getActivity();
+
     }
 }
