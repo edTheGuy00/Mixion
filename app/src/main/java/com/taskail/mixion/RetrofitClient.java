@@ -7,8 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-/**
- * Created by ed on 10/1/17.
+/**Created by ed on 10/1/17.
  */
 
 public class RetrofitClient{

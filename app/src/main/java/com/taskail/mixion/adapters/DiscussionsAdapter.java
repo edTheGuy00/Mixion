@@ -101,8 +101,8 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                     .apply(options)
                     .into(mainImage);
 
+            //TODO - applyOnClick in onBindViewHolder does not work without this.. Why??
             discussionCard.setOnClickListener((View v) -> {
-
             });
         }
 

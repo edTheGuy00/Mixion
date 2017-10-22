@@ -5,8 +5,11 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/**
- * Created by ed on 10/14/17.
+/**Created by ed on 10/14/17.
+ *
+ * Lock the viewpager to disable swipe actions.
+ * navigating to different Fragments is only done through
+ * BottomNavigationView
  */
 
 public class LockableViewPager extends ViewPager {

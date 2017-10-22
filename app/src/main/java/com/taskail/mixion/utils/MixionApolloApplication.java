@@ -21,8 +21,10 @@ import javax.annotation.Nonnull;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-/**
- * Created by ed on 10/22/17.
+/**Created by ed on 10/22/17.
+ *
+ * Standard Apollo Client class that allows caching.
+ * This class is only used for @saratases SteemQL API
  */
 
 public class MixionApolloApplication extends Application {

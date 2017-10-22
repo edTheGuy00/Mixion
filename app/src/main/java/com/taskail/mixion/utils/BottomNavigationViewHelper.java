@@ -6,8 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import java.lang.reflect.Field;
 
-/**
- * Created by ed on 10/3/17.
+/**Created by ed on 10/3/17.
  */
 
 public class BottomNavigationViewHelper {

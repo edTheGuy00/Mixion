@@ -84,8 +84,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
         if (bundle != null){
 
-            Log.d(TAG, "handleBundle: bundle not mepty");
-
             SteemDiscussion steemDiscussion = (SteemDiscussion) bundle.getSerializable("data");
             if (steemDiscussion != null) {
 
@@ -124,6 +122,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
             }
 
             @Override public void onError(Throwable e) {
+                Log.e(TAG, "onError: " + e.getMessage() );
                 firstServerErrorHandler(author, link);
             }
 
@@ -145,6 +144,15 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
             timeAgo.setText(GetTimeAgo.getlongtoago(post.created()));
             markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(post.body()).toString());
         }
+    }
+
+    private void firstServerErrorHandler(String author, String link){
+        Toast.makeText(mContext, "Server Error, retrying different server", Toast.LENGTH_SHORT).show();
+
+        disposable.add(steemApi.getContent(author, link)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleSecondResponse,this::handleError));
     }
 
     private void handleSecondResponse(SteemDiscussion steemDiscussion) {
@@ -177,15 +185,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private void stopLoadingProgress(){
         mCirProg.stopSpinning();
         mCirProg.setVisibility(View.GONE);
-    }
-
-    private void firstServerErrorHandler(String author, String link){
-        Toast.makeText(mContext, "Server Error, retrying different server", Toast.LENGTH_SHORT).show();
-
-        disposable.add(steemApi.getContent(author, link)
-         .observeOn(AndroidSchedulers.mainThread())
-         .subscribeOn(Schedulers.io())
-         .subscribe(this::handleSecondResponse,this::handleError));
     }
 
     private void setError(){

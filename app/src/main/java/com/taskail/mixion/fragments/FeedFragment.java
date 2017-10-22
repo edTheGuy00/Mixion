@@ -26,6 +26,7 @@ import com.taskail.mixion.RetrofitClient;
 import com.taskail.mixion.SteemAPI;
 import com.taskail.mixion.adapters.DiscussionsAdapter;
 import com.taskail.mixion.models.SteemDiscussion;
+import com.taskail.mixion.utils.BottomNavigationViewVisibility;
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener;
 import com.taskail.mixion.utils.FragmentLifecycle;
 
@@ -45,17 +46,7 @@ import io.reactivex.schedulers.Schedulers;
 public class FeedFragment extends Fragment implements FragmentLifecycle, DiscussionsAdapter.CardClickListener {
     private static final String TAG = "FeedFragment";
 
-    public interface OnHide{
-        void onHideBNV();
-    }
-
-    public interface OnShow{
-        void onShowBNV();
-    }
-
-    private OnHide hideBnv;
-    private OnShow showBvn;
-
+    private BottomNavigationViewVisibility navigationViewVisibility;
 
     private static final String BASE_URL = "https://api.steemjs.com/";
 
@@ -110,12 +101,12 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
                     Log.d(TAG, "scrollAction: hiding ");
                     isVisible = false;
-                    hideBnv.onHideBNV();
+                    navigationViewVisibility.hideBNV();
                 } else if (dy < 0 && !isVisible){
 
                     Log.d(TAG, "scrollAction: showing ");
                     isVisible = true;
-                    showBvn.onShowBNV();
+                    navigationViewVisibility.showBNV();
                 }
 
                 //hide the FAB
@@ -390,9 +381,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        hideBnv = (OnHide) getActivity();
-
-        showBvn = (OnShow) getActivity();
+        navigationViewVisibility = (BottomNavigationViewVisibility) getActivity();
 
     }
 }
