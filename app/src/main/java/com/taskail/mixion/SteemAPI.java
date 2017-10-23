@@ -4,7 +4,6 @@ import com.taskail.mixion.models.AskSteem;
 import com.taskail.mixion.models.SteemDiscussion;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

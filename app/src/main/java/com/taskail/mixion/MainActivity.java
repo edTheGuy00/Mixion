@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.animation.AccelerateInterpolator;
 
 import com.taskail.mixion.adapters.PagerAdapter;
-import com.taskail.mixion.fragments.DTubeFragment;
+import com.taskail.mixion.fragments.ChatsFragment;
 import com.taskail.mixion.fragments.FeedFragment;
 import com.taskail.mixion.fragments.AskSteemFragment;
 import com.taskail.mixion.fragments.ProfileFragment;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         pagerAdapter.addFragment(new FeedFragment());
         pagerAdapter.addFragment(new AskSteemFragment());
-        pagerAdapter.addFragment(new DTubeFragment());
+        pagerAdapter.addFragment(new ChatsFragment());
         pagerAdapter.addFragment(new ProfileFragment());
 
         viewPager.setAdapter(pagerAdapter);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 case R.id.asksteem_icon:
                     viewPager.setCurrentItem(1, true);
                     break;
-                case R.id.dtube_icon:
+                case R.id.chat_icon:
                     viewPager.setCurrentItem(2);
                     break;
                 case R.id.profile_icon:

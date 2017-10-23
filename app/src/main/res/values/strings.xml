@@ -4,7 +4,7 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="asksteem">AskSteem</string>
-    <string name="dtube">DTube</string>
+    <string name="chat">Chat</string>
 
     <string-array name="feed_type">
         <item>Trending</item>

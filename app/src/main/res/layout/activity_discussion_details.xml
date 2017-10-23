@@ -10,17 +10,63 @@
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="@color/white">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_marginStart="4dp"
+
+                <LinearLayout
+                    android:id="@+id/container_linearlay"
                     android:layout_centerVertical="true"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"/>
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/upvote_button"/>
+
+                    <TextView
+                        android:id="@+id/payout"
+                        android:layout_marginStart="3dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginStart="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_upvote_arrow"/>
+
+                    <TextView
+                        android:id="@+id/votes_count"
+                        android:layout_marginStart="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_comments" />
+
+                    <TextView
+                        android:id="@+id/replies_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
 
                 <ImageView
                     android:id="@+id/menu_img"
@@ -103,59 +149,8 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/container_linearlay"
-                android:layout_below="@id/info_linLayout"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/upvote_button"/>
-
-                <TextView
-                    android:id="@+id/payout"
-                    android:layout_marginStart="3dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:layout_marginStart="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_upvote_arrow"/>
-
-                <TextView
-                    android:id="@+id/votes_count"
-                    android:layout_marginStart="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_comments" />
-
-                <TextView
-                    android:id="@+id/replies_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="3dp"/>
-
-            </LinearLayout>
-
             <br.tiagohm.markdownview.MarkdownView
-                android:layout_below="@+id/container_linearlay"
+                android:layout_below="@+id/info_linLayout"
                 android:id="@+id/markdown_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -16,9 +16,9 @@
     </item>
 
     <item
-        android:id="@+id/dtube_icon"
-        android:title="@string/dtube"
-        android:icon="@drawable/ic_dtube">
+        android:id="@+id/chat_icon"
+        android:title="@string/chat"
+        android:icon="@drawable/ic_chat">
 
     </item>
 

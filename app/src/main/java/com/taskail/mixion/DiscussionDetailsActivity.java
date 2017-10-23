@@ -47,6 +47,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private TextView title, author, category, payout, votesCount, repliesCount, timeAgo;
     private CircleProgressView mCirProg;
 
+    private StringBuilder userInfo;
     private MixionApolloApplication application;
 
     private MarkdownView markdownView;
@@ -57,9 +58,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         application = (MixionApolloApplication) getApplication();
         ImageView menu = findViewById(R.id.menu_img);
         initWidgets();
-        ImageView toolbarImage = findViewById(R.id.logo);
-        Glide.with(this).asDrawable().load(R.drawable.steem_logo).into(toolbarImage);
-
     }
 
     private void initWidgets(){
