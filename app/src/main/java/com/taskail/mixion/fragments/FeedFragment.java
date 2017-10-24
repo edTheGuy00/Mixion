@@ -285,7 +285,6 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         }
         isLoading = false;
 
-
         mAdapter.setDiscussion(discussionFromResponse, FeedFragment.this, this);
 
     }
@@ -343,11 +342,25 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     public void onPause() {
         super.onPause();
         Log.d(TAG, "onPause: Paused");
+        
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState: ");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewStateRestored: ");
+        super.onViewStateRestored(savedInstanceState);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: ");
         if (mAdapter.getItemCount() <= 0) {
             Log.d(TAG, "onResume: Loading new");
             requestToLoadNew();

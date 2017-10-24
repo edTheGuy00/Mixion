@@ -72,6 +72,12 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:text="I'm Working hard on this one, please be patient. \n meanwhile you can create an account at \n Steemit.chat"/>
 
     <Button
         android:id="@+id/loginBtn"

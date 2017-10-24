@@ -14,13 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.bumptech.glide.Glide;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.GetTimeAgo;
-import com.taskail.mixion.utils.MixionApolloApplication;
 import com.taskail.mixion.utils.StringManipulator;
 
 import at.grabner.circleprogress.CircleProgressView;
@@ -48,14 +48,14 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private CircleProgressView mCirProg;
 
     private StringBuilder userInfo;
-    private MixionApolloApplication application;
+    private ApolloClient mApolloClient;
 
     private MarkdownView markdownView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion_details);
-        application = (MixionApolloApplication) getApplication();
+        mApolloClient = MixionApolloClient.getApolloCleint();
         ImageView menu = findViewById(R.id.menu_img);
         initWidgets();
     }
@@ -107,7 +107,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private void loadData(String author, String link){
         startLoadingProgress();
 
-        ApolloCall<GetSingleDiscussionQuery.Data> discussionData = application.apolloClient()
+        ApolloCall<GetSingleDiscussionQuery.Data> discussionData = mApolloClient
                 .query(new GetSingleDiscussionQuery(author, link))
                 .responseFetcher(ApolloResponseFetchers.NETWORK_ONLY);
 

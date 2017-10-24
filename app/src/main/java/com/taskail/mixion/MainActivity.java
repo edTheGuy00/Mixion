@@ -60,15 +60,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             @Override
             public void onPageSelected(int newPosition) {
-
-                FragmentLifecycle fragmentToHide = (FragmentLifecycle) pagerAdapter.getItem(currentPosition);
-                fragmentToHide.onPauseFragment();
-
-                FragmentLifecycle fragmentToShow = (FragmentLifecycle) pagerAdapter.getItem(newPosition);
-                fragmentToShow.onResumeFragment();
-
+                handleFragmentLifeCycle(currentPosition, newPosition);
                 currentPosition = newPosition;
-
             }
 
             @Override
@@ -76,6 +69,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             }
         });
+    }
+
+    private void handleFragmentLifeCycle(int currentPosition, int newPosition){
+
+        FragmentLifecycle fragmentToHide = (FragmentLifecycle) pagerAdapter.getItem(currentPosition);
+        fragmentToHide.onPauseFragment();
+
+        FragmentLifecycle fragmentToShow = (FragmentLifecycle) pagerAdapter.getItem(newPosition);
+        fragmentToShow.onResumeFragment();
+
     }
 
     private void startBottomNavView(){

@@ -5,7 +5,19 @@
     android:padding="8dp"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/steemit_chattext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login with your steemit.chat credentials"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"/>
+
     <android.support.v7.widget.AppCompatEditText
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/steemit_chattext"
         android:id="@+id/user_name"
         android:hint="username...."
         android:layout_width="match_parent"
@@ -14,6 +26,7 @@
     <android.support.v7.widget.AppCompatEditText
         android:layout_below="@+id/user_name"
         android:id="@+id/passwrd"
+        android:inputType="textPassword"
         android:hint="password..."
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

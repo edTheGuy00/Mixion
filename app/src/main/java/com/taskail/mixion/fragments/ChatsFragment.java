@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.rocketchat.core.RocketChatClient;
 import com.taskail.mixion.R;
 import com.taskail.mixion.steemitchat.ChatLoginDialog;
+import com.taskail.mixion.steemitchat.RocketChatApplication;
+import com.taskail.mixion.steemitchat.RocketChatHelper;
 import com.taskail.mixion.utils.FragmentLifecycle;
 
 /**Created by ed on 9/30/17.
@@ -23,6 +26,7 @@ public class ChatsFragment extends Fragment implements FragmentLifecycle {
 
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPref;
+    private RocketChatClient rocketChatClient;
 
     @Nullable
     @Override
@@ -34,15 +38,17 @@ public class ChatsFragment extends Fragment implements FragmentLifecycle {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sharedPref = getActivity().getSharedPreferences("mixion-app", Context.MODE_PRIVATE);
+        rocketChatClient = ((RocketChatApplication)getActivity().getApplicationContext()).getRocketChatAPI();
 
-        checkLoggedInUser(view);
+        //checkCurrentUser(view);
     }
 
-    private void checkLoggedInUser(View v){
-        String username = sharedPref.getString("username", null);
-        String password = sharedPref.getString("password", null);
-        if (username != null){
-            login(username, password);
+    private void checkCurrentUser(View v){
+        //String username = sharedPref.getString("chat-username", null);
+        //String password = sharedPref.getString("chat-password", null);
+        String token = sharedPref.getString("rocket-chat-token", null);
+        if (token != null){
+            autoLogin(token);
         } else {
             initLoginDialog(v);
         }
@@ -57,8 +63,9 @@ public class ChatsFragment extends Fragment implements FragmentLifecycle {
         });
     }
 
-    private void login(String user, String password){
+    private void autoLogin(String token){
 
+        Log.d(TAG, "autoLogin: " + token);
     }
 
     @Override

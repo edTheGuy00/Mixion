@@ -39,6 +39,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/search_icon"
                     android:background="@null"
+                    android:inputType="text"
                     android:hint="Search" />
 
                 <ImageView

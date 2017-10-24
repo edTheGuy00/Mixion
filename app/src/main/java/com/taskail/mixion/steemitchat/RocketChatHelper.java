@@ -2,10 +2,10 @@ package com.taskail.mixion.steemitchat;
 
 import com.rocketchat.common.network.ReconnectionStrategy;
 import com.rocketchat.common.utils.Logger;
+import com.rocketchat.common.utils.Utils;
 import com.rocketchat.core.RocketChatClient;
 
-/**
- * Created by ed on 10/22/17.
+/**Created by ed on 10/22/17.
  */
 
 public class RocketChatHelper {
@@ -38,9 +38,12 @@ public class RocketChatHelper {
                 .logger(logger)
                 .build();
 
+        Utils.DOMAIN_NAME = "https://steemit.chat";
+
         rocketChatClient.setReconnectionStrategy(new ReconnectionStrategy(20, 3000));
 
 
         return rocketChatClient;
     }
+
 }

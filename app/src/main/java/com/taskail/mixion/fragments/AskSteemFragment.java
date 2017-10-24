@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,11 +114,22 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         final EditText searchTerm = view.findViewById(R.id.search_edit_text);
         ImageView searchIcon = view.findViewById(R.id.search_icon);
 
+        searchTerm.setOnEditorActionListener((TextView textView, int i, KeyEvent keyEvent) ->{
+
+            Log.d(TAG, "onViewCreated: key code " + keyEvent.getKeyCode());
+            Log.d(TAG, "onViewCreated: int " + i);
+
+            return false;
+        });
+
         searchTerm.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN && i == KeyEvent.KEYCODE_ENTER){
 
+                Log.d(TAG, "onKey: key event" + keyEvent.toString());
+                Log.d(TAG, "onKey: key code " + i);
+
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER || i == EditorInfo.IME_ACTION_DONE){
                     resultsFromResponse.clear();
                     mAdapter.notifyDataSetChanged();
                     startLoadingProgress();
