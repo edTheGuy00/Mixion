@@ -21,8 +21,8 @@ import java.util.regex.Pattern;
  * what a mess, i get a headache reading this
  */
 
-public class StringManipulator {
-    private static final String TAG = "StringManipulator";
+public class StringUtils {
+    private static final String TAG = "StringUtils";
 
     private boolean containsCharacter(char c, String s) {
         return s.indexOf(c) > -1;
@@ -70,7 +70,12 @@ public class StringManipulator {
         return firstImg;
     }
 
-    public String getFirstFewCharacters(String body){
+    /**
+     * shorten the entire body to 200 characters to display in the feed list
+     * @param body is the entire response from the server
+     * @return a body of 200 characters
+     */
+    public String getShorterBody(String body){
 
         String stringFromHtml;
 
@@ -99,7 +104,7 @@ public class StringManipulator {
             try {
                 if (containsText("http", shortenString(0, 10, whitoutCharacter))){
 
-                    Log.d(TAG, "getFirstFewCharacters: there's a link");
+                    Log.d(TAG, "getShorterBody: there's a link");
                 }
 
             } catch (IOException e) {
@@ -116,7 +121,7 @@ public class StringManipulator {
                 try {
                     shorterString = shortenString(location, 400, stringFromHtml);
                 } catch (StringIndexOutOfBoundsException e){
-                    Log.e(TAG, "getFirstFewCharacters: unable to shorten string " + e.getMessage());
+                    Log.e(TAG, "getShorterBody: unable to shorten string " + e.getMessage());
                 }
                 return shorterString;
             }
@@ -126,6 +131,12 @@ public class StringManipulator {
         }
         return shorterBody;
     }
+
+    /**
+     * Removes urls so they won't be displayed.
+     * @param commentstr the body containing urls
+     * @return a body without urls
+     */
 
     private String removeUrl(String commentstr)
     {
@@ -140,48 +151,6 @@ public class StringManipulator {
         return commentstr;
     }
 
-    public void parseBody(String jsonMetaData, String body){
-
-        Log.d(TAG, "parseBody: Entire body " + body);
-        Log.d(TAG, "parseBody: the jSon Meta data " + jsonMetaData);
-
-        JSONObject mainObject = null;
-        try {
-            mainObject = new JSONObject(jsonMetaData);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONArray imgObject = null;
-        try {
-            if (mainObject != null) {
-                imgObject = mainObject.getJSONArray("image");
-                Log.d(TAG, "parseBody: image " + imgObject.length());
-            } else {
-                imgObject = null;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            for (int i = 0; i < imgObject.length(); i++) {
-
-                Log.d(TAG, "parseBody: Location of images " + stringLocation(imgObject.get(i).toString(), body));
-
-            }
-
-        } catch(JSONException e){
-            e.printStackTrace();
-        }
-
-        try {
-            createArrayofTexts(imgObject.length(), imgObject, body);
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public List createArrayOfImages(String jsonMetaData){
 
@@ -211,126 +180,6 @@ public class StringManipulator {
         Log.d(TAG, "createArrayOfImages: " + imagesArray.get(0));
 
         return imagesArray;
-    }
-
-    public List createArrayofTexts(int numOfImages, JSONArray images, String body) throws JSONException, IOException {
-        List stringArray = new ArrayList();
-        int startAt = 0;
-
-        for (int i =0; i < numOfImages; i++){
-
-            int imageLocation = stringLocation(images.get(i).toString(), body);
-
-            stringArray.add(shortenString(startAt, imageLocation, body));
-
-            startAt = (imageLocation + images.get(i).toString().length());
-
-        }
-
-        return stringArray;
-    }
-
-    public List<FullDiscussion> createArrayOfImagesAndText(String body, String jsonMetaData){
-        List <FullDiscussion> listToLoad = new ArrayList<>();
-        String contentFromHtml = Html.fromHtml(body).toString();
-        int startAt = 0;
-
-        Log.d(TAG, "createArrayOfImagesAndText: content from html " + contentFromHtml);
-
-        try {
-            if (containsCharacter('[', shortenString(0, 20, contentFromHtml)));
-
-            Log.d(TAG, "createArrayOfImagesAndText: Find the end of ] ");
-
-            Log.d(TAG, "createArrayOfImagesAndText: " + locationOfLast(']', shortenString(0, 200, contentFromHtml)));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        JSONObject mainObject = null;
-        try {
-            mainObject = new JSONObject(jsonMetaData);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONArray imgObject = null;
-        try {
-            if (mainObject != null) {
-                imgObject = mainObject.getJSONArray("image");
-                if (imgObject != null) {
-
-                    for (int i =0; i < imgObject.length(); i++){
-                        int imageLocation = stringLocation(imgObject.get(i).toString(), body);
-
-                        try {
-                            listToLoad.add(new FullDiscussion(
-                                    shortenString(startAt, imageLocation, body),
-                                    true
-                            ));
-                        }catch (StringIndexOutOfBoundsException e){
-                            Log.e(TAG, "createArrayOfImagesAndText: " + e.getMessage() );
-                        }
-
-                        listToLoad.add(new FullDiscussion(
-                                imgObject.get(i).toString(),
-                                false
-                        ));
-
-                        if (i == (imgObject.length() - 1)){
-
-                            try {
-                                listToLoad.add(new FullDiscussion(
-                                        shortenString(startAt, imageLocation, body),
-                                        true
-                                ));
-
-                                Log.d(TAG, "createArrayOfImagesAndText: added last part " + shortenString(imageLocation, body.length(), body));
-                            }catch (StringIndexOutOfBoundsException e){
-                                Log.e(TAG, "createArrayOfImagesAndText: " + e.getMessage() );
-
-                                listToLoad.add(new FullDiscussion(
-                                        shortenString(startAt, body.length(), body),
-                                        true
-                                ));
-
-                                Log.d(TAG, "createArrayOfImagesAndText: added last part " + shortenString(startAt, body.length(), body));
-
-                            }
-
-
-                        }
-
-                        startAt = (imageLocation + imgObject.get(i).toString().length());
-
-                    }
-                }
-            }
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(TAG, "createArrayOfImagesAndText: First " + listToLoad.get(0).getmString());
-
-        Log.d(TAG, "createArrayOfImagesAndText: second " + listToLoad.get(1).getmString());
-
-        return listToLoad;
-
-    }
-
-    public void findText(String[] args) {
-        Pattern p = Pattern.compile(
-                "<row><column>(.*)</column></row>",
-                Pattern.DOTALL
-        );
-
-        Matcher matcher = p.matcher(
-                "<row><column>Header\n\n\ntext</column></row>"
-        );
-
-        if(matcher.matches()){
-            System.out.println(matcher.group(1));
-        }
     }
 
     public static List<String> extractLinksFromContent(String content) {

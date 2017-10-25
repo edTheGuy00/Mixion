@@ -7,6 +7,9 @@ import android.util.Log;
 import java.lang.reflect.Field;
 
 /**Created by ed on 10/3/17.
+ *
+ * Disables icon movements in the Bottom navigation view
+ * when changing fragments.
  */
 
 public class BottomNavigationViewHelper {

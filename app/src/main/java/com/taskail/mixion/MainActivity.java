@@ -27,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private PagerAdapter pagerAdapter;
     private BottomNavigationView bottomNavigationView;
 
+    private final int FEED_FRAGMENT = 0;
+    private final int ASK_STEEM_FRAGMENT = 1;
+    private final int CHAT_FRAGMENT = 2;
+    private final int PROFILE_FRAGMENT = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +54,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         pagerAdapter.addFragment(new ProfileFragment());
 
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(FEED_FRAGMENT);
         viewPager.setSwipeable(false);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-            int currentPosition = 0;
+            int currentPosition = FEED_FRAGMENT;
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -74,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
+    /**
+     * Implements a manula lifecycle for each fragment.
+     * @param currentPosition begins with MainActivity#FEED_FRAGMENT
+     * @param newPosition updated position as the user navigates the fragments
+     */
     private void handleFragmentLifeCycle(int currentPosition, int newPosition){
 
         FragmentLifecycle fragmentToHide = (FragmentLifecycle) pagerAdapter.getItem(currentPosition);
@@ -90,16 +100,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             item.setChecked(true);
             switch (item.getItemId()) {
                 case R.id.feed_icon:
-                    viewPager.setCurrentItem(0, true);
+                    viewPager.setCurrentItem(FEED_FRAGMENT, true);
                     break;
                 case R.id.asksteem_icon:
-                    viewPager.setCurrentItem(1, true);
+                    viewPager.setCurrentItem(ASK_STEEM_FRAGMENT, true);
                     break;
                 case R.id.chat_icon:
-                    viewPager.setCurrentItem(2);
+                    viewPager.setCurrentItem(CHAT_FRAGMENT);
                     break;
                 case R.id.profile_icon:
-                    viewPager.setCurrentItem(3, true);
+                    viewPager.setCurrentItem(PROFILE_FRAGMENT, true);
                     break;
             }
             return false;

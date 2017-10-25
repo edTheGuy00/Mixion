@@ -18,10 +18,9 @@ import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
-import com.bumptech.glide.Glide;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.GetTimeAgo;
-import com.taskail.mixion.utils.StringManipulator;
+import com.taskail.mixion.utils.StringUtils;
 
 import at.grabner.circleprogress.CircleProgressView;
 import br.tiagohm.markdownview.MarkdownView;
@@ -41,7 +40,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private CompositeDisposable disposable = new CompositeDisposable();
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(BASE_URL).create(SteemAPI.class);
 
-    StringManipulator stringManipulator;
+    StringUtils stringUtils;
     private RecyclerView mRecyclerView;
     private Context mContext = DiscussionDetailsActivity.this;
     private TextView title, author, category, payout, votesCount, repliesCount, timeAgo;
@@ -71,13 +70,17 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         mCirProg = findViewById(R.id.circleProgress);
 
         markdownView = findViewById(R.id.markdown_web);
-        stringManipulator = new StringManipulator();
+        stringUtils = new StringUtils();
 
         Bundle bundle = this.getIntent().getExtras();
         handleBundle(bundle);
 
     }
 
+    /**
+     * @param bundle passed from the calling fragment
+     * It will either be a serializable bundle of two strings
+     */
     private void handleBundle(Bundle bundle){
 
         if (bundle != null){
@@ -103,6 +106,12 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * The two strings passed from the AskSteem fragmnet are:
+     * @param author and
+     * @param link are used for querying the particular steem discussion.
+     */
 
     private void loadData(String author, String link){
         startLoadingProgress();
@@ -130,6 +139,10 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         }));
     }
 
+    /**
+     * Load the response from the GraphQL server
+     * @param responseData response containing the date for the discussion
+     */
     private void handleResponse(GetSingleDiscussionQuery.Data responseData){
         final GetSingleDiscussionQuery.Post post = responseData.post();
         if (post != null){
@@ -144,6 +157,10 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * The first call is made to @sarasate GrahpQL server, if that fails,
+     * a second call will be made to the default api.steemjs.com
+     */
     private void firstServerErrorHandler(String author, String link){
         Toast.makeText(mContext, "Server Error, retrying different server", Toast.LENGTH_SHORT).show();
 

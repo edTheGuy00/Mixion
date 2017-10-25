@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.taskail.mixion.R;
 import com.taskail.mixion.models.SteemDiscussion;
-import com.taskail.mixion.utils.StringManipulator;
+import com.taskail.mixion.utils.StringUtils;
 import com.taskail.mixion.utils.GetTimeAgo;
 
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
     private RequestOptions options = new RequestOptions().error(R.drawable.steem_logo).placeholder(R.drawable.steem_logo);
     private CardClickListener listener;
 
-    private StringManipulator stringManipulator = new StringManipulator();
+    private StringUtils stringManipulator = new StringUtils();
 
     private List<SteemDiscussion> discussion = Collections.emptyList();
     public void setDiscussion(List<SteemDiscussion> discussion, Fragment feedFragment, CardClickListener listener){
@@ -88,7 +88,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
         }
         void setDiscussion(final SteemDiscussion discussion){
             title.setText(discussion.getTitle());
-            body.setText(stringManipulator.getFirstFewCharacters(discussion.getBody()));
+            body.setText(stringManipulator.getShorterBody(discussion.getBody()));
             author.setText(discussion.getAuthor());
             category.setText(discussion.getCategory());
             payout.setText(discussion.getPendingPayoutValue());
