@@ -115,8 +115,6 @@ public class ChatLoginDialog extends DialogFragment implements ConnectListener {
     @Override
     public void onDisconnect(boolean closedByServer) {
 
-        Log.d(TAG, "onDisconnect: diconnected " + closedByServer);
-
     }
 
     @Override

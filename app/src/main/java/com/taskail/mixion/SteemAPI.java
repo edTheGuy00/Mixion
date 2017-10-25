@@ -21,16 +21,16 @@ public interface SteemAPI {
             @Query("pg") Integer page);
 
     @GET("get_discussions_by_trending")
-    Observable<SteemDiscussion[]> getRXTrendingDiscussions(@Query("query") String tagLimit);
+    Observable<SteemDiscussion[]> getTrendingDiscussions(@Query("query") String tagLimit);
 
     @GET("get_discussions_by_hot")
-    Observable<SteemDiscussion[]> getRxHotDiscussions(@Query("query") String tagLimit);
+    Observable<SteemDiscussion[]> getHotDiscussions(@Query("query") String tagLimit);
 
     @GET("get_discussions_by_created")
-    Observable<SteemDiscussion[]> getRxNewestDiscussions(@Query("query") String tagLimit);
+    Observable<SteemDiscussion[]> getNewestDiscussions(@Query("query") String tagLimit);
 
     @GET("get_discussions_by_promoted")
-    Observable<SteemDiscussion[]> getrxPromotedDiscussions(@Query("query") String tagLimit);
+    Observable<SteemDiscussion[]> getPromotedDiscussions(@Query("query") String tagLimit);
 
     @GET("get_content")
     Observable<SteemDiscussion> getContent(

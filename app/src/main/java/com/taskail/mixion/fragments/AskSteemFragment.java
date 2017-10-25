@@ -53,6 +53,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     private List<Result> resultsFromResponse = new ArrayList<>();
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(ASK_STEEM_URL).create(SteemAPI.class);
     private CompositeDisposable disposable = new CompositeDisposable();
+    private EditText searchInput;
     private AskSteemAdapter mAdapter;
     private boolean isLoading = false;
     private CircleProgressView mCirProg;
@@ -84,25 +85,15 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         resultsText = view.findViewById(R.id.results_text);
         nextbtn = view.findViewById(R.id.next_button);
         nextbtn.setOnClickListener((View v) ->{
-
             if (hasMore) {
-                resultsFromResponse.clear();
-                mAdapter.notifyDataSetChanged();
-                startLoadingProgress();
-                getMorePages(searchFor, nextPage);
+                loadNextPage();
             }
-
         });
         prevBtn = view.findViewById(R.id.previous_button);
         prevBtn.setOnClickListener((View v) ->{
-
             if (hasPrev) {
-                resultsFromResponse.clear();
-                mAdapter.notifyDataSetChanged();
-                startLoadingProgress();
-                getMorePages(searchFor, prevPage);
+                loadPreviousPage();
             }
-
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.results_recyclerview);
@@ -111,55 +102,49 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setNestedScrollingEnabled(false);
 
-        final EditText searchTerm = view.findViewById(R.id.search_edit_text);
+        searchInput = view.findViewById(R.id.search_edit_text);
         ImageView searchIcon = view.findViewById(R.id.search_icon);
-
-        searchTerm.setOnEditorActionListener((TextView textView, int i, KeyEvent keyEvent) ->{
-
-            Log.d(TAG, "onViewCreated: key code " + keyEvent.getKeyCode());
-            Log.d(TAG, "onViewCreated: int " + i);
+        searchInput.setOnEditorActionListener((TextView textView, int i, KeyEvent keyEvent) ->{
+            if ( i == KeyEvent.KEYCODE_CALL ){
+                performSearch(getSearchInput(), view);
+                return true;
+            }
 
             return false;
         });
 
-        searchTerm.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-                Log.d(TAG, "onKey: key event" + keyEvent.toString());
-                Log.d(TAG, "onKey: key code " + i);
-
-                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER || i == EditorInfo.IME_ACTION_DONE){
-                    resultsFromResponse.clear();
-                    mAdapter.notifyDataSetChanged();
-                    startLoadingProgress();
-                    askSteem(searchTerm.getText().toString());
-                    searchFor = searchTerm.getText().toString();
-
-                    //Hide Keyboard
-                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
         searchIcon.setOnClickListener((View) -> {
-            if (!TextUtils.isEmpty(searchTerm.getText())){
-                resultsFromResponse.clear();
-                mAdapter.notifyDataSetChanged();
-                startLoadingProgress();
-                askSteem(searchTerm.getText().toString());
-                searchFor = searchTerm.getText().toString();
-
-                //Hide Keyboard
-                InputMethodManager in = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-
+            performSearch(getSearchInput(), view);
         });
+    }
+
+    private String getSearchInput() throws NullPointerException{
+        return searchInput.getText().toString();
+    }
+
+    private void performSearch(String term, View v){
+        resultsFromResponse.clear();
+        mAdapter.notifyDataSetChanged();
+        startLoadingProgress();
+        askSteem(term);
+        searchFor = term;
+        //Hide Keyboard
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private void loadNextPage(){
+        resultsFromResponse.clear();
+        mAdapter.notifyDataSetChanged();
+        startLoadingProgress();
+        getMorePages(searchFor, nextPage);
+    }
+
+    private void loadPreviousPage(){
+        resultsFromResponse.clear();
+        mAdapter.notifyDataSetChanged();
+        startLoadingProgress();
+        getMorePages(searchFor, prevPage);
     }
 
     private void askSteem(String term){

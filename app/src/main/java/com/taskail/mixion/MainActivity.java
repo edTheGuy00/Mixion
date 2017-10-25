@@ -17,6 +17,9 @@ import com.taskail.mixion.utils.BottomNavigationViewVisibility;
 import com.taskail.mixion.utils.FragmentLifecycle;
 import com.taskail.mixion.utils.LockableViewPager;
 
+/**
+ * The main entry point for Mixion
+ */
 public class MainActivity extends AppCompatActivity implements BottomNavigationViewVisibility {
     private static final String TAG = "MainActivity";
 
@@ -99,18 +102,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     viewPager.setCurrentItem(3, true);
                     break;
             }
-
             return false;
         });
 
     }
+
+    /**
+     * Hide and show the bottom navigation view
+     */
 
     @Override
     public void hideBNV() {
         bottomNavigationView.animate().translationY(bottomNavigationView.getHeight())
                 .setInterpolator(new AccelerateInterpolator(2)).start();
     }
-
     @Override
     public void showBNV() {
         bottomNavigationView.animate().translationY(0).setInterpolator(new AccelerateInterpolator(2));
