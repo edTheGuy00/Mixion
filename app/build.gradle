@@ -11,7 +11,7 @@ apply plugin: 'com.apollographql.android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.taskail.mixion"
         minSdkVersion 19
@@ -19,10 +19,6 @@ android {
         versionCode 3
         versionName "1.0-beta3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        jackOptions {
-            enabled true
-        }
 
         multiDexEnabled true
     }
