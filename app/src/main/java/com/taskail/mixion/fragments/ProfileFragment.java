@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.taskail.mixion.R;
-import com.taskail.mixion.utils.FragmentLifecycle;
+import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 /**
  * Created by ed on 9/30/17.

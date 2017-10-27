@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.taskail.mixion.MainActivity">
 
-    <com.taskail.mixion.utils.LockableViewPager
+    <com.taskail.mixion.helpers.LockableViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.taskail.mixion.utils.LockableViewPager>
+    </com.taskail.mixion.helpers.LockableViewPager>
 
     <android.support.design.widget.BottomNavigationView
         app:itemIconTint="@drawable/bottom_navigation_color_selector"

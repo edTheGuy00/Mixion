@@ -1,4 +1,4 @@
-package com.taskail.mixion;
+package com.taskail.mixion.network;
 
 import com.apollographql.apollo.ApolloClient;
 

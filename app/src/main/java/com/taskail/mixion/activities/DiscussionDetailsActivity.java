@@ -1,7 +1,6 @@
-package com.taskail.mixion;
+package com.taskail.mixion.activities;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,12 @@ import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
+import com.taskail.mixion.GetSingleDiscussionQuery;
+import com.taskail.mixion.network.MixionApolloClient;
+import com.taskail.mixion.R;
+import com.taskail.mixion.network.RetrofitClient;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
+import com.taskail.mixion.interfaces.SteemAPI;
 import com.taskail.mixion.models.ActiveVote;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.GetTimeAgo;

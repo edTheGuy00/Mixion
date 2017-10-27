@@ -15,7 +15,7 @@ import com.rocketchat.core.RocketChatClient;
 import com.taskail.mixion.R;
 import com.taskail.mixion.steemitchat.ChatLoginDialog;
 import com.taskail.mixion.steemitchat.RocketChatApplication;
-import com.taskail.mixion.utils.FragmentLifecycle;
+import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 /**Created by ed on 9/30/17.
  */

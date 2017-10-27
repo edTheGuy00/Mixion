@@ -2,9 +2,7 @@ package com.taskail.mixion.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,16 +19,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.taskail.mixion.DiscussionDetailsActivity;
+import com.taskail.mixion.activities.DiscussionDetailsActivity;
 import com.taskail.mixion.R;
-import com.taskail.mixion.RetrofitClient;
-import com.taskail.mixion.SteemAPI;
+import com.taskail.mixion.network.RetrofitClient;
+import com.taskail.mixion.interfaces.SteemAPI;
 import com.taskail.mixion.adapters.DiscussionsAdapter;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.models.SteemDiscussion;
-import com.taskail.mixion.utils.BottomNavigationViewVisibility;
+import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener;
-import com.taskail.mixion.utils.FragmentLifecycle;
+import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 import java.util.ArrayList;
 import java.util.Arrays;

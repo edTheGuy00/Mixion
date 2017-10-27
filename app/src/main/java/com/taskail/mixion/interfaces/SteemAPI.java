@@ -1,4 +1,4 @@
-package com.taskail.mixion;
+package com.taskail.mixion.interfaces;
 
 import com.taskail.mixion.models.AskSteem;
 import com.taskail.mixion.models.SteemDiscussion;

@@ -1,4 +1,4 @@
-package com.taskail.mixion.utils;
+package com.taskail.mixion.helpers;
 
 import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;

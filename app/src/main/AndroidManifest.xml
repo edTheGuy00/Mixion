@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.taskail.mixion.DiscussionDetailsActivity">
+        <activity android:name="com.taskail.mixion.activities.DiscussionDetailsActivity">
 
         </activity>
     </application>

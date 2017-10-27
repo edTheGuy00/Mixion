@@ -1,4 +1,4 @@
-package com.taskail.mixion;
+package com.taskail.mixion.network;
 
 
 import okhttp3.OkHttpClient;

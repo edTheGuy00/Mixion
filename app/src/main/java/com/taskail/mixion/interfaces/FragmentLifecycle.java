@@ -1,4 +1,4 @@
-package com.taskail.mixion.utils;
+package com.taskail.mixion.interfaces;
 
 /**Created by ed on 10/3/17.
  *

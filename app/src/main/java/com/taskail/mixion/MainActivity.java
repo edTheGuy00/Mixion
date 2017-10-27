@@ -12,10 +12,10 @@ import com.taskail.mixion.fragments.ChatsFragment;
 import com.taskail.mixion.fragments.FeedFragment;
 import com.taskail.mixion.fragments.AskSteemFragment;
 import com.taskail.mixion.fragments.ProfileFragment;
-import com.taskail.mixion.utils.BottomNavigationViewHelper;
-import com.taskail.mixion.utils.BottomNavigationViewVisibility;
-import com.taskail.mixion.utils.FragmentLifecycle;
-import com.taskail.mixion.utils.LockableViewPager;
+import com.taskail.mixion.helpers.BottomNavigationViewHelper;
+import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
+import com.taskail.mixion.interfaces.FragmentLifecycle;
+import com.taskail.mixion.helpers.LockableViewPager;
 
 /**
  * The main entry point for Mixion
