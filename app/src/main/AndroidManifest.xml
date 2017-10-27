@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.taskail.mixion.MainActivity"
+        <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
@@ -21,6 +21,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name="com.taskail.mixion.activities.DiscussionDetailsActivity">
 
