@@ -28,6 +28,7 @@ import com.taskail.mixion.R;
 import com.taskail.mixion.RetrofitClient;
 import com.taskail.mixion.SteemAPI;
 import com.taskail.mixion.adapters.AskSteemAdapter;
+import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.models.AskSteem;
 import com.taskail.mixion.models.Result;
 import com.taskail.mixion.utils.FragmentLifecycle;
@@ -56,7 +57,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     private EditText searchInput;
     private AskSteemAdapter mAdapter;
     private boolean isLoading = false;
-    private CircleProgressView mCirProg;
+    private CircleProgressView circleProgressView;
     private ScrollView scrollView;
     private RelativeLayout seachRelativeLayout;
     private TextView resultsText;
@@ -77,7 +78,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCirProg = view.findViewById(R.id.circleProgress);
+        circleProgressView = view.findViewById(R.id.circleProgress);
         ImageView askSteemImage = view.findViewById(R.id.askseem_logo);
         Glide.with(this).asDrawable().load(R.drawable.ask_steem_logo).into(askSteemImage);
 
@@ -124,7 +125,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     private void performSearch(String term, View v){
         resultsFromResponse.clear();
         mAdapter.notifyDataSetChanged();
-        startLoadingProgress();
+        CircleProgressViewHelper.showLoading(circleProgressView);
         askSteem(term);
         searchFor = term;
         //Hide Keyboard
@@ -137,14 +138,14 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     private void loadNextPage(){
         resultsFromResponse.clear();
         mAdapter.notifyDataSetChanged();
-        startLoadingProgress();
+        CircleProgressViewHelper.showLoading(circleProgressView);
         getMorePages(searchFor, nextPage);
     }
 
     private void loadPreviousPage(){
         resultsFromResponse.clear();
         mAdapter.notifyDataSetChanged();
-        startLoadingProgress();
+        CircleProgressViewHelper.showLoading(circleProgressView);
         getMorePages(searchFor, prevPage);
     }
 
@@ -173,7 +174,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
             currentPage = askResult.getPages().getCurrent();
             resultsFromResponse.addAll( askResult.getResults() );
             mAdapter.setResults(resultsFromResponse, this);
-            stopLoadingProgress();
+            CircleProgressViewHelper.stopLoading(circleProgressView);
             scrollView.post(() -> scrollView.smoothScrollTo(0, seachRelativeLayout.getTop()));
 
             if (askResult.getPages().getHasNext()){
@@ -199,19 +200,8 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         if (error.getMessage().equals("timeout")){
             Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
         }
-        stopLoadingProgress();
+        CircleProgressViewHelper.stopLoading(circleProgressView);
     }
-
-    private void startLoadingProgress(){
-        mCirProg.setVisibility(View.VISIBLE);
-        mCirProg.setValue(50);
-        mCirProg.spin();
-    }
-    private void stopLoadingProgress(){
-        mCirProg.stopSpinning();
-        mCirProg.setVisibility(View.GONE);
-    }
-
 
     @Override
     public void onPauseFragment() {

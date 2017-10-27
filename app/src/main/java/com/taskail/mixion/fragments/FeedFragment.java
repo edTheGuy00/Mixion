@@ -26,6 +26,7 @@ import com.taskail.mixion.R;
 import com.taskail.mixion.RetrofitClient;
 import com.taskail.mixion.SteemAPI;
 import com.taskail.mixion.adapters.DiscussionsAdapter;
+import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.BottomNavigationViewVisibility;
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener;
@@ -58,7 +59,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     private EndlessRecyclerViewScrollListener scrollListener;
     private Spinner typeSpinner, topicsSpinner;
     private DiscussionsAdapter mAdapter;
-    private CircleProgressView mCirProg;
+    private CircleProgressView circleProgressView;
     private ProgressBar loadMoreProgress;
     private RecyclerView recyclerView;
 
@@ -76,7 +77,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         typeSpinner = view.findViewById(R.id.feed_type);
         topicsSpinner = view.findViewById(R.id.topics);
-        mCirProg = view.findViewById(R.id.circleProgress);
+        circleProgressView = view.findViewById(R.id.circleProgress);
         loadMoreProgress = view.findViewById(R.id.load_moreProgress);
         recyclerView = view.findViewById(R.id.recycler_view);
         return view;
@@ -159,7 +160,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
             scrollListener.resetState();
             isLoading = true;
             isPaginated = false;
-            startLoadingProgress();
+            CircleProgressViewHelper.showLoading(circleProgressView);
 
             switch (sortBy) {
                 case ("Trending"):
@@ -270,7 +271,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         if (!isPaginated) {
             discussionFromResponse = new ArrayList<>();
             Collections.addAll(discussionFromResponse, steem);
-            stopLoadingProgress();
+            CircleProgressViewHelper.stopLoading(circleProgressView);
         }else {
             Collections.addAll(discussionFromResponse, Arrays.copyOfRange(steem, 1, loadCount));
             mAdapter.notifyItemRangeInserted(beginToLoadAt, discussionFromResponse.size());
@@ -294,16 +295,6 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         setOnFailure();
     }
 
-    private void startLoadingProgress(){
-        mCirProg.setVisibility(View.VISIBLE);
-        mCirProg.setValue(50);
-        mCirProg.setText("Loading..");
-        mCirProg.spin();
-    }
-    private void stopLoadingProgress(){
-        mCirProg.stopSpinning();
-        mCirProg.setVisibility(View.GONE);
-    }
     private void startLoadingMore(){
         loadMoreProgress.setVisibility(View.VISIBLE);
     }
@@ -313,12 +304,9 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     }
     private void setOnFailure(){
         isLoading = false;
-
         if (!isPaginated) {
-            mCirProg.stopSpinning();
-            mCirProg.setBarColor(Color.RED);
-            mCirProg.setText("Retry");
-            mCirProg.setOnClickListener((View view) -> {
+            CircleProgressViewHelper.setRetryError(circleProgressView);
+            circleProgressView.setOnClickListener((View view) -> {
                 if (!isLoading) {
                     requestToLoadNew();
                 }

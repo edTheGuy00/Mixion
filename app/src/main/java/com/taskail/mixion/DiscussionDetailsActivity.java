@@ -18,6 +18,7 @@ import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
+import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.models.ActiveVote;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.GetTimeAgo;
@@ -115,7 +116,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
      */
 
     private void loadData(String author, String link){
-        startLoadingProgress();
+        CircleProgressViewHelper.showLoading(circleProgressView);
 
         ApolloCall<GetSingleDiscussionQuery.Data> discussionData = mApolloClient
                 .query(new GetSingleDiscussionQuery(author, link))
@@ -135,7 +136,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
             }
 
             @Override public void onComplete() {
-                stopLoadingProgress();
+                CircleProgressViewHelper.stopLoading(circleProgressView);
             }
         }));
     }
@@ -192,7 +193,8 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
         markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(body).toString());
 
-        stopLoadingProgress();
+        CircleProgressViewHelper.stopLoading(circleProgressView);
+
     }
 
     public void loadComments(View view){
@@ -213,26 +215,9 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     }
 
     private void handleError(Throwable e) {
-        setError();
+        CircleProgressViewHelper.unableToLoadError(circleProgressView);
         Log.e(TAG, e.getMessage(), e);
         Toast.makeText(mContext, "Unable to Load", Toast.LENGTH_SHORT).show();
-    }
-
-    private void startLoadingProgress(){
-        circleProgressView.setVisibility(View.VISIBLE);
-        circleProgressView.setValue(50);
-        circleProgressView.setText("Loading..");
-        circleProgressView.spin();
-    }
-    private void stopLoadingProgress(){
-        circleProgressView.stopSpinning();
-        circleProgressView.setVisibility(View.GONE);
-    }
-
-    private void setError(){
-        circleProgressView.stopSpinning();
-        circleProgressView.setBarColor(Color.RED);
-        circleProgressView.setText("ERROR");
     }
 
     @Override
