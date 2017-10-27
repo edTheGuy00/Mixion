@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewVisibility{
         bottomNavigationView?.setOnNavigationItemSelectedListener { item: MenuItem ->
             item.isChecked = true
             when (item.itemId) {
-                R.id.feed_icon -> viewPager?.setCurrentItem(FEED_FRAGMENT, true)
-                R.id.asksteem_icon -> viewPager?.setCurrentItem(ASK_STEEM_FRAGMENT, true)
+                R.id.feed_icon -> viewPager?.currentItem = FEED_FRAGMENT
+                R.id.asksteem_icon -> viewPager?.currentItem = ASK_STEEM_FRAGMENT
                 R.id.chat_icon -> viewPager?.currentItem = CHAT_FRAGMENT
-                R.id.profile_icon -> viewPager?.setCurrentItem(PROFILE_FRAGMENT, true)
+                R.id.profile_icon -> viewPager?.currentItem = PROFILE_FRAGMENT
             }
             false
         }
