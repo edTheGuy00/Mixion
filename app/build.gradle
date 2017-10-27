@@ -2,11 +2,12 @@ buildscript {
     ext.jacksonReleaseVersion = '2.9.1'
     ext.squareupRetrofitVersion = '2.3.0'
     ext.squareupOkhttpVersion = '3.9.0'
-    ext.androidSupportVersion = '26.0.1'
+    ext.androidSupportVersion = '26.1.0'
     ext.apolloReleaseVersion = '0.4.1'
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.apollographql.android'
 
 android {
@@ -16,8 +17,8 @@ android {
         applicationId "com.taskail.mixion"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.0-beta3"
+        versionCode 4
+        versionName "1.0-beta4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -69,6 +70,10 @@ dependencies {
     compile 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
     compile 'id.zelory:compressor:2.1.0'
 
+    compile 'eu.bittrade.libs:steemj-core:0.4.0'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'eu.lp0.slf4j:slf4j-android:1.7.25-0'
+
     compile "com.apollographql.apollo:apollo-runtime:$apolloReleaseVersion"
     compile "com.apollographql.apollo:apollo-android-support:$apolloReleaseVersion"
     compile "com.apollographql.apollo:apollo-rx2-support:$apolloReleaseVersion"
@@ -92,4 +97,8 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$androidSupportVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

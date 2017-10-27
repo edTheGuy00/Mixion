@@ -1,16 +1,11 @@
 package com.taskail.mixion.adapters;
 
-import android.animation.ObjectAnimator;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,8 +49,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
     @Override
     public void onBindViewHolder(DiscussionItemViewHolder holder, int position) {
         final SteemDiscussion allDiscussions = this.discussion.get(position);
-        holder.setDiscussion(allDiscussions);
-        applyOnClick(holder, position);
+        holder.setDiscussion(allDiscussions, position);
 
     }
     @Override
@@ -86,7 +80,7 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
             discussionCard = itemView.findViewById(R.id.discussion_card);
             mainImage = itemView.findViewById(R.id.preview_image);
         }
-        void setDiscussion(final SteemDiscussion discussion){
+        void setDiscussion(final SteemDiscussion discussion, int position){
             title.setText(discussion.getTitle());
             body.setText(stringManipulator.getShorterBody(discussion.getBody()));
             author.setText(discussion.getAuthor());
@@ -101,39 +95,8 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
                     .apply(options)
                     .into(mainImage);
 
-            //TODO - applyOnClick in onBindViewHolder does not work without this.. Why??
-            discussionCard.setOnClickListener((View v) -> {
-            });
+            discussionCard.setOnClickListener((View v) -> listener.onCardClicked(position));
         }
-
-    }
-
-    private void applyOnClick (DiscussionItemViewHolder holder, final int position){
-
-        holder.discussionCard.setOnTouchListener((View view, MotionEvent motionEvent) -> {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        ObjectAnimator upAnim = ObjectAnimator.ofFloat(view, "translationZ", 0);
-                        upAnim.setDuration(200);
-                        upAnim.setInterpolator(new DecelerateInterpolator());
-                        upAnim.start();
-                        break;
-                    case MotionEvent.ACTION_UP:
-
-                        Log.d(TAG, "onTouch: Logging " );
-                        listener.onCardClicked(position);
-
-                    case MotionEvent.ACTION_CANCEL:
-                        ObjectAnimator downAnim = ObjectAnimator.ofFloat(view, "translationZ", 20);
-                        downAnim.setDuration(200);
-                        downAnim.setInterpolator(new AccelerateInterpolator());
-                        downAnim.start();
-                        break;
-                }
-
-                return false;
-
-        });
     }
 
     public interface CardClickListener{

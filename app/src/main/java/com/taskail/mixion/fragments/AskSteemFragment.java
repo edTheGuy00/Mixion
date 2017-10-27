@@ -73,6 +73,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         return inflater.inflate(R.layout.fragment_asksteem, container, false);
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -113,9 +114,7 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
             return false;
         });
 
-        searchIcon.setOnClickListener((View) -> {
-            performSearch(getSearchInput(), view);
-        });
+        searchIcon.setOnClickListener((View) -> performSearch(getSearchInput(), view));
     }
 
     private String getSearchInput() throws NullPointerException{
@@ -130,7 +129,9 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         searchFor = term;
         //Hide Keyboard
         InputMethodManager in = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        if (in != null) {
+            in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
     private void loadNextPage(){
@@ -157,8 +158,6 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
 
     private void getMorePages(String term, Integer page){
 
-        Log.d(TAG, "getMorePages: " + page);
-
         disposable.add(steemApi.AskMoreSteem("search+" + term, page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -168,25 +167,20 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     private void handleResponse(AskSteem askResult) {
         resultsFromResponse = new ArrayList<>();
         if (askResult != null){
-            resultsText.setText(String.valueOf(askResult.getHits()) + " results " + "(" + String.valueOf(askResult.getTime()) + " seconds)");
+            StringBuilder results = new StringBuilder();
+            results.append(String.valueOf(askResult.getHits())).append(" results ").append(String.valueOf(askResult.getTime())).append(" seconds ");
+            resultsText.setText(results);
             currentPage = askResult.getPages().getCurrent();
             resultsFromResponse.addAll( askResult.getResults() );
             mAdapter.setResults(resultsFromResponse, this);
             stopLoadingProgress();
-
-            Log.d(TAG, "handleResponse: " + currentPage);
-
-            scrollView.post(() ->{
-                scrollView.smoothScrollTo(0, seachRelativeLayout.getTop());
-            });
+            scrollView.post(() -> scrollView.smoothScrollTo(0, seachRelativeLayout.getTop()));
 
             if (askResult.getPages().getHasNext()){
                 nextbtn.setVisibility(View.VISIBLE);
                 hasMore = askResult.getPages().getHasNext();
                 nextPage = currentPage;
                 nextPage++;
-
-                Log.d(TAG, "handleResponse: nextPage " + nextPage);
             } else {
                 nextbtn.setVisibility(View.GONE);
             }
@@ -195,8 +189,6 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
                 hasPrev = askResult.getPages().getHasPrevious();
                 prevPage = currentPage;
                 prevPage--;
-
-                Log.d(TAG, "handleResponse: " + prevPage);
             } else {
                 prevBtn.setVisibility(View.GONE);
             }
@@ -235,13 +227,9 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
     public void onItemClick(int position) {
 
         Intent intent = new Intent(getActivity(), DiscussionDetailsActivity.class);
-
         intent.putExtra("Author", resultsFromResponse.get(position).getAuthor());
         intent.putExtra("link", resultsFromResponse.get(position).getPermlink());
-
         getActivity().startActivity(intent);
-
-        Log.d(TAG, "onItemClick: " + resultsFromResponse.get(position).getAuthor());
 
     }
 }

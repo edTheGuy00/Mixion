@@ -18,9 +18,13 @@ import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
+import com.taskail.mixion.models.ActiveVote;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.utils.GetTimeAgo;
 import com.taskail.mixion.utils.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import at.grabner.circleprogress.CircleProgressView;
 import br.tiagohm.markdownview.MarkdownView;
@@ -43,12 +47,11 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     StringUtils stringUtils;
     private RecyclerView mRecyclerView;
     private Context mContext = DiscussionDetailsActivity.this;
-    private TextView title, author, category, payout, votesCount, repliesCount, timeAgo;
-    private CircleProgressView mCirProg;
+    private TextView titleTV, authorTV, categoryTV, payoutTV, votesCountTV, repliesCountTV, timeAgoTV;
+    private CircleProgressView circleProgressView;
+    private List<ActiveVote> voters = new ArrayList<>();
 
-    private StringBuilder userInfo;
     private ApolloClient mApolloClient;
-
     private MarkdownView markdownView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,14 +63,14 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     }
 
     private void initWidgets(){
-        title = findViewById(R.id.title);
-        author = findViewById(R.id.author);
-        category = findViewById(R.id.category);
-        payout = findViewById(R.id.payout);
-        votesCount = findViewById(R.id.votes_count);
-        repliesCount = findViewById(R.id.replies_count);
-        timeAgo = findViewById(R.id.time_ago);
-        mCirProg = findViewById(R.id.circleProgress);
+        titleTV = findViewById(R.id.title);
+        authorTV = findViewById(R.id.author);
+        categoryTV = findViewById(R.id.category);
+        payoutTV = findViewById(R.id.payout);
+        votesCountTV = findViewById(R.id.votes_count);
+        repliesCountTV = findViewById(R.id.replies_count);
+        timeAgoTV = findViewById(R.id.time_ago);
+        circleProgressView = findViewById(R.id.circleProgress);
 
         markdownView = findViewById(R.id.markdown_web);
         stringUtils = new StringUtils();
@@ -87,16 +90,14 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
             SteemDiscussion steemDiscussion = (SteemDiscussion) bundle.getSerializable("data");
             if (steemDiscussion != null) {
+                if (steemDiscussion.getActiveVotes().size() > 0){
+                    voters = steemDiscussion.getActiveVotes();
+                }
 
-                title.setText(steemDiscussion.getTitle());
-                author.setText(steemDiscussion.getAuthor());
-                category.setText(steemDiscussion.getCategory());
-                payout.setText(steemDiscussion.getPendingPayoutValue());
-                votesCount.setText(String.valueOf(steemDiscussion.getNetVotes()));
-                repliesCount.setText(String.valueOf(steemDiscussion.getChildren()));
-                timeAgo.setText(GetTimeAgo.getlongtoago(steemDiscussion.getCreated()));
-
-                markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(steemDiscussion.getBody()).toString());
+                setTexts(steemDiscussion.getTitle(), steemDiscussion.getAuthor(), steemDiscussion.getCategory(),
+                        steemDiscussion.getPendingPayoutValue(),
+                        String.valueOf(steemDiscussion.getNetVotes()),
+                        String.valueOf(steemDiscussion.getChildren()), steemDiscussion.getCreated(), steemDiscussion.getBody());
             } else {
                 loadData(bundle.getString("Author"), bundle.getString("link"));
 
@@ -146,14 +147,12 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private void handleResponse(GetSingleDiscussionQuery.Data responseData){
         final GetSingleDiscussionQuery.Post post = responseData.post();
         if (post != null){
-            title.setText(post.title());
-            author.setText(post.author());
-            category.setText(post.category());
-            payout.setText(post.pending_payout_value());
-            votesCount.setText(String.valueOf(post.net_votes()));
-            repliesCount.setText(String.valueOf(post.children()));
-            timeAgo.setText(GetTimeAgo.getlongtoago(post.created()));
-            markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(post.body()).toString());
+
+            setTexts(post.title(), post.author(), post.category(), post.pending_payout_value(),
+                    String.valueOf(post.net_votes()),
+                    String.valueOf(post.children()),
+                    post.created(),
+                    post.body());
         }
     }
 
@@ -172,17 +171,45 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
     private void handleSecondResponse(SteemDiscussion steemDiscussion) {
 
-        title.setText(steemDiscussion.getTitle());
-        author.setText(steemDiscussion.getAuthor());
-        category.setText(steemDiscussion.getCategory());
-        payout.setText(steemDiscussion.getPendingPayoutValue());
-        votesCount.setText(String.valueOf(steemDiscussion.getNetVotes()));
-        repliesCount.setText(String.valueOf(steemDiscussion.getChildren()));
-        timeAgo.setText(GetTimeAgo.getlongtoago(steemDiscussion.getCreated()));
+        if (steemDiscussion.getActiveVotes().size() > 0){
+            voters = steemDiscussion.getActiveVotes();
+        }
+        setTexts(steemDiscussion.getTitle(), steemDiscussion.getAuthor(), steemDiscussion.getCategory(),
+                steemDiscussion.getPendingPayoutValue(),
+                String.valueOf(steemDiscussion.getNetVotes()),
+                String.valueOf(steemDiscussion.getChildren()), steemDiscussion.getCreated(), steemDiscussion.getBody());
+    }
 
-        markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(steemDiscussion.getBody()).toString());
+    private void setTexts(String title, String author, String category, String payout, String votes,
+                          String replies, String created, String body){
+        titleTV.setText(title);
+        authorTV.setText(author);
+        categoryTV.setText(category);
+        payoutTV.setText(payout);
+        votesCountTV.setText(votes);
+        repliesCountTV.setText(replies);
+        timeAgoTV.setText(GetTimeAgo.getlongtoago(created));
+
+        markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(body).toString());
 
         stopLoadingProgress();
+    }
+
+    public void loadComments(View view){
+        if (!isLoading())
+            Toast.makeText(mContext, "Load comments", Toast.LENGTH_SHORT).show();
+    }
+
+    public void showVoters(View view){
+        if ( !isLoading() && votersExist())
+            Toast.makeText(mContext, "Show Voters " + voters.get(0).getVoter(), Toast.LENGTH_SHORT).show();
+
+    }
+    private boolean votersExist(){
+        return voters.size() > 0;
+    }
+    private boolean isLoading(){
+        return circleProgressView.getVisibility() == View.VISIBLE;
     }
 
     private void handleError(Throwable e) {
@@ -192,20 +219,20 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     }
 
     private void startLoadingProgress(){
-        mCirProg.setVisibility(View.VISIBLE);
-        mCirProg.setValue(50);
-        mCirProg.setText("Loading..");
-        mCirProg.spin();
+        circleProgressView.setVisibility(View.VISIBLE);
+        circleProgressView.setValue(50);
+        circleProgressView.setText("Loading..");
+        circleProgressView.spin();
     }
     private void stopLoadingProgress(){
-        mCirProg.stopSpinning();
-        mCirProg.setVisibility(View.GONE);
+        circleProgressView.stopSpinning();
+        circleProgressView.setVisibility(View.GONE);
     }
 
     private void setError(){
-        mCirProg.stopSpinning();
-        mCirProg.setBarColor(Color.RED);
-        mCirProg.setText("ERROR");
+        circleProgressView.stopSpinning();
+        circleProgressView.setBarColor(Color.RED);
+        circleProgressView.setText("ERROR");
     }
 
     @Override

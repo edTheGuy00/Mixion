@@ -75,11 +75,7 @@ public class AskSteemAdapter extends RecyclerView.Adapter<AskSteemAdapter.Result
             author.setText(results.getAuthor());
             timeAgo.setText(GetTimeAgo.getlongtoago(results.getCreated()));
 
-            linearLayout.setOnClickListener((View view) ->{
-
-                listener.onItemClick(position);
-
-            });
+            linearLayout.setOnClickListener((View view) -> listener.onItemClick(position));
         }
     }
 

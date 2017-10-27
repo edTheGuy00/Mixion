@@ -10,6 +10,8 @@
         app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         app:cardElevation="3dp"
+        android:clickable="true"
+        android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -19,7 +21,6 @@
 
             <TextView
                 android:id="@+id/steem_title"
-                android:text="Title"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:ellipsize="end"
@@ -39,8 +40,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:text="timeago"/>
+                    android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:layout_gravity="center_vertical"
@@ -55,7 +55,6 @@
                     android:id="@+id/author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Author"
                     android:textColor="@color/colorPrimary"/>
 
                 <TextView
@@ -70,8 +69,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="3dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Category"/>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <ImageView
@@ -85,7 +83,6 @@
             <TextView
                 android:layout_marginStart="4dp"
                 android:id="@+id/steem_body"
-                android:text="Aloen fiensienvodsinvodsinvsd vodsinv  vds vds vds vds vds v ds vds vds v dsv sd vsd v dsv ds vds v dsvosdinvsd vsdvsdinvods vodsi vodsi vods vodsinvsodi vods vodsivodsivods vodsinvodsivsod vodsi vodsivodsinvsod vodsi vods ivodsi vodsi vodsi vosdi vosdi voids vosd iv"
                 android:layout_marginTop="5dp"
                 android:layout_below="@id/info_linLayout"
                 android:layout_toEndOf="@id/preview_image"
