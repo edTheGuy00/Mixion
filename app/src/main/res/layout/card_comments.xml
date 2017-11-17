@@ -21,18 +21,19 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/user_info"
+                android:id="@+id/user_info_layout"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <android.support.v4.widget.CircleImageView
+                    android:id="@+id/userImg"
                     android:layout_width="25dp"
                     android:layout_height="25dp" />
 
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_gravity="center_vertical"
-                    android:text="user"
                     android:layout_marginStart="3dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -40,14 +41,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-
-
             </LinearLayout>
 
             <TextView
                 android:padding="4dp"
-                android:layout_below="@+id/user_info"
-                android:id="@+id/steem_title"
+                android:layout_below="@+id/user_info_layout"
+                android:id="@+id/commentBody"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"

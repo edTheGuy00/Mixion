@@ -50,7 +50,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(BASE_URL).create(SteemAPI.class);
 
     StringUtils stringUtils;
-    private RecyclerView mRecyclerView;
+    private RecyclerView commentsRecyclerView;
     private Context mContext = DiscussionDetailsActivity.this;
     private TextView titleTV, authorTV, categoryTV, payoutTV, votesCountTV, repliesCountTV, timeAgoTV;
     private CircleProgressView circleProgressView;
@@ -63,8 +63,13 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion_details);
         mApolloClient = MixionApolloClient.getApolloCleint();
+        commentsRecyclerView = findViewById(R.id.comments_list);
         ImageView menu = findViewById(R.id.menu_img);
         initWidgets();
+    }
+
+    private void initCommentsLayout(){
+
     }
 
     private void initWidgets(){
