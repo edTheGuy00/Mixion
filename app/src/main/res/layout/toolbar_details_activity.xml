@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/container_linearlay"
+                android:layout_centerVertical="true"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/upvote_button"/>
+
+                <TextView
+                    android:id="@+id/payout"
+                    android:layout_marginStart="3dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:onClick="showVoters"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/upvote_arrow"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_upvote_arrow"/>
+
+                    <TextView
+                        android:id="@+id/votes_count"
+                        android:layout_toEndOf="@+id/upvote_arrow"
+                        android:layout_marginStart="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="loadComments"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/comments_img"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_comments" />
+
+                    <TextView
+                        android:id="@+id/replies_count"
+                        android:layout_toEndOf="@+id/comments_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/menu_img"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_menu"
+                android:layout_marginEnd="4dp"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+</merge>
