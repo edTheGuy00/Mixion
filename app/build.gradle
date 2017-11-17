@@ -70,7 +70,7 @@ dependencies {
     compile 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
     compile 'id.zelory:compressor:2.1.0'
 
-    compile 'eu.bittrade.libs:steemj-core:0.4.1'
+    compile 'eu.bittrade.libs:steemj-core:0.4.2'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'eu.lp0.slf4j:slf4j-android:1.7.25-0'
 
