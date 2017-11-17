@@ -13,7 +13,7 @@
         <item>Promoted</item>
     </string-array>
 
-    <string-array name="topics">
+    <string-array name="tags">
         <item>steem</item>
         <item>photography</item>
         <item>steemit</item>
@@ -37,7 +37,6 @@
         <item>colorchallenge</item>
         <item>money</item>
         <item>coding</item>
-        <item>mixion</item>
         <item>health</item>
         <item>music</item>
         <item>poetry</item>

@@ -21,9 +21,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.taskail.mixion.activities.DiscussionDetailsActivity;
 import com.taskail.mixion.R;
+import com.taskail.mixion.adapters.DiscussionsRecyclerAdapter;
 import com.taskail.mixion.network.RetrofitClient;
 import com.taskail.mixion.interfaces.SteemAPI;
-import com.taskail.mixion.adapters.DiscussionsAdapter;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
@@ -45,7 +45,7 @@ import io.reactivex.schedulers.Schedulers;
  * Feed fragment makes all the calls to api.steem.com
  */
 
-public class FeedFragment extends Fragment implements FragmentLifecycle, DiscussionsAdapter.CardClickListener {
+public class FeedFragment extends Fragment implements FragmentLifecycle, DiscussionsRecyclerAdapter.CardClickListener {
     private static final String TAG = "FeedFragment";
 
     private static final String BASE_URL = "https://api.steemjs.com/";
@@ -56,7 +56,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     private BottomNavigationViewVisibility navigationViewVisibility;
     private EndlessRecyclerViewScrollListener scrollListener;
     private Spinner typeSpinner, topicsSpinner;
-    private DiscussionsAdapter mAdapter;
+    private DiscussionsRecyclerAdapter mAdapter;
     private CircleProgressView circleProgressView;
     private ProgressBar loadMoreProgress;
     private RecyclerView recyclerView;
@@ -87,7 +87,7 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         ImageView toolbarImage = view.findViewById(R.id.logo);
         Glide.with(this).asDrawable().load(R.drawable.steem_logo).into(toolbarImage);
 
-        mAdapter = new DiscussionsAdapter();
+        mAdapter = new DiscussionsRecyclerAdapter(discussionFromResponse, getActivity(), this);
         recyclerView.setAdapter(mAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -114,9 +114,13 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
         setupSpinners();
     }
 
-
+    /**
+     * Setup the drop down spinners, one is the feed type (hot, new, trending), and the other is
+     * the tags available. Array list is found in R.array
+     */
     private void setupSpinners() {
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.feed_type, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.feed_type, android.R.layout.simple_spinner_item);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -133,13 +137,14 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
             }
         });
 
-        ArrayAdapter<CharSequence> topicsAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.topics, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> topicsAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.tags, android.R.layout.simple_spinner_item);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         topicsSpinner.setAdapter(topicsAdapter);
         topicsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tag = getActivity().getResources().getStringArray(R.array.topics)[i];
+                tag = getActivity().getResources().getStringArray(R.array.tags)[i];
                 if (!isLoading) {
                     requestToLoadNew();
                 }
@@ -183,16 +188,20 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
             switch (sortBy) {
                 case ("Trending"):
-                    fetchMoreTrending(discussionFromResponse.get(lastPostLocation-1).getAuthor(), discussionFromResponse.get(lastPostLocation-1).getPermlink());
+                    fetchMoreTrending(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
+                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
                     break;
                 case ("Hot"):
-                    fetchMoreHot(discussionFromResponse.get(lastPostLocation-1).getAuthor(), discussionFromResponse.get(lastPostLocation-1).getPermlink());
+                    fetchMoreHot(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
+                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
                     break;
                 case ("New"):
-                    fetchMoreNew(discussionFromResponse.get(lastPostLocation-1).getAuthor(), discussionFromResponse.get(lastPostLocation-1).getPermlink());
+                    fetchMoreNew(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
+                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
                     break;
                 case ("Promoted"):
-                    fetchMorePromoted(discussionFromResponse.get(lastPostLocation-1).getAuthor(), discussionFromResponse.get(lastPostLocation-1).getPermlink());
+                    fetchMorePromoted(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
+                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
             }
 
         }
@@ -201,7 +210,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchTrending(){
 
-        disposable.add(steemApi.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\"}")
+        disposable.add(steemApi.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\""
+                + ",\"limit\":\"" + loadCount + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -209,7 +219,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchHot(){
 
-        disposable.add(steemApi.getHotDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\"}")
+        disposable.add(steemApi.getHotDiscussions("{\"tag\":" + "\"" + tag + "\""
+                + ",\"limit\":\"" + loadCount + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -217,7 +228,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchNew(){
 
-        disposable.add(steemApi.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\"}")
+        disposable.add(steemApi.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\""
+                + ",\"limit\":\"" + loadCount + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -225,7 +237,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchPromoted(){
 
-        disposable.add(steemApi.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\"}")
+        disposable.add(steemApi.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\""
+                + ",\"limit\":\"" + loadCount + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -233,7 +246,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchMoreTrending(String startAuthor,String startPermLink){
 
-        disposable.add(steemApi.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
+        disposable.add(steemApi.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
+                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -242,7 +256,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchMoreHot(String startAuthor,String startPermLink){
 
-        disposable.add(steemApi.getHotDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
+        disposable.add(steemApi.getHotDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
+                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -250,7 +265,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchMoreNew(String startAuthor,String startPermLink){
 
-        disposable.add(steemApi.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
+        disposable.add(steemApi.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
+                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -258,7 +274,8 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
     private void fetchMorePromoted(String startAuthor,String startPermLink){
 
-        disposable.add(steemApi.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\"" + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
+        disposable.add(steemApi.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
+                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -267,9 +284,9 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
     private void handleResponse(SteemDiscussion[] steem) {
 
         if (!isPaginated) {
-            discussionFromResponse = new ArrayList<>();
             Collections.addAll(discussionFromResponse, steem);
             CircleProgressViewHelper.stopLoading(circleProgressView);
+            mAdapter.notifyDataSetChanged();
         }else {
             Collections.addAll(discussionFromResponse, Arrays.copyOfRange(steem, 1, loadCount));
             mAdapter.notifyItemRangeInserted(beginToLoadAt, discussionFromResponse.size());
@@ -277,8 +294,6 @@ public class FeedFragment extends Fragment implements FragmentLifecycle, Discuss
 
         }
         isLoading = false;
-
-        mAdapter.setDiscussion(discussionFromResponse, FeedFragment.this, this);
 
     }
 
