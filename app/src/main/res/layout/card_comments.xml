@@ -26,11 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.v4.widget.CircleImageView
-                    android:id="@+id/userImg"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
-
                 <TextView
                     android:id="@+id/userName"
                     android:layout_gravity="center_vertical"

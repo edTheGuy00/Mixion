@@ -91,11 +91,11 @@ public class ContentReply {
     @JsonProperty("children")
     private Integer children;
     @JsonProperty("net_rshares")
-    private Integer netRshares;
+    private Float netRshares;
     @JsonProperty("abs_rshares")
-    private Integer absRshares;
+    private Float absRshares;
     @JsonProperty("vote_rshares")
-    private Integer voteRshares;
+    private Float voteRshares;
     @JsonProperty("children_abs_rshares")
     private Integer childrenAbsRshares;
     @JsonProperty("cashout_time")
@@ -302,32 +302,32 @@ public class ContentReply {
     }
 
     @JsonProperty("net_rshares")
-    public Integer getNetRshares() {
+    public Float getNetRshares() {
         return netRshares;
     }
 
     @JsonProperty("net_rshares")
-    public void setNetRshares(Integer netRshares) {
+    public void setNetRshares(Float netRshares) {
         this.netRshares = netRshares;
     }
 
     @JsonProperty("abs_rshares")
-    public Integer getAbsRshares() {
+    public Float getAbsRshares() {
         return absRshares;
     }
 
     @JsonProperty("abs_rshares")
-    public void setAbsRshares(Integer absRshares) {
+    public void setAbsRshares(Float absRshares) {
         this.absRshares = absRshares;
     }
 
     @JsonProperty("vote_rshares")
-    public Integer getVoteRshares() {
+    public Float getVoteRshares() {
         return voteRshares;
     }
 
     @JsonProperty("vote_rshares")
-    public void setVoteRshares(Integer voteRshares) {
+    public void setVoteRshares(Float voteRshares) {
         this.voteRshares = voteRshares;
     }
 

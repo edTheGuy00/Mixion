@@ -1,7 +1,10 @@
 package com.taskail.mixion.interfaces;
 
 import com.taskail.mixion.models.AskSteem;
+import com.taskail.mixion.models.ContentReply;
 import com.taskail.mixion.models.SteemDiscussion;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -37,4 +40,8 @@ public interface SteemAPI {
             @Query("author") String author,
             @Query("permlink") String permlink);
 
+    @GET("get_content_replies")
+    Observable<ContentReply[]> getContentReplies(
+            @Query("author") String author,
+            @Query("permlink") String permlink);
 }

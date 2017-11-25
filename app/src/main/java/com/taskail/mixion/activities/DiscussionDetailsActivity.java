@@ -10,6 +10,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.taskail.mixion.utils.GetTimeAgo;
 import com.taskail.mixion.utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import at.grabner.circleprogress.CircleProgressView;
@@ -40,6 +42,7 @@ import br.tiagohm.markdownview.MarkdownView;
 import br.tiagohm.markdownview.css.styles.Github;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -58,8 +61,10 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private TextView titleTV, authorTV, categoryTV, payoutTV, votesCountTV, repliesCountTV, timeAgoTV;
     private CircleProgressView circleProgressView;
     private List<ActiveVote> voters = new ArrayList<>();
-    private List<ContentReply> contentReplies = new ArrayList<>();
+    private List<ContentReply> contentRepliesList = new ArrayList<>();
     private CommentsRecyclerAdapter repliesAdapter;
+    private ScrollView scrollView;
+    private String author, permLink;
 
     private ApolloClient mApolloClient;
     private MarkdownView markdownView;
@@ -69,8 +74,10 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_discussion_details);
         mApolloClient = MixionApolloClient.getApolloCleint();
         commentsRecyclerView = findViewById(R.id.comments_list);
+        scrollView = findViewById(R.id.scrollView);
         ImageView menu = findViewById(R.id.menu_img);
         initWidgets();
+        initCommentsLayout();
     }
 
     /**
@@ -78,7 +85,8 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
      */
     private void initCommentsLayout(){
         commentsRecyclerView = findViewById(R.id.comments_list);
-        repliesAdapter = new CommentsRecyclerAdapter(contentReplies, mContext);
+        commentsRecyclerView.setNestedScrollingEnabled(true);
+        repliesAdapter = new CommentsRecyclerAdapter(contentRepliesList, mContext);
         commentsRecyclerView.setAdapter(repliesAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         commentsRecyclerView.setLayoutManager(layoutManager);
@@ -116,12 +124,18 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
                     voters = steemDiscussion.getActiveVotes();
                 }
 
+                author = steemDiscussion.getAuthor();
+                permLink = steemDiscussion.getPermlink();
+
                 setTexts(steemDiscussion.getTitle(), steemDiscussion.getAuthor(), steemDiscussion.getCategory(),
                         steemDiscussion.getPendingPayoutValue(),
                         String.valueOf(steemDiscussion.getNetVotes()),
                         String.valueOf(steemDiscussion.getChildren()), steemDiscussion.getCreated(), steemDiscussion.getBody());
             } else {
-                loadData(bundle.getString("Author"), bundle.getString("link"));
+
+                author = bundle.getString("Author");
+                permLink = bundle.getString("link");
+                loadData(author, permLink);
 
             }
         } else {
@@ -220,7 +234,24 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
     public void loadComments(View view){
         if (!isLoading())
-            Toast.makeText(mContext, "Load comments", Toast.LENGTH_SHORT).show();
+            disposable.add(steemApi.getContentReplies(author, permLink)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                        }
+                    })
+                    .doOnNext(new Consumer<ContentReply[]>() {
+                        @Override
+                        public void accept(ContentReply[] contentReplies) throws Exception {
+                            Collections.addAll(contentRepliesList, contentReplies);
+                            repliesAdapter.notifyDataSetChanged();
+                            scrollView.post(() -> scrollView.smoothScrollTo(0, commentsRecyclerView.getTop()));
+                        }
+                    })
+                    .subscribe());
     }
 
     public void showVoters(View view){
