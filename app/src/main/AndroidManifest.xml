@@ -26,6 +26,7 @@
         <activity android:name="com.taskail.mixion.activities.DiscussionDetailsActivity">
 
         </activity>
+        <activity android:name=".activities.SearchActivity"/>
     </application>
 
 </manifest>

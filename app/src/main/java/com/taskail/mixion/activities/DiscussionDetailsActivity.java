@@ -237,19 +237,13 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
             disposable.add(steemApi.getContentReplies(author, permLink)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-
-                        }
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "loadComments: ", throwable);
                     })
-                    .doOnNext(new Consumer<ContentReply[]>() {
-                        @Override
-                        public void accept(ContentReply[] contentReplies) throws Exception {
-                            Collections.addAll(contentRepliesList, contentReplies);
-                            repliesAdapter.notifyDataSetChanged();
-                            scrollView.post(() -> scrollView.smoothScrollTo(0, commentsRecyclerView.getTop()));
-                        }
+                    .doOnNext(contentReplies -> {
+                        Collections.addAll(contentRepliesList, contentReplies);
+                        repliesAdapter.notifyDataSetChanged();
+                        scrollView.post(() -> scrollView.smoothScrollTo(0, commentsRecyclerView.getTop()));
                     })
                     .subscribe());
     }

@@ -38,6 +38,15 @@
 
             </Spinner>
 
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"/>
+
             <ProgressBar
                 android:id="@+id/load_moreProgress"
                 android:layout_width="30dp"
