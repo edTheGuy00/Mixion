@@ -27,6 +27,7 @@ import com.taskail.mixion.interfaces.SteemAPI;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.models.SteemDiscussion;
 import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
+import com.taskail.mixion.utils.Constants;
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener;
 import com.taskail.mixion.interfaces.FragmentLifecycle;
 
@@ -48,9 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 public class FeedFragment extends Fragment implements FragmentLifecycle, DiscussionsRecyclerAdapter.CardClickListener {
     private static final String TAG = "FeedFragment";
 
-    private static final String BASE_URL = "https://api.steemjs.com/";
-
-    SteemAPI steemApi = RetrofitClient.getRetrofitClient(BASE_URL).create(SteemAPI.class);
+    SteemAPI steemApi = RetrofitClient.getRetrofitClient(Constants.BASE_URL).create(SteemAPI.class);
     private List<SteemDiscussion> discussionFromResponse = new ArrayList<>();
     private CompositeDisposable disposable = new CompositeDisposable();
     private BottomNavigationViewVisibility navigationViewVisibility;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.taskail.mixion.GetSingleDiscussionQuery;
+import com.taskail.mixion.adapters.CommentsRecyclerAdapter;
+import com.taskail.mixion.models.ContentReply;
 import com.taskail.mixion.network.MixionApolloClient;
 import com.taskail.mixion.R;
 import com.taskail.mixion.network.RetrofitClient;
@@ -25,6 +28,7 @@ import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.interfaces.SteemAPI;
 import com.taskail.mixion.models.ActiveVote;
 import com.taskail.mixion.models.SteemDiscussion;
+import com.taskail.mixion.utils.Constants;
 import com.taskail.mixion.utils.GetTimeAgo;
 import com.taskail.mixion.utils.StringUtils;
 
@@ -45,9 +49,8 @@ import io.reactivex.schedulers.Schedulers;
 public class DiscussionDetailsActivity extends AppCompatActivity {
     private static final String TAG = "DiscussionDetailsActivi";
 
-    private static final String BASE_URL = "https://api.steemjs.com/";
     private CompositeDisposable disposable = new CompositeDisposable();
-    SteemAPI steemApi = RetrofitClient.getRetrofitClient(BASE_URL).create(SteemAPI.class);
+    SteemAPI steemApi = RetrofitClient.getRetrofitClient(Constants.BASE_URL).create(SteemAPI.class);
 
     StringUtils stringUtils;
     private RecyclerView commentsRecyclerView;
@@ -55,6 +58,8 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private TextView titleTV, authorTV, categoryTV, payoutTV, votesCountTV, repliesCountTV, timeAgoTV;
     private CircleProgressView circleProgressView;
     private List<ActiveVote> voters = new ArrayList<>();
+    private List<ContentReply> contentReplies = new ArrayList<>();
+    private CommentsRecyclerAdapter repliesAdapter;
 
     private ApolloClient mApolloClient;
     private MarkdownView markdownView;
@@ -68,8 +73,15 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         initWidgets();
     }
 
+    /**
+     *A RecyclerView for the comments(replies) of a particular discussion.
+     */
     private void initCommentsLayout(){
-
+        commentsRecyclerView = findViewById(R.id.comments_list);
+        repliesAdapter = new CommentsRecyclerAdapter(contentReplies, mContext);
+        commentsRecyclerView.setAdapter(repliesAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        commentsRecyclerView.setLayoutManager(layoutManager);
     }
 
     private void initWidgets(){
@@ -92,7 +104,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
     /**
      * @param bundle passed from the calling fragment
-     * It will either be a serializable bundle of two strings
+     * It will either be a serializable bundle or two strings
      */
     private void handleBundle(Bundle bundle){
 
