@@ -1,4 +1,4 @@
-package com.taskail.mixion.activities;
+package com.taskail.mixion.steempost;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,14 +21,14 @@ import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.taskail.mixion.GetSingleDiscussionQuery;
 import com.taskail.mixion.adapters.CommentsRecyclerAdapter;
-import com.taskail.mixion.models.ContentReply;
-import com.taskail.mixion.network.MixionApolloClient;
+import com.taskail.mixion.data.models.ContentReply;
+import com.taskail.mixion.data.network.MixionApolloClient;
 import com.taskail.mixion.R;
-import com.taskail.mixion.network.RetrofitClient;
+import com.taskail.mixion.data.network.RetrofitClient;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
-import com.taskail.mixion.interfaces.SteemAPI;
-import com.taskail.mixion.models.ActiveVote;
-import com.taskail.mixion.models.SteemDiscussion;
+import com.taskail.mixion.data.SteemAPI;
+import com.taskail.mixion.data.models.ActiveVote;
+import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.utils.Constants;
 import com.taskail.mixion.utils.GetTimeAgo;
 import com.taskail.mixion.utils.StringUtils;
@@ -42,7 +42,6 @@ import br.tiagohm.markdownview.MarkdownView;
 import br.tiagohm.markdownview.css.styles.Github;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 

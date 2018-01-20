@@ -1,4 +1,4 @@
-package com.taskail.mixion.models;
+package com.taskail.mixion.data.models;
 
 import java.io.Serializable;
 import java.util.HashMap;

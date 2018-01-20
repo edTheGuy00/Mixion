@@ -23,7 +23,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="com.taskail.mixion.activities.DiscussionDetailsActivity">
+        <activity android:name="com.taskail.mixion.steempost.DiscussionDetailsActivity">
 
         </activity>
     </application>

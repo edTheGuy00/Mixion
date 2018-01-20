@@ -20,14 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.taskail.mixion.activities.DiscussionDetailsActivity;
+import com.taskail.mixion.steempost.DiscussionDetailsActivity;
 import com.taskail.mixion.R;
-import com.taskail.mixion.network.RetrofitClient;
-import com.taskail.mixion.interfaces.SteemAPI;
+import com.taskail.mixion.data.network.RetrofitClient;
+import com.taskail.mixion.data.SteemAPI;
 import com.taskail.mixion.adapters.AskSteemAdapter;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
-import com.taskail.mixion.models.AskSteem;
-import com.taskail.mixion.models.Result;
+import com.taskail.mixion.data.models.AskSteem;
+import com.taskail.mixion.data.models.Result;
 import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 import java.util.ArrayList;

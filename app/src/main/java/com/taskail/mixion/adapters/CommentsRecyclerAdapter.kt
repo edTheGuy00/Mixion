@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.taskail.mixion.R
 import com.taskail.mixion.adapters.CommentsRecyclerAdapter.ViewHolder
-import com.taskail.mixion.models.ContentReply
+import com.taskail.mixion.data.models.ContentReply
 
 /**
  *Created by ed on 11/17/17.

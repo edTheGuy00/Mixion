@@ -1,10 +1,8 @@
-package com.taskail.mixion.interfaces;
+package com.taskail.mixion.data;
 
-import com.taskail.mixion.models.AskSteem;
-import com.taskail.mixion.models.ContentReply;
-import com.taskail.mixion.models.SteemDiscussion;
-
-import java.util.List;
+import com.taskail.mixion.data.models.AskSteem;
+import com.taskail.mixion.data.models.ContentReply;
+import com.taskail.mixion.data.models.SteemDiscussion;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

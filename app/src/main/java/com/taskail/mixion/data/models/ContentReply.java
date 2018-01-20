@@ -1,6 +1,5 @@
-package com.taskail.mixion.models;
+package com.taskail.mixion.data.models;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-/**Created by ed on 10/2/17.
- */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -61,7 +57,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "body_length",
         "reblogged_by"
 })
-public class SteemDiscussion implements Serializable{
+
+public class ContentReply {
 
     @JsonProperty("id")
     private Integer id;
@@ -94,13 +91,13 @@ public class SteemDiscussion implements Serializable{
     @JsonProperty("children")
     private Integer children;
     @JsonProperty("net_rshares")
-    private String netRshares;
+    private Float netRshares;
     @JsonProperty("abs_rshares")
-    private String absRshares;
+    private Float absRshares;
     @JsonProperty("vote_rshares")
-    private String voteRshares;
+    private Float voteRshares;
     @JsonProperty("children_abs_rshares")
-    private String childrenAbsRshares;
+    private Integer childrenAbsRshares;
     @JsonProperty("cashout_time")
     private String cashoutTime;
     @JsonProperty("max_cashout_time")
@@ -140,9 +137,9 @@ public class SteemDiscussion implements Serializable{
     @JsonProperty("total_pending_payout_value")
     private String totalPendingPayoutValue;
     @JsonProperty("active_votes")
-    private List<ActiveVote> activeVotes = null;
+    private List<Object> activeVotes = null;
     @JsonProperty("replies")
-    private List<Object> replies;
+    private List<Object> replies = null;
     @JsonProperty("author_reputation")
     private String authorReputation;
     @JsonProperty("promoted")
@@ -305,42 +302,42 @@ public class SteemDiscussion implements Serializable{
     }
 
     @JsonProperty("net_rshares")
-    public String getNetRshares() {
+    public Float getNetRshares() {
         return netRshares;
     }
 
     @JsonProperty("net_rshares")
-    public void setNetRshares(String netRshares) {
+    public void setNetRshares(Float netRshares) {
         this.netRshares = netRshares;
     }
 
     @JsonProperty("abs_rshares")
-    public String getAbsRshares() {
+    public Float getAbsRshares() {
         return absRshares;
     }
 
     @JsonProperty("abs_rshares")
-    public void setAbsRshares(String absRshares) {
+    public void setAbsRshares(Float absRshares) {
         this.absRshares = absRshares;
     }
 
     @JsonProperty("vote_rshares")
-    public String getVoteRshares() {
+    public Float getVoteRshares() {
         return voteRshares;
     }
 
     @JsonProperty("vote_rshares")
-    public void setVoteRshares(String voteRshares) {
+    public void setVoteRshares(Float voteRshares) {
         this.voteRshares = voteRshares;
     }
 
     @JsonProperty("children_abs_rshares")
-    public String getChildrenAbsRshares() {
+    public Integer getChildrenAbsRshares() {
         return childrenAbsRshares;
     }
 
     @JsonProperty("children_abs_rshares")
-    public void setChildrenAbsRshares(String childrenAbsRshares) {
+    public void setChildrenAbsRshares(Integer childrenAbsRshares) {
         this.childrenAbsRshares = childrenAbsRshares;
     }
 
@@ -535,12 +532,12 @@ public class SteemDiscussion implements Serializable{
     }
 
     @JsonProperty("active_votes")
-    public List<ActiveVote> getActiveVotes() {
+    public List<Object> getActiveVotes() {
         return activeVotes;
     }
 
     @JsonProperty("active_votes")
-    public void setActiveVotes(List<ActiveVote> activeVotes) {
+    public void setActiveVotes(List<Object> activeVotes) {
         this.activeVotes = activeVotes;
     }
 

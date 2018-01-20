@@ -1,4 +1,4 @@
-package com.taskail.mixion.models;
+package com.taskail.mixion.data.models;
 
 /**
  * Created by ed on 10/7/17.

@@ -19,13 +19,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.taskail.mixion.activities.DiscussionDetailsActivity;
+import com.taskail.mixion.steempost.DiscussionDetailsActivity;
 import com.taskail.mixion.R;
 import com.taskail.mixion.adapters.DiscussionsRecyclerAdapter;
-import com.taskail.mixion.network.RetrofitClient;
-import com.taskail.mixion.interfaces.SteemAPI;
+import com.taskail.mixion.data.network.RetrofitClient;
+import com.taskail.mixion.data.SteemAPI;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
-import com.taskail.mixion.models.SteemDiscussion;
+import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
 import com.taskail.mixion.utils.Constants;
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener;

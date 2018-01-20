@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.taskail.mixion.R
-import com.taskail.mixion.models.SteemDiscussion
+import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.adapters.DiscussionsRecyclerAdapter.ViewHolder
 import com.taskail.mixion.utils.GetTimeAgo
 import com.taskail.mixion.utils.StringUtils

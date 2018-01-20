@@ -1,5 +1,6 @@
-package com.taskail.mixion.models;
+package com.taskail.mixion.data.models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+/**Created by ed on 10/2/17.
+ */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -57,8 +61,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "body_length",
         "reblogged_by"
 })
-
-public class ContentReply {
+public class SteemDiscussion implements Serializable{
 
     @JsonProperty("id")
     private Integer id;
@@ -91,13 +94,13 @@ public class ContentReply {
     @JsonProperty("children")
     private Integer children;
     @JsonProperty("net_rshares")
-    private Float netRshares;
+    private String netRshares;
     @JsonProperty("abs_rshares")
-    private Float absRshares;
+    private String absRshares;
     @JsonProperty("vote_rshares")
-    private Float voteRshares;
+    private String voteRshares;
     @JsonProperty("children_abs_rshares")
-    private Integer childrenAbsRshares;
+    private String childrenAbsRshares;
     @JsonProperty("cashout_time")
     private String cashoutTime;
     @JsonProperty("max_cashout_time")
@@ -137,9 +140,9 @@ public class ContentReply {
     @JsonProperty("total_pending_payout_value")
     private String totalPendingPayoutValue;
     @JsonProperty("active_votes")
-    private List<Object> activeVotes = null;
+    private List<ActiveVote> activeVotes = null;
     @JsonProperty("replies")
-    private List<Object> replies = null;
+    private List<Object> replies;
     @JsonProperty("author_reputation")
     private String authorReputation;
     @JsonProperty("promoted")
@@ -302,42 +305,42 @@ public class ContentReply {
     }
 
     @JsonProperty("net_rshares")
-    public Float getNetRshares() {
+    public String getNetRshares() {
         return netRshares;
     }
 
     @JsonProperty("net_rshares")
-    public void setNetRshares(Float netRshares) {
+    public void setNetRshares(String netRshares) {
         this.netRshares = netRshares;
     }
 
     @JsonProperty("abs_rshares")
-    public Float getAbsRshares() {
+    public String getAbsRshares() {
         return absRshares;
     }
 
     @JsonProperty("abs_rshares")
-    public void setAbsRshares(Float absRshares) {
+    public void setAbsRshares(String absRshares) {
         this.absRshares = absRshares;
     }
 
     @JsonProperty("vote_rshares")
-    public Float getVoteRshares() {
+    public String getVoteRshares() {
         return voteRshares;
     }
 
     @JsonProperty("vote_rshares")
-    public void setVoteRshares(Float voteRshares) {
+    public void setVoteRshares(String voteRshares) {
         this.voteRshares = voteRshares;
     }
 
     @JsonProperty("children_abs_rshares")
-    public Integer getChildrenAbsRshares() {
+    public String getChildrenAbsRshares() {
         return childrenAbsRshares;
     }
 
     @JsonProperty("children_abs_rshares")
-    public void setChildrenAbsRshares(Integer childrenAbsRshares) {
+    public void setChildrenAbsRshares(String childrenAbsRshares) {
         this.childrenAbsRshares = childrenAbsRshares;
     }
 
@@ -532,12 +535,12 @@ public class ContentReply {
     }
 
     @JsonProperty("active_votes")
-    public List<Object> getActiveVotes() {
+    public List<ActiveVote> getActiveVotes() {
         return activeVotes;
     }
 
     @JsonProperty("active_votes")
-    public void setActiveVotes(List<Object> activeVotes) {
+    public void setActiveVotes(List<ActiveVote> activeVotes) {
         this.activeVotes = activeVotes;
     }
 

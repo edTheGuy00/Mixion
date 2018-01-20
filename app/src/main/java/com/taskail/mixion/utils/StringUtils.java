@@ -4,7 +4,7 @@ import android.os.Build;
 import android.text.Html;
 import android.util.Log;
 
-import com.taskail.mixion.models.FullDiscussion;
+import com.taskail.mixion.data.models.FullDiscussion;
 
 import org.json.JSONArray;
 import org.json.JSONException;

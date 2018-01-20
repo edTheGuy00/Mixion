@@ -1,7 +1,6 @@
 package com.taskail.mixion.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taskail.mixion.R;
-import com.taskail.mixion.models.Result;
+import com.taskail.mixion.data.models.Result;
 import com.taskail.mixion.utils.GetTimeAgo;
 
 import java.util.Collections;
