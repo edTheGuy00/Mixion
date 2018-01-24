@@ -19,7 +19,7 @@ import com.taskail.mixion.interfaces.FragmentLifecycle
 /**Created by ed on 10/26/17.
  * Main Entry Point for Mixion
  */
-class MainActivity : AppCompatActivity(), BottomNavigationViewVisibility{
+class OldMainActivity : AppCompatActivity(), BottomNavigationViewVisibility{
     private var bottomNavigationView: BottomNavigationView? = null
     private var viewPager: LockableViewPager? = null
     private var pagerAdapter: PagerAdapter? = null
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewVisibility{
     }
     /**
      * Implements a manual lifecycle for each fragment.
-     * @param currentPosition begins with MainActivity#FEED_FRAGMENT
+     * @param currentPosition begins with OldMainActivity#FEED_FRAGMENT
      * @param newPosition updated position as the user navigates the fragments
      */
     private fun handleFragmentLifeCycle(currentPosition: Int, newPosition: Int) {
