@@ -47,7 +47,7 @@ class DiscussionsRecyclerAdapter(private val steemDiscussion: List<SteemDiscussi
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.body?.text = stringManipulator.getShorterBody(steemDiscussion[position].body)
+        holder?.body?.text = StringUtils.getShorterBody(steemDiscussion[position].body)
         holder?.title?.text = steemDiscussion[position].title
         holder?.author?.text = steemDiscussion[position].author
         holder?.category?.text = steemDiscussion[position].category

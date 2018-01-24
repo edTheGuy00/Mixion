@@ -24,19 +24,19 @@ import java.util.regex.Pattern;
 public class StringUtils {
     private static final String TAG = "StringUtils";
 
-    private boolean containsCharacter(char c, String s) {
+    private static boolean containsCharacter(char c, String s) {
         return s.indexOf(c) > -1;
     }
-    private boolean containsText(String match, String s){
+    private static boolean containsText(String match, String s){
         return s.contains(match);
     }
-    private int stringLocation(String match, String s){
+    private static int stringLocation(String match, String s){
         return s.indexOf(match);
     }
-    private int locationOfLast(char c, String s){
+    private static int locationOfLast(char c, String s){
         return s.indexOf(c);
     }
-    public String shortenString(int begin, int lenght, String s) throws IOException, IndexOutOfBoundsException{
+    public static String shortenString(int begin, int lenght, String s) throws IOException, IndexOutOfBoundsException{
         return s.substring(begin, Math.min(s.length(), lenght));
     }
 
@@ -75,7 +75,7 @@ public class StringUtils {
      * @param body is the entire response from the server
      * @return a body of 200 characters
      */
-    public String getShorterBody(String body){
+    public static String getShorterBody(String body){
 
         String stringFromHtml;
 
@@ -138,7 +138,7 @@ public class StringUtils {
      * @return a body without urls
      */
 
-    private String removeUrl(String commentstr)
+    private static String removeUrl(String commentstr)
     {
         String urlPattern = "((https?|ftp|gopher|telnet|file|Unsure|http):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
         Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);

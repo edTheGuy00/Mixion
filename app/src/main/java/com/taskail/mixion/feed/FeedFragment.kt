@@ -9,7 +9,14 @@ import android.view.ViewGroup
 /**
  *Created by ed on 1/24/18.
  */
-class FeedFragment : Fragment() {
+class FeedFragment : Fragment(), FeedContract.View {
+
+
+    override lateinit var  presenter: FeedContract.Presenter
+
+    override fun showFeed() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     companion object {
         @JvmStatic fun newInstance(): FeedFragment {
@@ -22,6 +29,7 @@ class FeedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

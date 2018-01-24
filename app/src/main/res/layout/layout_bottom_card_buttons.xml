@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:layout_weight="1.0"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_upvote_arrow" />
+
+        <TextView
+            android:id="@+id/payout"
+            android:layout_gravity="center_vertical"
+            android:text="Money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:layout_weight="1.0"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_upvote_arrow" />
+
+        <TextView
+            android:id="@+id/votes_count"
+            android:layout_gravity="center_vertical"
+            android:text="Money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:layout_weight="1.0"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_comments" />
+
+        <TextView
+            android:id="@+id/replies_count"
+            android:layout_gravity="center_vertical"
+            android:text="Money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
