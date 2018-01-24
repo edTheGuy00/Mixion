@@ -46,8 +46,8 @@ import io.reactivex.schedulers.Schedulers;
  * Feed fragment makes all the calls to api.steem.com
  */
 
-public class FeedFragment extends Fragment implements FragmentLifecycle, DiscussionsRecyclerAdapter.CardClickListener {
-    private static final String TAG = "FeedFragment";
+public class OldFeedFragment extends Fragment implements FragmentLifecycle, DiscussionsRecyclerAdapter.CardClickListener {
+    private static final String TAG = "OldFeedFragment";
 
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(Constants.BASE_URL).create(SteemAPI.class);
     private List<SteemDiscussion> discussionFromResponse = new ArrayList<>();

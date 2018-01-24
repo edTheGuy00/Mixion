@@ -27,8 +27,8 @@ abstract class SingleFragmentActivity<T : Fragment>: AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(getContainerId(), fragment).commit()
     }
 
-    protected fun getFragment(): T? {
-        return supportFragmentManager.findFragmentById(getContainerId()) as T
+    protected fun getFragment(): Fragment? {
+        return supportFragmentManager.findFragmentById(getContainerId())
     }
 
     protected abstract fun createFragment(): T

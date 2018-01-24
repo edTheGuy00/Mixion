@@ -10,7 +10,7 @@ import com.taskail.mixion.R
 import com.taskail.mixion.adapters.PagerAdapter
 import com.taskail.mixion.fragments.AskSteemFragment
 import com.taskail.mixion.fragments.ChatsFragment
-import com.taskail.mixion.fragments.FeedFragment
+import com.taskail.mixion.fragments.OldFeedFragment
 import com.taskail.mixion.fragments.ProfileFragment
 import com.taskail.mixion.helpers.BottomNavigationViewHelper
 import com.taskail.mixion.helpers.LockableViewPager
@@ -38,7 +38,7 @@ class OldMainActivity : AppCompatActivity(), BottomNavigationViewVisibility{
         startBottomNavView()
     }
     private fun setupViewPager(){
-        pagerAdapter?.addFragment(FeedFragment())
+        pagerAdapter?.addFragment(OldFeedFragment())
         pagerAdapter?.addFragment(AskSteemFragment())
         pagerAdapter?.addFragment(ChatsFragment())
         pagerAdapter?.addFragment(ProfileFragment())

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_main_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="?android:attr/actionBarSize">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/fragment_main_coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.taskail.mixion.helpers.LockableViewPager
+                android:id="@+id/fragment_main_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <com.taskail.mixion.bottomNav.MainBottomNavLayout
+            android:id="@+id/fragment_main_nav_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="bottom"
+            android:background="@android:color/black"
+            app:tabGravity="fill"
+            app:itemIconTint="@drawable/bottom_navigation_color_selector"
+            app:itemTextColor="@drawable/bottom_navigation_color_selector"
+            app:tabIndicatorColor="@android:color/transparent"/>
+
+    </LinearLayout>
+
+</FrameLayout>
