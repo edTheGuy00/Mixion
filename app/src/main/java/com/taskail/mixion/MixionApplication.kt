@@ -1,4 +1,4 @@
-package com.taskail.mixion.steemitchat;
+package com.taskail.mixion;
 
 import android.app.Application;
 
@@ -10,12 +10,11 @@ import com.rocketchat.core.RocketChatClient;
 /**Created by ed on 10/22/17.
  */
 
-public class RocketChatApplication extends Application {
+class MixionApplication : Application() {
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    override fun onCreate() {
+        super.onCreate()
 
     }
 

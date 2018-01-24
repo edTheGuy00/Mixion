@@ -14,7 +14,7 @@ import android.widget.Button;
 import com.rocketchat.core.RocketChatClient;
 import com.taskail.mixion.R;
 import com.taskail.mixion.steemitchat.ChatLoginDialog;
-import com.taskail.mixion.steemitchat.RocketChatApplication;
+import com.taskail.mixion.MixionApplication;
 import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 /**Created by ed on 9/30/17.
@@ -37,7 +37,7 @@ public class ChatsFragment extends Fragment implements FragmentLifecycle {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sharedPref = getActivity().getSharedPreferences("mixion-app", Context.MODE_PRIVATE);
-        rocketChatClient = ((RocketChatApplication)getActivity().getApplicationContext()).getRocketChatAPI();
+        rocketChatClient = ((MixionApplication)getActivity().getApplicationContext()).getRocketChatAPI();
 
         //checkCurrentUser(view);
     }

@@ -1,4 +1,4 @@
-package com.taskail.mixion
+package com.taskail.mixion.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
+import com.taskail.mixion.R
 import com.taskail.mixion.adapters.PagerAdapter
 import com.taskail.mixion.fragments.AskSteemFragment
 import com.taskail.mixion.fragments.ChatsFragment

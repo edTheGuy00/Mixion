@@ -8,11 +8,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".steemitchat.RocketChatApplication"
+        android:name=".MixionApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".OldMainActivity"
+        <activity android:name=".main.OldMainActivity"
             android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
