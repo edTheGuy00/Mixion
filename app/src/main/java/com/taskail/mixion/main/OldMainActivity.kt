@@ -45,7 +45,6 @@ class OldMainActivity : AppCompatActivity(), BottomNavigationViewVisibility{
 
         viewPager?.adapter = pagerAdapter
         viewPager?.currentItem = FEED_FRAGMENT
-        viewPager?.setSwipeable(false)
 
         viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             internal var currentPosition = FEED_FRAGMENT

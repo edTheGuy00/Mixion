@@ -14,7 +14,7 @@ abstract class SingleFragmentToolbarActivity<T : Fragment> : SingleFragmentActiv
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(getToolbar())
-        supportActionBar?.title = ""
+        supportActionBar?.title = getString(R.string.app_name)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
