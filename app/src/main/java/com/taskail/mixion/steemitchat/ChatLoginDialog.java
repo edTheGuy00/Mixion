@@ -37,24 +37,12 @@ public class ChatLoginDialog extends DialogFragment implements ConnectListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_chat_login, container, false);
-        rocketChatClient = ((RocketChatApplication) getActivity().getApplicationContext()).getRocketChatAPI();
-        password = view.findViewById(R.id.passwrd);
-        userName = view.findViewById(R.id.user_name);
-        sharedPreferences = getActivity().getSharedPreferences("mixion-app", Context.MODE_PRIVATE);
-        rocketChatClient.setReconnectionStrategy(null);
-        rocketChatClient.connect(this);
+        //password = view.findViewById(R.id.passwrd);
+        //userName = view.findViewById(R.id.user_name);
+        //sharedPreferences = getActivity().getSharedPreferences("mixion-app", Context.MODE_PRIVATE);
+        //rocketChatClient.setReconnectionStrategy(null);
+        //rocketChatClient.connect(this);
 
-        Button loginBtn = view.findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener((View v) -> {
-
-            if (!isConnected()){
-                reconnect();
-            } else {
-                loginBtnClicked();
-
-            }
-
-        });
         return view;
     }
 

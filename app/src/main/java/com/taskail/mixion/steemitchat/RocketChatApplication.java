@@ -12,55 +12,11 @@ import com.rocketchat.core.RocketChatClient;
 
 public class RocketChatApplication extends Application {
 
-    RocketChatClient rocketChatClient;
-
-    private static String serverurl = "wss://steemit.chat/websocket";
-    private static String baseUrl = "https://steemit.chat/api/v1/";
-
-
-    public String token;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        rocketChatClient = new RocketChatClient.Builder()
-                .websocketUrl(serverurl)
-                .restBaseUrl(baseUrl)
-                .logger(logger)
-                .build();
-
-        Utils.DOMAIN_NAME = "https://steemit.chat";
-
-        rocketChatClient.setReconnectionStrategy(new ReconnectionStrategy(20, 3000));
 
     }
 
-    public RocketChatClient getRocketChatAPI() {
-        return rocketChatClient;
-    }
-
-    Logger logger = new Logger() {
-        @Override
-        public void info(String format, Object... args) {
-            System.out.println(format + " " +  args);
-        }
-
-        @Override
-        public void warning(String format, Object... args) {
-            System.out.println(format + " " +  args);
-        }
-
-        @Override
-        public void debug(String format, Object... args) {
-            System.out.println(format + " " +  args);
-        }
-    };
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
 }
