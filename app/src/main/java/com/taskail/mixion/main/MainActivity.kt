@@ -9,8 +9,6 @@ import com.taskail.mixion.activity.SingleFragmentActivity
 class MainActivity : SingleFragmentActivity<MainFragment>(){
 
 
-
-
     override fun createFragment(): MainFragment {
         return MainFragment.newInstance()
     }

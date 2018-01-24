@@ -36,8 +36,8 @@ public class ChatsFragment extends Fragment implements FragmentLifecycle {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sharedPref = getActivity().getSharedPreferences("mixion-app", Context.MODE_PRIVATE);
-        rocketChatClient = ((MixionApplication)getActivity().getApplicationContext()).getRocketChatAPI();
+        //sharedPref = getActivity().getSharedPreferences("mixion-app", Context.MODE_PRIVATE);
+        //rocketChatClient = ((MixionApplication)getActivity().getApplicationContext()).getRocketChatAPI();
 
         //checkCurrentUser(view);
     }
