@@ -23,7 +23,7 @@ import com.taskail.mixion.steempost.DiscussionDetailsActivity;
 import com.taskail.mixion.R;
 import com.taskail.mixion.adapters.DiscussionsRecyclerAdapter;
 import com.taskail.mixion.data.network.RetrofitClient;
-import com.taskail.mixion.data.SteemAPI;
+import com.taskail.mixion.data.source.SteemAPI;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
@@ -71,7 +71,7 @@ public class OldFeedFragment extends Fragment implements FragmentLifecycle, Disc
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_feed, container, false);
+        View view = inflater.inflate(R.layout.old_fragment_feed, container, false);
         typeSpinner = view.findViewById(R.id.feed_type);
         topicsSpinner = view.findViewById(R.id.topics);
         circleProgressView = view.findViewById(R.id.circleProgress);

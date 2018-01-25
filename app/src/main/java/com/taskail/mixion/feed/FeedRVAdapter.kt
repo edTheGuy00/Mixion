@@ -24,7 +24,7 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>) :
 
             with(discussion){
                 itemView.steemTitle.text = title
-                itemView.body_text.text = StringUtils.getShorterBody(body)
+                itemView.steem_body.text = StringUtils.getShorterBody(body)
 
                 Glide.with(itemView.rootView)
                         .load(jsonMetadata.getFirstImgFromJsonMeta())

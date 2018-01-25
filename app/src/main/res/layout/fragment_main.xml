@@ -19,14 +19,14 @@
             android:layout_weight="1">
 
             <com.taskail.mixion.helpers.LockableViewPager
-                android:id="@+id/fragment_main_view_pager"
+                android:id="@+id/lockableViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
         </android.support.design.widget.CoordinatorLayout>
 
-        <com.taskail.mixion.bottomNav.MainBottomNavLayout
-            android:id="@+id/fragment_main_nav_tab_layout"
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomNavView"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="bottom"
@@ -34,7 +34,8 @@
             app:tabGravity="fill"
             app:itemIconTint="@drawable/bottom_navigation_color_selector"
             app:itemTextColor="@drawable/bottom_navigation_color_selector"
-            app:tabIndicatorColor="@android:color/transparent"/>
+            app:tabIndicatorColor="@android:color/transparent"
+            app:menu="@menu/bottom_nav_items"/>
 
     </LinearLayout>
 

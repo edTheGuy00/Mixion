@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_feed"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <at.grabner.circleprogress.CircleProgressView
+        android:id="@+id/circleProgress"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        app:cpv_autoTextSize="true"
+        app:cpv_barColor="@color/colorPrimary"
+        app:cpv_barWidth="15dp"
+        app:cpv_innerContourSize="0dp"
+        app:cpv_showTextInSpinningMode="true"
+        app:cpv_textMode="Text"
+        app:cpv_outerContourSize="0dp"
+        app:cpv_rimColor="@color/circular_light"
+        app:cpv_rimWidth="15dp"
+        app:cpv_seekMode="false"
+        app:cpv_spinColor="@color/colorPrimary"
+        app:cpv_textColor="@color/colorPrimaryDark"/>
+
+</android.support.design.widget.CoordinatorLayout>

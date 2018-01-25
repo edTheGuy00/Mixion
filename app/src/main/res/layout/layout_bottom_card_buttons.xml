@@ -9,6 +9,8 @@
         android:layout_width="0dp"
         android:padding="5dp"
         android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
         android:layout_weight="1.0"
         android:layout_height="35dp">
@@ -32,6 +34,8 @@
         android:layout_width="0dp"
         android:padding="5dp"
         android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
         android:layout_weight="1.0"
         android:layout_height="35dp">
@@ -55,6 +59,8 @@
         android:layout_width="0dp"
         android:padding="5dp"
         android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
         android:layout_weight="1.0"
         android:layout_height="35dp">

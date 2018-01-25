@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/feed_icon"
+        android:title="@string/feed"
+        android:icon="@drawable/ic_feed">
+
+    </item>
+
+    <item
+        android:id="@+id/bookmark"
+        android:title="@string/bookmark"
+        android:icon="@drawable/ic_bookmark_border_black_24dp">
+
+    </item>
+
+</menu>
