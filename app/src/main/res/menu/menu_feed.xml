@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
+
+    <item android:id="@+id/menu_feed_search"
+        android:title="@string/search_hint"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/menu_feed_tabs"
+        android:title="@string/filter_by"
+        android:icon="@drawable/ic_filter_list_black_24dp"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/menu_overflow_button"
+        android:title="@string/account"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        app:showAsAction="always"/>
+
+</menu>

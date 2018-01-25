@@ -6,6 +6,9 @@
     <string name="profile">Profile</string>
     <string name="asksteem">AskSteem</string>
     <string name="chat">Chat</string>
+    <string name="search_hint">Search</string>
+    <string name="filter_by">Filter</string>
+    <string name="account">Account</string>
 
     <string-array name="feed_type">
         <item>Trending</item>
