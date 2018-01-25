@@ -19,17 +19,30 @@ class FeedPresenter(val feedView: FeedContract.View,
         feedView.presenter = this
         feedView.discussionFromResponse = discussionFromResponse
 
+        steemitRepository.remoteRepository.tag = "steemit"
+
         steemitRepository.tag = "steemit"
     }
 
     override fun start() {
-        fetNew()
-        Log.d("Presenter", "Started")
+        fetch()
     }
 
-    private fun fetNew(){
+    private fun fetch(){
+        steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback{
+            override fun onDataLoaded(steem: Array<SteemDiscussion>) {
+                feedView.discussionFromResponse.addAll(steem)
 
+                feedView.showFeed()
+            }
 
+            override fun onLoadError(error: Throwable) {
+            }
+
+            override fun onComplete() {
+            }
+
+        }, "New")
     }
 
     override fun loadSteemFeed(steem : Array<SteemDiscussion>) {

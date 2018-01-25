@@ -10,15 +10,11 @@ import io.reactivex.schedulers.Schedulers
 /**
  *Created by ed on 1/24/18.
  */
-class RemoteDataSource(val disposable: CompositeDisposable,
-                       val steemAPI: SteemAPI) : SteemitDataSource{
+class RemoteDataSource(private val disposable: CompositeDisposable,
+                       private val steemAPI: SteemAPI) : SteemitDataSource{
 
-    override var tag: String
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
-    override var loadCount: Int
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
+    override lateinit var tag: String
+    override var loadCount: Int = 10
 
 
     override fun getFeed(callback: SteemitDataSource.DataLoadedCallback, sortBy: String) {

@@ -15,12 +15,11 @@ import com.rocketchat.core.RocketChatClient;
 import com.taskail.mixion.R;
 import com.taskail.mixion.steemitchat.ChatLoginDialog;
 import com.taskail.mixion.MixionApplication;
-import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 /**Created by ed on 9/30/17.
  */
 
-public class ChatsFragment extends Fragment implements FragmentLifecycle {
+public class ChatsFragment extends Fragment {
     private static final String TAG = "ChatsFragment";
 
     private SharedPreferences.Editor editor;
@@ -65,15 +64,5 @@ public class ChatsFragment extends Fragment implements FragmentLifecycle {
     private void autoLogin(String token){
 
         Log.d(TAG, "autoLogin: " + token);
-    }
-
-    @Override
-    public void onPauseFragment() {
-
-    }
-
-    @Override
-    public void onResumeFragment() {
-
     }
 }

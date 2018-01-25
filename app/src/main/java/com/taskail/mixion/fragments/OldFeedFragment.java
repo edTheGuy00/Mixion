@@ -26,10 +26,8 @@ import com.taskail.mixion.data.network.RetrofitClient;
 import com.taskail.mixion.data.source.SteemAPI;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.data.models.SteemDiscussion;
-import com.taskail.mixion.interfaces.BottomNavigationViewVisibility;
 import com.taskail.mixion.utils.Constants;
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener;
-import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,13 +44,12 @@ import io.reactivex.schedulers.Schedulers;
  * Feed fragment makes all the calls to api.steem.com
  */
 
-public class OldFeedFragment extends Fragment implements FragmentLifecycle, DiscussionsRecyclerAdapter.CardClickListener {
+public class OldFeedFragment extends Fragment implements DiscussionsRecyclerAdapter.CardClickListener {
     private static final String TAG = "OldFeedFragment";
 
     SteemAPI steemApi = RetrofitClient.getRetrofitClient(Constants.BASE_URL).create(SteemAPI.class);
     private List<SteemDiscussion> discussionFromResponse = new ArrayList<>();
     private CompositeDisposable disposable = new CompositeDisposable();
-    private BottomNavigationViewVisibility navigationViewVisibility;
     private EndlessRecyclerViewScrollListener scrollListener;
     private Spinner typeSpinner, topicsSpinner;
     private DiscussionsRecyclerAdapter mAdapter;
@@ -100,10 +97,8 @@ public class OldFeedFragment extends Fragment implements FragmentLifecycle, Disc
             public void scrollAction(int dx, int dy) {
                 if (dy > 0 && isVisible){
                     isVisible = false;
-                    navigationViewVisibility.hideBNV();
                 } else if (dy < 0 && !isVisible){
                     isVisible = true;
-                    navigationViewVisibility.showBNV();
                 }
 
             }
@@ -348,12 +343,6 @@ public class OldFeedFragment extends Fragment implements FragmentLifecycle, Disc
         Glide.get(getActivity()).clearMemory();
         disposable.dispose();
     }
-    @Override
-    public void onPauseFragment() {
-    }
-    @Override
-    public void onResumeFragment() {
-    }
 
     @Override
     public void onCardClicked(int position) {
@@ -365,9 +354,4 @@ public class OldFeedFragment extends Fragment implements FragmentLifecycle, Disc
         
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        navigationViewVisibility = (BottomNavigationViewVisibility) getActivity();
-    }
 }

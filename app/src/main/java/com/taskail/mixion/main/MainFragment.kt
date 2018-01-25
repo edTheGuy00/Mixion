@@ -53,7 +53,7 @@ class MainFragment : Fragment() {
 
     private fun createRepo(): SteemitRepository{
         return steemitRepository ?:
-        SteemitRepository(createRemoteRepo()).apply {
+        SteemitRepository.getInstance(createRemoteRepo()).apply {
             steemitRepository = this
         }
     }

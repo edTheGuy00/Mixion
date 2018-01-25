@@ -28,7 +28,6 @@ import com.taskail.mixion.adapters.AskSteemAdapter;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.data.models.AskSteem;
 import com.taskail.mixion.data.models.Result;
-import com.taskail.mixion.interfaces.FragmentLifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Created by ed on 9/30/17.
  */
 
-public class AskSteemFragment extends Fragment implements FragmentLifecycle, AskSteemAdapter.ItemClickedListener {
+public class AskSteemFragment extends Fragment implements AskSteemAdapter.ItemClickedListener {
     private static final String TAG = "AskSteemFragmet";
 
     private static final String ASK_STEEM_URL = "https://api.asksteem.com/";
@@ -200,15 +199,6 @@ public class AskSteemFragment extends Fragment implements FragmentLifecycle, Ask
         CircleProgressViewHelper.stopLoading(circleProgressView);
     }
 
-    @Override
-    public void onPauseFragment() {
-
-    }
-
-    @Override
-    public void onResumeFragment() {
-
-    }
 
     @Override
     public void onItemClick(int position) {
