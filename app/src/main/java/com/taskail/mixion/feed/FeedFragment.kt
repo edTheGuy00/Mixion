@@ -5,11 +5,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.utils.getCallback
 import kotlinx.android.synthetic.main.fragment_feed.*
 import java.util.*
 
@@ -17,6 +16,12 @@ import java.util.*
  *Created by ed on 1/24/18.
  */
 class FeedFragment : Fragment(), FeedContract.View {
+
+    interface Callback {
+        fun onFeedSearchRequested()
+        fun onAccountRequested()
+        fun getFilterMenuAnchor(): View?
+    }
 
     override fun showFeed() {
         adapter.notifyDataSetChanged()
@@ -61,6 +66,40 @@ class FeedFragment : Fragment(), FeedContract.View {
         return view
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_feed_search -> {
+                getCallback()?.onFeedSearchRequested()
+                true
+            }
+            R.id.menu_feed_filter -> {
+                val callback = getCallback() ?: return false
+                callback.getFilterMenuAnchor()?.let { showFilterMenu(it) }
+                true
+            }
+            R.id.menu_user_account -> {
+                getCallback()?.onAccountRequested()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showFilterMenu(anchor: View){
+
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_feed, menu)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,5 +108,9 @@ class FeedFragment : Fragment(), FeedContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
+    }
+
+    private fun getCallback(): Callback? {
+        return getCallback(this, Callback::class.java)
     }
 }

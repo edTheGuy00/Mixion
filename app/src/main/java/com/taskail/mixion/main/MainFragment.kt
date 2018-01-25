@@ -13,14 +13,28 @@ import com.taskail.mixion.data.source.SteemAPI
 import com.taskail.mixion.data.source.getRetrofitClient
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
+import com.taskail.mixion.utils.getCallback
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
  *Created by ed on 1/19/18.
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), FeedFragment.Callback {
+    override fun onFeedSearchRequested() {
 
+    }
+
+    override fun onAccountRequested() {
+    }
+
+    override fun getFilterMenuAnchor(): View? {
+        return getCallback()?.getFilterMenuAnchor()
+    }
+
+    interface Callback{
+        fun getFilterMenuAnchor(): View?
+    }
     private var feedDisposable = CompositeDisposable()
     private var steemitRepository: SteemitRepository? = null
     private var steemitAPI: SteemAPI? = null
@@ -79,5 +93,9 @@ class MainFragment : Fragment() {
     override fun onDestroy() {
         feedDisposable.dispose()
         super.onDestroy()
+    }
+
+    private fun getCallback(): Callback? {
+        return getCallback(this, Callback::class.java)
     }
 }
