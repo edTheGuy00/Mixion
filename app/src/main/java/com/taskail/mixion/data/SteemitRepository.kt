@@ -1,6 +1,7 @@
 package com.taskail.mixion.data
 
 import android.util.Log
+import com.taskail.mixion.data.source.RemoteDataSource
 import com.taskail.mixion.data.source.SteemAPI
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -9,8 +10,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  *Created by ed on 1/24/18.
  */
-class SteemitRepository(val disposable: CompositeDisposable,
-                        val steemAPI: SteemAPI) : SteemitDataSource {
+class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataSource {
 
 
     override fun getFeed(callback: SteemitDataSource.DataLoadedCallback, sortBy: String) {
@@ -31,8 +31,11 @@ class SteemitRepository(val disposable: CompositeDisposable,
          * Returns the single instance of this class, creating it if necessary.
          */
         @JvmStatic
-        fun getInstance(disposable: CompositeDisposable, steemAPI: SteemAPI): SteemitRepository{
-            return INSTANCE ?: SteemitRepository(disposable, steemAPI).apply {
+        fun getInstance(disposable: CompositeDisposable,
+                        remoteRepository: RemoteDataSource,
+                        steemAPI: SteemAPI):
+                SteemitRepository{
+            return INSTANCE ?: SteemitRepository(remoteRepository).apply {
                 INSTANCE = this
             }
         }

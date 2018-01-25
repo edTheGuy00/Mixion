@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.adapters.ViewPagerAdapter
 import com.taskail.mixion.data.SteemitRepository
+import com.taskail.mixion.data.source.RemoteDataSource
 import com.taskail.mixion.data.source.SteemAPI
 import com.taskail.mixion.data.source.getRetrofitClient
 import com.taskail.mixion.feed.FeedFragment
@@ -47,14 +48,18 @@ class MainFragment : Fragment() {
         }
 
         lockableViewPager.adapter = adapter
-        lockableViewPager.setCurrentItem(FEED_FRAGMENT)
+        lockableViewPager.currentItem = FEED_FRAGMENT
     }
 
     private fun createRepo(): SteemitRepository{
         return steemitRepository ?:
-        SteemitRepository(feedDisposable, createSteemApi()).apply {
+        SteemitRepository(createRemoteRepo()).apply {
             steemitRepository = this
         }
+    }
+
+    private fun createRemoteRepo() : RemoteDataSource{
+        return RemoteDataSource(feedDisposable, createSteemApi())
     }
 
     private fun createSteemApi() : SteemAPI{
