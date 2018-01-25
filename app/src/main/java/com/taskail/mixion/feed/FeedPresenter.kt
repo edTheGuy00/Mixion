@@ -42,7 +42,7 @@ class FeedPresenter(val feedView: FeedContract.View,
             override fun onComplete() {
             }
 
-        }, "New")
+        }, "Trending")
     }
 
     override fun loadSteemFeed(steem : Array<SteemDiscussion>) {

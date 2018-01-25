@@ -37,24 +37,22 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Title" />
+                    android:layout_height="wrap_content" />
                 <LinearLayout
                     android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_clock" />
                     <TextView
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textStyle="normal"
-                        android:id="@+id/text_date"
+                        android:id="@+id/text_timeago"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -67,6 +65,7 @@
                     android:padding="5dp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:foreground="?selectableItemBackgroundBorderless"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_more" />

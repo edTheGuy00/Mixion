@@ -19,12 +19,11 @@
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_upvote_arrow" />
+            android:src="@drawable/ic_attach_money_black_24dp" />
 
         <TextView
             android:id="@+id/payout"
             android:layout_gravity="center_vertical"
-            android:text="Money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -49,7 +48,6 @@
         <TextView
             android:id="@+id/votes_count"
             android:layout_gravity="center_vertical"
-            android:text="Money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -74,7 +72,6 @@
         <TextView
             android:id="@+id/replies_count"
             android:layout_gravity="center_vertical"
-            android:text="Money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
