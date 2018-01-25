@@ -29,22 +29,7 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     private fun fetNew(){
 
-        steemitRepository.getNew(object : SteemitDataSource.DataLoadedCallback{
 
-            override fun onDataLoaded(steem: Array<SteemDiscussion>) {
-                feedView.discussionFromResponse.addAll(steem)
-
-                feedView.showFeed()
-            }
-
-            override fun onLoadError(error: Throwable) {
-
-            }
-
-            override fun onComplete() {
-
-            }
-        })
     }
 
     override fun loadSteemFeed(steem : Array<SteemDiscussion>) {

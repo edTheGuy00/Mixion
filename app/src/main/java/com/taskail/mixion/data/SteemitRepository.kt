@@ -12,64 +12,17 @@ import io.reactivex.schedulers.Schedulers
 class SteemitRepository(val disposable: CompositeDisposable,
                         val steemAPI: SteemAPI) : SteemitDataSource {
 
+
+    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback, sortBy: String) {
+
+    }
+
     override lateinit var tag: String
 
     override var loadCount = 10
 
 
-    override fun getNew(callback: SteemitDataSource.DataLoadedCallback) {
 
-        Log.d("Repository", "get new called")
-
-        disposable.add(steemAPI.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { callback.onDataLoaded(it)},
-                        { callback.onLoadError(it) })
-        )
-    }
-
-    override fun getTrending(callback: SteemitDataSource.DataLoadedCallback) {
-
-        disposable.add(steemAPI.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { callback.onDataLoaded(it)},
-                        { callback.onLoadError(it) })
-        )
-    }
-
-    override fun getHot(callback: SteemitDataSource.DataLoadedCallback) {
-
-        disposable.add(steemAPI.getHotDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { callback.onDataLoaded(it)},
-                        { callback.onLoadError(it) })
-        )
-    }
-
-    override fun getPromoted(callback: SteemitDataSource.DataLoadedCallback) {
-
-        disposable.add(steemAPI.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { callback.onDataLoaded(it)},
-                        { callback.onLoadError(it) })
-        )
-    }
-
-    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback) {
-
-    }
 
     companion object {
         private var INSTANCE: SteemitRepository? = null

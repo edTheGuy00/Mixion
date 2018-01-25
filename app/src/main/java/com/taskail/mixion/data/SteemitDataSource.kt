@@ -20,13 +20,5 @@ interface SteemitDataSource {
 
     var loadCount: Int
 
-    fun getFeed(callback: DataLoadedCallback)
-
-    fun getNew(callback: DataLoadedCallback)
-
-    fun getTrending(callback: DataLoadedCallback)
-
-    fun getHot(callback: DataLoadedCallback)
-
-    fun getPromoted(callback: DataLoadedCallback)
+    fun getFeed(callback: DataLoadedCallback, sortBy: String)
 }
