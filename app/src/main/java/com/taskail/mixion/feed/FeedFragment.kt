@@ -9,6 +9,7 @@ import android.view.*
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.utils.getCallback
+import com.taskail.mixion.views.FilterMenuView
 import kotlinx.android.synthetic.main.fragment_feed.*
 import java.util.*
 
@@ -17,11 +18,15 @@ import java.util.*
  */
 class FeedFragment : Fragment(), FeedContract.View {
 
+    val TAG = "Feed Fragment"
+
     interface Callback {
         fun onFeedSearchRequested()
         fun onAccountRequested()
         fun getFilterMenuAnchor(): View?
     }
+
+    private val filterMenuCallback = FilterMenuCallback()
 
     override fun showFeed() {
         adapter.notifyDataSetChanged()
@@ -87,7 +92,8 @@ class FeedFragment : Fragment(), FeedContract.View {
 
     private fun showFilterMenu(anchor: View){
 
-
+        val filterMenuView = FilterMenuView(context)
+        filterMenuView.show(anchor, filterMenuCallback)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -112,5 +118,28 @@ class FeedFragment : Fragment(), FeedContract.View {
 
     private fun getCallback(): Callback? {
         return getCallback(this, Callback::class.java)
+    }
+
+    private  inner class FilterMenuCallback : FilterMenuView.Callback{
+        override fun onHotSelected() {
+            Log.d(TAG, "Hot selected")
+        }
+
+        override fun onNewSelected() {
+            Log.d(TAG, "new selected")
+        }
+
+        override fun onTrendingSelected() {
+            Log.d(TAG, "trending selected")
+        }
+
+        override fun onPromotedSelected() {
+            Log.d(TAG, "promoted selected")
+        }
+
+        override fun onTagsSelected() {
+            Log.d(TAG, "tags selected")
+        }
+
     }
 }

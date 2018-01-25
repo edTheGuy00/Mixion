@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="192dp"
+    android:orientation="vertical"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/filter_new"
+            style="@style/OverflowMenuItem"
+            android:text="@string/filter_new"/>
+
+        <TextView
+            android:id="@+id/filter_hot"
+            style="@style/OverflowMenuItem"
+            android:text="@string/filter_hot"/>
+
+        <TextView
+            android:id="@+id/filter_trending"
+            style="@style/OverflowMenuItem"
+            android:text="@string/filter_trending"/>
+
+        <TextView
+            android:id="@+id/filter_promoted"
+            style="@style/OverflowMenuItem"
+            android:text="@string/filter_promoted"/>
+
+        <TextView
+            android:id="@+id/filter_tags"
+            style="@style/OverflowMenuItem"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/browse_tags"/>
+
+    </LinearLayout>
+
+</LinearLayout>

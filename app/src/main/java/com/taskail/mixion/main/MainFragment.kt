@@ -2,6 +2,7 @@ package com.taskail.mixion.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +22,15 @@ import kotlinx.android.synthetic.main.fragment_main.*
  *Created by ed on 1/19/18.
  */
 class MainFragment : Fragment(), FeedFragment.Callback {
-    override fun onFeedSearchRequested() {
 
+    val TAG = "MainFragment"
+
+    override fun onFeedSearchRequested() {
+        Log.d(TAG, "Feed Search Requested")
     }
 
     override fun onAccountRequested() {
+        Log.d(TAG, "account Requested")
     }
 
     override fun getFilterMenuAnchor(): View? {

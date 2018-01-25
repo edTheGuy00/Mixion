@@ -9,6 +9,11 @@
     <string name="search_hint">Search</string>
     <string name="filter_by">Filter</string>
     <string name="account">Account</string>
+    <string name="filter_new">New</string>
+    <string name="filter_hot">Hot</string>
+    <string name="filter_trending">Trending</string>
+    <string name="filter_promoted">Promoted</string>
+    <string name="browse_tags">Browse By Tags</string>
 
     <string-array name="feed_type">
         <item>Trending</item>
