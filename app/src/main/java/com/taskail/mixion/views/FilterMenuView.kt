@@ -44,22 +44,37 @@ class FilterMenuView(context: Context?) : FrameLayout(context) {
             popupWindowHost?.elevation = resources.getDimension(R.dimen.filter_menu_elevation)
         }
         PopupWindowCompat.setOverlapAnchor(popupWindowHost!!, true)
-        PopupWindowCompat.showAsDropDown(popupWindowHost!!, anchorView, 0, 0, Gravity.END)
+        PopupWindowCompat.showAsDropDown(popupWindowHost!!, anchorView, 0, 0, Gravity.CENTER)
 
         initOnClickListeners()
     }
 
     private fun initOnClickListeners(){
 
-        filter_new.setOnClickListener { callback?.onNewSelected() }
+        filter_new.setOnClickListener {
+            popupWindowHost?.dismiss()
+            callback?.onNewSelected()
+        }
 
-        filter_hot.setOnClickListener { callback?.onHotSelected() }
+        filter_hot.setOnClickListener {
+            popupWindowHost?.dismiss()
+            callback?.onHotSelected()
+        }
 
-        filter_promoted.setOnClickListener { callback?.onPromotedSelected() }
+        filter_promoted.setOnClickListener {
+            popupWindowHost?.dismiss()
+            callback?.onPromotedSelected()
+        }
 
-        filter_trending.setOnClickListener { callback?.onTrendingSelected() }
+        filter_trending.setOnClickListener {
+            popupWindowHost?.dismiss()
+            callback?.onTrendingSelected()
+        }
 
-        filter_tags.setOnClickListener { callback?.onTagsSelected() }
+        filter_tags.setOnClickListener {
+            popupWindowHost?.dismiss()
+            callback?.onTagsSelected()
+        }
 
     }
 }
