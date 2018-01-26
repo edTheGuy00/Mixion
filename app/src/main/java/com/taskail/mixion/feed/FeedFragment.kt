@@ -167,7 +167,7 @@ class FeedFragment : Fragment(), FeedContract.View {
         }
 
         override fun onTagsSelected() {
-            Log.d(TAG, "tags selected")
+            Log.d(TAG, "Tags selected")
         }
 
     }

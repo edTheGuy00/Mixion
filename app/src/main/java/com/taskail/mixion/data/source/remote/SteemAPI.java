@@ -3,6 +3,7 @@ package com.taskail.mixion.data.source.remote;
 import com.taskail.mixion.data.models.AskSteem;
 import com.taskail.mixion.data.models.ContentReply;
 import com.taskail.mixion.data.models.SteemDiscussion;
+import com.taskail.mixion.data.models.Tags;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -42,4 +43,7 @@ public interface SteemAPI {
     Observable<ContentReply[]> getContentReplies(
             @Query("author") String author,
             @Query("permlink") String permlink);
+
+    @GET("get_trending_tags")
+    Observable<Tags[]> getTags(@Query("afterTag") String afterTag, @Query("limit") Integer limit);
 }

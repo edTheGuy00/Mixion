@@ -90,7 +90,7 @@ public class OldFeedFragment extends Fragment implements DiscussionsRecyclerAdap
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 beginToLoadAt = totalItemsCount;
-                loadMore(totalItemsCount);
+
             }
             @Override
             public void scrollAction(int dx, int dy) {
@@ -109,7 +109,7 @@ public class OldFeedFragment extends Fragment implements DiscussionsRecyclerAdap
 
     /**
      * Setup the drop down spinners, one is the feed type (hot, new, trending), and the other is
-     * the tags available. Array list is found in R.array
+     * the Tags available. Array list is found in R.array
      */
     private void setupSpinners() {
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -158,121 +158,12 @@ public class OldFeedFragment extends Fragment implements DiscussionsRecyclerAdap
             isPaginated = false;
             CircleProgressViewHelper.showLoading(circleProgressView);
 
-            switch (sortBy) {
-                case ("Trending"):
-                    fetchTrending();
-                    break;
-                case ("Hot"):
-                    fetchHot();
-                    break;
-                case ("New"):
-                    fetchNew();
-                    break;
-                case ("Promoted"):
-                    fetchPromoted();
-            }
-        }
-    }
-    private void loadMore(int lastPostLocation){
-        isPaginated = true;
-        startLoadingMore();
-
-        if (tag != null){
-
-            switch (sortBy) {
-                case ("Trending"):
-                    fetchMoreTrending(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
-                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
-                    break;
-                case ("Hot"):
-                    fetchMoreHot(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
-                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
-                    break;
-                case ("New"):
-                    fetchMoreNew(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
-                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
-                    break;
-                case ("Promoted"):
-                    fetchMorePromoted(discussionFromResponse.get(lastPostLocation-1).getAuthor(),
-                            discussionFromResponse.get(lastPostLocation-1).getPermlink());
-            }
 
         }
-
     }
 
-    private void fetchTrending(){
 
-        disposable.add(steemApi.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
 
-    private void fetchHot(){
-
-        disposable.add(steemApi.getHotDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    private void fetchNew(){
-
-        disposable.add(steemApi.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    private void fetchPromoted(){
-
-        disposable.add(steemApi.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\""
-                + ",\"limit\":\"" + loadCount + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    private void fetchMoreTrending(String startAuthor,String startPermLink){
-
-        disposable.add(steemApi.getTrendingDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
-                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-
-    }
-
-    private void fetchMoreHot(String startAuthor,String startPermLink){
-
-        disposable.add(steemApi.getHotDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
-                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    private void fetchMoreNew(String startAuthor,String startPermLink){
-
-        disposable.add(steemApi.getNewestDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
-                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    private void fetchMorePromoted(String startAuthor,String startPermLink){
-
-        disposable.add(steemApi.getPromotedDiscussions("{\"tag\":" + "\"" + tag + "\"" + ",\"limit\":\""
-                + loadCount + "\", \"start_author\":\"" + startAuthor + "\", \"start_permlink\":\"" + startPermLink + "\"}")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
 
     private void handleResponse(SteemDiscussion[] steem) {
 

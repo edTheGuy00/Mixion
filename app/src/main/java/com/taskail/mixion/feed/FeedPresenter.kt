@@ -72,7 +72,7 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     private fun fetch(){
 
-        steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback{
+        steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
                 feedView.discussionFromResponse.addAll(steem)
                 feedView.showFeed()
@@ -87,7 +87,7 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     override fun fetchMore(lastPostLocation: Int) {
 
-        steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback{
+        steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
 
                 /**

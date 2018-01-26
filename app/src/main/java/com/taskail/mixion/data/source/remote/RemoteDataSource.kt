@@ -2,6 +2,7 @@ package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.Tags
 import com.taskail.mixion.data.source.remote.SteemAPI
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +21,8 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
     override var loadCount: Int = 10
 
 
-    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback, sortBy: String) {
+    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
+
         when(sortBy){
 
             "New" -> fetchOnDisposable(callback, getNew())
@@ -33,7 +35,7 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         }
     }
 
-    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback,
+    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>,
                              sortBy: String,
                              startAuthor: String,
                              startPermLink: String) {
@@ -48,6 +50,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
             "Trending" -> fetchOnDisposable(callback, getMoreTrending(startAuthor, startPermLink))
         }
+    }
+
+    override fun getTags(callback: SteemitDataSource.DataLoadedCallback<Tags>) {
+
     }
 
     private fun getNew(): Observable<Array<SteemDiscussion>> {
@@ -82,8 +88,8 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
     }
 
-    private fun fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback,
-                                  observable: Observable<Array<SteemDiscussion>>){
+    private fun <T> fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback<T>,
+                                  observable: Observable<Array<T>>){
 
         disposable.add(observable
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,6 +97,19 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
                 .subscribe(
                         { callback.onDataLoaded(it)},
                         { callback.onLoadError(it) }))
+    }
+
+    companion object {
+        private var INSTANCE: RemoteDataSource? = null
+
+        @JvmStatic
+        fun getInstance(disposable: CompositeDisposable,
+                        steemAPI: SteemAPI) : RemoteDataSource{
+
+            return INSTANCE ?: RemoteDataSource(disposable, steemAPI).apply {
+                INSTANCE = this
+            }
+        }
     }
 
 }

@@ -7,7 +7,7 @@ import android.arch.persistence.room.Entity
  *Created by ed on 1/26/18.
  */
 
-@Entity(tableName = "tags")
+@Entity(tableName = "Tags")
 data class RoomTags @JvmOverloads constructor(
 
         @ColumnInfo(name = "tag") var tag: String = "",

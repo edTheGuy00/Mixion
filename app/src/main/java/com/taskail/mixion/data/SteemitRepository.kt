@@ -1,5 +1,6 @@
 package com.taskail.mixion.data
 
+import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.source.remote.RemoteDataSource
 
 /**
@@ -7,15 +8,16 @@ import com.taskail.mixion.data.source.remote.RemoteDataSource
  *
  * This class is responsible for all data
  */
-class SteemitRepository( val remoteRepository: RemoteDataSource) : SteemitDataSource {
+class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataSource {
 
 
-    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback, sortBy: String) {
+
+    override fun  getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
 
         remoteRepository.getFeed(callback, sortBy)
     }
 
-    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback,
+    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>,
                              sortBy: String,
                              startAuthor: String, startPermLink: String) {
 

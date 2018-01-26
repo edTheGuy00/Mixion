@@ -49,7 +49,6 @@ class MainFragment : Fragment(), FeedFragment.Callback {
         fun getFilterMenuAnchor(): View?
     }
     private var feedDisposable = CompositeDisposable()
-    private var steemitRepository: SteemitRepository? = null
     private var steemitAPI: SteemAPI? = null
     private val FEED_FRAGMENT = 0
     private lateinit var feedPresenter: FeedPresenter
@@ -79,14 +78,11 @@ class MainFragment : Fragment(), FeedFragment.Callback {
     }
 
     private fun createRepo(): SteemitRepository{
-        return steemitRepository ?:
-        SteemitRepository.getInstance(createRemoteRepo()).apply {
-            steemitRepository = this
-        }
+        return SteemitRepository.getInstance(createRemoteRepo())
     }
 
     private fun createRemoteRepo() : RemoteDataSource {
-        return RemoteDataSource(feedDisposable, createSteemApi())
+        return RemoteDataSource.getInstance(feedDisposable, createSteemApi())
     }
 
     private fun createSteemApi() : SteemAPI {
