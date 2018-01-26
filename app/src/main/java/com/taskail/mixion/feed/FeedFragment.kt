@@ -32,8 +32,8 @@ class FeedFragment : Fragment(), FeedContract.View {
         adapter.notifyDataSetChanged()
     }
 
-    override fun showMoreFeed() {
-        adapter.notifyItemRangeInserted(0, 0)
+    override fun showMoreFeed(previousSize: Int, newSize: Int) {
+        adapter.notifyItemRangeInserted(previousSize, newSize)
     }
 
     companion object {

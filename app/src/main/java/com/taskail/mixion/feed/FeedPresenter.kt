@@ -1,6 +1,5 @@
 package com.taskail.mixion.feed
 
-import android.util.Log
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
@@ -13,47 +12,65 @@ class FeedPresenter(val feedView: FeedContract.View,
                     val steemitRepository: SteemitRepository) : FeedContract.Presenter {
 
     var discussionFromResponse = ArrayList<SteemDiscussion>()
-    var loadCount: Int = 0
+    var sortBy = "Trending"
 
     init {
         feedView.presenter = this
         feedView.discussionFromResponse = discussionFromResponse
 
         steemitRepository.remoteRepository.tag = "steemit"
-
-        steemitRepository.tag = "steemit"
     }
 
     override fun start() {
         fetch()
     }
 
-    private fun fetch(){
+    override fun fetch(){
+
+        if (!feedIsLoaded()){
+            getFeed()
+        }
+    }
+
+    private fun getFeed(){
+
         steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback{
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
                 feedView.discussionFromResponse.addAll(steem)
-
                 feedView.showFeed()
             }
 
             override fun onLoadError(error: Throwable) {
             }
 
-            override fun onComplete() {
+        }, sortBy)
+
+    }
+
+    override fun fetchMore(lastPostLocation: Int) {
+
+        steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback{
+            override fun onDataLoaded(steem: Array<SteemDiscussion>) {
+                feedView.discussionFromResponse.addAll(steem)
+
+                feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
             }
 
-        }, "Trending")
+            override fun onLoadError(error: Throwable) {
+            }
+
+        }, sortBy, getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation))
     }
 
-    override fun loadSteemFeed(steem : Array<SteemDiscussion>) {
-
-
-        feedView.discussionFromResponse.addAll(steem)
+    private fun feedIsLoaded(): Boolean{
+        return feedView.discussionFromResponse.isNotEmpty()
     }
 
-    override fun loadMoreSteem(steem : Array<SteemDiscussion>) {
-        discussionFromResponse.addAll(Arrays.copyOfRange(steem, 1, loadCount))
+    private fun getStartAuthor(lastPostLocation: Int) : String{
+        return feedView.discussionFromResponse[lastPostLocation-1].author
     }
 
-
+    private fun getStartPermlink(lastPostLocation: Int) : String{
+        return feedView.discussionFromResponse[lastPostLocation-1].permlink
+    }
 }

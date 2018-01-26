@@ -16,14 +16,14 @@ interface FeedContract {
 
         fun showFeed()
 
-        fun showMoreFeed()
+        fun showMoreFeed(previousSize: Int, newSize: Int)
 
     }
 
     interface Presenter : BasePresenter{
 
-        fun loadSteemFeed(steem : Array<SteemDiscussion>)
+        fun fetch()
 
-        fun loadMoreSteem(steem : Array<SteemDiscussion>)
+        fun fetchMore(lastPostLocation: Int)
     }
 }

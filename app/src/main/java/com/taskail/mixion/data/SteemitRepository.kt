@@ -13,9 +13,12 @@ class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataS
         remoteRepository.getFeed(callback, sortBy)
     }
 
-    override lateinit var tag: String
+    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback,
+                             sortBy: String,
+                             startAuthor: String, startPermLink: String) {
 
-    override var loadCount = 10
+        remoteRepository.getMoreFeed(callback, sortBy, startAuthor, startPermLink)
+    }
 
 
     companion object {

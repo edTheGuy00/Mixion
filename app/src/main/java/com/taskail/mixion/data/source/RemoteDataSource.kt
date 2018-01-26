@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
  *Created by ed on 1/24/18.
  */
 class RemoteDataSource(private val disposable: CompositeDisposable,
-                       private val steemAPI: SteemAPI) : SteemitDataSource{
+                       private val steemAPI: SteemAPI) : SteemitDataSource.Remote{
 
     override lateinit var tag: String
     override var loadCount: Int = 10
@@ -24,9 +24,26 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
             "Hot" -> fetchOnDisposable(callback, getHot())
 
-            "Promoted" -> fetchOnDisposable(callback, getpromoted())
+            "Promoted" -> fetchOnDisposable(callback, getPromoted())
 
             "Trending" -> fetchOnDisposable(callback, getTrending())
+        }
+    }
+
+    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback,
+                             sortBy: String,
+                             startAuthor: String,
+                             startPermLink: String) {
+
+        when(sortBy){
+
+            "New" -> fetchOnDisposable(callback, getMoreNew(startAuthor, startPermLink))
+
+            "Hot" -> fetchOnDisposable(callback, getMoreHot(startAuthor, startPermLink))
+
+            "Promoted" -> fetchOnDisposable(callback, getMorePromoted(startAuthor, startPermLink))
+
+            "Trending" -> fetchOnDisposable(callback, getMoreTrending(startAuthor, startPermLink))
         }
     }
 
@@ -38,12 +55,28 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         return steemAPI.getHotDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\"}")
     }
 
-    private fun getpromoted(): Observable<Array<SteemDiscussion>>{
+    private fun getPromoted(): Observable<Array<SteemDiscussion>>{
         return steemAPI.getPromotedDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\"}")
     }
 
     private fun getTrending(): Observable<Array<SteemDiscussion>>{
         return steemAPI.getTrendingDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\"}")
+    }
+
+    private fun getMoreNew(startAuthor: String, startPermLink: String): Observable<Array<SteemDiscussion>> {
+        return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
+    }
+
+    private fun getMoreHot(startAuthor: String, startPermLink: String): Observable<Array<SteemDiscussion>> {
+        return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
+    }
+
+    private fun getMorePromoted(startAuthor: String, startPermLink: String): Observable<Array<SteemDiscussion>> {
+        return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
+    }
+
+    private fun getMoreTrending(startAuthor: String, startPermLink: String): Observable<Array<SteemDiscussion>> {
+        return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
     }
 
     private fun fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback,
