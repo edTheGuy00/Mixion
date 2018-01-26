@@ -16,13 +16,21 @@ interface FeedContract {
 
         fun showFeed()
 
+        fun clearItems()
+
         fun showMoreFeed(previousSize: Int, newSize: Int)
 
     }
 
     interface Presenter : BasePresenter{
 
-        fun fetch()
+        fun getNew()
+
+        fun getHot()
+
+        fun getTrending()
+
+        fun getPromoted()
 
         fun fetchMore(lastPostLocation: Int)
     }

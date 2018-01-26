@@ -4,6 +4,8 @@ import com.taskail.mixion.data.source.RemoteDataSource
 
 /**
  *Created by ed on 1/24/18.
+ *
+ * This class is responsible for all data
  */
 class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataSource {
 

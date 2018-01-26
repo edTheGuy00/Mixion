@@ -21,18 +21,56 @@ class FeedPresenter(val feedView: FeedContract.View,
         steemitRepository.remoteRepository.tag = "steemit"
     }
 
+    /**
+     * Start follows onResume from FeedFragment
+     */
     override fun start() {
-        fetch()
+        firstCall()
     }
 
-    override fun fetch(){
+    private fun firstCall(){
 
         if (!feedIsLoaded()){
-            getFeed()
+            fetch()
         }
     }
 
-    private fun getFeed(){
+    override fun getHot() {
+        if (sortBy != "Hot"){
+            sortBy = "Hot"
+            performCleanFetch()
+        }
+    }
+
+    override fun getNew() {
+        if (sortBy != "New"){
+            sortBy = "New"
+            performCleanFetch()
+        }
+    }
+
+    override fun getTrending() {
+        if (sortBy != "Trending"){
+            sortBy = "Trending"
+            performCleanFetch()
+        }
+    }
+
+    override fun getPromoted() {
+        if (sortBy != "Promoted"){
+            sortBy = "Promoted"
+            performCleanFetch()
+        }
+    }
+
+    private fun performCleanFetch(){
+        feedView.discussionFromResponse.clear()
+        feedView.clearItems()
+
+        fetch()
+    }
+
+    private fun fetch(){
 
         steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback{
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
@@ -67,14 +105,23 @@ class FeedPresenter(val feedView: FeedContract.View,
         }, sortBy, getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation))
     }
 
+    /**
+     * onResume will call a a query, check to see if items are empty before doing a network call
+     */
     private fun feedIsLoaded(): Boolean{
         return feedView.discussionFromResponse.isNotEmpty()
     }
 
+    /**
+     * get the last author on the current list to fetch more items
+     */
     private fun getStartAuthor(lastPostLocation: Int) : String{
         return feedView.discussionFromResponse[lastPostLocation-1].author
     }
 
+    /**
+     * get the last permlink on the current list to fetch more items
+     */
     private fun getStartPermlink(lastPostLocation: Int) : String{
         return feedView.discussionFromResponse[lastPostLocation-1].permlink
     }

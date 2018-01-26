@@ -17,6 +17,8 @@ import java.util.*
 
 /**
  *Created by ed on 1/24/18.
+ *
+ * Feed fragment is responsible for all views in the feed page.
  */
 class FeedFragment : Fragment(), FeedContract.View {
 
@@ -31,6 +33,10 @@ class FeedFragment : Fragment(), FeedContract.View {
     private val filterMenuCallback = FilterMenuCallback()
 
     override fun showFeed() {
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun clearItems() {
         adapter.notifyDataSetChanged()
     }
 
@@ -132,21 +138,21 @@ class FeedFragment : Fragment(), FeedContract.View {
         return getCallback(this, Callback::class.java)
     }
 
-    private  inner class FilterMenuCallback : FilterMenuView.Callback{
+    private inner class FilterMenuCallback : FilterMenuView.Callback{
         override fun onHotSelected() {
-            Log.d(TAG, "Hot selected")
+            presenter.getHot()
         }
 
         override fun onNewSelected() {
-            Log.d(TAG, "new selected")
+            presenter.getNew()
         }
 
         override fun onTrendingSelected() {
-            Log.d(TAG, "trending selected")
+            presenter.getTrending()
         }
 
         override fun onPromotedSelected() {
-            Log.d(TAG, "promoted selected")
+            presenter.getPromoted()
         }
 
         override fun onTagsSelected() {
