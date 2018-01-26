@@ -27,6 +27,8 @@ class FeedFragment : Fragment(), FeedContract.View {
     interface Callback {
         fun onFeedSearchRequested()
         fun onAccountRequested()
+        fun hideBottomNav()
+        fun showBottomNave()
         fun getFilterMenuAnchor(): View?
     }
 
@@ -63,6 +65,8 @@ class FeedFragment : Fragment(), FeedContract.View {
     override lateinit var  presenter: FeedContract.Presenter
 
     private lateinit var adapter: FeedRVAdapter
+
+    private var bottomNavIsVisible = true
 
     override fun onResume() {
         super.onResume()
@@ -129,6 +133,13 @@ class FeedFragment : Fragment(), FeedContract.View {
             }
 
             override fun scrollAction(dx: Int, dy: Int) {
+                if (dy > 0 && bottomNavIsVisible) {
+                    bottomNavIsVisible = false
+                    getCallback()?.hideBottomNav()
+                } else if (dy < 0 && !bottomNavIsVisible) {
+                    bottomNavIsVisible = true
+                    getCallback()?.showBottomNave()
+                }
             }
 
         })

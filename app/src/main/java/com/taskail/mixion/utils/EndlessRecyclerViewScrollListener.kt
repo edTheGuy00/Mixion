@@ -97,6 +97,8 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
             onLoadMore(currentPage, totalItemCount, view)
             loading = true
         }
+
+        scrollAction(dx, dy)
     }
 
     // Call this method whenever performing new searches

@@ -1,6 +1,7 @@
 package com.taskail.mixion.utils
 
 import android.support.design.widget.BottomNavigationView
+import android.view.View
 import android.view.animation.AccelerateInterpolator
 
 /**
@@ -9,9 +10,11 @@ import android.view.animation.AccelerateInterpolator
 
 
 fun BottomNavigationView.hideBottomNavigationView(){
-    this.animate().translationY(this.height.toFloat()).setInterpolator(AccelerateInterpolator(2f)).start()
+    this.animate().translationY(this.height.toFloat()).setInterpolator(AccelerateInterpolator(2f))
+            .withEndAction { this.visibility = View.GONE }.start()
 }
 
 fun BottomNavigationView.showBottomNavigationView(){
     this.animate().translationY(0f).interpolator = AccelerateInterpolator(2f)
+    this.visibility = View.VISIBLE
 }

@@ -15,6 +15,8 @@ import com.taskail.mixion.data.source.getRetrofitClient
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.utils.getCallback
+import com.taskail.mixion.utils.hideBottomNavigationView
+import com.taskail.mixion.utils.showBottomNavigationView
 import eu.bittrade.libs.steemj.base.models.AccountName
 import eu.bittrade.libs.steemj.configuration.SteemJConfig
 import io.reactivex.disposables.CompositeDisposable
@@ -101,6 +103,15 @@ class MainFragment : Fragment(), FeedFragment.Callback {
         return SteemJConfig.getInstance()
     }
 
+    override fun hideBottomNav() {
+        Log.d("Main Frag", "HIde")
+        bottomNavView.hideBottomNavigationView()
+    }
+
+    override fun showBottomNave() {
+        Log.d("Main Frag", "show")
+        bottomNavView.showBottomNavigationView()
+    }
 
 
     companion object {
