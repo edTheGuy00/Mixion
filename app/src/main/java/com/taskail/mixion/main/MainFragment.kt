@@ -15,6 +15,8 @@ import com.taskail.mixion.data.source.getRetrofitClient
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.utils.getCallback
+import eu.bittrade.libs.steemj.base.models.AccountName
+import eu.bittrade.libs.steemj.configuration.SteemJConfig
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -26,11 +28,15 @@ class MainFragment : Fragment(), FeedFragment.Callback {
     val TAG = "MainFragment"
 
     override fun onFeedSearchRequested() {
-        Log.d(TAG, "Feed Search Requested")
+
     }
 
     override fun onAccountRequested() {
-        Log.d(TAG, "account Requested")
+        if (!getCurrentUser().isEmpty){
+            //User logged In, get info
+        } else {
+            //login
+        }
     }
 
     override fun getFilterMenuAnchor(): View? {
@@ -86,6 +92,16 @@ class MainFragment : Fragment(), FeedFragment.Callback {
             steemitAPI = this
         }
     }
+
+    private fun getCurrentUser() : AccountName{
+        return getSteemJConfig().defaultAccount
+    }
+
+    private fun getSteemJConfig(): SteemJConfig{
+        return SteemJConfig.getInstance()
+    }
+
+
 
     companion object {
         @JvmStatic fun newInstance(): MainFragment{

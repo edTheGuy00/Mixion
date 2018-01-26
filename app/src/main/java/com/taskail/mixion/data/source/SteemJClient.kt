@@ -2,51 +2,48 @@ package com.taskail.mixion.data.source
 
 import eu.bittrade.libs.steemj.SteemJ
 import eu.bittrade.libs.steemj.base.models.AccountName
-import eu.bittrade.libs.steemj.configuration.SteemJConfig
-import eu.bittrade.libs.steemj.enums.PrivateKeyType
-import org.apache.commons.lang3.tuple.ImmutablePair
-import java.util.ArrayList
+import eu.bittrade.libs.steemj.base.models.Permlink
+import io.reactivex.Completable
+import io.reactivex.schedulers.Schedulers
 
-/**
- *Created by ed on 1/24/18.
- */
-class SteemJClient(accountName : String,
-                   activeKey : String,
-                   postingKey: String) {
 
-    private var steemJ: SteemJ
+var steemJClient: SteemJ? = null
 
-    init {
-        val steemJConfig = SteemJConfig.getNewInstance()
-        steemJConfig.defaultAccount = AccountName(accountName)
+fun initSteemJ(){
+    getSteemJ().subscribeOn(Schedulers.io()).subscribe().dispose()
+}
 
-        steemJ = SteemJ()
+fun getSteemJ() : Completable{
+    return Completable.create {
+        steemJClient = SteemJ()
 
-        val privateKeys = ArrayList<ImmutablePair<PrivateKeyType, String>>()
-        privateKeys.add(ImmutablePair(PrivateKeyType.POSTING, postingKey))
-        privateKeys.add(ImmutablePair(PrivateKeyType.ACTIVE, activeKey))
-
-        steemJConfig.privateKeyStorage.addAccount(steemJConfig.defaultAccount, privateKeys)
+        it.onComplete()
     }
+}
 
-    fun getSteemJ() : SteemJ{
-        return steemJ
+fun logIntoSteemJ(accountName: AccountName, password: String) : Completable{
+
+    return Completable.create{
+        steemJClient?.login(accountName, password)
+
+        it.onComplete()
     }
+}
 
-    companion object {
-        private var INSTANCE : SteemJ? = null
+fun upvote(accountName: AccountName, permlink: Permlink, percentage: Short) : Completable{
 
-        /**
-         * Returns the single instance of this class, creating one if necessary.
-         *
-         */
+    return Completable.create{
+        steemJClient?.vote(accountName, permlink, percentage)
 
-        @JvmStatic
-        fun getSteemJInstance(accountName: String, activeKey: String, postingKey: String) : SteemJ{
-            return INSTANCE ?: SteemJClient(accountName, activeKey, postingKey)
-                    .getSteemJ().apply {
-                INSTANCE = this
-            }
-        }
+        it.onComplete()
+    }
+}
+
+fun reSteem(author: AccountName, permlink: Permlink) : Completable{
+    return Completable.create{
+
+        steemJClient?.reblog(author, permlink)
+
+        it.onComplete()
     }
 }
