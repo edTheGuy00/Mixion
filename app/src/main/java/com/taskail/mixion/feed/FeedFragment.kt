@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.views.FilterMenuView
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -114,6 +116,16 @@ class FeedFragment : Fragment(), FeedContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
+
+        recyclerView.addOnScrollListener(object : EndlessRecyclerViewScrollListener(linearLayoutManager){
+            override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView?) {
+                presenter.fetchMore(totalItemsCount)
+            }
+
+            override fun scrollAction(dx: Int, dy: Int) {
+            }
+
+        })
     }
 
     private fun getCallback(): Callback? {

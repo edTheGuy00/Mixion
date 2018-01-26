@@ -51,7 +51,12 @@ class FeedPresenter(val feedView: FeedContract.View,
 
         steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback{
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
-                feedView.discussionFromResponse.addAll(steem)
+
+                /**
+                 * Skip the first item from the returned list as it will be the same item
+                 * from the previous last item.
+                 */
+                Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(steem, 1, 10))
 
                 feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
             }
