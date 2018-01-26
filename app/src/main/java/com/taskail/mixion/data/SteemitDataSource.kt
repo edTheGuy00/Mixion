@@ -19,6 +19,11 @@ interface SteemitDataSource {
 
     }
 
+    interface Local{
+
+        fun getTags()
+    }
+
     interface DataLoadedCallback{
 
         fun onDataLoaded(steem: Array<SteemDiscussion>)
