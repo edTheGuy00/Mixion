@@ -1,6 +1,5 @@
 package com.taskail.mixion.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +22,7 @@ import com.taskail.mixion.steempost.DiscussionDetailsActivity;
 import com.taskail.mixion.R;
 import com.taskail.mixion.adapters.DiscussionsRecyclerAdapter;
 import com.taskail.mixion.data.network.RetrofitClient;
-import com.taskail.mixion.data.source.SteemAPI;
+import com.taskail.mixion.data.source.remote.SteemAPI;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
 import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.utils.Constants;

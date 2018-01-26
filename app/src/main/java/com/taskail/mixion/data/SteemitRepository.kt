@@ -1,13 +1,13 @@
 package com.taskail.mixion.data
 
-import com.taskail.mixion.data.source.RemoteDataSource
+import com.taskail.mixion.data.source.remote.RemoteDataSource
 
 /**
  *Created by ed on 1/24/18.
  *
  * This class is responsible for all data
  */
-class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataSource {
+class SteemitRepository( val remoteRepository: RemoteDataSource) : SteemitDataSource {
 
 
     override fun getFeed(callback: SteemitDataSource.DataLoadedCallback, sortBy: String) {
@@ -30,7 +30,7 @@ class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataS
          * Returns the single instance of this class, creating it if necessary.
          */
         @JvmStatic
-        fun getInstance( remoteRepository: RemoteDataSource ):
+        fun getInstance( remoteRepository: RemoteDataSource):
                 SteemitRepository{
             return INSTANCE ?: SteemitRepository(remoteRepository).apply {
                 INSTANCE = this

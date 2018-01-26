@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.source;
+package com.taskail.mixion.data.source.remote;
 
 import com.taskail.mixion.data.models.AskSteem;
 import com.taskail.mixion.data.models.ContentReply;

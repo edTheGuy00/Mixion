@@ -26,7 +26,7 @@ import com.taskail.mixion.data.network.MixionApolloClient;
 import com.taskail.mixion.R;
 import com.taskail.mixion.data.network.RetrofitClient;
 import com.taskail.mixion.helpers.CircleProgressViewHelper;
-import com.taskail.mixion.data.source.SteemAPI;
+import com.taskail.mixion.data.source.remote.SteemAPI;
 import com.taskail.mixion.data.models.ActiveVote;
 import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.utils.Constants;

@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.source
+package com.taskail.mixion.data.source.remote
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

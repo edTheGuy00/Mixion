@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.source
+package com.taskail.mixion.data.source.remote
 
 import eu.bittrade.libs.steemj.SteemJ
 import eu.bittrade.libs.steemj.base.models.AccountName

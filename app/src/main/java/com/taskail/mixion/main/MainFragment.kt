@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.adapters.ViewPagerAdapter
 import com.taskail.mixion.data.SteemitRepository
-import com.taskail.mixion.data.source.RemoteDataSource
-import com.taskail.mixion.data.source.SteemAPI
-import com.taskail.mixion.data.source.getRetrofitClient
+import com.taskail.mixion.data.source.remote.RemoteDataSource
+import com.taskail.mixion.data.source.remote.SteemAPI
+import com.taskail.mixion.data.source.remote.getRetrofitClient
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.utils.getCallback
@@ -85,11 +85,11 @@ class MainFragment : Fragment(), FeedFragment.Callback {
         }
     }
 
-    private fun createRemoteRepo() : RemoteDataSource{
+    private fun createRemoteRepo() : RemoteDataSource {
         return RemoteDataSource(feedDisposable, createSteemApi())
     }
 
-    private fun createSteemApi() : SteemAPI{
+    private fun createSteemApi() : SteemAPI {
         return steemitAPI ?: getRetrofitClient().create(SteemAPI::class.java).apply {
             steemitAPI = this
         }
