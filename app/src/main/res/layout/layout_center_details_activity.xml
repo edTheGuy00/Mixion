@@ -66,18 +66,9 @@
         </LinearLayout>
 
 
-        <br.tiagohm.markdownview.MarkdownView
-            android:layout_below="@+id/info_linLayout"
-            android:id="@+id/markdown_web"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </br.tiagohm.markdownview.MarkdownView>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/comments_list"
             android:layout_width="match_parent"
-            android:layout_below="@id/markdown_web"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>

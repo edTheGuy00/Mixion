@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.grabner.circleprogress.CircleProgressView;
-import br.tiagohm.markdownview.MarkdownView;
-import br.tiagohm.markdownview.css.styles.Github;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -58,7 +56,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private String author, permLink;
 
     private ApolloClient mApolloClient;
-    private MarkdownView markdownView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +82,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         timeAgoTV = findViewById(R.id.time_ago);
         circleProgressView = findViewById(R.id.circleProgress);
 
-        markdownView = findViewById(R.id.markdown_web);
         stringUtils = new StringUtils();
 
         Bundle bundle = this.getIntent().getExtras();
@@ -204,8 +200,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         votesCountTV.setText(votes);
         repliesCountTV.setText(replies);
         timeAgoTV.setText(GetTimeAgo.getlongtoago(created));
-
-        markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(body).toString());
 
 
     }

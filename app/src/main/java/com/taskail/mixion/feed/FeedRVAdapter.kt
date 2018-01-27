@@ -12,7 +12,6 @@ import com.taskail.mixion.utils.StringUtils
 import com.taskail.mixion.utils.getFirstImgFromJsonMeta
 import kotlinx.android.synthetic.main.cardview_steem_post.view.*
 import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
-import kotlinx.android.synthetic.main.text_item.view.*
 
 /**
  *Created by ed on 1/24/18.

@@ -96,8 +96,6 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$roomVersion"
     implementation "com.google.guava:guava:$guavaVersion"
 
-    compile 'com.github.tiagohm.MarkdownView:library:0.17.0'
-
     implementation "com.android.support:design:$androidSupportVersion"
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
     implementation "com.android.support:cardview-v7:$androidSupportVersion"
