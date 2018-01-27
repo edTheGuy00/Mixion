@@ -152,19 +152,19 @@ class FeedFragment : Fragment(), FeedContract.View {
 
     private inner class FilterMenuCallback : FilterMenuView.Callback{
         override fun onHotSelected() {
-            presenter.getHot()
+            presenter.sortBy("Hot")
         }
 
         override fun onNewSelected() {
-            presenter.getNew()
+            presenter.sortBy("New")
         }
 
         override fun onTrendingSelected() {
-            presenter.getTrending()
+            presenter.sortBy("Trending")
         }
 
         override fun onPromotedSelected() {
-            presenter.getPromoted()
+            presenter.sortBy("Promoted")
         }
 
         override fun onTagsSelected() {

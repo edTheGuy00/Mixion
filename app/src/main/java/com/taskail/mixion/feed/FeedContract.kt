@@ -24,13 +24,7 @@ interface FeedContract {
 
     interface Presenter : BasePresenter{
 
-        fun getNew()
-
-        fun getHot()
-
-        fun getTrending()
-
-        fun getPromoted()
+        fun sortBy(sortBy: String)
 
         fun getByTag(tag: String)
 

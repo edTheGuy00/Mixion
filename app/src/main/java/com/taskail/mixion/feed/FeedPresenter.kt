@@ -35,30 +35,9 @@ class FeedPresenter(val feedView: FeedContract.View,
         }
     }
 
-    override fun getHot() {
-        if (sortBy != "Hot"){
-            sortBy = "Hot"
-            performCleanFetch()
-        }
-    }
-
-    override fun getNew() {
-        if (sortBy != "New"){
-            sortBy = "New"
-            performCleanFetch()
-        }
-    }
-
-    override fun getTrending() {
-        if (sortBy != "Trending"){
-            sortBy = "Trending"
-            performCleanFetch()
-        }
-    }
-
-    override fun getPromoted() {
-        if (sortBy != "Promoted"){
-            sortBy = "Promoted"
+    override fun sortBy(sortBy: String) {
+        if (this.sortBy != sortBy){
+            this.sortBy = sortBy
             performCleanFetch()
         }
     }
