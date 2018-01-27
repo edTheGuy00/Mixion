@@ -30,3 +30,11 @@ fun insertTag(@NonNull tagsDao: TagsDao, @NonNull tags: RoomTags) : Completable{
         e.onComplete()
     }
 }
+
+@NonNull
+fun deleteTags(@NonNull tagsDao: TagsDao) : Completable{
+    return Completable.create { emitter ->
+        tagsDao.deleteTags()
+        emitter.onComplete()
+    }
+}

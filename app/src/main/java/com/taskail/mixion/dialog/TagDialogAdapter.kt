@@ -15,8 +15,14 @@ import kotlinx.android.synthetic.main.items_dialog_tags.view.*
  *Created by ed on 1/26/18.
  */
 class TagDialogAdapter(private val callback: TagDialogCallback,
-                       private val tags: List<RoomTags>) : Adapter<ItemVH>() {
+                       tags: List<RoomTags>) : Adapter<ItemVH>() {
 
+    var tags: List<RoomTags> = tags
+
+    set(loadedTags) {
+        field = loadedTags
+        notifyDataSetChanged()
+    }
 
     class ItemVH(itemView: View, val callback: TagDialogCallback) : ViewHolder(itemView){
 
@@ -24,6 +30,10 @@ class TagDialogAdapter(private val callback: TagDialogCallback,
 
             itemView.text_tag.text = tag.tag
             itemView.text_posts.text = "${tag.comments}"
+
+            itemView.setOnClickListener {
+                callback.onTagSelected(tag.tag)
+            }
         }
     }
 

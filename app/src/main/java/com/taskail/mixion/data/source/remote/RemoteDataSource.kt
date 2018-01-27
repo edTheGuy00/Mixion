@@ -53,7 +53,7 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
     }
 
     override fun getTags(callback: SteemitDataSource.DataLoadedCallback<Tags>) {
-
+        fetchOnDisposable(callback, getTags())
     }
 
     private fun getNew(): Observable<Array<SteemDiscussion>> {
@@ -86,6 +86,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
     private fun getMoreTrending(startAuthor: String, startPermLink: String): Observable<Array<SteemDiscussion>> {
         return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
+    }
+
+    private fun getTags() : Observable<Array<Tags>>{
+        return steemAPI.getTags("life", 50)
     }
 
     private fun <T> fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback<T>,

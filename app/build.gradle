@@ -5,6 +5,7 @@ buildscript {
     ext.androidSupportVersion = '27.0.2'
     ext.apolloReleaseVersion = '0.4.1'
     ext.roomVersion = '1.0.0'
+    ext.guavaVersion = '22.0-android'
 }
 
 apply plugin: 'com.android.application'
@@ -94,6 +95,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     kapt "android.arch.persistence.room:compiler:$roomVersion"
     implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+    implementation "com.google.guava:guava:$guavaVersion"
 
     compile 'com.github.tiagohm.MarkdownView:library:0.17.0'
 

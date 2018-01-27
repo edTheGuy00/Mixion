@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="40dp"
     android:orientation="horizontal"
     android:paddingTop="2dip"
     android:paddingBottom="2dip"
+    android:clickable="true"
+    android:focusable="true"
     android:foreground="?selectableItemBackgroundBorderless"
-    android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
+    android:paddingStart="20dp"
     android:paddingEnd="?android:attr/expandableListPreferredItemIndicatorRight">
 
     <TextView android:id="@+id/text_tag"

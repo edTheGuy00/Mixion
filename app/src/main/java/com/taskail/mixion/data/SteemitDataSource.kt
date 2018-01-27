@@ -27,6 +27,8 @@ interface SteemitDataSource {
         fun getTags(callback: DataLoadedCallback<RoomTags>)
 
         fun saveTags(tags: RoomTags)
+
+        fun deleteTags()
     }
 
 
@@ -34,12 +36,12 @@ interface SteemitDataSource {
 
         fun onDataLoaded(list: List<T>)
 
-        fun onDataLoaded(steem: Array<T>)
+        fun onDataLoaded(array: Array<T>)
 
         fun onLoadError(error: Throwable)
     }
 
-    fun <T>getTags(callback: DataLoadedCallback<T>)
+    fun getTags(callback: DataLoadedCallback<RoomTags>)
 
     fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
 

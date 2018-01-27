@@ -30,9 +30,17 @@ class LocalDataSource(val tagsDao: TagsDao,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.d("Save Business", "Success")
+                    Log.d("Save Tag", "Success")
                 }))
 
+    }
+
+    override fun deleteTags() {
+        disposable.add(deleteTags(tagsDao)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d("Delete Tags", "Success")
+                }))
     }
 
     companion object {

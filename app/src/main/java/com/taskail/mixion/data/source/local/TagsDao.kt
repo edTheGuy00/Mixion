@@ -15,4 +15,9 @@ import android.arch.persistence.room.Query
     @Query("SELECT * FROM Tags") fun getTags(): List<RoomTags>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertTag(tags: RoomTags)
+
+    /**
+     * Delete all Tags.
+     */
+    @Query("DELETE FROM Tags") fun deleteTags()
 }
