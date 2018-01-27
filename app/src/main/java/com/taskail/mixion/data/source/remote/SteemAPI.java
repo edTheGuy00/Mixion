@@ -14,9 +14,11 @@ import retrofit2.http.Query;
 
 public interface SteemAPI {
 
+    //call using ("search+" + term)
     @GET("search")
     Observable<AskSteem> searchAskSteem(@Query("q") String searchTerm);
 
+    //call using ("search+" + term, page)
     @GET("search")
     Observable<AskSteem> AskMoreSteem(
             @Query("q") String searchTerm,

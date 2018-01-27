@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.adapters.ViewPagerAdapter
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.local.MixionDatabase

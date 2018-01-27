@@ -65,7 +65,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
-    compile 'com.github.stfalcon:chatkit:0.2.1'
     compile ('com.rocketchat.core:rocketchat-core:0.7.1.9') {
         exclude group :'org.json', module: 'json'
     }

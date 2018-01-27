@@ -1,4 +1,4 @@
-package com.taskail.mixion.helpers;
+package com.taskail.mixion.views;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

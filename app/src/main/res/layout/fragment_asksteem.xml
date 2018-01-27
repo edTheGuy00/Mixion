@@ -37,17 +37,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/search_icon"
                     android:background="@null"
                     android:inputType="text"
                     android:hint="Search" />
 
-                <ImageView
-                    android:id="@+id/search_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_search"/>
             </RelativeLayout>
 
             <TextView

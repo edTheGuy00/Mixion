@@ -1,5 +1,6 @@
 package com.taskail.mixion.data.source.remote
 
+import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,6 +12,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory
  */
 
 const val baseUrl = "https://api.steemjs.com/"
+
+const val insteemUrl = "https://steemql.herokuapp.com/graphql"
 
 fun getRetrofitClient() : Retrofit{
 
@@ -28,4 +31,19 @@ fun getRetrofitClient() : Retrofit{
             .addConverterFactory(JacksonConverterFactory.create())
             .build()
 
+}
+
+fun getApolloClient() : ApolloClient{
+
+    val loggingInterceptor = HttpLoggingInterceptor()
+    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+    val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+    return ApolloClient.builder()
+            .serverUrl(insteemUrl)
+            .okHttpClient(okHttpClient)
+            .build()
 }
