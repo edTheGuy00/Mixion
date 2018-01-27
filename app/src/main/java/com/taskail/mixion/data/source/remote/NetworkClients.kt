@@ -13,7 +13,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 const val baseUrl = "https://api.steemjs.com/"
 
-const val insteemUrl = "https://steemql.herokuapp.com/graphql"
+const val insteemUrl = "https://steemql.insteem.com/graphql"
 
 fun getRetrofitClient() : Retrofit{
 
