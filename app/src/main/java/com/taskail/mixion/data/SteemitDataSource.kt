@@ -2,6 +2,7 @@ package com.taskail.mixion.data
 
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
+import com.taskail.mixion.data.source.local.RoomTags
 
 /**
  *Created by ed on 1/24/18.
@@ -23,16 +24,22 @@ interface SteemitDataSource {
 
     interface Local{
 
-        fun getTags()
+        fun getTags(callback: DataLoadedCallback<RoomTags>)
+
+        fun saveTags(tags: RoomTags)
     }
 
 
     interface DataLoadedCallback <T>{
 
+        fun onDataLoaded(list: List<T>)
+
         fun onDataLoaded(steem: Array<T>)
 
         fun onLoadError(error: Throwable)
     }
+
+    fun <T>getTags(callback: DataLoadedCallback<T>)
 
     fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
 

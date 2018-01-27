@@ -32,6 +32,8 @@ interface FeedContract {
 
         fun getPromoted()
 
+        fun getByTag(tag: String)
+
         fun fetchMore(lastPostLocation: Int)
     }
 }

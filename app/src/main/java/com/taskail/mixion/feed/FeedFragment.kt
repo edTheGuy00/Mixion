@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.views.FilterMenuView
@@ -28,8 +28,9 @@ class FeedFragment : Fragment(), FeedContract.View {
         fun onFeedSearchRequested()
         fun onAccountRequested()
         fun hideBottomNav()
-        fun showBottomNave()
+        fun showBottomNav()
         fun getFilterMenuAnchor(): View?
+        fun onTagDialogRequested()
     }
 
     private val filterMenuCallback = FilterMenuCallback()
@@ -138,7 +139,7 @@ class FeedFragment : Fragment(), FeedContract.View {
                     getCallback()?.hideBottomNav()
                 } else if (dy < 0 && !bottomNavIsVisible) {
                     bottomNavIsVisible = true
-                    getCallback()?.showBottomNave()
+                    getCallback()?.showBottomNav()
                 }
             }
 
@@ -167,7 +168,7 @@ class FeedFragment : Fragment(), FeedContract.View {
         }
 
         override fun onTagsSelected() {
-            Log.d(TAG, "Tags selected")
+            getCallback()?.onTagDialogRequested()
         }
 
     }

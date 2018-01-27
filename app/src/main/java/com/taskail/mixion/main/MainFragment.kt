@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.adapters.ViewPagerAdapter
 import com.taskail.mixion.data.SteemitRepository
+import com.taskail.mixion.data.source.local.LocalDataSource
+import com.taskail.mixion.data.source.local.MixionDatabase
 import com.taskail.mixion.data.source.remote.RemoteDataSource
 import com.taskail.mixion.data.source.remote.SteemAPI
 import com.taskail.mixion.data.source.remote.getRetrofitClient
+import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.utils.getCallback
@@ -35,7 +38,7 @@ class MainFragment : Fragment(), FeedFragment.Callback {
 
     override fun onAccountRequested() {
         if (!getCurrentUser().isEmpty){
-            //User logged In, get info
+            //User logged In, get info, open new activity
         } else {
             //login
         }
@@ -47,8 +50,11 @@ class MainFragment : Fragment(), FeedFragment.Callback {
 
     interface Callback{
         fun getFilterMenuAnchor(): View?
+
+        fun getDatabase(): MixionDatabase?
     }
-    private var feedDisposable = CompositeDisposable()
+    private var remoteDisposable = CompositeDisposable()
+    private var localDisposable = CompositeDisposable()
     private var steemitAPI: SteemAPI? = null
     private val FEED_FRAGMENT = 0
     private lateinit var feedPresenter: FeedPresenter
@@ -70,19 +76,23 @@ class MainFragment : Fragment(), FeedFragment.Callback {
 
         val feedFragment = FeedFragment.getInstance()
         adapter.addFragment(feedFragment, "feed Fragment").also {
-            feedPresenter = FeedPresenter(feedFragment, createRepo())
+            feedPresenter = FeedPresenter(feedFragment, getRepository())
         }
 
         lockableViewPager.adapter = adapter
         lockableViewPager.currentItem = FEED_FRAGMENT
     }
 
-    private fun createRepo(): SteemitRepository{
-        return SteemitRepository.getInstance(createRemoteRepo())
+    private fun getRepository(): SteemitRepository{
+        return SteemitRepository.getInstance(createRemoteRepo(), createLocalRepo())
     }
 
     private fun createRemoteRepo() : RemoteDataSource {
-        return RemoteDataSource.getInstance(feedDisposable, createSteemApi())
+        return RemoteDataSource.getInstance(remoteDisposable, createSteemApi())
+    }
+
+    private fun createLocalRepo(): LocalDataSource {
+        return LocalDataSource.getInstance(getCallback()?.getDatabase()?.tagsDao()!!, localDisposable)
     }
 
     private fun createSteemApi() : SteemAPI {
@@ -104,9 +114,18 @@ class MainFragment : Fragment(), FeedFragment.Callback {
         bottomNavView.hideBottomNavigationView()
     }
 
-    override fun showBottomNave() {
+    override fun showBottomNav() {
         Log.d("Main Frag", "show")
         bottomNavView.showBottomNavigationView()
+    }
+
+    override fun onTagDialogRequested() {
+        TagDialog(context, getRepository(), object : TagDialog.TagDialogCallback{
+            override fun onTagSelected(tag: String) {
+                feedPresenter.getByTag(tag)
+            }
+
+        }).show()
     }
 
 
@@ -119,7 +138,7 @@ class MainFragment : Fragment(), FeedFragment.Callback {
     }
 
     override fun onDestroy() {
-        feedDisposable.dispose()
+        remoteDisposable.dispose()
         super.onDestroy()
     }
 

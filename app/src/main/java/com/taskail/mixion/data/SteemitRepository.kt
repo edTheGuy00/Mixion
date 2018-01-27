@@ -1,6 +1,8 @@
 package com.taskail.mixion.data
 
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.Tags
+import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.remote.RemoteDataSource
 
 /**
@@ -8,7 +10,10 @@ import com.taskail.mixion.data.source.remote.RemoteDataSource
  *
  * This class is responsible for all data
  */
-class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataSource {
+class SteemitRepository(
+        val remoteRepository: RemoteDataSource,
+        val localRepository: LocalDataSource
+        ) : SteemitDataSource {
 
 
 
@@ -24,6 +29,11 @@ class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataS
         remoteRepository.getMoreFeed(callback, sortBy, startAuthor, startPermLink)
     }
 
+    override fun <T> getTags(callback: SteemitDataSource.DataLoadedCallback<T>) {
+
+
+    }
+
 
     companion object {
         private var INSTANCE: SteemitRepository? = null
@@ -32,9 +42,9 @@ class SteemitRepository( val remoteRepository: RemoteDataSource ) : SteemitDataS
          * Returns the single instance of this class, creating it if necessary.
          */
         @JvmStatic
-        fun getInstance( remoteRepository: RemoteDataSource):
+        fun getInstance( remoteRepository: RemoteDataSource, localRepository: LocalDataSource):
                 SteemitRepository{
-            return INSTANCE ?: SteemitRepository(remoteRepository).apply {
+            return INSTANCE ?: SteemitRepository(remoteRepository, localRepository).apply {
                 INSTANCE = this
             }
         }

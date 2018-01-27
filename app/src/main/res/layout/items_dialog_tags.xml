@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="2dip"
+    android:paddingBottom="2dip"
+    android:foreground="?selectableItemBackgroundBorderless"
+    android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
+    android:paddingEnd="?android:attr/expandableListPreferredItemIndicatorRight">
+
+    <TextView android:id="@+id/text_tag"
+        android:text="tag"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textAlignment="viewStart"
+        android:gravity="start" />
+
+    <TextView android:id="@+id/text_posts"
+        android:text="post"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+
+</LinearLayout>

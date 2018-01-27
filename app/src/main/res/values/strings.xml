@@ -14,6 +14,7 @@
     <string name="filter_trending">Trending</string>
     <string name="filter_promoted">Promoted</string>
     <string name="browse_tags">Browse By Tags</string>
+    <string name="tags">Tags</string>
 
     <string-array name="feed_type">
         <item>Trending</item>

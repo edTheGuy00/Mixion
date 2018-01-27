@@ -70,9 +70,20 @@ class FeedPresenter(val feedView: FeedContract.View,
         fetch()
     }
 
+    override fun getByTag(tag: String) {
+        if (steemitRepository.remoteRepository.tag != tag){
+            steemitRepository.remoteRepository.tag = tag
+            feedView.clearItems()
+            performCleanFetch()
+        }
+    }
+
     private fun fetch(){
 
         steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
+            override fun onDataLoaded(list: List<SteemDiscussion>) {
+            }
+
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
                 feedView.discussionFromResponse.addAll(steem)
                 feedView.showFeed()
@@ -88,6 +99,9 @@ class FeedPresenter(val feedView: FeedContract.View,
     override fun fetchMore(lastPostLocation: Int) {
 
         steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
+            override fun onDataLoaded(list: List<SteemDiscussion>) {
+            }
+
             override fun onDataLoaded(steem: Array<SteemDiscussion>) {
 
                 /**
