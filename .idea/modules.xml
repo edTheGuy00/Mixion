@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mixion.iml" filepath="$PROJECT_DIR$/Mixion.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bypass/bypass.iml" filepath="$PROJECT_DIR$/bypass/bypass.iml" />
     </modules>
   </component>
 </project>
