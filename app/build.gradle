@@ -18,7 +18,7 @@ android {
     buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.taskail.mixion"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 4
         versionName "1.0-beta4"

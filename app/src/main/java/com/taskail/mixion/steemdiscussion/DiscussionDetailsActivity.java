@@ -1,10 +1,9 @@
-package com.taskail.mixion.steempost;
+package com.taskail.mixion.steemdiscussion;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -20,21 +19,14 @@ import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.fetcher.ApolloResponseFetchers;
 import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.taskail.mixion.GetSingleDiscussionQuery;
-import com.taskail.mixion.adapters.CommentsRecyclerAdapter;
 import com.taskail.mixion.data.models.ContentReply;
-import com.taskail.mixion.data.network.MixionApolloClient;
 import com.taskail.mixion.R;
-import com.taskail.mixion.data.network.RetrofitClient;
-import com.taskail.mixion.helpers.CircleProgressViewHelper;
-import com.taskail.mixion.data.source.remote.SteemAPI;
 import com.taskail.mixion.data.models.ActiveVote;
 import com.taskail.mixion.data.models.SteemDiscussion;
-import com.taskail.mixion.utils.Constants;
 import com.taskail.mixion.utils.GetTimeAgo;
 import com.taskail.mixion.utils.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import at.grabner.circleprogress.CircleProgressView;
@@ -52,7 +44,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private static final String TAG = "DiscussionDetailsActivi";
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    SteemAPI steemApi = RetrofitClient.getRetrofitClient(Constants.BASE_URL).create(SteemAPI.class);
+    //SteemAPI steemApi = RetrofitClient.getRetrofitClient(Constants.BASE_URL).create(SteemAPI.class);
 
     StringUtils stringUtils;
     private RecyclerView commentsRecyclerView;
@@ -61,7 +53,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private CircleProgressView circleProgressView;
     private List<ActiveVote> voters = new ArrayList<>();
     private List<ContentReply> contentRepliesList = new ArrayList<>();
-    private CommentsRecyclerAdapter repliesAdapter;
+    //private CommentsRecyclerAdapter repliesAdapter;
     private ScrollView scrollView;
     private String author, permLink;
 
@@ -71,25 +63,17 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion_details);
-        mApolloClient = MixionApolloClient.getApolloCleint();
+        //mApolloClient = MixionApolloClient.getApolloCleint();
         commentsRecyclerView = findViewById(R.id.comments_list);
         scrollView = findViewById(R.id.scrollView);
         ImageView menu = findViewById(R.id.menu_img);
         initWidgets();
-        initCommentsLayout();
     }
 
     /**
      *A RecyclerView for the comments(replies) of a particular discussion.
      */
-    private void initCommentsLayout(){
-        commentsRecyclerView = findViewById(R.id.comments_list);
-        commentsRecyclerView.setNestedScrollingEnabled(true);
-        repliesAdapter = new CommentsRecyclerAdapter(contentRepliesList, mContext);
-        commentsRecyclerView.setAdapter(repliesAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        commentsRecyclerView.setLayoutManager(layoutManager);
-    }
+
 
     private void initWidgets(){
         titleTV = findViewById(R.id.title);
@@ -150,7 +134,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
      */
 
     private void loadData(String author, String link){
-        CircleProgressViewHelper.showLoading(circleProgressView);
+        //CircleProgressViewHelper.showLoading(circleProgressView);
 
         ApolloCall<GetSingleDiscussionQuery.Data> discussionData = mApolloClient
                 .query(new GetSingleDiscussionQuery(author, link))
@@ -170,7 +154,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
             }
 
             @Override public void onComplete() {
-                CircleProgressViewHelper.stopLoading(circleProgressView);
+                //CircleProgressViewHelper.stopLoading(circleProgressView);
             }
         }));
     }
@@ -198,10 +182,6 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
     private void firstServerErrorHandler(String author, String link){
         Toast.makeText(mContext, "Server Error, retrying different server", Toast.LENGTH_SHORT).show();
 
-        disposable.add(steemApi.getContent(author, link)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleSecondResponse,this::handleError));
     }
 
     private void handleSecondResponse(SteemDiscussion steemDiscussion) {
@@ -227,25 +207,9 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
 
         markdownView.addStyleSheet(new Github()).loadMarkdown(Html.fromHtml(body).toString());
 
-        CircleProgressViewHelper.stopLoading(circleProgressView);
 
     }
 
-    public void loadComments(View view){
-        if (!isLoading())
-            disposable.add(steemApi.getContentReplies(author, permLink)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .doOnError(throwable -> {
-                        Log.e(TAG, "loadComments: ", throwable);
-                    })
-                    .doOnNext(contentReplies -> {
-                        Collections.addAll(contentRepliesList, contentReplies);
-                        repliesAdapter.notifyDataSetChanged();
-                        scrollView.post(() -> scrollView.smoothScrollTo(0, commentsRecyclerView.getTop()));
-                    })
-                    .subscribe());
-    }
 
     public void showVoters(View view){
         if ( !isLoading() && votersExist())
@@ -259,11 +223,7 @@ public class DiscussionDetailsActivity extends AppCompatActivity {
         return circleProgressView.getVisibility() == View.VISIBLE;
     }
 
-    private void handleError(Throwable e) {
-        CircleProgressViewHelper.unableToLoadError(circleProgressView);
-        Log.e(TAG, e.getMessage(), e);
-        Toast.makeText(mContext, "Unable to Load", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     protected void onDestroy() {

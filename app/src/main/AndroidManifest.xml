@@ -24,7 +24,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="com.taskail.mixion.steempost.DiscussionDetailsActivity">
+        <activity android:name="com.taskail.mixion.steemdiscussion.DiscussionDetailsActivity">
 
         </activity>
     </application>

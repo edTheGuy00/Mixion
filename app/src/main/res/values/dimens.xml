@@ -10,4 +10,5 @@
     <dimen name="spacing_xsmall">2dp</dimen>
     <dimen name="spacing_xxlarge">40dp</dimen>
     <dimen name="filter_menu_elevation">16dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
 </resources>
