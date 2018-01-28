@@ -15,12 +15,13 @@
         android:layout_centerHorizontal="true"/>
 
     <android.support.v7.widget.AppCompatEditText
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/steemit_chattext"
         android:id="@+id/user_name"
-        android:hint="username...."
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/steemit_chattext"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/vidaloka"
+        android:hint="username...." />
 
     <android.support.v7.widget.AppCompatEditText
         android:layout_below="@+id/user_name"

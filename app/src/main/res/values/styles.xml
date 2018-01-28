@@ -2,19 +2,19 @@
 
     <!-- Base application theme. -->
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Mixion" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="Mixion.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
     
-    <style name="AppTheme.DarkAccent">
+    <style name="Mixion.DarkAccent">
         <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
 
@@ -34,5 +34,39 @@
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:clickable">true</item>
     </style>
+
+    <style name="TextAppearance.DiscussionTitle" parent="@android:style/TextAppearance.Material.Headline">
+        <item name="android:fontFamily">@font/vidaloka</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
+        <item name="lineHeightHint">32sp</item>
+    </style>
+
+    <style name="TextAppearance.DiscussionDescription" parent="@android:style/TextAppearance.Material.Subhead">
+    <item name="android:textColor">@color/text_secondary_dark</item>
+    <item name="android:letterSpacing">0.01</item>
+    <item name="lineHeightHint">24sp</item>
+    </style>
+
+    <style name="Widget.CustomButton.InlineActionButton" parent="@android:style/Widget.Material.Button">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textAppearance">@style/TextAppearance.CommentAuthor</item>
+        <item name="android:drawablePadding">@dimen/spacing_micro</item>
+        <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="TextAppearance.CommentAuthor" parent="@android:style/TextAppearance.Material.Caption">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFeatureSettings">smcp, onum</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.CommentTimestamp" parent="@android:style/TextAppearance.Material.Caption">
+        <item name="android:textColor">@color/hint_disabled_dark</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFeatureSettings">onum, smcp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
 
 </resources>

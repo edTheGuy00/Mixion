@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_discussions_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/top_bar"
+
+    <fragment
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:id="@+id/discussion_details_fragment"
+        android:name="com.taskail.mixion.steemdiscussion.DiscussionDetailsFragment"
+        android:layout="@layout/fragment_steem_discussion"
+        tools:layout="@layout/fragment_steem_discussion" />
 
-        <include layout="@layout/toolbar_details_activity"/>
+    <FrameLayout
+        android:id="@+id/back_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="9dp">
 
-    </android.support.design.widget.AppBarLayout>
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginEnd="@dimen/padding_normal"
+            android:layout_marginBottom="@dimen/padding_normal"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:background="@drawable/mid_grey_ripple" />
 
-    <ScrollView
-        android:layout_below="@+id/top_bar"
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    </FrameLayout>
 
-        <include layout="@layout/layout_center_details_activity"/>
-
-    </ScrollView>
-
-    <at.grabner.circleprogress.CircleProgressView
-        android:id="@+id/circleProgress"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        app:cpv_autoTextSize="true"
-        app:cpv_barColor="@color/colorPrimary"
-        app:cpv_barWidth="15dp"
-        app:cpv_innerContourSize="0dp"
-        app:cpv_showTextInSpinningMode="true"
-        app:cpv_textMode="Text"
-        app:cpv_outerContourSize="0dp"
-        app:cpv_rimColor="@color/circular_light"
-        app:cpv_rimWidth="15dp"
-        app:cpv_seekMode="false"
-        android:visibility="gone"
-        app:cpv_spinColor="@color/colorPrimary"
-        app:cpv_textColor="@color/colorPrimaryDark"/>
-
-</RelativeLayout>
+</FrameLayout>

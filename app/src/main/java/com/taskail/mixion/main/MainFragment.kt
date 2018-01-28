@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitRepository
+import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.local.MixionDatabase
 import com.taskail.mixion.data.source.remote.RemoteDataSource
@@ -16,6 +17,8 @@ import com.taskail.mixion.data.source.remote.getRetrofitClient
 import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
+import com.taskail.mixion.steemdiscussion.DiscussionDetailsActivity
+import com.taskail.mixion.steemdiscussion.newDiscussionIntent
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.utils.hideBottomNavigationView
 import com.taskail.mixion.utils.showBottomNavigationView
@@ -109,12 +112,10 @@ class MainFragment : Fragment(), FeedFragment.Callback {
     }
 
     override fun hideBottomNav() {
-        Log.d("Main Frag", "HIde")
         bottomNavView.hideBottomNavigationView()
     }
 
     override fun showBottomNav() {
-        Log.d("Main Frag", "show")
         bottomNavView.showBottomNavigationView()
     }
 
@@ -127,6 +128,9 @@ class MainFragment : Fragment(), FeedFragment.Callback {
         }).show()
     }
 
+    override fun openDiscussionRequested(discussion: SteemDiscussion) {
+        startActivity(newDiscussionIntent(context!!, discussion))
+    }
 
     companion object {
         @JvmStatic fun newInstance(): MainFragment{

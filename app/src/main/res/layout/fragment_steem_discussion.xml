@@ -4,27 +4,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <View
+        android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:background="@color/background_light" />
 
-    <FrameLayout
-        android:id="@+id/back_wrapper"
-        android:layout_width="wrap_content"
+    <com.taskail.mixion.ui.FourThreeImageSwitcher
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="9dp">
+        android:background="@color/light_grey"
+        android:minHeight="168dp"/>
 
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="?android:actionBarSize"
-            android:layout_height="?android:actionBarSize"
-            android:layout_marginEnd="@dimen/padding_normal"
-            android:layout_marginBottom="@dimen/padding_normal"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            android:background="@drawable/mid_grey_ripple" />
-
-    </FrameLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusableInTouchMode="true"
+        android:importantForAccessibility="no" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/discussion_comments"

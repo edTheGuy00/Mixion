@@ -5,13 +5,13 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
-import com.taskail.mixion.views.FilterMenuView
+import com.taskail.mixion.ui.FilterMenuView
 import kotlinx.android.synthetic.main.fragment_feed.*
 import java.util.*
 
@@ -31,9 +31,11 @@ class FeedFragment : Fragment(), FeedContract.View {
         fun showBottomNav()
         fun getFilterMenuAnchor(): View?
         fun onTagDialogRequested()
+        fun openDiscussionRequested(discussion: SteemDiscussion)
     }
 
     private val filterMenuCallback = FilterMenuCallback()
+    private val feedCallBack = FeedCallBack()
 
     override fun showFeed() {
         adapter.notifyDataSetChanged()
@@ -79,7 +81,7 @@ class FeedFragment : Fragment(), FeedContract.View {
                               savedInstanceState: Bundle?): View? {
         val view: View=  inflater.inflate(R.layout.fragment_feed, container, false)
 
-        adapter = FeedRVAdapter(discussionFromResponse)
+        adapter = FeedRVAdapter(discussionFromResponse, feedCallBack)
 
         return view
     }
@@ -148,6 +150,14 @@ class FeedFragment : Fragment(), FeedContract.View {
 
     private fun getCallback(): Callback? {
         return getCallback(this, Callback::class.java)
+    }
+
+    private inner class FeedCallBack : FeedRVAdapter.FeedAdapterCallBack{
+        override fun onDiscussionSelected(discussion: SteemDiscussion) {
+
+            Log.d(TAG, " Feed Clicked")
+            getCallback()?.openDiscussionRequested(discussion)
+        }
     }
 
     private inner class FilterMenuCallback : FilterMenuView.Callback{
