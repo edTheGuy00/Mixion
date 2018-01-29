@@ -16,8 +16,8 @@ android {
         applicationId "com.taskail.mixion"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.0-beta4"
+        versionCode 5
+        versionName "1.0-beta5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -48,6 +48,13 @@ android {
 
     dexOptions {
         javaMaxHeapSize '6g'
+    }
+}
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+        exclude module: 'commons-logging'
     }
 }
 
