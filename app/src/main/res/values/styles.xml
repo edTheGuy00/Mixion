@@ -68,5 +68,10 @@
         <item name="android:letterSpacing">0.02</item>
     </style>
 
+    <style name="SearchToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/light_search_toolbar_icon</item>
+        <item name="colorControlActivated">?android:attr/textColorTertiary</item>
+        <item name="colorControlHighlight">?android:attr/textColorTertiary</item>
+    </style>
 
 </resources>

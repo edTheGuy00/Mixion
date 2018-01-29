@@ -30,7 +30,22 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(), MainFragment
         mixionDatabase = MixionDatabase.getInstance(this)
     }
 
+    override fun onSearchOpen() {
+        getToolbar().visibility = View.GONE
+    }
+
+    override fun onSearchClosed() {
+        getToolbar().visibility = View.VISIBLE
+    }
+
     override fun createFragment(): MainFragment {
         return MainFragment.newInstance()
+    }
+
+    override fun onBackPressed() {
+        if (getFragment()?.onBackPressed()!!){
+            return
+        }
+        finish()
     }
 }

@@ -25,7 +25,7 @@ class FeedFragment : Fragment(), FeedContract.View {
     val TAG = "Feed Fragment"
 
     interface Callback {
-        fun onFeedSearchRequested()
+        fun onSearchRequested()
         fun onAccountRequested()
         fun hideBottomNav()
         fun showBottomNav()
@@ -89,7 +89,7 @@ class FeedFragment : Fragment(), FeedContract.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_feed_search -> {
-                getCallback()?.onFeedSearchRequested()
+                getCallback()?.onSearchRequested()
                 true
             }
             R.id.menu_feed_filter -> {

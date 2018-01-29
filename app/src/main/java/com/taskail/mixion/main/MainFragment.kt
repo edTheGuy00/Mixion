@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
@@ -17,7 +18,7 @@ import com.taskail.mixion.data.source.remote.getRetrofitClient
 import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
-import com.taskail.mixion.steemdiscussion.DiscussionDetailsActivity
+import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.steemdiscussion.newDiscussionIntent
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.utils.hideBottomNavigationView
@@ -30,13 +31,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 /**
  *Created by ed on 1/19/18.
  */
-class MainFragment : Fragment(), FeedFragment.Callback {
+class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, SearchFragment.Callback {
 
     val TAG = "MainFragment"
-
-    override fun onFeedSearchRequested() {
-
-    }
 
     override fun onAccountRequested() {
         if (!getCurrentUser().isEmpty){
@@ -51,8 +48,9 @@ class MainFragment : Fragment(), FeedFragment.Callback {
     }
 
     interface Callback{
+        fun onSearchOpen()
+        fun onSearchClosed()
         fun getFilterMenuAnchor(): View?
-
         fun getDatabase(): MixionDatabase?
     }
     private var remoteDisposable = CompositeDisposable()
@@ -128,6 +126,33 @@ class MainFragment : Fragment(), FeedFragment.Callback {
         }).show()
     }
 
+    private fun searchFragment(): SearchFragment? {
+        return childFragmentManager.findFragmentById(R.id.fragment_main_container) as SearchFragment?
+    }
+
+    override fun onSearchRequested() {
+        var fragment: Fragment? = searchFragment()
+        if (fragment == null) {
+            fragment = SearchFragment.newInstance()
+            childFragmentManager
+                    .beginTransaction()
+                    .add(R.id.fragment_main_container, fragment)
+                    .commitNow()
+        }
+
+        getCallback()?.onSearchOpen()
+
+    }
+
+    override fun onSearchClosed() {
+        childFragmentManager.beginTransaction().remove(searchFragment()).commitNowAllowingStateLoss()
+        getCallback()?.onSearchClosed()
+    }
+
+    override fun onSearchResultSelected() {
+
+    }
+
     override fun openDiscussionRequested(discussion: SteemDiscussion) {
         startActivity(newDiscussionIntent(context!!, discussion))
     }
@@ -148,5 +173,14 @@ class MainFragment : Fragment(), FeedFragment.Callback {
 
     private fun getCallback(): Callback? {
         return getCallback(this, Callback::class.java)
+    }
+
+    override fun onBackPressed(): Boolean {
+        val searchFragment = searchFragment()
+        if (searchFragment != null && searchFragment.onBackPressed()) {
+            return true
+        }
+
+        return false
     }
 }

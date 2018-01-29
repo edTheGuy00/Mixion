@@ -27,8 +27,9 @@ abstract class SingleFragmentActivity<T : Fragment>: AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(getContainerId(), fragment).commit()
     }
 
-    protected fun getFragment(): Fragment? {
-        return supportFragmentManager.findFragmentById(getContainerId())
+    @Suppress("UNCHECKED_CAST")
+    protected fun getFragment(): T? {
+        return supportFragmentManager.findFragmentById(getContainerId()) as T?
     }
 
     protected abstract fun createFragment(): T
