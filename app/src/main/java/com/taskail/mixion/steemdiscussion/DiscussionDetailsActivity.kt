@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.utils.GetTimeAgo
 import com.taskail.mixion.utils.StringUtils
 import com.taskail.mixion.utils.parseHtml
 
@@ -55,8 +56,10 @@ class DiscussionDetailsActivity : AppCompatActivity(), DiscussionContract.Presen
 
     private fun setDiscussion(discussion: SteemDiscussion){
         discussionsView.displayTitle(discussion.title)
-
-        val format = "nothing" //StringUtils.getFormat(discussion.jsonMetadata)
+        discussionsView.setUser(discussion.author)
+        discussionsView.setPayout(discussion.pendingPayoutValue.replace("SBD", ""))
+        discussionsView.setTimeAgo(GetTimeAgo.getlongtoago(discussion.created))
+        discussionsView.setUpVoteCount(discussion.netVotes.toString())
 
         val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
                 ContextCompat.getColor(this, R.color.colorAccent))
@@ -68,11 +71,12 @@ class DiscussionDetailsActivity : AppCompatActivity(), DiscussionContract.Presen
         if (images != null){
             discussionsView.displayImages(images)
         } else{
-
+            discussionsView.setNoImages()
         }
 
-        discussionsView.setUpVoteCount(discussion.netVotes.toString())
+        //val format = StringUtils.getFormat(discussion.jsonMetadata)
 
+        //TODO - properly parse the body
         /**if (format != null)
             when(format){
                 "html" -> {

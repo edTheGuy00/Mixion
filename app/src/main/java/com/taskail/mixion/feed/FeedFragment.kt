@@ -138,10 +138,10 @@ class FeedFragment : Fragment(), FeedContract.View {
             override fun scrollAction(dx: Int, dy: Int) {
                 if (dy > 0 && bottomNavIsVisible) {
                     bottomNavIsVisible = false
-                    getCallback()?.hideBottomNav()
+                    //getCallback()?.hideBottomNav()
                 } else if (dy < 0 && !bottomNavIsVisible) {
                     bottomNavIsVisible = true
-                    getCallback()?.showBottomNav()
+                    //getCallback()?.showBottomNav()
                 }
             }
 

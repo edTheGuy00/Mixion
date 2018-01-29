@@ -3,6 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image"
     android:elevation="1dp"
-    android:scaleType="fitCenter"
+    android:scaleType="centerCrop"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />

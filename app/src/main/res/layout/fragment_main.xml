@@ -31,6 +31,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/dark_gray"
+            android:visibility="gone"
             app:tabGravity="fill"
             app:itemIconTint="@drawable/bottom_navigation_color_selector"
             app:itemTextColor="@drawable/bottom_navigation_color_selector"

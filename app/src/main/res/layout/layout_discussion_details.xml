@@ -58,7 +58,45 @@
             tools:text="Re-Steem"
             style="@style/Widget.CustomButton.InlineActionButton" />
 
+        <Button
+            android:id="@+id/discussion_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:drawableTop="@drawable/ic_user"
+            tools:text="user"
+            style="@style/Widget.CustomButton.InlineActionButton" />
+
+        <Button
+            android:id="@+id/discussion_payout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:drawableTop="@drawable/ic_attach_money_black_24dp"
+            tools:text="1223"
+            style="@style/Widget.CustomButton.InlineActionButton" />
+
     </LinearLayout>
+
+    <com.taskail.mixion.ui.BaselineGridTextView
+        android:id="@+id/time_ago"
+        android:layout_columnSpan="1"
+        android:padding="@dimen/spacing_micro"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="0dp"
+        android:textAppearance="@style/TextAppearance.CommentTimestamp"
+        tools:text="3 hours ago" />
+
+    <com.taskail.mixion.ui.BaselineGridTextView
+        android:id="@+id/tag"
+        android:layout_columnSpan="1"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="0dp"
+        android:padding="@dimen/spacing_micro"
+        android:textAppearance="@style/TextAppearance.CommentTimestamp"
+        tools:text="in dTube" />
 
     <com.taskail.mixion.ui.BaselineGridTextView
         android:id="@+id/discussion_description"
@@ -70,32 +108,5 @@
         android:textColorLink="@color/colorAccent"
         tools:text="Check out My New Post!" />
 
-
-
-    <com.taskail.mixion.ui.BaselineGridTextView
-        android:id="@+id/user_name"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:gravity="end"
-        android:layout_marginTop="@dimen/padding_normal"
-        android:paddingTop="@dimen/spacing_normal"
-        android:textAppearance="@style/TextAppearance.CommentAuthor"
-        android:clickable="false"
-        tools:text="—Edgrr t." />
-
-    <Space
-        android:layout_width="@dimen/avatar_margin"
-        android:layout_rowSpan="2" />
-
-    <com.taskail.mixion.ui.BaselineGridTextView
-        android:id="@+id/time_ago"
-        android:layout_gravity="end"
-        android:gravity="end"
-        android:textAppearance="@style/TextAppearance.CommentTimestamp"
-        tools:text="3 hours ago" />
-
-    <Space
-        android:layout_height="@dimen/avatar_margin"
-        android:layout_columnSpan="3" />
 
 </GridLayout>

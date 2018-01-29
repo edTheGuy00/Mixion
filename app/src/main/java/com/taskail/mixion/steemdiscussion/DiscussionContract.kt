@@ -21,6 +21,12 @@ interface DiscussionContract {
 
         fun setUpVoteCount(votes: String)
 
+        fun setPayout(payout: String)
+
+        fun setUser(user: String)
+
+        fun setTimeAgo(timeAgo: String)
+
         fun setNoImages()
     }
 

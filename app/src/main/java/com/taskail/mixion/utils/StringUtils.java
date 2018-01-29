@@ -199,11 +199,11 @@ public class StringUtils {
                     imagesArray.add(imgObject.get(i).toString());
                 }
 
-            } else {
-                imgObject = null;
             }
         } catch (JSONException e) {
             e.printStackTrace();
+
+            return null;
         }
 
         return imagesArray;

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.utils.*
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
+import kotlinx.android.synthetic.main.layout_discussion_details.*
 import kotlinx.android.synthetic.main.layout_discussion_details.view.*
 
 /**
@@ -77,8 +78,20 @@ class DiscussionDetailsFragment : Fragment(), DiscussionContract.View {
         titleAndDescriptionLayout.discussion_upvote_count.text = votes
     }
 
-    override fun setNoImages() {
+    override fun setPayout(payout: String) {
+        titleAndDescriptionLayout.discussion_payout.text = payout
+    }
 
+    override fun setUser(user: String) {
+        titleAndDescriptionLayout.discussion_author.text = user
+    }
+
+    override fun setTimeAgo(timeAgo: String) {
+        titleAndDescriptionLayout.time_ago.text = timeAgo
+    }
+
+    override fun setNoImages() {
+        discussion_comments.post({ discussion_comments.scrollBy(0, discussion_title.top) })
     }
 
     inner class ImageCallBack : Bypass.LoadImageCallback{
