@@ -142,6 +142,7 @@ class MainFragment : Fragment(), FeedFragment.Callback {
 
     override fun onDestroy() {
         remoteDisposable.dispose()
+        localDisposable.dispose()
         super.onDestroy()
     }
 
