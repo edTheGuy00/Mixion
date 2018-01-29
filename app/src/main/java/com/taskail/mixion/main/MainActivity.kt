@@ -31,11 +31,11 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(), MainFragment
     }
 
     override fun onSearchOpen() {
-        getToolbar().visibility = View.GONE
+        hideToolbar()
     }
 
     override fun onSearchClosed() {
-        getToolbar().visibility = View.VISIBLE
+        showToolbar()
     }
 
     override fun createFragment(): MainFragment {

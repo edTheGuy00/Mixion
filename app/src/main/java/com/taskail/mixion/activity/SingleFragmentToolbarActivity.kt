@@ -27,4 +27,12 @@ abstract class SingleFragmentToolbarActivity<T : Fragment> : SingleFragmentActiv
         return R.layout.activity_single_fragment_with_toolbar
     }
 
+    protected fun hideToolbar(){
+        supportActionBar?.hide()
+    }
+
+    protected fun showToolbar(){
+        supportActionBar?.show()
+    }
+
 }
