@@ -37,9 +37,10 @@ import com.taskail.mixion.R
  * the grid (relative to the view's top) & that this view's height is a multiple of 4dp so that
  * subsequent views start on the grid.
  */
-class BaselineGridTextViewK : AppCompatTextView {
+class BaselineGridTextView : AppCompatTextView {
 
-    private var FOUR_DIP: Float? = null
+    private var FOUR_DIP: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics)
+
 
     private var lineHeightMultiplierHint = 1f
     private var lineHeightHint = 0f
@@ -74,8 +75,8 @@ class BaselineGridTextViewK : AppCompatTextView {
         maxLinesByHeight = a.getBoolean(R.styleable.BaselineGridTextView_maxLinesByHeight, false)
         a.recycle()
 
-        FOUR_DIP = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics)
+        //FOUR_DIP = TypedValue.applyDimension(
+          //      TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics)
         computeLineHeight()
     }
 
@@ -151,7 +152,7 @@ class BaselineGridTextViewK : AppCompatTextView {
         else
             lineHeightMultiplierHint * fontHeight
 
-        val baselineAlignedLineHeight = (FOUR_DIP!! * Math.ceil((desiredLineHeight / FOUR_DIP!!).toDouble()).toFloat() + 0.5f).toInt()
+        val baselineAlignedLineHeight = (FOUR_DIP.times( Math.ceil((desiredLineHeight / FOUR_DIP).toDouble())).toFloat() + 0.5f).toInt()
         setLineSpacing(baselineAlignedLineHeight - fontHeight, 1f)
     }
 
@@ -159,10 +160,10 @@ class BaselineGridTextViewK : AppCompatTextView {
      * Ensure that the first line of text sits on the 4dp grid.
      */
     private fun ensureBaselineOnGrid(): Int {
-        val baseline = baseline.toFloat()
-        val gridAlign = baseline % FOUR_DIP!!
+        val baseline: Float = baseline.toFloat()
+        val gridAlign: Float = baseline.rem(FOUR_DIP)
         if (gridAlign != 0f) {
-            extraTopPadding = (FOUR_DIP!! - Math.ceil(gridAlign.toDouble())).toInt()
+            extraTopPadding = (FOUR_DIP.minus(Math.ceil(gridAlign.toDouble())).toInt())
         }
         return extraTopPadding
     }
@@ -172,9 +173,9 @@ class BaselineGridTextViewK : AppCompatTextView {
      * Ensure that height is a multiple of 4dp.
      */
     private fun ensureHeightGridAligned(height: Int): Int {
-        val gridOverhang = height % FOUR_DIP!!
+        val gridOverhang = height.rem(FOUR_DIP)
         if (gridOverhang != 0f) {
-            extraBottomPadding = (FOUR_DIP!! - Math.ceil(gridOverhang.toDouble())).toInt()
+            extraBottomPadding = (FOUR_DIP.minus(Math.ceil(gridOverhang.toDouble())).toInt())
         }
         return extraBottomPadding
     }

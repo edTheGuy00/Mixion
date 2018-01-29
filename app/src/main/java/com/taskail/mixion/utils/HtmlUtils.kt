@@ -64,7 +64,7 @@ fun parseHtml(
     var spanned = fromHtml(input)
 
     // strip any trailing newlines
-    while (spanned.get(spanned.length - 1) == '\n') {
+    while (spanned[spanned.length - 1] == '\n') {
         spanned = spanned.delete(spanned.length - 1, spanned.length)
     }
 
@@ -85,7 +85,7 @@ private fun linkifyPlainLinks(
 
     // Linkify doesn't seem to work as expected on M+
     // TODO: figure out why
-    //Linkify.addLinks(plainLinks, Linkify.WEB_URLS);
+    //Linkify.addLinks(plainLinks, Linkify.WEB_URLS)
 
     val urlSpans = plainLinks.getSpans(0, plainLinks.length, URLSpan::class.java)
 
@@ -102,7 +102,7 @@ private fun linkifyPlainLinks(
     return ssb
 }
 
-private fun fromHtml(input: String): SpannableStringBuilder {
+fun fromHtml(input: String): SpannableStringBuilder {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY) as SpannableStringBuilder
     } else {

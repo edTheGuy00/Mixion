@@ -10,11 +10,14 @@
         android:layout_height="match_parent"
         android:background="@color/background_light" />
 
-    <com.taskail.mixion.ui.FourThreeImageSwitcher
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/imageRecycler"
         android:background="@color/light_grey"
-        android:minHeight="168dp"/>
+        android:orientation="horizontal"
+        android:elevation="1dp"
+        android:layout_width="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_height="wrap_content"/>
 
     <View
         android:layout_width="0dp"

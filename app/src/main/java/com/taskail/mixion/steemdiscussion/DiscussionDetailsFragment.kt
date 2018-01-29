@@ -1,24 +1,30 @@
 package com.taskail.mixion.steemdiscussion
 
+import `in`.uncod.android.bypass.Bypass
+import `in`.uncod.android.bypass.style.ImageLoadingSpan
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.utils.*
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
-import kotlinx.android.synthetic.main.layout_discussion_title_and_body.view.*
+import kotlinx.android.synthetic.main.layout_discussion_details.view.*
 
 /**
  *Created by ed on 1/27/18.
  */
 
-class DiscussionDetailsFragment : Fragment() {
+class DiscussionDetailsFragment : Fragment(), DiscussionContract.View {
+    override lateinit var presenter: DiscussionContract.Presenter
 
-    lateinit var titleAndDescriptionLayout: View
+    private lateinit var titleAndDescriptionLayout: View
+
+    private lateinit var imagesAdapter: DiscussionImagesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_steem_discussion, container, false)
@@ -32,21 +38,53 @@ class DiscussionDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout)
+        val discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout)
+        imagesAdapter = DiscussionImagesAdapter(ArrayList(0))
 
         discussion_comments.itemAnimator = DefaultItemAnimator()
-        discussion_comments.adapter = adapter
+        discussion_comments.adapter = discussionAdapter
+        discussion_comments.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                imageRecycler.scrollBy(dy, dx)
+
+            }
+        })
+
+        imageRecycler.itemAnimator = DefaultItemAnimator()
+        imageRecycler.adapter = imagesAdapter
+    }
+
+    override fun displayTitle(title: String) {
+        titleAndDescriptionLayout.discussion_title.text = title
+    }
+
+    override fun displayHtmlBody(body: CharSequence) {
+        setTextWithNiceLinks(titleAndDescriptionLayout.discussion_description, body)
 
     }
 
-    fun loadDiscussion(discussion: SteemDiscussion){
-        Log.d("Details Fragment", discussion.author)
-
-        setTitle(discussion.title)
+    override fun displayMarkdownBody(body: String, markdown: Bypass) {
+        parseMarkdownAndSetText(titleAndDescriptionLayout.discussion_description,
+                body, markdown, ImageCallBack())
     }
 
-    private fun setTitle(title: String){
-       titleAndDescriptionLayout.discussion_title.text = title
+    override fun displayImages(images: List<String>) {
+        imagesAdapter.images = images
+    }
+
+    override fun setUpVoteCount(votes: String) {
+        titleAndDescriptionLayout.discussion_upvote_count.text = votes
+    }
+
+    override fun setNoImages() {
+
+    }
+
+    inner class ImageCallBack : Bypass.LoadImageCallback{
+        override fun loadImage(src: String?, loadingSpan: ImageLoadingSpan?) {
+
+        }
     }
 
 }

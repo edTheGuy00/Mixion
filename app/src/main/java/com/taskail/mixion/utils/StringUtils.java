@@ -9,6 +9,7 @@ import com.taskail.mixion.data.models.FullDiscussion;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -151,10 +152,37 @@ public class StringUtils {
         return commentstr;
     }
 
+    public static String getFormat(String jsonMeta){
 
-    public List createArrayOfImages(String jsonMetaData){
+        JSONObject mainObject = null;
+        try {
+            mainObject = new JSONObject(jsonMeta);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        List imagesArray = new ArrayList();
+        String format = null;
+
+        try {
+            if (mainObject != null) {
+                format = mainObject.getString("format");
+            } else {
+                format = null;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (format != null){
+            return format;
+        }else
+            return null;
+    }
+
+
+    public static ArrayList<String> createArrayOfImages(String jsonMetaData){
+
+        ArrayList<String> imagesArray = new ArrayList<>();
 
         JSONObject mainObject = null;
         try {
@@ -168,7 +196,7 @@ public class StringUtils {
                 imgObject = mainObject.getJSONArray("image");
 
                 for (int i = 0; i < imgObject.length(); i++){
-                    imagesArray.add(imgObject.get(i));
+                    imagesArray.add(imgObject.get(i).toString());
                 }
 
             } else {
@@ -177,7 +205,6 @@ public class StringUtils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "createArrayOfImages: " + imagesArray.get(0));
 
         return imagesArray;
     }
