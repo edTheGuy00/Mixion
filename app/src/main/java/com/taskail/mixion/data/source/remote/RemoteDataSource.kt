@@ -16,7 +16,8 @@ import io.reactivex.schedulers.Schedulers
  * This class is responsible for all Network data
  */
 class RemoteDataSource(private val disposable: CompositeDisposable,
-                       private val steemAPI: SteemAPI) : SteemitDataSource.Remote{
+                       private val steemAPI: SteemAPI) :
+        SteemitDataSource.Remote{
 
     override lateinit var tag: String
     override var loadCount: Int = 10

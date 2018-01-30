@@ -34,8 +34,10 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 var steemitRepository: SteemitRepository? = null
 
-class MainFragment : Fragment(), BackPressedHandler,
-        FeedFragment.Callback, SearchFragment.Callback {
+class MainFragment : Fragment(),
+        BackPressedHandler,
+        FeedFragment.Callback,
+        SearchFragment.Callback {
 
     val TAG = "MainFragment"
 

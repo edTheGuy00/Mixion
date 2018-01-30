@@ -12,7 +12,8 @@ import com.taskail.mixion.data.source.local.MixionDatabase
  * The main Entry point for Mixion Application
  */
 
-class MainActivity : SingleFragmentToolbarActivity<MainFragment>(), MainFragment.Callback{
+class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
+        MainFragment.Callback{
 
     lateinit var mixionDatabase: MixionDatabase
 

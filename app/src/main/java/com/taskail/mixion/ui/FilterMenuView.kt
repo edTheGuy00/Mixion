@@ -16,7 +16,8 @@ import kotlinx.android.synthetic.main.view_filter_menu.view.*
 /**
  *Created by ed on 1/25/18.
  */
-class FilterMenuView(context: Context?) : FrameLayout(context) {
+class FilterMenuView(context: Context?) :
+        FrameLayout(context) {
 
     init {
 

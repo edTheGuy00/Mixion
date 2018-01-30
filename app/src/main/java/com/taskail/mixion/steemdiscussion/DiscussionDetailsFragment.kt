@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.layout_discussion_details.view.*
  *Created by ed on 1/27/18.
  */
 
-class DiscussionDetailsFragment : Fragment(), DiscussionContract.View {
+class DiscussionDetailsFragment : Fragment(),
+        DiscussionContract.View {
     override lateinit var presenter: DiscussionContract.Presenter
 
     private lateinit var titleAndDescriptionLayout: View

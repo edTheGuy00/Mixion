@@ -37,7 +37,8 @@ fun loadDiscussionIntent(context: Context, author: String, permlink: String): In
             .putExtra(loadDiscussionPermlink, permlink)
 }
 
-class DiscussionDetailsActivity : AppCompatActivity(), DiscussionContract.Presenter {
+class DiscussionDetailsActivity : AppCompatActivity(),
+        DiscussionContract.Presenter {
 
     private lateinit var discussionsView: DiscussionContract.View
 

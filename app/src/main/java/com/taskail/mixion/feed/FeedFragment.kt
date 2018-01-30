@@ -20,7 +20,8 @@ import java.util.*
  *
  * Feed fragment is responsible for all views in the feed page.
  */
-class FeedFragment : Fragment(), FeedContract.View {
+class FeedFragment : Fragment(),
+        FeedContract.View {
 
     val TAG = "Feed Fragment"
 

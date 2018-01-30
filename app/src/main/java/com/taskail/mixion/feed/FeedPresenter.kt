@@ -9,7 +9,8 @@ import java.util.*
  *Created by ed on 1/24/18.
  */
 class FeedPresenter(val feedView: FeedContract.View,
-                    val steemitRepository: SteemitRepository) : FeedContract.Presenter {
+                    val steemitRepository: SteemitRepository) :
+        FeedContract.Presenter {
 
     var discussionFromResponse = ArrayList<SteemDiscussion>()
     var sortBy = "Trending"

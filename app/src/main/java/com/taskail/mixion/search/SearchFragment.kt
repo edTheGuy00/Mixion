@@ -20,7 +20,10 @@ import kotlinx.android.synthetic.main.fragment_search.*
  *Created by ed on 1/29/18.
  */
 
-class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View, SearchAdapter.SearchAdapterCallback {
+class SearchFragment : Fragment(),
+        BackPressedHandler,
+        SearchContract.View,
+        SearchAdapter.SearchAdapterCallback {
 
     override lateinit var presenter: SearchContract.Presenter
 

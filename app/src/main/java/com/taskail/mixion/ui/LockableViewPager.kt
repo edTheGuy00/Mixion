@@ -12,7 +12,8 @@ import android.view.MotionEvent;
  * BottomNavigationView
  */
 
-class LockableViewPager(context: Context, attributeSet: AttributeSet) : ViewPager(context, attributeSet){
+class LockableViewPager(context: Context, attributeSet: AttributeSet) :
+        ViewPager(context, attributeSet){
 
         override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         return false

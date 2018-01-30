@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.items_dialog_tags.view.*
  *Created by ed on 1/26/18.
  */
 class TagDialogAdapter(private val callback: TagDialogCallback,
-                       tags: List<RoomTags>) : Adapter<ItemVH>() {
+                       tags: List<RoomTags>) :
+        Adapter<ItemVH>() {
 
     var tags: List<RoomTags> = tags
 
