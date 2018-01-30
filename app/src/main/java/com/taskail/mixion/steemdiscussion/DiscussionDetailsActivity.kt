@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.taskail.mixion.R
+import com.taskail.mixion.data.SteemitDataSource
+import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.GetTimeAgo
 import com.taskail.mixion.utils.StringUtils
 import com.taskail.mixion.utils.parseHtml
@@ -18,12 +20,21 @@ import com.taskail.mixion.utils.parseHtml
 
 internal const val openDiscussion = "DiscussionFromFeed"
 
-internal const val loadDiscussionDiscussion = "LoadDiscussion"
+internal const val loadDiscussionAuthor = "LoadDiscussionAuthor"
 
-fun newDiscussionIntent(context: Context, discussion: SteemDiscussion) : Intent{
+internal const val loadDiscussionPermlink = "LoadDiscussionPermlink"
+
+fun openDiscussionIntent(context: Context, discussion: SteemDiscussion) : Intent{
     return Intent()
             .setClass(context, DiscussionDetailsActivity::class.java)
             .putExtra(openDiscussion, discussion)
+}
+
+fun loadDiscussionIntent(context: Context, author: String, permlink: String): Intent{
+    return Intent()
+            .setClass(context, DiscussionDetailsActivity::class.java)
+            .putExtra(loadDiscussionAuthor, author)
+            .putExtra(loadDiscussionPermlink, permlink)
 }
 
 class DiscussionDetailsActivity : AppCompatActivity(), DiscussionContract.Presenter {
@@ -51,7 +62,26 @@ class DiscussionDetailsActivity : AppCompatActivity(), DiscussionContract.Presen
         if (extra != null){
             val discussion: SteemDiscussion = extra as SteemDiscussion
             setDiscussion(discussion)
+        } else {
+            val author = intent.getStringExtra(loadDiscussionAuthor)
+            val permlink = intent.getStringExtra(loadDiscussionPermlink)
+
+            if (author != null && permlink !=null){
+                loadDiscussion(author, permlink)
+            }
         }
+    }
+
+    private fun loadDiscussion(author: String, permlink: String){
+        steemitRepository?.getDiscussion(author, permlink, object : SteemitDataSource.DiscussionLoadedCallBack{
+            override fun onDataLoaded(discussion: SteemDiscussion) {
+                setDiscussion(discussion)
+            }
+
+            override fun onLoadError(error: Throwable) {
+
+            }
+        })
     }
 
     private fun setDiscussion(discussion: SteemDiscussion){

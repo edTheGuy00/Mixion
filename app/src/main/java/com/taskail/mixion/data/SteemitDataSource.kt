@@ -21,6 +21,8 @@ interface SteemitDataSource {
         fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
 
         fun getTags(callback: DataLoadedCallback<Tags>)
+
+        fun getDiscussion(callBack: DiscussionLoadedCallBack, author: String, permlink: String)
     }
 
     interface Local{
@@ -32,6 +34,13 @@ interface SteemitDataSource {
         fun deleteTags()
     }
 
+    fun getDiscussion(author: String, permlink: String, callBack: DiscussionLoadedCallBack)
+
+    fun getTags(callback: DataLoadedCallback<RoomTags>)
+
+    fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
+
+    fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
 
     interface DataLoadedCallback <T>{
 
@@ -42,10 +51,10 @@ interface SteemitDataSource {
         fun onLoadError(error: Throwable)
     }
 
+    interface DiscussionLoadedCallBack{
 
-    fun getTags(callback: DataLoadedCallback<RoomTags>)
+        fun onDataLoaded(discussion: SteemDiscussion)
 
-    fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
-
-    fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
+        fun onLoadError(error: Throwable)
+    }
 }

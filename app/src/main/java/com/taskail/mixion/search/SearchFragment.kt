@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.fragment_search.*
 /**
  *Created by ed on 1/29/18.
  */
-class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
+
+class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View, SearchAdapter.SearchAdapterCallback {
 
     override lateinit var presenter: SearchContract.Presenter
 
@@ -38,13 +39,13 @@ class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
 
     interface Callback{
         fun onSearchClosed()
-        fun onSearchResultSelected()
+        fun onSearchResultSelected(author: String, permlink: String)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
 
-        searchAdapter = SearchAdapter(results)
+        searchAdapter = SearchAdapter(results, this)
 
         return view
     }
@@ -86,6 +87,10 @@ class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
             return true
         }
 
+    }
+
+    override fun onItemSelected(author: String, permlink: String) {
+        callback()?.onSearchResultSelected(author, permlink)
     }
 
     override fun noResultsFound() {

@@ -18,7 +18,8 @@ import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
-import com.taskail.mixion.steemdiscussion.newDiscussionIntent
+import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
+import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.utils.hideBottomNavigationView
 import com.taskail.mixion.utils.showBottomNavigationView
@@ -30,7 +31,11 @@ import kotlinx.android.synthetic.main.fragment_main.*
 /**
  *Created by ed on 1/19/18.
  */
-class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, SearchFragment.Callback {
+
+var steemitRepository: SteemitRepository? = null
+
+class MainFragment : Fragment(), BackPressedHandler,
+        FeedFragment.Callback, SearchFragment.Callback {
 
     val TAG = "MainFragment"
 
@@ -85,7 +90,9 @@ class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, Sear
     }
 
     private fun getRepository(): SteemitRepository{
-        return SteemitRepository.getInstance(createRemoteRepo(), createLocalRepo())
+        return steemitRepository ?: SteemitRepository.getInstance(createRemoteRepo(), createLocalRepo()).apply {
+            steemitRepository = this
+        }
     }
 
     private fun createRemoteRepo() : RemoteDataSource {
@@ -166,12 +173,12 @@ class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, Sear
         getCallback()?.onSearchClosed()
     }
 
-    override fun onSearchResultSelected() {
-
+    override fun onSearchResultSelected(author: String, permlink: String) {
+        startActivity(loadDiscussionIntent(context!!, author, permlink))
     }
 
     override fun openDiscussionRequested(discussion: SteemDiscussion) {
-        startActivity(newDiscussionIntent(context!!, discussion))
+        startActivity(openDiscussionIntent(context!!, discussion))
     }
 
     companion object {

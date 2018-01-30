@@ -13,10 +13,11 @@ import kotlinx.android.synthetic.main.item_search_result.view.*
 /**
  *Created by ed on 1/29/18.
  */
-class SearchAdapter(private val results: List<Result>) :
+class SearchAdapter(private val results: List<Result>,
+                    private val callback: SearchAdapterCallback) :
         RecyclerView.Adapter<SearchAdapter.ResultViewHolder>() {
 
-    class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ResultViewHolder(itemView: View, private val callback: SearchAdapterCallback) : RecyclerView.ViewHolder(itemView) {
 
         fun setResult(result: Result){
 
@@ -29,17 +30,21 @@ class SearchAdapter(private val results: List<Result>) :
                 itemView.author.text = author
 
                 itemView.setOnClickListener {
-                    Log.d("Adapter", permlink)
+                    callback.onItemSelected(author, permlink)
                 }
 
             }
         }
     }
 
+    interface SearchAdapterCallback{
+        fun onItemSelected(author: String, permlink: String)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ResultViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.item_search_result,
                 parent, false)
-        return SearchAdapter.ResultViewHolder(itemView)
+        return SearchAdapter.ResultViewHolder(itemView, callback)
     }
 
     override fun getItemCount(): Int {

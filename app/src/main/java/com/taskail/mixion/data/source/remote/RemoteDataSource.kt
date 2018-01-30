@@ -57,6 +57,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         fetchOnDisposable(callback, getTags())
     }
 
+    override fun getDiscussion(callBack: SteemitDataSource.DiscussionLoadedCallBack, author: String, permlink: String) {
+        fetchOnDisposable(callBack, getDiscussion(author, permlink))
+    }
+
     private fun getNew(): Observable<Array<SteemDiscussion>> {
         return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\"}")
     }
@@ -89,6 +93,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
     }
 
+    private fun getDiscussion(author: String, permlink: String) : Observable<SteemDiscussion>{
+        return steemAPI.getContent(author, permlink)
+    }
+
     private fun getTags() : Observable<Array<Tags>>{
         return steemAPI.getTags("life", 100)
     }
@@ -102,6 +110,18 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
                 .subscribe(
                         { callback.onDataLoaded(it)},
                         { callback.onLoadError(it) }))
+    }
+
+    private fun fetchOnDisposable(callback: SteemitDataSource.DiscussionLoadedCallBack,
+                                  observable: Observable<SteemDiscussion>){
+
+        disposable.add(observable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        { callback.onDataLoaded(it)},
+                        { callback.onLoadError(it) }))
+
     }
 
     companion object {

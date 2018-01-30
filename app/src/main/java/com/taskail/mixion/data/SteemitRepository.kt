@@ -68,6 +68,10 @@ class SteemitRepository(
 
     }
 
+    override fun getDiscussion(author: String, permlink: String, callBack: SteemitDataSource.DiscussionLoadedCallBack) {
+        remoteRepository.getDiscussion(callBack, author, permlink)
+    }
+
     private fun getTagsFromRemoteDataSource(callback: SteemitDataSource.DataLoadedCallback<RoomTags>){
 
         Log.d("tags", "getting from network")
