@@ -21,10 +21,6 @@ interface SteemitDataSource {
         fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
 
         fun getTags(callback: DataLoadedCallback<Tags>)
-
-        fun askSteem(term: String, callback: AskSteemCallback)
-
-        fun askMore(term: String, page: Int, callback: AskSteemCallback)
     }
 
     interface Local{
@@ -46,14 +42,6 @@ interface SteemitDataSource {
         fun onLoadError(error: Throwable)
     }
 
-    interface AskSteemCallback{
-
-        fun onDataLoaded(askSteemResult: AskSteemResult)
-
-        fun onLoadError(error: Throwable)
-    }
-
-    fun askSteem(term: String, callback: AskSteemCallback)
 
     fun getTags(callback: DataLoadedCallback<RoomTags>)
 

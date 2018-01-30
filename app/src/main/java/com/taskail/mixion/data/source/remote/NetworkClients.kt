@@ -15,7 +15,9 @@ const val baseUrl = "https://api.steemjs.com/"
 
 const val insteemUrl = "https://steemql.insteem.com/graphql"
 
-fun getRetrofitClient() : Retrofit{
+const val askSteemUrl = "https://api.asksteem.com/"
+
+fun getRetrofitClient(url: String) : Retrofit{
 
     val loggingInterceptor = HttpLoggingInterceptor()
     loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -25,7 +27,7 @@ fun getRetrofitClient() : Retrofit{
             .build()
 
     return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(url)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(JacksonConverterFactory.create())

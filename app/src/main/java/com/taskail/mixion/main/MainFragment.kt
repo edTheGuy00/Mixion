@@ -2,23 +2,22 @@ package com.taskail.mixion.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.R
+import com.taskail.mixion.data.source.remote.AskSteemRepository
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.local.MixionDatabase
-import com.taskail.mixion.data.source.remote.RemoteDataSource
-import com.taskail.mixion.data.source.remote.SteemAPI
-import com.taskail.mixion.data.source.remote.getRetrofitClient
+import com.taskail.mixion.data.source.remote.*
 import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.search.SearchFragment
+import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.steemdiscussion.newDiscussionIntent
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.utils.hideBottomNavigationView
@@ -56,6 +55,8 @@ class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, Sear
     private var remoteDisposable = CompositeDisposable()
     private var localDisposable = CompositeDisposable()
     private var steemitAPI: SteemAPI? = null
+    private var askSteemApi: AskSteemApi? = null
+    private var askSteemDisposable: CompositeDisposable? = null
     private val FEED_FRAGMENT = 0
     private lateinit var feedPresenter: FeedPresenter
 
@@ -96,8 +97,22 @@ class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, Sear
     }
 
     private fun createSteemApi() : SteemAPI {
-        return steemitAPI ?: getRetrofitClient().create(SteemAPI::class.java).apply {
+        return steemitAPI ?: getRetrofitClient(baseUrl).create(SteemAPI::class.java).apply {
             steemitAPI = this
+        }
+    }
+
+    private fun getAskSteemRepo() : AskSteemRepository {
+        return AskSteemRepository.getInstance(getAskSteemDisposable(), createAskSteemApi())
+    }
+
+    private fun getAskSteemDisposable(): CompositeDisposable{
+        return askSteemDisposable ?: CompositeDisposable()
+    }
+
+    private fun createAskSteemApi() : AskSteemApi {
+        return askSteemApi ?: getRetrofitClient(askSteemUrl).create(AskSteemApi::class.java).apply {
+            askSteemApi = this
         }
     }
 
@@ -133,7 +148,9 @@ class MainFragment : Fragment(), BackPressedHandler, FeedFragment.Callback, Sear
     override fun onSearchRequested() {
         var fragment: Fragment? = searchFragment()
         if (fragment == null) {
-            fragment = SearchFragment.newInstance()
+            fragment = SearchFragment.newInstance().apply {
+                SearchPresenter(this, getAskSteemRepo())
+            }
             childFragmentManager
                     .beginTransaction()
                     .add(R.id.fragment_main_container, fragment)

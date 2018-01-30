@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_light"
     tools:visibility="visible">
 
     <FrameLayout
@@ -46,6 +47,7 @@
     </FrameLayout>
 
     <ImageView
+        android:id="@+id/askSteemLogo"
         android:layout_marginTop="@dimen/padding_normal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -57,7 +59,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:scrollbars="vertical"
-        android:scrollbarStyle="insideOverlay"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        android:scrollbarStyle="insideOverlay"/>
 
 </LinearLayout>

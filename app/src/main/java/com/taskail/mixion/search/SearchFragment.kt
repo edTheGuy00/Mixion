@@ -2,6 +2,9 @@ package com.taskail.mixion.search
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,12 +23,15 @@ class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
 
     override lateinit var presenter: SearchContract.Presenter
 
-    override lateinit var results: List<Result>
+    override lateinit var results: ArrayList<Result>
 
     lateinit var searchAdapter: SearchAdapter
 
     companion object {
         @JvmStatic fun newInstance(): SearchFragment{
+
+            Log.d("searchfragment", "Instantiated")
+
             return SearchFragment()
         }
     }
@@ -51,6 +57,20 @@ class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
         searchView.isIconified = false
         searchContainer.fadeInAnimation()
         searchView.setOnQueryTextListener(QueryTextChangeListener())
+
+        val layoutManager = LinearLayoutManager(context)
+        searchRecyclerView.layoutManager = layoutManager
+        searchRecyclerView.itemAnimator = DefaultItemAnimator()
+        searchRecyclerView.adapter = searchAdapter
+        searchRecyclerView.addOnScrollListener( object : EndlessRecyclerViewScrollListener(layoutManager){
+            override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView?) {
+                presenter.askMore()
+            }
+
+            override fun scrollAction(dx: Int, dy: Int) {
+
+            }
+        })
     }
 
     private inner class QueryTextChangeListener : SearchView.OnQueryTextListener{
@@ -68,8 +88,23 @@ class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
 
     }
 
-    override fun setResults() {
+    override fun noResultsFound() {
+
+    }
+
+    override fun cleanResults() {
         searchAdapter.notifyDataSetChanged()
+    }
+
+    override fun setResults() {
+        hideLogo()
+        searchAdapter.notifyDataSetChanged()
+    }
+
+    private fun hideLogo(){
+        if (askSteemLogo.visibility != View.GONE) {
+            askSteemLogo.visibility = View.GONE
+        }
     }
 
     override fun onBackPressed() : Boolean {
@@ -90,6 +125,11 @@ class SearchFragment : Fragment(), BackPressedHandler, SearchContract.View {
 
     private fun callback(): Callback? {
         return getCallback(this, Callback::class.java)
+    }
+
+    override fun onDestroyView() {
+        results.clear()
+        super.onDestroyView()
     }
 
 }

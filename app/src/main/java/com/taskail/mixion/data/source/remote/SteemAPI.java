@@ -14,15 +14,6 @@ import retrofit2.http.Query;
 
 public interface SteemAPI {
 
-    //call using ("search+" + term)
-    @GET("search")
-    Observable<AskSteemResult> askSteem(@Query("q") String searchTerm);
-
-    //call using ("search+" + term, page)
-    @GET("search")
-    Observable<AskSteemResult> askMore(
-            @Query("q") String searchTerm,
-            @Query("pg") Integer page);
 
     @GET("get_discussions_by_trending")
     Observable<SteemDiscussion[]> getTrendingDiscussions(@Query("query") String tagLimit);

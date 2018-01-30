@@ -4,7 +4,7 @@
     android:id="@+id/result_item"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="5dp"
+    android:padding="@dimen/padding_normal"
     android:background="@drawable/white_black_border_bottom"
     android:layout_height="wrap_content">
 
