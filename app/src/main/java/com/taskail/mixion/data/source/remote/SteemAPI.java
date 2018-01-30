@@ -1,6 +1,6 @@
 package com.taskail.mixion.data.source.remote;
 
-import com.taskail.mixion.data.models.AskSteem;
+import com.taskail.mixion.data.models.AskSteemResult;
 import com.taskail.mixion.data.models.ContentReply;
 import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.data.models.Tags;
@@ -16,11 +16,11 @@ public interface SteemAPI {
 
     //call using ("search+" + term)
     @GET("search")
-    Observable<AskSteem> searchAskSteem(@Query("q") String searchTerm);
+    Observable<AskSteemResult> askSteem(@Query("q") String searchTerm);
 
     //call using ("search+" + term, page)
     @GET("search")
-    Observable<AskSteem> AskMoreSteem(
+    Observable<AskSteemResult> askMore(
             @Query("q") String searchTerm,
             @Query("pg") Integer page);
 

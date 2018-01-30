@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "error"
 })
 
-public class AskSteem {
+public class AskSteemResult {
 
     @JsonProperty("pages")
     private Pages pages;

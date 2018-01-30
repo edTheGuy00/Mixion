@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/result_item"
     android:orientation="vertical"
@@ -12,19 +12,21 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"
         android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/colorPrimary"
-        android:textStyle="normal" />
+        android:fontFamily="@font/vidaloka"
+        android:textStyle="normal"
+        tools:text="Some awesome title"/>
 
     <TextView
         android:id="@+id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:maxLines="3"/>
+        android:maxLines="3"
+        tools:text="Some long summary or description about my awesome posts i just created"/>
 
     <LinearLayout
         android:layout_marginTop="5dp"
@@ -35,14 +37,15 @@
             android:layout_gravity="center_vertical"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/ic_upvote_arrow"/>
+            android:src="@drawable/ic_upvote"/>
 
         <TextView
             android:id="@+id/votes_count"
             android:layout_marginStart="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            tools:text="300"/>
 
         <ImageView
             android:layout_gravity="center_vertical"
@@ -56,7 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="3dp"/>
+            android:layout_marginStart="3dp"
+            tools:text="30"/>
 
         <TextView
             android:layout_marginStart="20dp"
@@ -64,7 +68,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="timeago"/>
+            tools:text="3 hours ago"/>
 
         <TextView
             android:layout_gravity="center_vertical"
@@ -79,7 +83,7 @@
             android:id="@+id/author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Author"/>
+            tools:text="Author"/>
 
     </LinearLayout>
 
