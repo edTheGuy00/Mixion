@@ -11,6 +11,6 @@ Please report via [GitHub issue](https://github.com/edTheGuy00/Mixion/issues) :)
 # Contributions
 
 
-Please follow the [contributions document](https://github.com/edTheGuy00/Mixion/CONTRIBUTIONS.md) when contributing.
+Please follow the [contributions document](https://github.com/edTheGuy00/Mixion/blob/dev/CONTRIBUTIONS.md) when contributing.
 
 
