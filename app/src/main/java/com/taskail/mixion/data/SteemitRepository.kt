@@ -139,6 +139,10 @@ class SteemitRepository(
         perform(cacheTag)
     }
 
+    override fun askSteem(term: String, callback: SteemitDataSource.AskSteemCallback) {
+        remoteRepository.askSteem(term, callback)
+    }
+
 
     companion object {
         private var INSTANCE: SteemitRepository? = null

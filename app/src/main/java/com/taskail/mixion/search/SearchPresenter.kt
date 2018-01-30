@@ -1,6 +1,8 @@
 package com.taskail.mixion.search
 
+import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
+import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.Result
 import java.util.ArrayList
 
@@ -24,7 +26,15 @@ class SearchPresenter (
     }
 
     override fun askSteem(query: String) {
+        repository.askSteem(query, object : SteemitDataSource.AskSteemCallback{
+            override fun onDataLoaded(askSteemResult: AskSteemResult) {
 
+            }
+
+            override fun onLoadError(error: Throwable) {
+
+            }
+        })
     }
 
     override fun askMore() {

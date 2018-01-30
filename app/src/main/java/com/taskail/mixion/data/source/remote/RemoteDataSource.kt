@@ -1,6 +1,7 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
+import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
 import com.taskail.mixion.data.source.remote.SteemAPI
@@ -56,6 +57,14 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         fetchOnDisposable(callback, getTags())
     }
 
+    override fun askSteem(term: String, callback: SteemitDataSource.AskSteemCallback) {
+        fetchOnDisposable(callback, askSteem(term))
+    }
+
+    override fun askMore(term: String, page: Int, callback: SteemitDataSource.AskSteemCallback) {
+        fetchOnDisposable(callback, askMore(term, page))
+    }
+
     private fun getNew(): Observable<Array<SteemDiscussion>> {
         return steemAPI.getNewestDiscussions("{\"tag\":\"$tag\",\"limit\":\"$loadCount\"}")
     }
@@ -90,6 +99,26 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
     private fun getTags() : Observable<Array<Tags>>{
         return steemAPI.getTags("life", 50)
+    }
+
+    private fun askSteem(term: String) : Observable<AskSteemResult>{
+        return steemAPI.askSteem("search+" + term)
+    }
+
+    private fun askMore(term: String, page: Int) : Observable<AskSteemResult>{
+        return steemAPI.askMore("search+" + term, page)
+    }
+
+    private fun fetchOnDisposable(callback: SteemitDataSource.AskSteemCallback,
+                                  observable: Observable<AskSteemResult>){
+
+        disposable.add(observable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        { callback.onDataLoaded(it)},
+                        { callback.onLoadError(it) }))
+
     }
 
     private fun <T> fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback<T>,
