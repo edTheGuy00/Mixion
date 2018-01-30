@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
 import com.taskail.mixion.R
+import com.taskail.mixion.utils.fadeInAnimation
 
 /**
  *Created by ed on 1/19/18.
@@ -32,7 +33,7 @@ abstract class SingleFragmentToolbarActivity<T : Fragment> : SingleFragmentActiv
     }
 
     protected fun showToolbar(){
-        supportActionBar?.show()
+        getToolbar().fadeInAnimation()
     }
 
 }

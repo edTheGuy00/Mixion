@@ -90,7 +90,7 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
     }
 
     private fun getTags() : Observable<Array<Tags>>{
-        return steemAPI.getTags("life", 50)
+        return steemAPI.getTags("life", 100)
     }
 
     private fun <T> fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback<T>,
