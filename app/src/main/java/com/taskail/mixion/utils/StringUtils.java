@@ -105,7 +105,16 @@ public class StringUtils {
             try {
                 if (containsText("http", shortenString(0, 10, whitoutCharacter))){
 
-                    Log.d(TAG, "getShorterBody: there's a link");
+                    String removeSecondLink = removeUrl(whitoutCharacter);
+                    int otherLocation = stringLocation(removeSecondLink, stringFromHtml);
+                    String removed = null;
+                    try {
+                        removed = shortenString(otherLocation, 600, stringFromHtml);
+                    } catch (StringIndexOutOfBoundsException e){
+                        Log.e(TAG, "getShorterBody: unable to shorten string " + e.getMessage());
+                    }
+                    return removed;
+
                 }
 
             } catch (IOException e) {

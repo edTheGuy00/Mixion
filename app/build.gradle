@@ -75,6 +75,8 @@ dependencies {
     implementation 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
     implementation 'id.zelory:compressor:2.1.0'
 
+    implementation 'org.jsoup:jsoup:1.11.2'
+
     implementation 'eu.bittrade.libs:steemj-core:0.4.3'
     implementation 'org.slf4j:slf4j-api:1.7.25'
     implementation 'eu.lp0.slf4j:slf4j-android:1.7.25-0'
@@ -98,8 +100,6 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:${versions.room}"
     implementation "android.arch.persistence.room:rxjava2:${versions.room}"
     implementation "com.google.guava:guava:$guavaVersion"
-
-    implementation 'com.azoft.carousellayoutmanager:carousel:1.2.1'
 
     implementation "com.android.support:design:${versions.supportLibrary}"
     implementation "com.android.support:appcompat-v7:${versions.supportLibrary}"
