@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.taskail.mixion.utils
+package com.taskail.mixion.utils.steemitutils
 
 import android.content.res.ColorStateList
 import android.os.Build
@@ -30,6 +30,7 @@ import android.widget.TextView
 
 import `in`.uncod.android.bypass.Bypass
 import `in`.uncod.android.bypass.style.TouchableUrlSpan
+import com.taskail.mixion.utils.LinkTouchMovementMethod
 
 /**
  *Created by ed on 1/27/18.
@@ -135,7 +136,7 @@ fun parseMarkdownAndPlainLinks(
 
 /**
  * Parse Markdown and plain-text links and set on the [TextView] with proper clickable
- * spans.
+ * spans. [input] should be either a parsed html or plain body depending on the feedtype
  */
 fun parseMarkdownAndSetText(
         textView: TextView,
@@ -144,10 +145,10 @@ fun parseMarkdownAndSetText(
         loadImageCallback: Bypass.LoadImageCallback) {
     if (TextUtils.isEmpty(input)) return
 
-    val parsedHtml = jsoupParser(input)
+    //val parsedHtml = jsoupParser(input)
 
     setTextWithNiceLinks(textView,
-            parseMarkdownAndPlainLinks(textView, parsedHtml, markdown, loadImageCallback))
+            parseMarkdownAndPlainLinks(textView, input, markdown, loadImageCallback))
 }
 
 /**

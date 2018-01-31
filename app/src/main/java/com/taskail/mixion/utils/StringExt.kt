@@ -1,9 +1,5 @@
 package com.taskail.mixion.utils
 
-import android.util.Log
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.io.IOException
 import java.util.regex.Pattern
@@ -16,41 +12,8 @@ fun String.getShorterSteemBody(){
 
 }
 
-/**
- *
- */
-fun String.getFirstImgFromJsonMeta() : String? {
-    var mainObject: JSONObject? = null
-    try {
-        mainObject = JSONObject(this)
-    } catch (e: JSONException) {
-        e.printStackTrace()
-    }
 
-    var imgObject: JSONArray? = null
-    try {
-        imgObject = if (mainObject != null) {
-            mainObject.getJSONArray("image")
-        } else {
-            null
-        }
-    } catch (e: JSONException) {
-        e.printStackTrace()
-    }
 
-    var firstImg: String? = null
-    try {
-        firstImg = if (imgObject != null) {
-            imgObject.get(0).toString()
-        } else {
-            null
-        }
-    } catch (e: JSONException) {
-        e.printStackTrace()
-    }
-
-    return firstImg
-}
 
 /**
  * an attempt to better parse the summary for the feedview
@@ -80,8 +43,8 @@ fun String.parseFeedBody(): String?{
  */
 
 @Throws(IOException::class, IndexOutOfBoundsException::class)
-fun extractShortSummary(begin: Int, lenght: Int, s: String): String {
-    return s.substring(begin, Math.min(s.length, lenght))
+fun extractShortSummary(begin: Int, length: Int, s: String): String {
+    return s.substring(begin, Math.min(s.length, length))
 }
 
 /**

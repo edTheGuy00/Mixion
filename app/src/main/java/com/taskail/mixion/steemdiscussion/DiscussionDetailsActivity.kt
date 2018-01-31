@@ -11,10 +11,12 @@ import android.util.Log
 import android.util.TypedValue
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
-import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
+import com.taskail.mixion.utils.steemitutils.containsYoutubeVieo
+import com.taskail.mixion.utils.steemitutils.getYoutubeId
+import com.taskail.mixion.utils.steemitutils.isFromDtube
 
 /**Created by ed on 10/6/17.
  */

@@ -9,7 +9,7 @@ import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.utils.GetTimeAgo
 import com.taskail.mixion.utils.StringUtils
-import com.taskail.mixion.utils.getFirstImgFromJsonMeta
+import com.taskail.mixion.utils.steemitutils.getFirstImgFromJsonMeta
 import kotlinx.android.synthetic.main.cardview_steem_post.view.*
 import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
 

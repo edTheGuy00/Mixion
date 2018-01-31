@@ -1,8 +1,9 @@
-package com.taskail.mixion.utils
+package com.taskail.mixion.utils.steemitutils
 
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.View
+import com.taskail.mixion.utils.TouchableUrlSpan
 
 /**
  *Created by ed on 1/30/18.

@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
-import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.utils.*
+import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText
+import com.taskail.mixion.utils.steemitutils.setTextWithNiceLinks
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
 import kotlinx.android.synthetic.main.layout_discussion_details.*
 import kotlinx.android.synthetic.main.layout_discussion_details.view.*
