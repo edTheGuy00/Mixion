@@ -14,7 +14,7 @@ import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
-import com.taskail.mixion.utils.steemitutils.containsYoutubeVieo
+import com.taskail.mixion.utils.steemitutils.containsYoutubeVideo
 import com.taskail.mixion.utils.steemitutils.getYoutubeId
 import com.taskail.mixion.utils.steemitutils.isFromDtube
 
@@ -140,7 +140,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         //For now we will try to only load videos from one source, if both exist
         if (body.isFromDtube()){
             discussionsView.displayDtube()
-        } else if (body.containsYoutubeVieo()){
+        } else if (body.containsYoutubeVideo()){
             discussionsView.displayYoutube(body.getYoutubeId())
         }
 
