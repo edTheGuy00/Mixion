@@ -135,8 +135,11 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
         discussionsView.displayMarkdownBody(body, bypass)
 
+        //For now we will try to only load videos from one source, if both exist
         if (body.isFromDtube()){
             discussionsView.displayDtube()
+        } else if (body.containsYoutubeVieo()){
+            discussionsView.displayYoutube(body.getYoutubeId())
         }
 
         /**if (format != null)

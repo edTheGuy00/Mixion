@@ -17,6 +17,8 @@ interface DiscussionContract {
 
         fun displayDtube()
 
+        fun displayYoutube(videoId: String)
+
         fun displayMarkdownBody(body: String, markdown: Bypass)
 
         fun displayImages(images: List<String>)

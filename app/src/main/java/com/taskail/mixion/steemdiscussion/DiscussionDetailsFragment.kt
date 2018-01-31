@@ -79,6 +79,10 @@ class DiscussionDetailsFragment : Fragment(),
 
     }
 
+    override fun displayYoutube(videoId: String) {
+
+    }
+
     override fun setUpVoteCount(votes: String) {
         titleAndDescriptionLayout.discussion_upvote_count.text = votes
     }

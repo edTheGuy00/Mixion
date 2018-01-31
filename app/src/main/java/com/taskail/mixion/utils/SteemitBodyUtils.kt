@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt
 import android.text.Spanned
 import android.util.Log
 import okhttp3.HttpUrl
+import java.util.regex.Pattern
 
 /**
  *Created by ed on 1/30/18.
@@ -18,8 +19,6 @@ fun parseBodyHtml(input: String,
                   @ColorInt linkHighlightColor: Int) : Spanned {
 
     val spannableStringBuilder = parseHtml(input, linkTextColor, linkHighlightColor)
-
-    Log.d("parseBody", spannableStringBuilder.getSpanStart(0).toString())
 
     val urlSpans =
             spannableStringBuilder.getSpans(0, spannableStringBuilder.length, TouchableUrlSpan::class.java)
@@ -54,6 +53,40 @@ fun parseBodyHtml(input: String,
     return spannableStringBuilder
 }
 
+/**
+ * detect whether the post is from dtube,
+ * 95% of the time they will begin as such..
+ */
 fun String.isFromDtube(): Boolean{
     return this.startsWith("<center><a href='https://d.tube")
+}
+
+/**
+ * detects if there is a youtube link in the post with a valid
+ * youtube id
+ */
+
+fun String.containsYoutubeVieo(): Boolean{
+
+    val pattern = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*"
+
+    val compiledPattern = Pattern.compile(pattern)
+
+    val matcher = compiledPattern.matcher(this)
+
+    return matcher.find()
+}
+
+/**
+ * extracts the Youtube Id
+ */
+fun String.getYoutubeId(): String{
+
+    val pattern = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*"
+
+    val compiledPattern = Pattern.compile(pattern)
+
+    val matcher = compiledPattern.matcher(this)
+
+    return matcher.group()
 }
