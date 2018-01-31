@@ -15,6 +15,8 @@ interface DiscussionContract {
 
         fun displayHtmlBody(body: CharSequence)
 
+        fun displayDtube()
+
         fun displayMarkdownBody(body: String, markdown: Bypass)
 
         fun displayImages(images: List<String>)

@@ -7,7 +7,7 @@ import android.text.style.URLSpan
 /**
  *Created by ed on 1/27/18.
  */
-class TouchableUrlSpan(url: String,
+open class TouchableUrlSpan(url: String,
                        textColor: ColorStateList,
                        pressedBackGroundColor: Int) : URLSpan(url) {
 

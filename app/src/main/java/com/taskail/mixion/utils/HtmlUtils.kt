@@ -64,8 +64,8 @@ fun parseHtml(
     var spanned = fromHtml(input)
 
     // strip any trailing newlines
-    while (spanned[spanned.length - 1] == '\n') {
-        spanned = spanned.delete(spanned.length - 1, spanned.length)
+    while (spanned[spanned.length.minus(1)] == '\n') {
+        spanned = spanned.delete(spanned.length.minus( 1), spanned.length)
     }
 
     return linkifyPlainLinks(spanned, linkTextColor, linkHighlightColor)
@@ -85,7 +85,7 @@ private fun linkifyPlainLinks(
 
     // Linkify doesn't seem to work as expected on M+
     // TODO: figure out why
-    //Linkify.addLinks(plainLinks, Linkify.WEB_URLS)
+    Linkify.addLinks(plainLinks, Linkify.WEB_URLS)
 
     val urlSpans = plainLinks.getSpans(0, plainLinks.length, URLSpan::class.java)
 
@@ -143,6 +143,9 @@ fun parseMarkdownAndSetText(
         markdown: Bypass,
         loadImageCallback: Bypass.LoadImageCallback) {
     if (TextUtils.isEmpty(input)) return
+
+    val parsedHtml = fromHtml(input).toString()
+
     setTextWithNiceLinks(textView,
-            parseMarkdownAndPlainLinks(textView, input, markdown, loadImageCallback))
+            parseMarkdownAndPlainLinks(textView, parsedHtml, markdown, loadImageCallback))
 }

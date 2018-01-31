@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -63,7 +64,6 @@ class DiscussionDetailsFragment : Fragment(),
 
     override fun displayHtmlBody(body: CharSequence) {
         setTextWithNiceLinks(titleAndDescriptionLayout.discussion_description, body)
-
     }
 
     override fun displayMarkdownBody(body: String, markdown: Bypass) {
@@ -73,6 +73,10 @@ class DiscussionDetailsFragment : Fragment(),
 
     override fun displayImages(images: List<String>) {
         imagesAdapter.images = images
+    }
+
+    override fun displayDtube() {
+
     }
 
     override fun setUpVoteCount(votes: String) {
@@ -98,6 +102,7 @@ class DiscussionDetailsFragment : Fragment(),
     inner class ImageCallBack : Bypass.LoadImageCallback{
         override fun loadImage(src: String?, loadingSpan: ImageLoadingSpan?) {
 
+            Log.d("img", src)
         }
     }
 

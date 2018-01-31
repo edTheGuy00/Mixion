@@ -1,19 +1,20 @@
 package com.taskail.mixion.steemdiscussion
 
+import `in`.uncod.android.bypass.Bypass
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.util.TypedValue
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
-import com.taskail.mixion.utils.GetTimeAgo
-import com.taskail.mixion.utils.StringUtils
-import com.taskail.mixion.utils.parseHtml
+import com.taskail.mixion.utils.*
 
 /**Created by ed on 10/6/17.
  */
@@ -92,38 +93,69 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         discussionsView.setTimeAgo(GetTimeAgo.getlongtoago(discussion.created))
         discussionsView.setUpVoteCount(discussion.netVotes.toString())
 
-        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
-                ContextCompat.getColor(this, R.color.colorAccent))
-
-        discussionsView.displayHtmlBody(textToSet)
-
         val images = StringUtils.createArrayOfImages(discussion.jsonMetadata)
-
         if (images != null){
             discussionsView.displayImages(images)
         } else{
             discussionsView.setNoImages()
         }
 
-        //val format = StringUtils.getFormat(discussion.jsonMetadata)
+        val format = StringUtils.getFormat(discussion.jsonMetadata)
 
-        //TODO - properly parse the body
+        if (format != null){
+            Log.d("format", format)
+        }
+
+        val body = discussion.body
+        handleBody(body)
+
+    }
+
+    private fun handleBody(body: String){
+
+        //TODO - Fix up a better solution,
+
+        //val linkTextColor = ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!
+        //val linkHighLightColor = ContextCompat.getColor(this, R.color.colorAccent)
+
+
+        val option = Bypass.Options()
+                .setBlockQuoteLineColor(
+                        ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                .setBlockQuoteLineWidth(2) // dps
+                .setBlockQuoteLineIndent(8) // dps
+                .setPreImageLinebreakHeight(4) //dps
+                .setBlockQuoteIndentSize(TypedValue.COMPLEX_UNIT_DIP, 2f)
+                .setBlockQuoteTextColor(ContextCompat.getColor(this, R.color.colorAccent))
+
+        val bypass = Bypass(this, option)
+
+        //val textToSet = parseBodyHtml(body, linkTextColor, linkHighLightColor)
+        //discussionsView.displayHtmlBody(textToSet)
+
+        discussionsView.displayMarkdownBody(body, bypass)
+
+        if (body.isFromDtube()){
+            discussionsView.displayDtube()
+        }
+
         /**if (format != null)
-            when(format){
-                "html" -> {
-                    val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
-                            ContextCompat.getColor(this, R.color.colorAccent))
+        when(format){
+        "html" -> {
+        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
+        ContextCompat.getColor(this, R.color.colorAccent))
 
-                    discussionsView.displayHtmlBody(textToSet)
-                }
+        discussionsView.displayHtmlBody(textToSet)
+        }
 
-                "markdown" -> {
-                    val option = Bypass.Options()
+        "markdown" -> {
+        val option = Bypass.Options()
 
-                    val bypass = Bypass(this, option)
+        val bypass = Bypass(this, option)
 
-                    discussionsView.displayMarkdownBody(discussion.body, bypass)
-                }
-            } */
+        discussionsView.displayMarkdownBody(discussion.body, bypass)
+        }
+        } */
+
     }
 }
