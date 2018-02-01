@@ -3,6 +3,7 @@ package com.taskail.mixion.steemdiscussion
 import `in`.uncod.android.bypass.Bypass
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v4.content.ContextCompat
@@ -14,10 +15,7 @@ import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
-import com.taskail.mixion.utils.steemitutils.containsYoutubeVideo
-import com.taskail.mixion.utils.steemitutils.getYoutubeId
-import com.taskail.mixion.utils.steemitutils.isFromDmania
-import com.taskail.mixion.utils.steemitutils.isFromDtube
+import com.taskail.mixion.utils.steemitutils.*
 
 /**Created by ed on 10/6/17.
  */
@@ -118,22 +116,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
         //TODO - Fix up a better solution,
 
-        //val linkTextColor = ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!
-        //val linkHighLightColor = ContextCompat.getColor(this, R.color.colorAccent)
-
-
-        val option = Bypass.Options()
-                .setBlockQuoteLineColor(
-                        ContextCompat.getColor(this, R.color.colorPrimaryDark))
-                .setBlockQuoteLineWidth(2) // dps
-                .setBlockQuoteLineIndent(8) // dps
-                .setPreImageLinebreakHeight(4) //dps
-                .setBlockQuoteIndentSize(TypedValue.COMPLEX_UNIT_DIP, 2f)
-                .setBlockQuoteTextColor(ContextCompat.getColor(this, R.color.colorAccent))
-
-        val bypass = Bypass(this, option)
-
-        //val textToSet = parseBodyHtml(body, linkTextColor, linkHighLightColor)
+        val textToSet = parseBodyHtml(body, getLinkTextColor(), getLinkHighlighterColor())
         //discussionsView.displayHtmlBody(textToSet)
 
         //discussionsView.displayMarkdownBody(body, bypass)
@@ -144,25 +127,8 @@ class DiscussionDetailsActivity : AppCompatActivity(),
             body.isFromDtube() -> discussionsView.displayDtube()
             body.isFromDmania() -> { discussionsView.displaySimpleHtml(body) //TODO-
 
-            }
+            } else -> when {
 
-        /**if (format != null)
-        when(format){
-        "html" -> {
-        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
-        ContextCompat.getColor(this, R.color.colorAccent))
-
-        discussionsView.displayHtmlBody(textToSet)
-        }
-
-        "markdown" -> {
-        val option = Bypass.Options()
-
-        val bypass = Bypass(this, option)
-
-        discussionsView.displayMarkdownBody(discussion.body, bypass)
-        }
-        } */
         }
 
         /**if (format != null)
@@ -182,6 +148,45 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         discussionsView.displayMarkdownBody(discussion.body, bypass)
         }
         } */
+        }
 
+        /**if (format != null)
+        when(format){
+        "html" -> {
+        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
+        ContextCompat.getColor(this, R.color.colorAccent))
+
+        discussionsView.displayHtmlBody(textToSet)
+        }
+
+        "markdown" -> {
+        val option = Bypass.Options()
+
+        val bypass = Bypass(this, option)
+
+        discussionsView.displayMarkdownBody(discussion.body, bypass)
+        }
+        } */
+
+    }
+
+    private fun getLinkHighlighterColor(): Int{
+        return ContextCompat.getColor(this, R.color.colorAccent)
+    }
+
+    private fun getLinkTextColor(): ColorStateList{
+        return ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!
+    }
+
+    private fun getBypass(): Bypass{
+        val option = Bypass.Options()
+                .setBlockQuoteLineColor(
+                        ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                .setBlockQuoteLineWidth(2) // dps
+                .setBlockQuoteLineIndent(8) // dps
+                .setPreImageLinebreakHeight(4) //dps
+                .setBlockQuoteIndentSize(TypedValue.COMPLEX_UNIT_DIP, 2f)
+                .setBlockQuoteTextColor(ContextCompat.getColor(this, R.color.colorAccent))
+        return Bypass(this, option)
     }
 }
