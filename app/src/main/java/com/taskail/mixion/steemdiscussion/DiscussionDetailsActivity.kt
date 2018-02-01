@@ -101,11 +101,11 @@ class DiscussionDetailsActivity : AppCompatActivity(),
             discussionsView.setNoImages()
         }
 
-        val format = StringUtils.getFormat(discussion.jsonMetadata)
-
-        if (format != null){
-            Log.d("format", format)
-        }
+        //TODO - format from json metadata is unreliable
+//        val format = StringUtils.getFormat(discussion.jsonMetadata)
+//        if (format != null){
+//            Log.d("format", format)
+//        }
 
         val body = discussion.body
         handleBody(body)
@@ -116,7 +116,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
         //TODO - Fix up a better solution,
 
-        val textToSet = parseBodyHtml(body, getLinkTextColor(), getLinkHighlighterColor())
+        //val textToSet = parseBodyHtml(body, getLinkTextColor(), getLinkHighlighterColor())
         //discussionsView.displayHtmlBody(textToSet)
 
         //discussionsView.displayMarkdownBody(body, bypass)

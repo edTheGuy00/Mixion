@@ -19,6 +19,7 @@ fun String.getShorterSteemBody(){
  * an attempt to better parse the summary for the feedview
  */
 
+//TODO - move this in FeedParser and figure out a way to extract a summary
 fun String.parseFeedBody(): String?{
 
     val fromHtml = jsoupParser(this)

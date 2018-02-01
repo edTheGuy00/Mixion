@@ -74,21 +74,21 @@ class DiscussionDetailsFragment : Fragment(),
                 body, markdown, ImageCallBack())
     }
 
-    override fun displayImages(images: List<String>) {
-        imagesAdapter.images = images
-    }
-
-    override fun displayDtube() {
-
-    }
-
     override fun displaySimpleHtml(body: String) {
         val html = fromHtml(body, GlideImageGetter(titleAndDescriptionLayout.discussion_description))
         titleAndDescriptionLayout.discussion_description.text = html
     }
 
-    override fun displayYoutube(videoId: String) {
+    override fun displayImages(images: List<String>) {
+        imagesAdapter.images = images
+    }
 
+    override fun displayDtube() {
+        //TODO - extract dtube video link, setup player
+    }
+
+    override fun displayYoutube(videoId: String) {
+        //TODO - extract youtube id, setup player
     }
 
     override fun setUpVoteCount(votes: String) {
@@ -108,13 +108,14 @@ class DiscussionDetailsFragment : Fragment(),
     }
 
     override fun setNoImages() {
-        discussion_comments.post({ discussion_comments.scrollBy(0, discussion_title.top) })
+        //TODO - something else, currently changing the layout
+        //discussion_comments.post({ discussion_comments.scrollBy(0, discussion_title.top) })
     }
 
     inner class ImageCallBack : Bypass.LoadImageCallback{
         override fun loadImage(src: String?, loadingSpan: ImageLoadingSpan?) {
 
-            Log.d("img", src)
+            //TODO - create spannable imageloader
         }
     }
 

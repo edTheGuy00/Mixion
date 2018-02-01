@@ -41,6 +41,7 @@ class MainFragment : Fragment(),
 
     val TAG = "MainFragment"
 
+    //TODO - open another menu overflow with account details, settings and about tab
     override fun onAccountRequested() {
         if (!getCurrentUser().isEmpty){
             //User logged In, get info, open new activity

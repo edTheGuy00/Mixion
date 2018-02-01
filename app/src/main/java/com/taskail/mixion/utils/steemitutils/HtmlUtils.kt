@@ -91,6 +91,7 @@ private fun linkifyPlainLinks(
 
     val urlSpans = plainLinks.getSpans(0, plainLinks.length, URLSpan::class.java)
 
+    //TODO - figure out why this doesn't work
     // add any plain links to the output
     val ssb = SpannableStringBuilder(input)
     for (urlSpan in urlSpans) {

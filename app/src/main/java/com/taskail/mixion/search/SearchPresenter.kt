@@ -96,7 +96,7 @@ class SearchPresenter (
                 }
 
                 override fun onLoadError(error: Throwable) {
-
+                    //TODO - handle error
                 }
             })
 

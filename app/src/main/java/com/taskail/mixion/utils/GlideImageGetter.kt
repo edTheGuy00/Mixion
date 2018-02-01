@@ -1,6 +1,5 @@
 package com.taskail.mixion.utils
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Html
 import android.widget.TextView
@@ -13,13 +12,6 @@ import android.graphics.Rect
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
-
-
-
-
-
-
-
 
 /**
  *Created by ed on 1/31/18.
@@ -58,6 +50,7 @@ class GlideImageGetter(private val target: TextView) :
                 val newHeight = hh * w / ww
                 val rect = Rect(0, 0, w, newHeight)
 
+                //TODO - make image match parent
                 /**if (resource.width > target.width) {
                     val aspectRatio = resource.height.toFloat().div( resource.width.toFloat())
                     bitmapDrawable.setBounds(0, 0, target.width, (aspectRatio * target.width).toInt())

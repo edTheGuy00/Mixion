@@ -33,9 +33,6 @@ class SearchFragment : Fragment(),
 
     companion object {
         @JvmStatic fun newInstance(): SearchFragment{
-
-            Log.d("searchfragment", "Instantiated")
-
             return SearchFragment()
         }
     }
@@ -50,6 +47,7 @@ class SearchFragment : Fragment(),
 
         searchAdapter = SearchAdapter(results, this)
 
+        //TODO - BUG - figure out why askSteemLogo image allows click event to backstack
         return view
     }
 
@@ -82,6 +80,8 @@ class SearchFragment : Fragment(),
             if (query != null) {
                 presenter.askSteem(query)
                 view?.hideSoftKeyboard()
+
+                //TODO - set a loading indicator
             }
             return true
         }
@@ -97,7 +97,7 @@ class SearchFragment : Fragment(),
     }
 
     override fun noResultsFound() {
-
+        //TODO - add no results message
     }
 
     override fun cleanResults() {

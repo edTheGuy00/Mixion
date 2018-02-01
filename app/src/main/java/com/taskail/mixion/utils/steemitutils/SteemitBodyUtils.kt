@@ -20,14 +20,13 @@ fun parseBodyHtml(input: String,
 
     val spannableStringBuilder = parseHtml(input, linkTextColor, linkHighlightColor)
 
+    //TODO - fix this
     val urlSpans =
             spannableStringBuilder.getSpans(0, spannableStringBuilder.length, TouchableUrlSpan::class.java)
 
     for (urlSpan in urlSpans){
 
         val start = spannableStringBuilder.getSpanStart(urlSpan)
-
-        Log.d("start", spannableStringBuilder.subSequence(start, 1).toString())
 
         if(spannableStringBuilder.subSequence(start, start.plus(1)).toString() == "@"){
             val end = spannableStringBuilder.getSpanEnd(urlSpan)
