@@ -8,7 +8,7 @@ import java.util.regex.Pattern
  */
 
 fun String.isFromDtube(): Boolean{
-    return this.startsWith("<center><a href='https://d.tube")
+    return this.startsWith("<center><a href='https://d.")
 }
 
 /**

@@ -98,6 +98,7 @@
         android:layout_columnSpan="3"
         android:paddingEnd="@dimen/padding_normal"
         android:paddingStart="@dimen/padding_normal"
+        android:layout_gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.DiscussionDescription"
         android:textColorHighlight="@color/colorPrimaryDark"
         android:textColorLink="@color/colorAccent"

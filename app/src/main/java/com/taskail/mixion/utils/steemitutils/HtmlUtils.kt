@@ -30,6 +30,7 @@ import android.widget.TextView
 
 import `in`.uncod.android.bypass.Bypass
 import `in`.uncod.android.bypass.style.TouchableUrlSpan
+import com.taskail.mixion.utils.GlideImageGetter
 import com.taskail.mixion.utils.LinkTouchMovementMethod
 
 /**
@@ -108,6 +109,14 @@ fun fromHtml(input: String): SpannableStringBuilder {
         Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY) as SpannableStringBuilder
     } else {
         Html.fromHtml(input) as SpannableStringBuilder
+    }
+}
+
+fun fromHtml(input: String, imageGetter: GlideImageGetter) : Spanned{
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY, imageGetter, null)
+    } else {
+        Html.fromHtml(input, imageGetter, null)
     }
 }
 

@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
+import com.taskail.mixion.utils.GlideImageGetter
+import com.taskail.mixion.utils.steemitutils.fromHtml
 import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText
 import com.taskail.mixion.utils.steemitutils.setTextWithNiceLinks
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
@@ -77,6 +80,11 @@ class DiscussionDetailsFragment : Fragment(),
 
     override fun displayDtube() {
 
+    }
+
+    override fun displaySimpleHtml(body: String) {
+        val html = fromHtml(body, GlideImageGetter(titleAndDescriptionLayout.discussion_description))
+        titleAndDescriptionLayout.discussion_description.text = html
     }
 
     override fun displayYoutube(videoId: String) {

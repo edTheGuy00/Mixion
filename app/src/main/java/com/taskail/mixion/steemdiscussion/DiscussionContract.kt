@@ -32,6 +32,8 @@ interface DiscussionContract {
         fun setTimeAgo(timeAgo: String)
 
         fun setNoImages()
+
+        fun displaySimpleHtml(body: String)
     }
 
     interface Presenter: BasePresenter{

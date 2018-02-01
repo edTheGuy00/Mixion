@@ -16,6 +16,7 @@ import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
 import com.taskail.mixion.utils.steemitutils.containsYoutubeVideo
 import com.taskail.mixion.utils.steemitutils.getYoutubeId
+import com.taskail.mixion.utils.steemitutils.isFromDmania
 import com.taskail.mixion.utils.steemitutils.isFromDtube
 
 /**Created by ed on 10/6/17.
@@ -135,13 +136,33 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         //val textToSet = parseBodyHtml(body, linkTextColor, linkHighLightColor)
         //discussionsView.displayHtmlBody(textToSet)
 
-        discussionsView.displayMarkdownBody(body, bypass)
+        //discussionsView.displayMarkdownBody(body, bypass)
+
 
         //For now we will try to only load videos from one source, if both exist
-        if (body.isFromDtube()){
-            discussionsView.displayDtube()
-        } else if (body.containsYoutubeVideo()){
-            discussionsView.displayYoutube(body.getYoutubeId())
+        when {
+            body.isFromDtube() -> discussionsView.displayDtube()
+            body.isFromDmania() -> { discussionsView.displaySimpleHtml(body) //TODO-
+
+            }
+
+        /**if (format != null)
+        when(format){
+        "html" -> {
+        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
+        ContextCompat.getColor(this, R.color.colorAccent))
+
+        discussionsView.displayHtmlBody(textToSet)
+        }
+
+        "markdown" -> {
+        val option = Bypass.Options()
+
+        val bypass = Bypass(this, option)
+
+        discussionsView.displayMarkdownBody(discussion.body, bypass)
+        }
+        } */
         }
 
         /**if (format != null)
