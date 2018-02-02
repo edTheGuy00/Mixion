@@ -15,6 +15,7 @@ import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
+import com.taskail.mixion.utils.html2md.HTML2Md
 import com.taskail.mixion.utils.steemitutils.*
 
 /**Created by ed on 10/6/17.
@@ -60,23 +61,23 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         handleIntent(intent)
     }
 
-    private fun handleIntent(@NonNull intent: Intent){
+    private fun handleIntent(@NonNull intent: Intent) {
         val extra = intent.extras[openDiscussion]
-        if (extra != null){
+        if (extra != null) {
             val discussion: SteemDiscussion = extra as SteemDiscussion
             setDiscussion(discussion)
         } else {
             val author = intent.getStringExtra(loadDiscussionAuthor)
             val permlink = intent.getStringExtra(loadDiscussionPermlink)
 
-            if (author != null && permlink !=null){
+            if (author != null && permlink != null) {
                 loadDiscussion(author, permlink)
             }
         }
     }
 
-    private fun loadDiscussion(author: String, permlink: String){
-        steemitRepository?.getDiscussion(author, permlink, object : SteemitDataSource.DiscussionLoadedCallBack{
+    private fun loadDiscussion(author: String, permlink: String) {
+        steemitRepository?.getDiscussion(author, permlink, object : SteemitDataSource.DiscussionLoadedCallBack {
             override fun onDataLoaded(discussion: SteemDiscussion) {
                 setDiscussion(discussion)
             }
@@ -87,7 +88,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         })
     }
 
-    private fun setDiscussion(discussion: SteemDiscussion){
+    private fun setDiscussion(discussion: SteemDiscussion) {
         discussionsView.displayTitle(discussion.title)
         discussionsView.setUser(discussion.author)
         discussionsView.setPayout(discussion.pendingPayoutValue.replace("SBD", ""))
@@ -95,9 +96,9 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         discussionsView.setUpVoteCount(discussion.netVotes.toString())
 
         val images = StringUtils.createArrayOfImages(discussion.jsonMetadata)
-        if (images != null){
+        if (images != null) {
             discussionsView.displayImages(images)
-        } else{
+        } else {
             discussionsView.setNoImages()
         }
 
@@ -107,12 +108,13 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 //            Log.d("format", format)
 //        }
 
-        val body = discussion.body
-        handleBody(body)
+        val newbody = HTML2Md.convert(discussion.body)
+        //handleBody(body)
+        discussionsView.displayMarkdownBody(newbody, getBypass())
 
     }
 
-    private fun handleBody(body: String){
+    private fun handleBody(body: String) {
 
         //TODO - Fix up a better solution,
 
@@ -123,13 +125,13 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
 
         //For now we will try to only load videos from one source, if both exist
-        when {
-            body.isFromDtube() -> discussionsView.displayDtube()
-            body.isFromDmania() -> { discussionsView.displaySimpleHtml(body) //TODO-
+        //when {
+        //body.isFromDtube() -> discussionsView.displayDtube()
+        //body.isFromDmania() -> { discussionsView.displaySimpleHtml(body) //TODO-
 
-            } else -> when {
+        // } else -> when {
 
-        }
+        //}
 
         /**if (format != null)
         when(format){
@@ -148,7 +150,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         discussionsView.displayMarkdownBody(discussion.body, bypass)
         }
         } */
-        }
+
 
         /**if (format != null)
         when(format){
@@ -175,7 +177,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     }
 
     private fun getLinkTextColor(): ColorStateList{
-        return ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!
+       return ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!
     }
 
     private fun getBypass(): Bypass{
@@ -185,7 +187,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
                 .setBlockQuoteLineWidth(2) // dps
                 .setBlockQuoteLineIndent(8) // dps
                 .setPreImageLinebreakHeight(4) //dps
-                .setBlockQuoteIndentSize(TypedValue.COMPLEX_UNIT_DIP, 2f)
+               .setBlockQuoteIndentSize(TypedValue.COMPLEX_UNIT_DIP, 2f)
                 .setBlockQuoteTextColor(ContextCompat.getColor(this, R.color.colorAccent))
         return Bypass(this, option)
     }

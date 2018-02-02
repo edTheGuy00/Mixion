@@ -155,45 +155,8 @@ fun parseMarkdownAndSetText(
         loadImageCallback: Bypass.LoadImageCallback) {
     if (TextUtils.isEmpty(input)) return
 
-    //val parsedHtml = jsoupParser(input)
+    //val parsedHtml = fromHtml(input, GlideImageGetter(textView))
 
     setTextWithNiceLinks(textView,
             parseMarkdownAndPlainLinks(textView, input, markdown, loadImageCallback))
-}
-
-/**
- * An iterative approach to removing Html tags,
- * This approach also removes links inside an html tag
- */
-
-fun stripHtmlTags(html: String): String {
-
-    val sbText = StringBuilder()
-    val sbHtml = StringBuilder()
-
-    var isText = true
-
-    for (ch in html.toCharArray()) {
-        if (isText) { // outside html
-            if (ch != '<') {
-                sbText.append(ch)
-                continue
-            } else {   // switch mode
-                isText = false
-                sbHtml.append(ch)
-                continue
-            }
-        } else { // inside html
-            if (ch != '>') {
-                sbHtml.append(ch)
-                continue
-            } else {      // switch mode
-                isText = true
-                sbHtml.append(ch)
-                continue
-            }
-        }
-    }
-
-    return sbText.toString()
 }

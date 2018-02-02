@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.utils.GetTimeAgo
-import com.taskail.mixion.utils.StringUtils
+import com.taskail.mixion.utils.steemitutils.getFeedSummary
 import com.taskail.mixion.utils.steemitutils.getFirstImgFromJsonMeta
 import kotlinx.android.synthetic.main.cardview_steem_post.view.*
 import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
@@ -27,7 +27,7 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
 
             with(discussion){
                 itemView.steemTitle.text = title
-                itemView.steem_body.text = StringUtils.getShorterBody(body)
+                itemView.steem_body.text = body.getFeedSummary()
                 itemView.text_timeago.text = GetTimeAgo.getlongtoago(created)
                 itemView.payout.text = pendingPayoutValue.replace("SBD", "")
                 itemView.votes_count.text = netVotes.toString()

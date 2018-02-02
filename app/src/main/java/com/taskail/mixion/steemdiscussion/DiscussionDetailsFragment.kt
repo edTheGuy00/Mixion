@@ -115,6 +115,7 @@ class DiscussionDetailsFragment : Fragment(),
     inner class ImageCallBack : Bypass.LoadImageCallback{
         override fun loadImage(src: String?, loadingSpan: ImageLoadingSpan?) {
 
+            Log.d("imgs", src)
             //TODO - create spannable imageloader
         }
     }
