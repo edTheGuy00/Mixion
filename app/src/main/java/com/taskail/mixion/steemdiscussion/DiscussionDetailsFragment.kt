@@ -11,8 +11,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.taskail.mixion.R
 import com.taskail.mixion.utils.GlideImageGetter
+import com.taskail.mixion.utils.ImageSpanTarget
 import com.taskail.mixion.utils.steemitutils.fromHtml
 import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText
 import com.taskail.mixion.utils.steemitutils.setTextWithNiceLinks
@@ -115,8 +119,12 @@ class DiscussionDetailsFragment : Fragment(),
     inner class ImageCallBack : Bypass.LoadImageCallback{
         override fun loadImage(src: String?, loadingSpan: ImageLoadingSpan?) {
 
-            Log.d("imgs", src)
-            //TODO - create spannable imageloader
+            Glide.with(context)
+                    .asBitmap()
+                    .load(src)
+                    .transition(BitmapTransitionOptions.withCrossFade())
+                    .into(ImageSpanTarget(titleAndDescriptionLayout.discussion_description, loadingSpan!!))
+
         }
     }
 

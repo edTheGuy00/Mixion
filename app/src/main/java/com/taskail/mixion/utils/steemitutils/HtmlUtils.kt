@@ -155,8 +155,6 @@ fun parseMarkdownAndSetText(
         loadImageCallback: Bypass.LoadImageCallback) {
     if (TextUtils.isEmpty(input)) return
 
-    //val parsedHtml = fromHtml(input, GlideImageGetter(textView))
-
     setTextWithNiceLinks(textView,
             parseMarkdownAndPlainLinks(textView, input, markdown, loadImageCallback))
 }

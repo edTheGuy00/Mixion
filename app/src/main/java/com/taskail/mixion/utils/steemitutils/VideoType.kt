@@ -2,14 +2,7 @@ package com.taskail.mixion.utils.steemitutils
 
 import java.util.regex.Pattern
 
-/**
- * detect whether the post is from dtube,
- * 95% of the time they will begin as such..
- */
 
-fun String.isFromDtube(): Boolean{
-    return this.startsWith("<center><a href='https://d.")
-}
 
 /**
  * detects if there is a youtube link in the post with a valid
