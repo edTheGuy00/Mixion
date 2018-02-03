@@ -16,4 +16,5 @@
     <string name="browse_tags">Browse By Tags</string>
     <string name="tags">Tags</string>
     <string name="resteem">Re-Steem</string>
+    <string name="no_comments">No Comments</string>
 </resources>
