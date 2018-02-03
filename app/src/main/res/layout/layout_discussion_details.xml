@@ -13,6 +13,9 @@
     android:clipToPadding="false"
     android:background="@android:color/transparent">
 
+    <com.taskail.mixion.ui.FourThreeView
+        android:visibility="gone"/>
+
     <com.taskail.mixion.ui.BaselineGridTextView
         android:id="@+id/discussion_title"
         android:layout_width="match_parent"
@@ -100,8 +103,8 @@
         android:paddingStart="@dimen/padding_normal"
         android:layout_gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.DiscussionDescription"
-        android:textColorHighlight="@color/colorPrimaryDark"
-        android:textColorLink="@color/colorAccent"
+        android:textColorHighlight="@color/colorAccent"
+        android:textColorLink="@color/circular_light"
         tools:text="Check out My New Post!" />
 
 

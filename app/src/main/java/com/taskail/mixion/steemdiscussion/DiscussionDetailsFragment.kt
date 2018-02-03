@@ -30,11 +30,11 @@ import kotlinx.android.synthetic.main.layout_discussion_details.view.*
 
 class DiscussionDetailsFragment : Fragment(),
         DiscussionContract.View {
+
     override lateinit var presenter: DiscussionContract.Presenter
 
     private lateinit var titleAndDescriptionLayout: View
 
-    private lateinit var imagesAdapter: DiscussionImagesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_steem_discussion, container, false)
@@ -49,20 +49,17 @@ class DiscussionDetailsFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         val discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout)
-        imagesAdapter = DiscussionImagesAdapter(ArrayList(0))
 
         discussion_comments.itemAnimator = DefaultItemAnimator()
         discussion_comments.adapter = discussionAdapter
         discussion_comments.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                imageRecycler.scrollBy(dy, dx)
+
 
             }
         })
 
-        imageRecycler.itemAnimator = DefaultItemAnimator()
-        imageRecycler.adapter = imagesAdapter
     }
 
     override fun displayTitle(title: String) {
