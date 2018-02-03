@@ -8,37 +8,6 @@ import java.util.regex.Pattern
  *Created by ed on 1/24/18.
  */
 
-fun String.getShorterSteemBody(){
-
-}
-
-
-
-
-/**
- * an attempt to better parse the summary for the feedview
- */
-
-//TODO - move this in FeedParser and figure out a way to extract a summary
-fun String.parseFeedBody(): String?{
-
-    val fromHtml = jsoupParser(this)
-    try {
-        val summary = extractShortSummary(0, 300, fromHtml)
-        if (containsMarkdown(summary)){
-
-        } else {
-            return summary
-        }
-    } catch (e: IOException){
-        e.printStackTrace()
-    }
-
-
-    return fromHtml
-
-}
-
 /**
  * this extracts a certain number of characters for a given string.
  */
