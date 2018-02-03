@@ -13,7 +13,7 @@ interface DiscussionContract {
 
         fun displayTitle(title: String)
 
-        fun displayHtmlBody(body: CharSequence)
+        fun displayBtnInfo(votes: String, payout: String, user: String, timeAgo: String)
 
         fun displayDtube()
 
@@ -21,19 +21,6 @@ interface DiscussionContract {
 
         fun displayMarkdownBody(body: String, markdown: Bypass)
 
-        fun displayImages(images: List<String>)
-
-        fun setUpVoteCount(votes: String)
-
-        fun setPayout(payout: String)
-
-        fun setUser(user: String)
-
-        fun setTimeAgo(timeAgo: String)
-
-        fun setNoImages()
-
-        fun displaySimpleHtml(body: String)
     }
 
     interface Presenter: BasePresenter{

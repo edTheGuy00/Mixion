@@ -90,100 +90,18 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
     private fun setDiscussion(discussion: SteemDiscussion) {
         discussionsView.displayTitle(discussion.title)
-        discussionsView.setUser(discussion.author)
-        discussionsView.setPayout(discussion.pendingPayoutValue.replace("SBD", ""))
-        discussionsView.setTimeAgo(GetTimeAgo.getlongtoago(discussion.created))
-        discussionsView.setUpVoteCount(discussion.netVotes.toString())
-
-        val images = StringUtils.createArrayOfImages(discussion.jsonMetadata)
-        if (images != null) {
-            discussionsView.displayImages(images)
-        } else {
-            discussionsView.setNoImages()
-        }
-
-        //TODO - format from json metadata is unreliable
-//        val format = StringUtils.getFormat(discussion.jsonMetadata)
-//        if (format != null){
-//            Log.d("format", format)
-//        }
+        discussionsView.displayBtnInfo(discussion.netVotes.toString(),
+                discussion.pendingPayoutValue.replace("SBD", ""),
+                discussion.author,
+                GetTimeAgo.getlongtoago(discussion.created))
 
         val newbody = HTML2Md.convert(discussion.body)
-        //handleBody(body)
         discussionsView.displayMarkdownBody(newbody, getBypass())
-
-    }
-
-    private fun handleBody(body: String) {
-
-        //TODO - Fix up a better solution,
-
-        //val textToSet = parseBodyHtml(body, getLinkTextColor(), getLinkHighlighterColor())
-        //discussionsView.displayHtmlBody(textToSet)
-
-        //discussionsView.displayMarkdownBody(body, bypass)
-
-
-        //For now we will try to only load videos from one source, if both exist
-        //when {
-        //body.isFromDtube() -> discussionsView.displayDtube()
-        //body.isFromDmania() -> { discussionsView.displaySimpleHtml(body) //TODO-
-
-        // } else -> when {
-
-        //}
-
-        /**if (format != null)
-        when(format){
-        "html" -> {
-        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
-        ContextCompat.getColor(this, R.color.colorAccent))
-
-        discussionsView.displayHtmlBody(textToSet)
-        }
-
-        "markdown" -> {
-        val option = Bypass.Options()
-
-        val bypass = Bypass(this, option)
-
-        discussionsView.displayMarkdownBody(discussion.body, bypass)
-        }
-        } */
-
-
-        /**if (format != null)
-        when(format){
-        "html" -> {
-        val textToSet = parseHtml(discussion.body, ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!,
-        ContextCompat.getColor(this, R.color.colorAccent))
-
-        discussionsView.displayHtmlBody(textToSet)
-        }
-
-        "markdown" -> {
-        val option = Bypass.Options()
-
-        val bypass = Bypass(this, option)
-
-        discussionsView.displayMarkdownBody(discussion.body, bypass)
-        }
-        } */
-
-    }
-
-    private fun getLinkHighlighterColor(): Int{
-        return ContextCompat.getColor(this, R.color.colorAccent)
-    }
-
-    private fun getLinkTextColor(): ColorStateList{
-       return ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)!!
     }
 
     private fun getBypass(): Bypass{
         val option = Bypass.Options()
-                .setBlockQuoteLineColor(
-                        ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                .setBlockQuoteLineColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setBlockQuoteLineWidth(2) // dps
                 .setBlockQuoteLineIndent(8) // dps
                 .setPreImageLinebreakHeight(4) //dps

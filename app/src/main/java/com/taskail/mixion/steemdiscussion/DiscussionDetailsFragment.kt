@@ -69,23 +69,11 @@ class DiscussionDetailsFragment : Fragment(),
         titleAndDescriptionLayout.discussion_title.text = title
     }
 
-    override fun displayHtmlBody(body: CharSequence) {
-        setTextWithNiceLinks(titleAndDescriptionLayout.discussion_description, body)
-    }
-
     override fun displayMarkdownBody(body: String, markdown: Bypass) {
         parseMarkdownAndSetText(titleAndDescriptionLayout.discussion_description,
                 body, markdown, ImageCallBack())
     }
 
-    override fun displaySimpleHtml(body: String) {
-        val html = fromHtml(body, GlideImageGetter(titleAndDescriptionLayout.discussion_description))
-        titleAndDescriptionLayout.discussion_description.text = html
-    }
-
-    override fun displayImages(images: List<String>) {
-        imagesAdapter.images = images
-    }
 
     override fun displayDtube() {
         //TODO - extract dtube video link, setup player
@@ -95,25 +83,11 @@ class DiscussionDetailsFragment : Fragment(),
         //TODO - extract youtube id, setup player
     }
 
-    override fun setUpVoteCount(votes: String) {
+    override fun displayBtnInfo(votes: String, payout: String, user: String, timeAgo: String) {
         titleAndDescriptionLayout.discussion_upvote_count.text = votes
-    }
-
-    override fun setPayout(payout: String) {
         titleAndDescriptionLayout.discussion_payout.text = payout
-    }
-
-    override fun setUser(user: String) {
         titleAndDescriptionLayout.discussion_author.text = user
-    }
-
-    override fun setTimeAgo(timeAgo: String) {
         titleAndDescriptionLayout.time_ago.text = timeAgo
-    }
-
-    override fun setNoImages() {
-        //TODO - something else, currently changing the layout
-        //discussion_comments.post({ discussion_comments.scrollBy(0, discussion_title.top) })
     }
 
     inner class ImageCallBack : Bypass.LoadImageCallback{
