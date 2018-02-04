@@ -15,7 +15,7 @@ abstract class SingleFragmentActivity<T : Fragment>: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         setContentView(getLayout())
 
         if (!isFragmentCreated()) {

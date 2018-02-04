@@ -15,7 +15,7 @@
         <activity android:name=".main.MainActivity"
             android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleTask"
-            android:theme="@style/Mixion.NoActionBar"
+            android:theme="@style/MaterialDrawerTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

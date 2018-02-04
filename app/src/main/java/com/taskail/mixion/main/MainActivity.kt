@@ -1,6 +1,7 @@
 package com.taskail.mixion.main
 
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.view.View
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.SingleFragmentToolbarActivity
@@ -17,6 +18,7 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
 
     lateinit var mixionDatabase: MixionDatabase
 
+
     override fun getFilterMenuAnchor(): View? {
         return getToolbar().findViewById<View?>(R.id.menu_feed_filter)
     }
@@ -25,10 +27,17 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
         return mixionDatabase
     }
 
+    override fun getMainToolbar(): Toolbar {
+        return getToolbar()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mixionDatabase = MixionDatabase.getInstance(this)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(false)
+
     }
 
     override fun onSearchOpen() {

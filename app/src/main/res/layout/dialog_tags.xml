@@ -37,15 +37,6 @@
                 android:textSize="24sp"
                 android:layout_marginStart="12dp" />
 
-            <ProgressBar
-                android:id="@+id/loadingIndicator"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:visibility="visible"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="16dp"/>
-
         </LinearLayout>
 
         <View

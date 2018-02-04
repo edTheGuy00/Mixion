@@ -27,7 +27,6 @@ class FeedFragment : Fragment(),
 
     interface Callback {
         fun onSearchRequested()
-        fun onAccountRequested()
         fun hideBottomNav()
         fun showBottomNav()
         fun getFilterMenuAnchor(): View?
@@ -96,10 +95,6 @@ class FeedFragment : Fragment(),
             R.id.menu_feed_filter -> {
                 val callback = getCallback() ?: return false
                 callback.getFilterMenuAnchor()?.let { showFilterMenu(it) }
-                true
-            }
-            R.id.menu_user_account -> {
-                getCallback()?.onAccountRequested()
                 true
             }
             else -> super.onOptionsItemSelected(item)

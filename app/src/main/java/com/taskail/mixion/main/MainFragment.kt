@@ -1,10 +1,19 @@
 package com.taskail.mixion.main
 
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.zsmb.materialdrawerkt.builders.drawer
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
+import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
+import co.zsmb.materialdrawerkt.draweritems.sectionHeader
+import com.mikepenz.fontawesome_typeface_library.FontAwesome
+import com.mikepenz.materialdrawer.Drawer
 import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.R
 import com.taskail.mixion.data.source.remote.AskSteemRepository
@@ -41,14 +50,7 @@ class MainFragment : Fragment(),
 
     val TAG = "MainFragment"
 
-    //TODO - open another menu overflow with account details, settings and about tab
-    override fun onAccountRequested() {
-        if (!getCurrentUser().isEmpty){
-            //User logged In, get info, open new activity
-        } else {
-            //login
-        }
-    }
+    private lateinit var result: Drawer
 
     override fun getFilterMenuAnchor(): View? {
         return getCallback()?.getFilterMenuAnchor()
@@ -59,6 +61,7 @@ class MainFragment : Fragment(),
         fun onSearchClosed()
         fun getFilterMenuAnchor(): View?
         fun getDatabase(): MixionDatabase?
+        fun getMainToolbar(): Toolbar
     }
     private var remoteDisposable = CompositeDisposable()
     private var localDisposable = CompositeDisposable()
@@ -79,6 +82,27 @@ class MainFragment : Fragment(),
         val pagerAdapter = ViewPagerAdapter(childFragmentManager)
 
         initViews(pagerAdapter)
+
+        result = drawer {
+            savedInstance = savedInstanceState
+            toolbar = this@MainFragment.getCallback()?.getMainToolbar()!!
+            actionBarDrawerToggleAnimated = true
+            rootViewRes = R.id.drawerContainer
+
+            primaryItem(R.string.home) { iicon = FontAwesome.Icon.faw_home }
+            primaryItem(R.string.profile) { iicon = FontAwesome.Icon.faw_user }
+            primaryItem(R.string.settings) { iicon = FontAwesome.Icon.faw_cog }
+            sectionHeader(R.string.app_name)
+            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }
+            secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_coffee }
+            secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }
+            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_bullhorn }
+            onItemClick { view, position, drawerItem ->
+                Log.d("frag", position.toString())
+                result.closeDrawer()
+                return@onItemClick true
+            }
+        }
     }
 
     private fun initViews(adapter: ViewPagerAdapter){

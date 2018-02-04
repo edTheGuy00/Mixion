@@ -9,7 +9,7 @@
     android:focusable="true"
     android:foreground="?selectableItemBackgroundBorderless"
     android:paddingStart="20dp"
-    android:paddingEnd="?android:attr/expandableListPreferredItemIndicatorRight">
+    android:paddingEnd="5dp">
 
     <TextView android:id="@+id/text_tag"
         android:text="tag"
@@ -17,6 +17,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
+        android:textColor="@color/black"
         android:textAppearance="?android:attr/textAppearanceListItem"
         android:textAlignment="viewStart"
         android:gravity="start" />
@@ -24,6 +25,7 @@
     <TextView android:id="@+id/text_posts"
         android:text="post"
         android:layout_width="0dp"
+        android:textColor="@color/md_grey_700"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
