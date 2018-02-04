@@ -5,8 +5,14 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
+import android.support.v7.widget.Toolbar
 import android.view.*
+import co.zsmb.materialdrawerkt.builders.drawer
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
+import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
+import co.zsmb.materialdrawerkt.draweritems.sectionHeader
+import com.mikepenz.fontawesome_typeface_library.FontAwesome
+import com.mikepenz.materialdrawer.Drawer
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
@@ -25,16 +31,19 @@ class FeedFragment : Fragment(),
 
     val TAG = "Feed Fragment"
 
+    private lateinit var result: Drawer
+
     interface Callback {
         fun onSearchRequested()
         fun hideBottomNav()
         fun showBottomNav()
-        fun getFilterMenuAnchor(): View?
         fun onTagDialogRequested()
         fun openDiscussionRequested(discussion: SteemDiscussion)
+        fun getDrawerToolbar(): Toolbar?
+        fun getDrawerContainer(): Int
+        fun onAccountRequested()
     }
 
-    private val filterMenuCallback = FilterMenuCallback()
     private val feedCallBack = FeedCallBack()
 
     override fun showFeed() {
@@ -92,19 +101,13 @@ class FeedFragment : Fragment(),
                 getCallback()?.onSearchRequested()
                 true
             }
-            R.id.menu_feed_filter -> {
+            R.id.menu_user_profile -> {
                 val callback = getCallback() ?: return false
-                callback.getFilterMenuAnchor()?.let { showFilterMenu(it) }
+                callback.onAccountRequested()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun showFilterMenu(anchor: View){
-
-        val filterMenuView = FilterMenuView(context)
-        filterMenuView.show(anchor, filterMenuCallback)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -142,6 +145,29 @@ class FeedFragment : Fragment(),
             }
 
         })
+
+        result = drawer {
+            savedInstance = savedInstanceState
+            toolbar = this@FeedFragment.getCallback()?.getDrawerToolbar()!!
+            actionBarDrawerToggleAnimated = true
+            rootViewRes = R.id.drawerContainer
+
+            primaryItem(R.string.home) { iicon = FontAwesome.Icon.faw_home }
+            primaryItem(R.string.filter_new) { iicon = FontAwesome.Icon.faw_sticky_note }
+            primaryItem(R.string.filter_hot) { iicon = FontAwesome.Icon.faw_fire }
+            primaryItem(R.string.filter_trending) { iicon = FontAwesome.Icon.faw_font_awesome }
+            primaryItem(R.string.filter_promoted) { iicon = FontAwesome.Icon.faw_money }
+            primaryItem(R.string.browse_tags)
+            sectionHeader(R.string.app_name)
+            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }
+            secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_sticky_note }
+            secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }
+            onItemClick { view, position, drawerItem ->
+                result.closeDrawer()
+                handleDrawerClicks(position)
+                return@onItemClick true
+            }
+        }
     }
 
     private fun getCallback(): Callback? {
@@ -150,32 +176,17 @@ class FeedFragment : Fragment(),
 
     private inner class FeedCallBack : FeedRVAdapter.FeedAdapterCallBack{
         override fun onDiscussionSelected(discussion: SteemDiscussion) {
-
-            Log.d(TAG, " Feed Clicked")
             getCallback()?.openDiscussionRequested(discussion)
         }
     }
 
-    private inner class FilterMenuCallback : FilterMenuView.Callback{
-        override fun onHotSelected() {
-            presenter.sortBy("Hot")
+    private fun handleDrawerClicks(position: Int){
+        when (position){
+            1 -> presenter.sortBy("New")
+            2 -> presenter.sortBy("Hot")
+            3 -> presenter.sortBy("Trending")
+            4 -> presenter.sortBy("Promoted")
+            5 -> getCallback()?.onTagDialogRequested()
         }
-
-        override fun onNewSelected() {
-            presenter.sortBy("New")
-        }
-
-        override fun onTrendingSelected() {
-            presenter.sortBy("Trending")
-        }
-
-        override fun onPromotedSelected() {
-            presenter.sortBy("Promoted")
-        }
-
-        override fun onTagsSelected() {
-            getCallback()?.onTagDialogRequested()
-        }
-
     }
 }

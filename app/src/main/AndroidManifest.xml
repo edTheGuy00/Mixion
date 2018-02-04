@@ -28,6 +28,10 @@
 
         </activity>
 
+        <activity android:name=".login.LoginActivity"
+            android:label="@string/login_title"
+            android:theme="@style/MaterialDrawerTheme.ActionBar"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

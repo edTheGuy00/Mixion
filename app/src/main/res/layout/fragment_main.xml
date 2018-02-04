@@ -6,45 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/drawerContainer"
+        android:layout_height="match_parent"
         android:layout_marginTop="?android:attr/actionBarSize"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/fragment_main_coordinator"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/fragment_main_coordinator"
+            <com.taskail.mixion.ui.LockableViewPager
+                android:id="@+id/lockableViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"/>
 
-                <com.taskail.mixion.ui.LockableViewPager
-                    android:id="@+id/lockableViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+        </android.support.design.widget.CoordinatorLayout>
 
-            </android.support.design.widget.CoordinatorLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomNavView"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="bottom"
+            android:background="@color/dark_gray"
+            android:visibility="gone"
+            app:tabGravity="fill"
+            app:itemIconTint="@drawable/bottom_navigation_color_selector"
+            app:itemTextColor="@drawable/bottom_navigation_color_selector"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:menu="@menu/bottom_nav_items"/>
 
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottomNavView"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_gravity="bottom"
-                android:background="@color/dark_gray"
-                android:visibility="gone"
-                app:tabGravity="fill"
-                app:itemIconTint="@drawable/bottom_navigation_color_selector"
-                app:itemTextColor="@drawable/bottom_navigation_color_selector"
-                app:tabIndicatorColor="@android:color/transparent"
-                app:menu="@menu/bottom_nav_items"/>
-
-        </LinearLayout>
-
-    </FrameLayout>
+    </LinearLayout>
 
 </FrameLayout>

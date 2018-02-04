@@ -9,9 +9,9 @@
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/menu_feed_filter"
-        android:title="@string/filter_by"
-        android:icon="@drawable/ic_filter_list_black_24dp"
+    <item android:id="@+id/menu_user_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_account_circle_black_24dp"
         app:showAsAction="always"/>
 
 </menu>

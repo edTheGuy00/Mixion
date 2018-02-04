@@ -25,6 +25,8 @@ import com.taskail.mixion.data.source.remote.*
 import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
+import com.taskail.mixion.login.LoginActivity
+import com.taskail.mixion.profile.ProfileFragment
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
@@ -50,18 +52,27 @@ class MainFragment : Fragment(),
 
     val TAG = "MainFragment"
 
-    private lateinit var result: Drawer
-
-    override fun getFilterMenuAnchor(): View? {
-        return getCallback()?.getFilterMenuAnchor()
-    }
-
     interface Callback{
         fun onSearchOpen()
         fun onSearchClosed()
-        fun getFilterMenuAnchor(): View?
         fun getDatabase(): MixionDatabase?
         fun getMainToolbar(): Toolbar
+    }
+
+    override fun onAccountRequested() {
+        if (getCurrentUser().isEmpty){
+            startActivity(LoginActivity.newIntent(context!!))
+        } else {
+            //Show user profile
+        }
+    }
+
+    override fun getDrawerToolbar(): Toolbar? {
+        return getCallback()?.getMainToolbar()
+    }
+
+    override fun getDrawerContainer(): Int {
+        return R.id.drawerContainer
     }
     private var remoteDisposable = CompositeDisposable()
     private var localDisposable = CompositeDisposable()
@@ -82,27 +93,6 @@ class MainFragment : Fragment(),
         val pagerAdapter = ViewPagerAdapter(childFragmentManager)
 
         initViews(pagerAdapter)
-
-        result = drawer {
-            savedInstance = savedInstanceState
-            toolbar = this@MainFragment.getCallback()?.getMainToolbar()!!
-            actionBarDrawerToggleAnimated = true
-            rootViewRes = R.id.drawerContainer
-
-            primaryItem(R.string.home) { iicon = FontAwesome.Icon.faw_home }
-            primaryItem(R.string.profile) { iicon = FontAwesome.Icon.faw_user }
-            primaryItem(R.string.settings) { iicon = FontAwesome.Icon.faw_cog }
-            sectionHeader(R.string.app_name)
-            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }
-            secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_coffee }
-            secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }
-            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_bullhorn }
-            onItemClick { view, position, drawerItem ->
-                Log.d("frag", position.toString())
-                result.closeDrawer()
-                return@onItemClick true
-            }
-        }
     }
 
     private fun initViews(adapter: ViewPagerAdapter){

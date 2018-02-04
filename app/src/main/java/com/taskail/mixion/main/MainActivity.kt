@@ -18,11 +18,6 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
 
     lateinit var mixionDatabase: MixionDatabase
 
-
-    override fun getFilterMenuAnchor(): View? {
-        return getToolbar().findViewById<View?>(R.id.menu_feed_filter)
-    }
-
     override fun getDatabase(): MixionDatabase? {
         return mixionDatabase
     }
