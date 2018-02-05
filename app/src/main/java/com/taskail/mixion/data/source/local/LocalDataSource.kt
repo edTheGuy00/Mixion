@@ -8,10 +8,15 @@ import io.reactivex.schedulers.Schedulers
 
 /**
  *Created by ed on 1/26/18.
+ *
+ * This class is responsible for all data in the Local database
  */
 class LocalDataSource(val tagsDao: TagsDao,
                       val disposable: CompositeDisposable) : SteemitDataSource.Local {
 
+    /**
+     * get the tags from the local database
+     */
     override fun getTags(callback: SteemitDataSource.DataLoadedCallback<RoomTags>) {
 
         disposable.add(getTagsFromDatabase(tagsDao)
@@ -24,6 +29,9 @@ class LocalDataSource(val tagsDao: TagsDao,
                 }))
     }
 
+    /**
+     * insert tags into the local database
+     */
     override fun saveTags(tags: RoomTags) {
 
         disposable.add(insertTag(tagsDao, tags)
@@ -35,6 +43,9 @@ class LocalDataSource(val tagsDao: TagsDao,
 
     }
 
+    /**
+     * This will delete all tags. Should only be called when we are updating the Database
+     */
     override fun deleteTags() {
         disposable.add(deleteTags(tagsDao)
                 .subscribeOn(Schedulers.io())
