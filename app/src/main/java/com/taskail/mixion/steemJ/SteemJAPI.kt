@@ -3,7 +3,6 @@ package com.taskail.mixion.steemJ
 import android.util.Log
 import eu.bittrade.libs.steemj.SteemJ
 import eu.bittrade.libs.steemj.base.models.AccountName
-import eu.bittrade.libs.steemj.base.models.operations.CommentOperation
 import eu.bittrade.libs.steemj.configuration.SteemJConfig
 import eu.bittrade.libs.steemj.enums.PrivateKeyType
 import io.reactivex.Completable
@@ -21,7 +20,6 @@ import java.util.ArrayList
 class SteemJAPI (private val steemJDisposable: CompositeDisposable) {
 
     var steemJ: SteemJ? = null
-
     val steemJConfig = SteemJConfig.getInstance()
 
     fun setupPostingUser(userName: String, postingKey: String){

@@ -24,7 +24,13 @@ class MixionApplication : Application() {
 
     inner class KeyStoreConfig: KeystoreCompatConfig(){
 
+        //this will enable the keyStore lib to work on rooted phones
         override fun isRootDetectionEnabled(): Boolean {
+            return false
+        }
+
+        //no need for the user to unlock/ enter pin onto the phone
+        override fun getUserAuthenticationRequired(): Boolean {
             return false
         }
     }

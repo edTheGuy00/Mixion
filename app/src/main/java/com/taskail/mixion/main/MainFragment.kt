@@ -28,6 +28,7 @@ import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.profile.ProfileFragment
+import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.steemJ.SteemJAPI
@@ -147,14 +148,6 @@ class MainFragment : Fragment(),
         }
     }
 
-    private fun getCurrentUser() : AccountName{
-        return getSteemJConfig().defaultAccount
-    }
-
-    private fun getSteemJConfig(): SteemJConfig{
-        return SteemJConfig.getInstance()
-    }
-
     override fun hideBottomNav() {
         bottomNavView.hideBottomNavigationView()
     }
@@ -216,6 +209,7 @@ class MainFragment : Fragment(),
     override fun onDestroy() {
         remoteDisposable.dispose()
         localDisposable.dispose()
+        User.performLogout()
         super.onDestroy()
     }
 
@@ -227,14 +221,12 @@ class MainFragment : Fragment(),
         runSinceLollipop {
             if (keystoreCompat.hasSecretLoadable()){
                 keystoreCompat.loadSecretAsString({ decryptResults ->
-
                     decryptResults.split(';').let {
-                        Log.d("User", it[0])
-                        Log.d("key", it[1])
+                        User.storeUser(it[0], it[1])
                     }
                 }, {
                     Log.d("Error", it.message)
-                }, false)
+                }, User.forceLockScreenFlag)
             }
         }
     }

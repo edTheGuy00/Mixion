@@ -7,10 +7,8 @@ import android.util.Log
 import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
-import com.taskail.mixion.steemJ.SteemJAPI
-import eu.bittrade.libs.steemj.configuration.SteemJConfig
+import com.taskail.mixion.profile.User
 import kotlinx.android.synthetic.main.activity_login.*
-import io.reactivex.disposables.CompositeDisposable
 
 
 /**
@@ -39,6 +37,7 @@ class LoginActivity : BaseActivity() {
             keystoreCompat.storeSecret("${user};${key}", {
                 Log.d("KeyStoreCompat", "Storing credentials failed")
             }, {
+                User.storeUser(user, key)
                 Log.d("Success", "Credentials stored")
             })
 
