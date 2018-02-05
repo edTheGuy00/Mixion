@@ -58,6 +58,10 @@ class FeedFragment : Fragment(),
         adapter.notifyItemRangeInserted(previousSize, newSize)
     }
 
+    override fun showFeedType(feed: String) {
+        getCallback()?.getDrawerToolbar()?.title = feed
+    }
+
     companion object {
         var INSTANCE : FeedFragment? = null
 
