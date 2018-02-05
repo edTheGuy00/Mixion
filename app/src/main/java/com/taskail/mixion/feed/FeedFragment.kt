@@ -6,15 +6,19 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.*
 import co.zsmb.materialdrawerkt.builders.drawer
+import co.zsmb.materialdrawerkt.builders.footer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.profile.User
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.ui.FilterMenuView
@@ -42,6 +46,7 @@ class FeedFragment : Fragment(),
         fun getDrawerToolbar(): Toolbar?
         fun getDrawerContainer(): Int
         fun onAccountRequested()
+        fun logoutUser()
     }
 
     private val feedCallBack = FeedCallBack()
@@ -166,9 +171,15 @@ class FeedFragment : Fragment(),
             secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }
             secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_sticky_note }
             secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }
+            if (User.userIsLoggedIn){
+                footer {
+                    primaryItem (User.getUserName()!!, getString(R.string.logout))
+                }
+            }
+
             onItemClick { view, position, drawerItem ->
                 result.closeDrawer()
-                handleDrawerClicks(position)
+                handleDrawerClicks(position, drawerItem)
                 return@onItemClick true
             }
         }
@@ -184,13 +195,17 @@ class FeedFragment : Fragment(),
         }
     }
 
-    private fun handleDrawerClicks(position: Int){
+    private fun handleDrawerClicks(position: Int, drawerItem: IDrawerItem<*, *>){
         when (position){
             1 -> presenter.sortBy("New")
             2 -> presenter.sortBy("Hot")
             3 -> presenter.sortBy("Trending")
             4 -> presenter.sortBy("Promoted")
             5 -> getCallback()?.onTagDialogRequested()
+            -1 -> {
+                result.removeAllStickyFooterItems()
+                getCallback()?.logoutUser()
+            }
         }
     }
 }

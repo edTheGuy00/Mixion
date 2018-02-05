@@ -67,10 +67,10 @@ class MainFragment : Fragment(),
     }
 
     override fun onAccountRequested() {
-        if (!keystoreCompat.hasSecretLoadable()){
-            startActivity(LoginActivity.newIntent(context!!))
+        if (User.userIsLoggedIn){
+            // start user profile
         } else {
-            getCredentials()
+            startActivity(LoginActivity.newIntent(context!!))
         }
     }
 
@@ -102,6 +102,7 @@ class MainFragment : Fragment(),
 
         if (keystoreCompat.hasSecretLoadable()){
             getCredentials()
+            User.userIsLoggedIn = true
         }
 
         initViews(pagerAdapter)
@@ -219,6 +220,13 @@ class MainFragment : Fragment(),
 
     private fun getCallback(): Callback? {
         return getCallback(this, Callback::class.java)
+    }
+
+    override fun logoutUser() {
+        User.performLogout()
+        runSinceLollipop {
+            keystoreCompat.clearCredentials()
+        }
     }
 
     private fun getCredentials(){

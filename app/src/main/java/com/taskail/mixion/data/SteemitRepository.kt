@@ -27,7 +27,7 @@ class SteemitRepository(
         remoteRepository.getMoreUserFeed(startAuthor, startPermLink, callback)
     }
 
-    override fun  getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
+    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
 
         remoteRepository.getFeed(callback, sortBy)
     }

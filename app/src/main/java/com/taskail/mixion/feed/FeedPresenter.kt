@@ -15,7 +15,6 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     var discussionFromResponse = ArrayList<SteemDiscussion>()
     var sortBy = "Trending"
-    var userLoggedIn = false
 
     init {
         feedView.presenter = this
@@ -45,8 +44,7 @@ class FeedPresenter(val feedView: FeedContract.View,
     private fun firstCall(){
         if (!feedIsLoaded()){
 
-            if (getUserName() != null){
-                userLoggedIn = true
+            if (User.userIsLoggedIn){
                 steemitRepository.remoteRepository.tag = getUserName()!!
                 fetchUserFeed()
             } else{
@@ -59,6 +57,10 @@ class FeedPresenter(val feedView: FeedContract.View,
     override fun sortBy(sortBy: String) {
         if (this.sortBy != sortBy){
             this.sortBy = sortBy
+
+            if (steemitRepository.remoteRepository.tag == getUserName()){
+                steemitRepository.remoteRepository.tag = "steemit"
+            }
             performCleanFetch()
         }
     }
@@ -114,7 +116,7 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     override fun fetchMore(lastPostLocation: Int) {
 
-        if (userLoggedIn && getUserName() == steemitRepository.remoteRepository.tag){
+        if (User.userIsLoggedIn && getUserName() == steemitRepository.remoteRepository.tag){
 
             getMoreUserFeed(lastPostLocation)
 

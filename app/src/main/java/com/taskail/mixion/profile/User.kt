@@ -9,6 +9,7 @@ object User {
     private var userKey: String? = null
 
     var forceLockScreenFlag = false
+    var userIsLoggedIn = false
 
     fun getUserName() = userName
     fun getUserKey() = userKey
