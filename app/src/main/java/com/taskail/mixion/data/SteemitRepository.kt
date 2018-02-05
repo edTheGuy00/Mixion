@@ -12,13 +12,19 @@ import java.util.*
 /**
  *Created by ed on 1/24/18.
  *
- * This class is responsible for all data
+ * This class is responsible for all data,
+ * whether it is from the local database or the remote source, this class will
+ * delegate where to query from.
  */
 class SteemitRepository(
         val remoteRepository: RemoteDataSource,
         val localRepository: LocalDataSource
         ) : SteemitDataSource {
 
+    /**
+     * at this moment we are only querying remote for the users feed,
+     * caching of the users feed may be implemented in the future
+     */
     override fun getUserFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
         remoteRepository.getUserFeed(callback)
     }
@@ -27,8 +33,10 @@ class SteemitRepository(
         remoteRepository.getMoreUserFeed(startAuthor, startPermLink, callback)
     }
 
+    /**
+     * It is sensible to only query the feed from remote
+     */
     override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
-
         remoteRepository.getFeed(callback, sortBy)
     }
 
@@ -39,15 +47,23 @@ class SteemitRepository(
         remoteRepository.getMoreFeed(callback, sortBy, startAuthor, startPermLink)
     }
 
+    /**
+     * This get's a single discussion.
+     */
+    override fun getDiscussion(author: String, permlink: String, callBack: SteemitDataSource.DiscussionLoadedCallBack) {
+        remoteRepository.getDiscussion(callBack, author, permlink)
+    }
+
+    /**
+     * Tags are queried from the remote API only if the local database is empty.
+     * Future call will always be from the local database, however we need to integrate
+     * a method to update the local database once and a while.
+     */
     var tagsInMemory: LinkedHashMap<String, RoomTags> = LinkedHashMap()
     override fun getTags(callback: SteemitDataSource.DataLoadedCallback<RoomTags>) {
 
-        Log.d("tags", "get tags")
-
         //Tags are still in memory, respond immediately
         if (tagsInMemory.isNotEmpty()){
-
-            Log.d("tags", "memory not empty")
 
             callback.onDataLoaded(ArrayList(tagsInMemory.values))
         } else {
@@ -56,8 +72,6 @@ class SteemitRepository(
             localRepository.getTags(object : SteemitDataSource.DataLoadedCallback<RoomTags>{
 
                 override fun onDataLoaded(list: List<RoomTags>) {
-
-                    Log.d("tags", "from local database")
                     refreshTagsInMemory(list)
                     callback.onDataLoaded(list)
                 }
@@ -75,13 +89,10 @@ class SteemitRepository(
 
     }
 
-    override fun getDiscussion(author: String, permlink: String, callBack: SteemitDataSource.DiscussionLoadedCallBack) {
-        remoteRepository.getDiscussion(callBack, author, permlink)
-    }
-
+    /**
+     * Getting tags from remote API will only be called if the local database is empty
+     */
     private fun getTagsFromRemoteDataSource(callback: SteemitDataSource.DataLoadedCallback<RoomTags>){
-
-        Log.d("tags", "getting from network")
 
         remoteRepository.getTags(object : SteemitDataSource.DataLoadedCallback<Tags>{
             override fun onDataLoaded(list: List<Tags>) {
@@ -100,6 +111,11 @@ class SteemitRepository(
         })
     }
 
+    /**
+     * Tags loaded from the remote API will be saved into the local database,
+     * first we need to convert them from and array of [Tags] into a list of [RoomTags] which is
+     * the format of the local database
+     */
     private fun handleRemoteToLocalTags(array: Array<Tags>) : List<RoomTags>{
 
         array.forEach {
@@ -118,15 +134,21 @@ class SteemitRepository(
         return newTags
     }
 
+    /**
+     * this is the action that saves into the local database
+     */
     private fun refreshLocalDataSource(tags: List<RoomTags>){
         localRepository.deleteTags()
 
         for (tag in tags){
             localRepository.saveTags(tag)
         }
-
     }
 
+    /**
+     * We will keep the tags in memory so that we won't have to query
+     * the database every time
+     */
     private fun refreshTagsInMemory(list: List<RoomTags>){
 
         tagsInMemory.clear()
