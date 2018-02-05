@@ -18,6 +18,8 @@ interface FeedContract {
 
         fun clearItems()
 
+        fun showFeedType(feed: String)
+
         fun showMoreFeed(previousSize: Int, newSize: Int)
 
     }
@@ -27,6 +29,8 @@ interface FeedContract {
         fun sortBy(sortBy: String)
 
         fun getByTag(tag: String)
+
+        fun getMyFeed()
 
         fun fetchMore(lastPostLocation: Int)
     }

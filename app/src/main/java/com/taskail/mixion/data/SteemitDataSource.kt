@@ -16,6 +16,10 @@ interface SteemitDataSource {
 
         var loadCount: Int
 
+        fun getUserFeed(callback: DataLoadedCallback<SteemDiscussion>)
+
+        fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
+
         fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
 
         fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
@@ -37,6 +41,10 @@ interface SteemitDataSource {
     fun getDiscussion(author: String, permlink: String, callBack: DiscussionLoadedCallBack)
 
     fun getTags(callback: DataLoadedCallback<RoomTags>)
+
+    fun getUserFeed(callback: DataLoadedCallback<SteemDiscussion>)
+
+    fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
 
     fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
 

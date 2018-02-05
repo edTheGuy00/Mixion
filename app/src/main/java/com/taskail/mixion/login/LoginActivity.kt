@@ -34,14 +34,18 @@ class LoginActivity : BaseActivity() {
             val user = login_username_text.editText?.text.toString()
             val key = login_key_input.editText?.text.toString()
 
-            keystoreCompat.storeSecret("${user};${key}", {
-                Log.d("KeyStoreCompat", "Storing credentials failed")
-            }, {
-                User.storeUser(user, key)
-                Log.d("Success", "Credentials stored")
-            })
-
+            if (user.isNotEmpty() && key.isNotEmpty()){
+                storeAndSetUserCredentials(user, key)
+            }
         }
+    }
+
+    private fun storeAndSetUserCredentials(user: String, key: String){
+        keystoreCompat.storeSecret("${user};${key}", {
+            Log.d("KeyStoreCompat", "Storing credentials failed")
+        }, {
+            User.storeUser(user, key)
+        })
     }
 
 }

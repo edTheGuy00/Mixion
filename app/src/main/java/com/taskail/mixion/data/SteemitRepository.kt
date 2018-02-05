@@ -19,6 +19,13 @@ class SteemitRepository(
         val localRepository: LocalDataSource
         ) : SteemitDataSource {
 
+    override fun getUserFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
+        remoteRepository.getUserFeed(callback)
+    }
+
+    override fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
+        remoteRepository.getMoreUserFeed(startAuthor, startPermLink, callback)
+    }
 
     override fun  getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
 

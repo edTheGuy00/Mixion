@@ -3,6 +3,7 @@ package com.taskail.mixion.feed
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.profile.User
 import java.util.*
 
 /**
@@ -14,6 +15,7 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     var discussionFromResponse = ArrayList<SteemDiscussion>()
     var sortBy = "Trending"
+    var userLoggedIn = false
 
     init {
         feedView.presenter = this
@@ -29,10 +31,28 @@ class FeedPresenter(val feedView: FeedContract.View,
         firstCall()
     }
 
-    private fun firstCall(){
+    override fun getMyFeed() {
+        if (getUserName() != null){
+            if (steemitRepository.remoteRepository.tag != getUserName()){
+                steemitRepository.remoteRepository.tag = getUserName()!!
+                feedView.discussionFromResponse.clear()
+                feedView.clearItems()
+                fetchUserFeed()
+            }
+        }
+    }
 
+    private fun firstCall(){
         if (!feedIsLoaded()){
-            fetch()
+
+            if (getUserName() != null){
+                userLoggedIn = true
+                steemitRepository.remoteRepository.tag = getUserName()!!
+                fetchUserFeed()
+            } else{
+                fetch()
+            }
+
         }
     }
 
@@ -58,14 +78,30 @@ class FeedPresenter(val feedView: FeedContract.View,
         }
     }
 
+    private fun fetchUserFeed(){
+         steemitRepository.getUserFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
+             override fun onDataLoaded(list: List<SteemDiscussion>) {
+             }
+
+             override fun onDataLoaded(array: Array<SteemDiscussion>) {
+                 feedView.discussionFromResponse.addAll(array)
+                 feedView.showFeed()
+             }
+
+             override fun onLoadError(error: Throwable) {
+             }
+
+         })
+    }
+
     private fun fetch(){
 
         steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
             override fun onDataLoaded(list: List<SteemDiscussion>) {
             }
 
-            override fun onDataLoaded(steem: Array<SteemDiscussion>) {
-                feedView.discussionFromResponse.addAll(steem)
+            override fun onDataLoaded(array: Array<SteemDiscussion>) {
+                feedView.discussionFromResponse.addAll(array)
                 feedView.showFeed()
             }
 
@@ -78,17 +114,49 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     override fun fetchMore(lastPostLocation: Int) {
 
-        steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
+        if (userLoggedIn && getUserName() == steemitRepository.remoteRepository.tag){
+
+            getMoreUserFeed(lastPostLocation)
+
+        } else {
+
+            steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion> {
+                override fun onDataLoaded(list: List<SteemDiscussion>) {
+                }
+
+                override fun onDataLoaded(array: Array<SteemDiscussion>) {
+
+                    /**
+                     * Skip the first item from the returned list as it will be the same item
+                     * from the previous last item.
+                     */
+                    Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(array, 1, 10))
+
+                    feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
+                }
+
+                override fun onLoadError(error: Throwable) {
+                }
+
+            }, sortBy, getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation))
+        }
+    }
+
+    private fun getMoreUserFeed(lastPostLocation: Int){
+
+        steemitRepository.getMoreUserFeed(getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation),
+                object : SteemitDataSource.DataLoadedCallback<SteemDiscussion> {
+
             override fun onDataLoaded(list: List<SteemDiscussion>) {
             }
 
-            override fun onDataLoaded(steem: Array<SteemDiscussion>) {
+            override fun onDataLoaded(array: Array<SteemDiscussion>) {
 
                 /**
                  * Skip the first item from the returned list as it will be the same item
                  * from the previous last item.
                  */
-                Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(steem, 1, 10))
+                Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(array, 1, 10))
 
                 feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
             }
@@ -96,7 +164,13 @@ class FeedPresenter(val feedView: FeedContract.View,
             override fun onLoadError(error: Throwable) {
             }
 
-        }, sortBy, getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation))
+        })
+
+    }
+
+    private fun getUserName(): String?{
+        var user: String? = null
+        return user ?: User.getUserName().apply { user = this }
     }
 
     /**

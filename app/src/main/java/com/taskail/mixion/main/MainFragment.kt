@@ -100,6 +100,10 @@ class MainFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         val pagerAdapter = ViewPagerAdapter(childFragmentManager)
 
+        if (keystoreCompat.hasSecretLoadable()){
+            getCredentials()
+        }
+
         initViews(pagerAdapter)
     }
 
@@ -219,15 +223,13 @@ class MainFragment : Fragment(),
 
     private fun getCredentials(){
         runSinceLollipop {
-            if (keystoreCompat.hasSecretLoadable()){
-                keystoreCompat.loadSecretAsString({ decryptResults ->
-                    decryptResults.split(';').let {
-                        User.storeUser(it[0], it[1])
-                    }
-                }, {
-                    Log.d("Error", it.message)
-                }, User.forceLockScreenFlag)
-            }
+            keystoreCompat.loadSecretAsString({ decryptResults ->
+                decryptResults.split(';').let {
+                    User.storeUser(it[0], it[1])
+                }
+            }, {
+                Log.d("Error", it.message)
+            }, User.forceLockScreenFlag)
         }
     }
 
