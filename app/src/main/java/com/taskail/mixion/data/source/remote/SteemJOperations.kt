@@ -9,18 +9,6 @@ import io.reactivex.schedulers.Schedulers
 
 var steemJClient: SteemJ? = null
 
-fun initSteemJ(){
-    getSteemJ().subscribeOn(Schedulers.io()).subscribe().dispose()
-}
-
-fun getSteemJ() : Completable{
-    return Completable.create {
-        steemJClient = SteemJ()
-
-        it.onComplete()
-    }
-}
-
 fun logIntoSteemJ(accountName: AccountName, password: String) : Completable{
 
     return Completable.create{

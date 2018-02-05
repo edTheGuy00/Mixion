@@ -15,6 +15,7 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
 import com.taskail.mixion.BackPressedHandler
+import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.R
 import com.taskail.mixion.data.source.remote.AskSteemRepository
 import com.taskail.mixion.data.SteemitRepository
@@ -29,11 +30,13 @@ import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.profile.ProfileFragment
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
+import com.taskail.mixion.steemJ.SteemJAPI
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.utils.getCallback
 import com.taskail.mixion.utils.hideBottomNavigationView
 import com.taskail.mixion.utils.showBottomNavigationView
+import cz.koto.keystorecompat.base.utility.runSinceLollipop
 import eu.bittrade.libs.steemj.base.models.AccountName
 import eu.bittrade.libs.steemj.configuration.SteemJConfig
 import io.reactivex.disposables.CompositeDisposable
@@ -44,6 +47,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
  */
 
 var steemitRepository: SteemitRepository? = null
+var steemJAPI: SteemJAPI? = null
 
 class MainFragment : Fragment(),
         BackPressedHandler,
@@ -51,6 +55,8 @@ class MainFragment : Fragment(),
         SearchFragment.Callback {
 
     val TAG = "MainFragment"
+
+    private val keystoreCompat by lazy { (activity?.application as MixionApplication).keyStoreCompat }
 
     interface Callback{
         fun onSearchOpen()
@@ -60,10 +66,10 @@ class MainFragment : Fragment(),
     }
 
     override fun onAccountRequested() {
-        if (getCurrentUser().isEmpty){
+        if (!keystoreCompat.hasSecretLoadable()){
             startActivity(LoginActivity.newIntent(context!!))
         } else {
-            //Show user profile
+            getCredentials()
         }
     }
 
@@ -76,6 +82,7 @@ class MainFragment : Fragment(),
     }
     private var remoteDisposable = CompositeDisposable()
     private var localDisposable = CompositeDisposable()
+    private var steemJDisposable = CompositeDisposable()
     private var steemitAPI: SteemAPI? = null
     private var askSteemApi: AskSteemApi? = null
     private var askSteemDisposable: CompositeDisposable? = null
@@ -214,6 +221,22 @@ class MainFragment : Fragment(),
 
     private fun getCallback(): Callback? {
         return getCallback(this, Callback::class.java)
+    }
+
+    private fun getCredentials(){
+        runSinceLollipop {
+            if (keystoreCompat.hasSecretLoadable()){
+                keystoreCompat.loadSecretAsString({ decryptResults ->
+
+                    decryptResults.split(';').let {
+                        Log.d("User", it[0])
+                        Log.d("key", it[1])
+                    }
+                }, {
+                    Log.d("Error", it.message)
+                }, false)
+            }
+        }
     }
 
     override fun onBackPressed(): Boolean {

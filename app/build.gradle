@@ -78,6 +78,16 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.2'
     implementation 'com.github.PierfrancescoSoffritti:AndroidYouTubePlayer:4.1.4'
 
+    api("cz.koto:android-keystore-compat-elplus:2.0.0") {
+        exclude group: 'com.android.support'
+    }
+    api("cz.koto:android-keystore-compat-base:2.0.1")
+    api("cz.koto:android-keystore-compat-21:2.0.1")
+    api("cz.koto:android-keystore-compat-23:2.0.1")
+    implementation('com.scottyab:rootbeer-lib:0.0.6') {
+        exclude group: 'com.android.support'
+    }
+
     implementation 'eu.bittrade.libs:steemj-core:0.4.3'
     implementation 'org.slf4j:slf4j-api:1.7.25'
     implementation 'eu.lp0.slf4j:slf4j-android:1.7.25-0'
