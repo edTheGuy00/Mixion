@@ -162,11 +162,8 @@ class MainFragment : Fragment(),
     }
 
     override fun onTagDialogRequested() {
-        TagDialog(context, getRepository(), object : TagDialog.TagDialogCallback{
-            override fun onTagSelected(tag: String) {
-                feedPresenter.getByTag(tag)
-            }
-
+        TagDialog(context, getRepository(), {
+            feedPresenter.getByTag(it)
         }).show()
     }
 

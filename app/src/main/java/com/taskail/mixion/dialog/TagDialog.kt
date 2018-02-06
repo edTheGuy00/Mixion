@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.dialog_tags.*
  */
 class TagDialog(context: Context?,
                 private val repository: SteemitRepository,
-                private val callback: TagDialogCallback) :
+                private val func: (String) -> Unit) :
         AppCompatDialog(context) {
 
     init {
@@ -58,7 +58,7 @@ class TagDialog(context: Context?,
 
         override fun onTagSelected(tag: String) {
             this@TagDialog.dismiss()
-            callback.onTagSelected(tag)
+            func(tag)
         }
     }
 }
