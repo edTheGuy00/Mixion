@@ -30,8 +30,12 @@ class FeedPresenter(val feedView: FeedContract.View,
         firstCall()
     }
 
+    /**
+     * get the current users feed, this will only be called
+     * if there is a user logged in
+     */
     override fun getMyFeed() {
-        if (getUserName() != null){
+        if (User.userIsLoggedIn){
             if (steemitRepository.remoteRepository.tag != getUserName()){
                 steemitRepository.remoteRepository.tag = getUserName()!!
                 feedView.discussionFromResponse.clear()
@@ -54,6 +58,12 @@ class FeedPresenter(val feedView: FeedContract.View,
         }
     }
 
+    /**
+     * This will sort the feed either by Hot, Trending, Promoted,
+     * or New. if the @param[sortBy] is already selected nothing will happen.
+     * we also need to clear the [steemitRepository.remoteRepository.tag] if we had
+     * previously queried a user feed
+     */
     override fun sortBy(sortBy: String) {
         if (this.sortBy != sortBy){
             this.sortBy = sortBy
@@ -114,6 +124,10 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     }
 
+    /**
+     * If we are currently on the user's feed, got more items for the user's feed,
+     * otherwise get from the regular feed.
+     */
     override fun fetchMore(lastPostLocation: Int) {
 
         if (User.userIsLoggedIn && getUserName() == steemitRepository.remoteRepository.tag){
