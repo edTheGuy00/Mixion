@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.taskail.mixion.ACTIVITY_REQUEST_LOGIN
-import com.taskail.mixion.BackPressedHandler
-import com.taskail.mixion.MixionApplication
-import com.taskail.mixion.R
+import com.taskail.mixion.*
 import com.taskail.mixion.data.source.remote.AskSteemRepository
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
@@ -60,7 +57,7 @@ class MainFragment : Fragment(),
         if (User.userIsLoggedIn){
             // start user profile
         } else {
-            startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN)
+            startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_PROFILE)
         }
     }
 
@@ -68,7 +65,7 @@ class MainFragment : Fragment(),
         if (User.userIsLoggedIn){
             // create a new post
         } else {
-            startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN)
+            startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_POST)
         }
     }
 
@@ -246,11 +243,15 @@ class MainFragment : Fragment(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode){
-            ACTIVITY_REQUEST_LOGIN -> {
+            ACTIVITY_REQUEST_LOGIN_TO_PROFILE -> {
                 if (resultCode == LoginActivity.RESUlT_LOGIN_OK){
                     updateUiForLoggedInUser()
                 }
-            } else -> super.onActivityResult(requestCode, resultCode, data)
+            }
+            ACTIVITY_REQUEST_LOGIN_TO_POST -> {
+
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
