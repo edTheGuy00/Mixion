@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.*
+import co.zsmb.materialdrawerkt.builders.StickyFooterKt
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.builders.footer
+import co.zsmb.materialdrawerkt.draweritems.badgeable.PrimaryDrawerItemKt
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
@@ -91,7 +93,7 @@ class FeedFragment : Fragment(),
 
     override fun onResume() {
         super.onResume()
-        presenter.start()
+        //presenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -166,14 +168,14 @@ class FeedFragment : Fragment(),
             primaryItem(R.string.filter_hot) { iicon = FontAwesome.Icon.faw_fire }
             primaryItem(R.string.filter_trending) { iicon = FontAwesome.Icon.faw_font_awesome }
             primaryItem(R.string.filter_promoted) { iicon = FontAwesome.Icon.faw_money }
-            primaryItem(R.string.browse_tags)
+            primaryItem(R.string.browse_tags).withSelectable(false)
             sectionHeader(R.string.app_name)
-            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }
-            secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_sticky_note }
-            secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }
+            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }.withSelectable(false)
+            secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_sticky_note }.withSelectable(false)
+            secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }.withSelectable(false)
             if (User.userIsLoggedIn){
                 footer {
-                    primaryItem (User.getUserName()!!, getString(R.string.logout))
+                    primaryItem (User.getUserName()!!, getString(R.string.logout)).withSelectable(false)
                 }
             }
 
@@ -183,6 +185,15 @@ class FeedFragment : Fragment(),
                 return@onItemClick true
             }
         }
+    }
+
+    /**
+     * this Will only be called when the user logs in.
+     */
+    override fun userHasLoggedIn() {
+        val drawerItem: IDrawerItem<*, *>
+        drawerItem = PrimaryDrawerItemKt().primaryItem (User.getUserName()!!, getString(R.string.logout)).withSelectable(false)
+        result.addStickyFooterItem(drawerItem)
     }
 
     private fun getCallback(): Callback? {

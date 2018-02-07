@@ -21,6 +21,8 @@ class LoginActivity : BaseActivity() {
         @JvmStatic fun newIntent(context: Context): Intent{
             return Intent(context, LoginActivity::class.java)
         }
+
+        val RESUlT_LOGIN_OK = 33
     }
 
     private val keystoreCompat by lazy { (application as MixionApplication).keyStoreCompat }
@@ -45,6 +47,9 @@ class LoginActivity : BaseActivity() {
             Log.d("KeyStoreCompat", "Storing credentials failed")
         }, {
             User.storeUser(user, key)
+            User.userIsLoggedIn = true
+            setResult(RESUlT_LOGIN_OK)
+            finish()
         })
     }
 

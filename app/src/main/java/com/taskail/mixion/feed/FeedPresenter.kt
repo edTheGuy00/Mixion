@@ -90,6 +90,15 @@ class FeedPresenter(val feedView: FeedContract.View,
         }
     }
 
+    /**
+     * this will only be called when the user logs in
+     */
+    override fun userStatus(loggedIn: Boolean) {
+        if (loggedIn){
+            feedView.userHasLoggedIn()
+        }
+    }
+
     private fun fetchUserFeed(){
          steemitRepository.getUserFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
              override fun onDataLoaded(list: List<SteemDiscussion>) {

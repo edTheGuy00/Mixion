@@ -20,6 +20,7 @@ object User {
     }
 
     fun performLogout() {
+        userIsLoggedIn = false
         userName = null
         userKey = null
     }

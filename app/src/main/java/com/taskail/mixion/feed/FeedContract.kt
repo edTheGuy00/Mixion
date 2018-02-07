@@ -22,9 +22,13 @@ interface FeedContract {
 
         fun showMoreFeed(previousSize: Int, newSize: Int)
 
+        fun userHasLoggedIn()
+
     }
 
     interface Presenter : BasePresenter{
+
+        fun userStatus(loggedIn: Boolean)
 
         fun sortBy(sortBy: String)
 

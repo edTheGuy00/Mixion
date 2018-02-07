@@ -1,5 +1,6 @@
 package com.taskail.mixion.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -14,6 +15,7 @@ import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
+import com.taskail.mixion.ACTIVITY_REQUEST_LOGIN
 import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.R
@@ -70,7 +72,7 @@ class MainFragment : Fragment(),
         if (User.userIsLoggedIn){
             // start user profile
         } else {
-            startActivity(LoginActivity.newIntent(context!!))
+            startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN)
         }
     }
 
@@ -223,6 +225,7 @@ class MainFragment : Fragment(),
         User.performLogout()
         runSinceLollipop {
             keystoreCompat.clearCredentials()
+            User.performLogout()
         }
     }
 
@@ -236,6 +239,21 @@ class MainFragment : Fragment(),
                 Log.d("Error", it.message)
             }, User.forceLockScreenFlag)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode){
+            ACTIVITY_REQUEST_LOGIN -> {
+                if (resultCode == LoginActivity.RESUlT_LOGIN_OK){
+                    updateUiForLoggedInUser()
+                }
+            } else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun updateUiForLoggedInUser(){
+        feedPresenter.getMyFeed()
+        feedPresenter.userStatus(loggedIn = true)
     }
 
     override fun onBackPressed(): Boolean {
