@@ -6,9 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.*
-import co.zsmb.materialdrawerkt.builders.StickyFooterKt
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.builders.footer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.PrimaryDrawerItemKt
@@ -23,7 +21,6 @@ import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
-import com.taskail.mixion.ui.FilterMenuView
 import kotlinx.android.synthetic.main.fragment_feed.*
 import java.util.*
 
@@ -41,8 +38,6 @@ class FeedFragment : Fragment(),
 
     interface Callback {
         fun onSearchRequested()
-        fun hideBottomNav()
-        fun showBottomNav()
         fun onTagDialogRequested()
         fun openDiscussionRequested(discussion: SteemDiscussion)
         fun getDrawerToolbar(): Toolbar?
@@ -94,7 +89,7 @@ class FeedFragment : Fragment(),
 
     override fun onResume() {
         super.onResume()
-        //presenter.start()
+        presenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater,

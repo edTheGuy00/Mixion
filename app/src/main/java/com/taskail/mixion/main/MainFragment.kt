@@ -105,25 +105,26 @@ class MainFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pagerAdapter = ViewPagerAdapter(childFragmentManager)
 
         if (keystoreCompat.hasSecretLoadable()){
             getCredentials()
             User.userIsLoggedIn = true
         }
 
-        initViews(pagerAdapter)
+        val feedFragment = FeedFragment.getInstance().apply {
+            feedPresenter = FeedPresenter(this, getRepository())
+        }
+        switchToFragment(feedFragment)
     }
 
-    private fun initViews(adapter: ViewPagerAdapter){
-
-        val feedFragment = FeedFragment.getInstance()
-        adapter.addFragment(feedFragment, "feed Fragment").also {
-            feedPresenter = FeedPresenter(feedFragment, getRepository())
-        }
-
-        lockableViewPager.adapter = adapter
-        lockableViewPager.currentItem = FEED_FRAGMENT
+    private fun switchToFragment(fragment: Fragment, addToBackStack: Boolean = false){
+        val fm = this.childFragmentManager
+        val currentFragment = fm.findFragmentById(R.id.container)
+        val transaction = fm.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        if (currentFragment != null && addToBackStack)
+            transaction.addToBackStack(fragment.javaClass.name)
+        transaction.commitAllowingStateLoss()
     }
 
     private fun getRepository(): SteemitRepository{
@@ -158,14 +159,6 @@ class MainFragment : Fragment(),
         return askSteemApi ?: getRetrofitClient(askSteemUrl).create(AskSteemApi::class.java).apply {
             askSteemApi = this
         }
-    }
-
-    override fun hideBottomNav() {
-        bottomNavView.hideBottomNavigationView()
-    }
-
-    override fun showBottomNav() {
-        bottomNavView.showBottomNavigationView()
     }
 
     override fun onTagDialogRequested() {
