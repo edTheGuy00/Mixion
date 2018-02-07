@@ -26,6 +26,10 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
         return getToolbar()
     }
 
+    override fun setToolbarTitle(title: String) {
+        supportActionBar?.setTitle(title)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mixionDatabase = MixionDatabase.getInstance(this)

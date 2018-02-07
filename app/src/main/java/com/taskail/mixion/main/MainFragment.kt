@@ -66,6 +66,7 @@ class MainFragment : Fragment(),
         fun onSearchClosed()
         fun getDatabase(): MixionDatabase?
         fun getMainToolbar(): Toolbar
+        fun setToolbarTitle(title: String)
     }
 
     override fun onAccountRequested() {
@@ -78,6 +79,10 @@ class MainFragment : Fragment(),
 
     override fun getDrawerToolbar(): Toolbar? {
         return getCallback()?.getMainToolbar()
+    }
+
+    override fun setToolbarTitle(title: String) {
+        getCallback()?.setToolbarTitle(title)
     }
 
     override fun getDrawerContainer(): Int {

@@ -48,6 +48,7 @@ class FeedFragment : Fragment(),
         fun getDrawerToolbar(): Toolbar?
         fun getDrawerContainer(): Int
         fun onAccountRequested()
+        fun setToolbarTitle(title: String)
         fun logoutUser()
     }
 
@@ -66,7 +67,7 @@ class FeedFragment : Fragment(),
     }
 
     override fun showFeedType(feed: String) {
-        getCallback()?.getDrawerToolbar()?.title = feed
+        getCallback()?.setToolbarTitle(title = feed)
     }
 
     companion object {
@@ -181,7 +182,7 @@ class FeedFragment : Fragment(),
 
             onItemClick { view, position, drawerItem ->
                 result.closeDrawer()
-                handleDrawerClicks(position, drawerItem)
+                handleDrawerClicks(position)
                 return@onItemClick true
             }
         }
@@ -206,8 +207,9 @@ class FeedFragment : Fragment(),
         }
     }
 
-    private fun handleDrawerClicks(position: Int, drawerItem: IDrawerItem<*, *>){
+    private fun handleDrawerClicks( position: Int ){
         when (position){
+            0 -> presenter.getMyFeed()
             1 -> presenter.sortBy("New")
             2 -> presenter.sortBy("Hot")
             3 -> presenter.sortBy("Trending")

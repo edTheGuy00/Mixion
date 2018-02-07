@@ -107,6 +107,7 @@ class FeedPresenter(val feedView: FeedContract.View,
              override fun onDataLoaded(array: Array<SteemDiscussion>) {
                  feedView.discussionFromResponse.addAll(array)
                  feedView.showFeed()
+                 feedView.showFeedType("My Feed")
              }
 
              override fun onLoadError(error: Throwable) {
