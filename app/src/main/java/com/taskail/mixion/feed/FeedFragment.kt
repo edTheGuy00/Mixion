@@ -98,6 +98,8 @@ class FeedFragment : Fragment(),
                               savedInstanceState: Bundle?): View? {
         val view: View=  inflater.inflate(R.layout.fragment_feed, container, false)
 
+        discussionFromResponse = ArrayList<SteemDiscussion>()
+
         adapter = FeedRVAdapter(discussionFromResponse, feedCallBack)
 
         return view

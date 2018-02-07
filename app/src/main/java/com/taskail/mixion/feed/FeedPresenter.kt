@@ -13,13 +13,10 @@ class FeedPresenter(val feedView: FeedContract.View,
                     val steemitRepository: SteemitRepository) :
         FeedContract.Presenter {
 
-    var discussionFromResponse = ArrayList<SteemDiscussion>()
     var sortBy = "Trending"
 
     init {
         feedView.presenter = this
-        feedView.discussionFromResponse = discussionFromResponse
-
         steemitRepository.remoteRepository.tag = "steemit"
     }
 
