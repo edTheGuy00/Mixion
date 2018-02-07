@@ -45,6 +45,7 @@ class FeedFragment : Fragment(),
         fun onAccountRequested()
         fun setToolbarTitle(title: String)
         fun logoutUser()
+        fun requestToAddNewPost()
     }
 
     private val feedCallBack = FeedCallBack()
@@ -85,7 +86,7 @@ class FeedFragment : Fragment(),
 
     private lateinit var adapter: FeedRVAdapter
 
-    private var bottomNavIsVisible = true
+    private var fabIsVisible = true
 
     override fun onResume() {
         super.onResume()
@@ -142,12 +143,12 @@ class FeedFragment : Fragment(),
             }
 
             override fun scrollAction(dx: Int, dy: Int) {
-                if (dy > 0 && bottomNavIsVisible) {
-                    bottomNavIsVisible = false
-                    //getCallback()?.hideBottomNav()
-                } else if (dy < 0 && !bottomNavIsVisible) {
-                    bottomNavIsVisible = true
-                    //getCallback()?.showBottomNav()
+                if (dy > 0 && fabIsVisible) {
+                    fabIsVisible = false
+                    fab.hide()
+                } else if (dy < 0 && !fabIsVisible) {
+                    fabIsVisible = true
+                    fab.show()
                 }
             }
 
@@ -181,7 +182,12 @@ class FeedFragment : Fragment(),
                 return@onItemClick true
             }
         }
+
+        fab.setOnClickListener {
+            getCallback()?.requestToAddNewPost()
+        }
     }
+
 
     /**
      * this Will only be called when the user logs in.

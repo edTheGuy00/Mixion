@@ -77,6 +77,14 @@ class MainFragment : Fragment(),
         }
     }
 
+    override fun requestToAddNewPost() {
+        if (User.userIsLoggedIn){
+            // create a new post
+        } else {
+            startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN)
+        }
+    }
+
     override fun getDrawerToolbar(): Toolbar? {
         return getCallback()?.getMainToolbar()
     }
@@ -121,7 +129,7 @@ class MainFragment : Fragment(),
         val fm = this.childFragmentManager
         val currentFragment = fm.findFragmentById(R.id.container)
         val transaction = fm.beginTransaction()
-        transaction.replace(R.id.container, fragment)
+        transaction.replace(R.id.childContainer, fragment)
         if (currentFragment != null && addToBackStack)
             transaction.addToBackStack(fragment.javaClass.name)
         transaction.commitAllowingStateLoss()
