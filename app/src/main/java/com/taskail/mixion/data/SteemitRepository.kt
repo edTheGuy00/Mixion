@@ -1,6 +1,5 @@
 package com.taskail.mixion.data
 
-import android.util.Log
 import com.google.common.collect.Lists
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
@@ -183,6 +182,11 @@ class SteemitRepository(
             return INSTANCE ?: SteemitRepository(remoteRepository, localRepository).apply {
                 INSTANCE = this
             }
+        }
+
+        @JvmStatic
+        fun destroyInstance(){
+            INSTANCE = null
         }
     }
 }

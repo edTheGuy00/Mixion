@@ -2,19 +2,12 @@ package com.taskail.mixion.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import co.zsmb.materialdrawerkt.builders.drawer
-import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
-import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
-import co.zsmb.materialdrawerkt.draweritems.sectionHeader
-import com.mikepenz.fontawesome_typeface_library.FontAwesome
-import com.mikepenz.materialdrawer.Drawer
 import com.taskail.mixion.ACTIVITY_REQUEST_LOGIN
 import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.MixionApplication
@@ -29,7 +22,6 @@ import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
-import com.taskail.mixion.profile.ProfileFragment
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
@@ -37,13 +29,8 @@ import com.taskail.mixion.steemJ.SteemJAPI
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.utils.getCallback
-import com.taskail.mixion.utils.hideBottomNavigationView
-import com.taskail.mixion.utils.showBottomNavigationView
 import cz.koto.keystorecompat.base.utility.runSinceLollipop
-import eu.bittrade.libs.steemj.base.models.AccountName
-import eu.bittrade.libs.steemj.configuration.SteemJConfig
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
  *Created by ed on 1/19/18.
@@ -96,19 +83,29 @@ class MainFragment : Fragment(),
     override fun getDrawerContainer(): Int {
         return R.id.drawerContainer
     }
-    private var remoteDisposable = CompositeDisposable()
-    private var localDisposable = CompositeDisposable()
-    private var steemJDisposable = CompositeDisposable()
+    private lateinit var remoteDisposable: CompositeDisposable
+    private lateinit var localDisposable: CompositeDisposable
+    private lateinit var steemJDisposable: CompositeDisposable
+    private lateinit var askSteemDisposable: CompositeDisposable
     private var steemitAPI: SteemAPI? = null
     private var askSteemApi: AskSteemApi? = null
-    private var askSteemDisposable: CompositeDisposable? = null
-    private val FEED_FRAGMENT = 0
     private lateinit var feedPresenter: FeedPresenter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
+
+        createDisposables()
+
+        return view
+    }
+
+    private fun createDisposables(){
+        remoteDisposable = CompositeDisposable()
+        localDisposable = CompositeDisposable()
+        steemJDisposable = CompositeDisposable()
+        askSteemDisposable = CompositeDisposable()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -150,17 +147,11 @@ class MainFragment : Fragment(),
     }
 
     private fun createSteemApi() : SteemAPI {
-        return steemitAPI ?: getRetrofitClient(baseUrl).create(SteemAPI::class.java).apply {
-            steemitAPI = this
-        }
+        return getRetrofitClient(baseUrl).create(SteemAPI::class.java)
     }
 
     private fun getAskSteemRepo() : AskSteemRepository {
-        return AskSteemRepository.getInstance(getAskSteemDisposable(), createAskSteemApi())
-    }
-
-    private fun getAskSteemDisposable(): CompositeDisposable{
-        return askSteemDisposable ?: CompositeDisposable()
+        return AskSteemRepository.getInstance(askSteemDisposable, createAskSteemApi())
     }
 
     private fun createAskSteemApi() : AskSteemApi {
@@ -217,10 +208,16 @@ class MainFragment : Fragment(),
     }
 
     override fun onDestroy() {
-        remoteDisposable.dispose()
-        localDisposable.dispose()
         User.performLogout()
+        clearDisposables()
         super.onDestroy()
+    }
+
+    private fun clearDisposables(){
+        askSteemDisposable.clear()
+        remoteDisposable.clear()
+        localDisposable.clear()
+        steemJDisposable.clear()
     }
 
     private fun getCallback(): Callback? {

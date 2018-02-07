@@ -1,10 +1,8 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
-import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
-import com.taskail.mixion.data.source.remote.SteemAPI
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -150,6 +148,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
             return INSTANCE ?: RemoteDataSource(disposable, steemAPI).apply {
                 INSTANCE = this
             }
+        }
+        @JvmStatic
+        fun destroyInstance(){
+            INSTANCE = null
         }
     }
 
