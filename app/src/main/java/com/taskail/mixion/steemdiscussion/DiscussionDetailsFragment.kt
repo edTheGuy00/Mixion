@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.taskail.mixion.R
+import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.utils.ImageSpanTarget
 import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
@@ -28,6 +29,7 @@ class DiscussionDetailsFragment : Fragment(),
 
     private lateinit var titleAndDescriptionLayout: View
 
+    lateinit var discussionAdapter: DiscussionRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_steem_discussion, container, false)
@@ -41,7 +43,7 @@ class DiscussionDetailsFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout)
+        discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout)
 
         discussion_comments.itemAnimator = DefaultItemAnimator()
         discussion_comments.adapter = discussionAdapter
@@ -57,6 +59,13 @@ class DiscussionDetailsFragment : Fragment(),
                 body, markdown, ImageCallBack())
     }
 
+    override fun displayComments(commentsFromResponse: Array<ContentReply>) {
+        discussionAdapter.addComments(commentsFromResponse)
+    }
+
+    override fun noComments() {
+        discussionAdapter.noComments()
+    }
 
     override fun displayDtube() {
         //TODO - extract dtube video link, setup player

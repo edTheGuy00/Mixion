@@ -1,6 +1,7 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
+import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
 import io.reactivex.Observable
@@ -63,6 +64,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         fetchOnDisposable(callback, getTags())
     }
 
+    override fun getComments(author: String, permlink: String, callback: SteemitDataSource.DataLoadedCallback<ContentReply>) {
+        fetchOnDisposable(callback, getComments(author, permlink))
+    }
+
     override fun getDiscussion(callBack: SteemitDataSource.DiscussionLoadedCallBack, author: String, permlink: String) {
         fetchOnDisposable(callBack, getDiscussion(author, permlink))
     }
@@ -113,6 +118,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
     private fun getTags() : Observable<Array<Tags>>{
         return steemAPI.getTags("life", 100)
+    }
+
+    private fun getComments(author: String, permlink: String): Observable<Array<ContentReply>>{
+        return steemAPI.getContentReplies(author, permlink)
     }
 
     private fun <T> fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback<T>,

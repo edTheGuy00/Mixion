@@ -12,6 +12,7 @@ import android.util.Log
 import android.util.TypedValue
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
+import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
@@ -83,7 +84,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
             }
 
             override fun onLoadError(error: Throwable) {
-
+                //TODO - add loading error
             }
         })
     }
@@ -97,6 +98,28 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
         val newbody = HTML2Md.convert(discussion.body)
         discussionsView.displayMarkdownBody(newbody, getBypass())
+        if (discussion.children > 0){
+            loadComments(discussion.author, discussion.permlink)
+        } else {
+            discussionsView.noComments()
+        }
+    }
+
+    private fun loadComments(author: String, permlink: String){
+        steemitRepository?.remoteRepository?.getComments(author, permlink, object :
+                SteemitDataSource.DataLoadedCallback<ContentReply> {
+            override fun onDataLoaded(list: List<ContentReply>) {
+                // Not needed, remove and fix this
+            }
+
+            override fun onDataLoaded(array: Array<ContentReply>) {
+                discussionsView.displayComments(array)
+            }
+
+            override fun onLoadError(error: Throwable) {
+            }
+
+        })
     }
 
     private fun getBypass(): Bypass{

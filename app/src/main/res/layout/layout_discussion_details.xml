@@ -26,6 +26,35 @@
         android:textAppearance="@style/TextAppearance.DiscussionTitle"
         tools:text="My Cool title" />
 
+    <com.taskail.mixion.ui.BaselineGridTextView
+        android:id="@+id/time_ago"
+        android:layout_columnSpan="1"
+        android:padding="@dimen/spacing_micro"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="0dp"
+        android:textAppearance="@style/TextAppearance.CommentTimestamp"
+        tools:text="3 hours ago" />
+
+    <com.taskail.mixion.ui.BaselineGridTextView
+        android:id="@+id/tag"
+        android:layout_columnSpan="1"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="0dp"
+        android:padding="@dimen/spacing_micro"
+        android:textAppearance="@style/TextAppearance.CommentTimestamp"
+        tools:text="in dTube" />
+
+    <com.taskail.mixion.ui.BaselineGridTextView
+        android:id="@+id/discussion_description"
+        android:layout_columnSpan="3"
+        android:paddingEnd="@dimen/padding_normal"
+        android:paddingStart="@dimen/padding_normal"
+        android:layout_gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.DiscussionDescription"
+        android:textColorHighlight="@color/colorAccent"
+        android:textColorLink="@color/circular_light"
+        tools:text="Check out My New Post!" />
+
     <LinearLayout
         android:id="@+id/discussion_actions"
         android:layout_columnSpan="3"
@@ -77,35 +106,6 @@
             style="@style/Widget.CustomButton.InlineActionButton" />
 
     </LinearLayout>
-
-    <com.taskail.mixion.ui.BaselineGridTextView
-        android:id="@+id/time_ago"
-        android:layout_columnSpan="1"
-        android:padding="@dimen/spacing_micro"
-        android:paddingStart="@dimen/padding_normal"
-        android:paddingEnd="0dp"
-        android:textAppearance="@style/TextAppearance.CommentTimestamp"
-        tools:text="3 hours ago" />
-
-    <com.taskail.mixion.ui.BaselineGridTextView
-        android:id="@+id/tag"
-        android:layout_columnSpan="1"
-        android:paddingStart="@dimen/padding_normal"
-        android:paddingEnd="0dp"
-        android:padding="@dimen/spacing_micro"
-        android:textAppearance="@style/TextAppearance.CommentTimestamp"
-        tools:text="in dTube" />
-
-    <com.taskail.mixion.ui.BaselineGridTextView
-        android:id="@+id/discussion_description"
-        android:layout_columnSpan="3"
-        android:paddingEnd="@dimen/padding_normal"
-        android:paddingStart="@dimen/padding_normal"
-        android:layout_gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.DiscussionDescription"
-        android:textColorHighlight="@color/colorAccent"
-        android:textColorLink="@color/circular_light"
-        tools:text="Check out My New Post!" />
 
 
 </GridLayout>

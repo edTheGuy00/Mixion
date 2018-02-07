@@ -1,6 +1,7 @@
 package com.taskail.mixion.data
 
 import com.taskail.mixion.data.models.AskSteemResult
+import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
 import com.taskail.mixion.data.source.local.RoomTags
@@ -27,6 +28,8 @@ interface SteemitDataSource {
         fun getTags(callback: DataLoadedCallback<Tags>)
 
         fun getDiscussion(callBack: DiscussionLoadedCallBack, author: String, permlink: String)
+
+        fun getComments(author: String, permlink: String, callback: DataLoadedCallback<ContentReply>)
     }
 
     interface Local{
