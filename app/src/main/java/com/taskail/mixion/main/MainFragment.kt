@@ -19,6 +19,7 @@ import com.taskail.mixion.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
+import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
@@ -63,7 +64,7 @@ class MainFragment : Fragment(),
 
     override fun requestToAddNewPost() {
         if (User.userIsLoggedIn){
-            // create a new post
+            startActivity(CreatePostActivity.newIntent(context!!))
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_POST)
         }
@@ -249,7 +250,7 @@ class MainFragment : Fragment(),
                 }
             }
             ACTIVITY_REQUEST_LOGIN_TO_POST -> {
-
+                startActivity(CreatePostActivity.newIntent(context!!))
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_create_post">
+
+    <ScrollView
+        android:id="@+id/edit_body_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+    </ScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/edit_post_action_bar_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:paddingTop="4dp">
+
+        <LinearLayout
+            android:id="@+id/edit_post_action_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+</LinearLayout>
