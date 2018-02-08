@@ -42,9 +42,9 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
         return when (position){
             0 -> return R.layout.layout_discussion_details
             1 -> {
-                //if (isLoading && !noComments)
-                //    return R.layout.item_loading
-                //else R.layout.card_comments
+                if (isLoading && !noComments)
+                    return R.layout.item_loading
+                else R.layout.card_comments
                 if (noComments)
                     return R.layout.item_no_comments
                 else R.layout.card_comments
@@ -75,17 +75,14 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
     fun addComments(commentsFromResponse: Array<ContentReply>){
         comments.addAll(commentsFromResponse)
 
-        Log.d("Add comments", comments[0].author)
-        Log.d("Cooments size", comments.size.toString())
         noComments = false
-        //removeLoadingIndicator()
-        //notifyDataSetChanged()
+        removeLoadingIndicator()
         notifyItemRangeInserted(1, comments.size)
     }
 
     fun noComments(){
         noComments = true
-        //removeLoadingIndicator()
+        removeLoadingIndicator()
         notifyItemRangeInserted(1, 2)
     }
 
@@ -100,12 +97,9 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
         var count = 1 // discussion details
         if (comments.isNotEmpty()){
             count += comments.size
-
-            Log.d("Item Count", "Adding to count")
         } else {
             count++ // either loading or no comments
         }
-        Log.d("Size", count.toString())
         return count
     }
 
