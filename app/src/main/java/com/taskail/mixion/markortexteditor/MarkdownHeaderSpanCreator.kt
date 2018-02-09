@@ -52,9 +52,9 @@ class MarkdownHeaderSpanCreator(private val highlighter: MarkdownHighlighter,
     private fun calculateProportionForUnderlineHeader(charSequence: CharArray): Float? {
         var proportion: Float? = STANDARD_PROPORTION_MAX
         if (Character.valueOf('=') == charSequence[charSequence.size - 1]) {
-            proportion =- SIZE_STEP
+            proportion = proportion?.minus(SIZE_STEP)
         } else if (Character.valueOf('-') == charSequence[charSequence.size - 1]) {
-            proportion =- SIZE_STEP * 2
+            proportion = proportion?.minus(SIZE_STEP.times( 2))
         }
         return proportion
     }
