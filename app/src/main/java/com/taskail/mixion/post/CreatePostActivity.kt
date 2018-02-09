@@ -26,4 +26,5 @@ class CreatePostActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
+
 }

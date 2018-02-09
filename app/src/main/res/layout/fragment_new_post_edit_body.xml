@@ -15,6 +15,25 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
+        <com.taskail.mixion.markortexteditor.HighlightingEditor
+            android:id="@+id/document__fragment__edit__highlighting_editor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:fontFamily="sans-serif-light"
+            android:gravity="top"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingBottom="120dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/dark_grey"
+            android:textCursorDrawable="@drawable/cursor_accent"
+            android:textSize="21sp"
+            tools:ignore="UnusedAttribute" />
+
     </ScrollView>
 
     <HorizontalScrollView

@@ -20,5 +20,6 @@
     <color name="inline_action_icon">#ff757575</color>
     <color name="hint_disabled_dark">#43000000</color> <!-- 26% black -->
     <color name="layout_dark">#202020</color>
+    <color name="dark_grey">#ff212121</color>
     <color name="base18">#43464a</color>
 </resources>
