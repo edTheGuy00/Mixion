@@ -4,7 +4,7 @@ import android.text.ParcelableSpan
 import java.util.regex.Matcher
 
 /**
- *Created by ed on 2/8/18.
+ *Markor text Editor from https://github.com/gsantner/markor
  */
 
 interface ParcelableSpanCreator {
