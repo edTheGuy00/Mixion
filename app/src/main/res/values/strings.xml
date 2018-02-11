@@ -29,4 +29,6 @@
     <string name="login_title">Log in to Steemit</string>
     <string name="logout">Log out</string>
     <string name="title">Title</string>
+    <string name="post">Post</string>
+    <string name="preview">Preview</string>
 </resources>

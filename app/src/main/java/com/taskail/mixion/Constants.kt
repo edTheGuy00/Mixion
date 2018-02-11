@@ -6,3 +6,6 @@ package com.taskail.mixion
 
 const val ACTIVITY_REQUEST_LOGIN_TO_PROFILE = 34
 const val ACTIVITY_REQUEST_LOGIN_TO_POST = 35
+const val ACTIVITY_REQUEST_CREATE_NEW_POST = 36
+
+const val myNewPermLink = "myNewPermLink"

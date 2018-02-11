@@ -64,7 +64,7 @@ class MainFragment : Fragment(),
 
     override fun requestToAddNewPost() {
         if (User.userIsLoggedIn){
-            startActivity(CreatePostActivity.newIntent(context!!))
+            startActivityForResult(CreatePostActivity.newIntent(context!!), ACTIVITY_REQUEST_CREATE_NEW_POST)
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_POST)
         }
@@ -251,6 +251,12 @@ class MainFragment : Fragment(),
             }
             ACTIVITY_REQUEST_LOGIN_TO_POST -> {
                 startActivity(CreatePostActivity.newIntent(context!!))
+            }
+            ACTIVITY_REQUEST_CREATE_NEW_POST -> {
+                if (resultCode == CreatePostActivity.POSTED_SUCCESSFULLY){
+                    val permlink = data?.getStringExtra(myNewPermLink)
+                    startActivity(loadDiscussionIntent(context!!, User.getUserName()!!, permlink!!))
+                }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }

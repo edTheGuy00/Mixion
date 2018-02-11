@@ -57,7 +57,7 @@ class SteemJAPI (private val steemJDisposable: CompositeDisposable) {
 
     }
 
-    private fun sendPost(title: String, body: String, tags: Array<String>):  Observable<String>{
+    fun sendPost(title: String, body: String, tags: Array<String>):  Observable<String>{
         return Observable.create { emitter ->
             val newPost = steemJ?.createPost(title, body, tags)
 
