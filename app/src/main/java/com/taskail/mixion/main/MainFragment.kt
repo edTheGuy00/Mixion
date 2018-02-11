@@ -250,7 +250,9 @@ class MainFragment : Fragment(),
                 }
             }
             ACTIVITY_REQUEST_LOGIN_TO_POST -> {
-                startActivity(CreatePostActivity.newIntent(context!!))
+                if (resultCode == LoginActivity.RESUlT_LOGIN_OK) {
+                    startActivity(CreatePostActivity.newIntent(context!!))
+                }
             }
             ACTIVITY_REQUEST_CREATE_NEW_POST -> {
                 if (resultCode == CreatePostActivity.POSTED_SUCCESSFULLY){
