@@ -1,11 +1,11 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.markortexteditor.highlighter
 
 import android.text.TextPaint
 import android.text.style.UnderlineSpan
 import android.text.style.UpdateAppearance
 
 /**
- *Created by ed on 2/8/18.
+ *  Markor text Editor from https://github.com/gsantner/markor
  */
 
 class ColorUnderlineSpan (val color: Int,

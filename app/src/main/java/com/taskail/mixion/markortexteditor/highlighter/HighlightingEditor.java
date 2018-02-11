@@ -3,7 +3,7 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor;
+package com.taskail.mixion.markortexteditor.highlighter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -14,7 +14,9 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
-
+/**
+ *  Markor text Editor from https://github.com/gsantner/markor
+ */
 
 public class HighlightingEditor extends AppCompatEditText {
     interface OnTextChangedListener {

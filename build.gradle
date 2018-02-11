@@ -11,7 +11,8 @@ buildscript {
             'retrofit'      : '2.3.0',
             'supportLibrary': '27.0.2',
             'room'          : '1.0.0',
-            'jackson'       : '2.9.1'
+            'jackson'       : '2.9.1',
+            'commonmark'    : '0.10.0'
     ]
     repositories {
         jcenter()

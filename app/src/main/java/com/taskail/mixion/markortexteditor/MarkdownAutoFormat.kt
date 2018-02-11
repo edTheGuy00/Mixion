@@ -2,6 +2,7 @@ package com.taskail.mixion.markortexteditor
 
 import android.text.InputFilter
 import android.text.Spanned
+import com.taskail.mixion.markortexteditor.highlighter.MarkdownHighlighterPattern
 import java.lang.NumberFormatException
 
 /**

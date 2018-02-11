@@ -1,12 +1,13 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.markortexteditor.highlighter
 
 import android.graphics.Color
 import android.text.ParcelableSpan
+import com.taskail.mixion.markortexteditor.ParcelableSpanCreator
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
- *Created by ed on 2/8/18.
+ *  Markor text Editor from https://github.com/gsantner/markor
  */
 class HexColorCodeUnderlineSpan : ParcelableSpanCreator {
 

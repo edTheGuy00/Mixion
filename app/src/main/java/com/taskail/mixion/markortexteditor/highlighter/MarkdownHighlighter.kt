@@ -1,12 +1,13 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.markortexteditor.highlighter
 
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.InputFilter
+import com.taskail.mixion.markortexteditor.MarkdownAutoFormat
 
 /**
- *Created by ed on 2/8/18.
+ *  Markor text Editor from https://github.com/gsantner/markor
  */
 
 open class MarkdownHighlighter : Highlighter(){

@@ -1,4 +1,4 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.markortexteditor.highlighter
 
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -7,16 +7,17 @@ import android.text.Editable
 import android.text.ParcelableSpan
 import android.text.style.TextAppearanceSpan
 import android.util.TypedValue
+import com.taskail.mixion.markortexteditor.ParcelableSpanCreator
 import java.util.regex.Matcher
 
 /**
- *Created by ed on 2/8/18.
+ *  Markor text Editor from https://github.com/gsantner/markor
  */
 
 class MarkdownHeaderSpanCreator(private val highlighter: MarkdownHighlighter,
                                 private val editable: Editable,
                                 private val color: Int) :
-        ParcelableSpanCreator{
+        ParcelableSpanCreator {
 
     private val POUND_SIGN = '#'
     private val DISPLAY_METRICS = Resources.getSystem().displayMetrics

@@ -1,7 +1,7 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.markortexteditor.highlighter
 
 /**
- *Created by ed on 2/8/18.
+ *  Markor text Editor from https://github.com/gsantner/markor
  */
 class MarkdownHighlighterColors {
     private val COLOR_HEADER = -0x109300

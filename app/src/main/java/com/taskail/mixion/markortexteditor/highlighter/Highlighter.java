@@ -3,7 +3,7 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor;
+package com.taskail.mixion.markortexteditor.highlighter;
 
 import android.content.Context;
 import android.support.annotation.ColorInt;
@@ -24,8 +24,16 @@ import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
 
 
+import com.taskail.mixion.markortexteditor.NanoProfiler;
+import com.taskail.mixion.markortexteditor.ParagraphStyleCreator;
+import com.taskail.mixion.markortexteditor.ParcelableSpanCreator;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/**
+ *  Markor text Editor from https://github.com/gsantner/markor
+ */
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public abstract class Highlighter {
