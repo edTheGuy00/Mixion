@@ -16,7 +16,7 @@ interface FeedContract {
 
         fun showFeed()
 
-        fun clearItems()
+        fun clearItemsForNewFeed()
 
         fun showFeedType(feed: String)
 

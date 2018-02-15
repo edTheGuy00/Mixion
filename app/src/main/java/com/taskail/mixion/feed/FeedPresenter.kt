@@ -36,7 +36,7 @@ class FeedPresenter(val feedView: FeedContract.View,
             if (steemitRepository.remoteRepository.tag != getUserName()){
                 steemitRepository.remoteRepository.tag = getUserName()!!
                 feedView.discussionFromResponse.clear()
-                feedView.clearItems()
+                feedView.clearItemsForNewFeed()
                 fetchUserFeed()
             }
         }
@@ -74,7 +74,7 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     private fun performCleanFetch(){
         feedView.discussionFromResponse.clear()
-        feedView.clearItems()
+        feedView.clearItemsForNewFeed()
 
         fetch()
     }
@@ -82,7 +82,7 @@ class FeedPresenter(val feedView: FeedContract.View,
     override fun getByTag(tag: String) {
         if (steemitRepository.remoteRepository.tag != tag){
             steemitRepository.remoteRepository.tag = tag
-            feedView.clearItems()
+            feedView.clearItemsForNewFeed()
             performCleanFetch()
         }
     }

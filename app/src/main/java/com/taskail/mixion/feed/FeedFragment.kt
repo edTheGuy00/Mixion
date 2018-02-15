@@ -51,10 +51,12 @@ class FeedFragment : Fragment(),
     private val feedCallBack = FeedCallBack()
 
     override fun showFeed() {
+        feed_loading_indicator.visibility = View.GONE
         adapter.notifyDataSetChanged()
     }
 
-    override fun clearItems() {
+    override fun clearItemsForNewFeed() {
+        feed_loading_indicator.visibility = View.VISIBLE
         adapter.notifyDataSetChanged()
     }
 
