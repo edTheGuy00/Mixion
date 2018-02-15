@@ -8,6 +8,7 @@ import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.profile.User
+import com.taskail.mixion.ui.TextInputValidator
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -30,15 +31,16 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        loginBtn.isEnabled = true
+
+        TextInputValidator({
+            loginBtn.isEnabled = it
+        }, login_username_text, login_key_input)
 
         loginBtn.setOnClickListener {
             val user = login_username_text.editText?.text.toString()
             val key = login_key_input.editText?.text.toString()
 
-            if (user.isNotEmpty() && key.isNotEmpty()){
-                storeAndSetUserCredentials(user, key)
-            }
+            storeAndSetUserCredentials(user, key)
         }
     }
 
