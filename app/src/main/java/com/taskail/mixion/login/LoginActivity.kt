@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
@@ -47,6 +48,7 @@ class LoginActivity : BaseActivity() {
     private fun storeAndSetUserCredentials(user: String, key: String){
         keystoreCompat.storeSecret("${user};${key}", {
             Log.d("KeyStoreCompat", "Storing credentials failed")
+            Toast.makeText(this, "Unable to securely store key, Make sure your device is secured with PIN/password or pattern", Toast.LENGTH_LONG).show()
         }, {
             User.storeUser(user, key)
             User.userIsLoggedIn = true
