@@ -32,7 +32,7 @@ import java.util.*
 class FeedFragment : Fragment(),
         FeedContract.View {
 
-    val TAG = "Feed Fragment"
+    val TAG = javaClass.simpleName
 
     private lateinit var result: Drawer
 

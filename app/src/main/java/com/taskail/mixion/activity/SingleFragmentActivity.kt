@@ -5,6 +5,7 @@ import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.taskail.mixion.R
 
 /**
@@ -12,6 +13,8 @@ import com.taskail.mixion.R
  */
 
 abstract class SingleFragmentActivity<T : Fragment>: AppCompatActivity() {
+
+    private val TAG = javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +24,8 @@ abstract class SingleFragmentActivity<T : Fragment>: AppCompatActivity() {
         if (!isFragmentCreated()) {
             addFragment(createFragment())
         }
+
+        Log.d(TAG, "onCreate")
     }
 
     protected fun addFragment(fragment: T) {

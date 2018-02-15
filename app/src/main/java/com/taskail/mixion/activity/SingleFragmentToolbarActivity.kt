@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import com.taskail.mixion.R
 import com.taskail.mixion.utils.fadeInAnimation
 
@@ -12,10 +13,13 @@ import com.taskail.mixion.utils.fadeInAnimation
  */
 abstract class SingleFragmentToolbarActivity<T : Fragment> : SingleFragmentActivity<T>()  {
 
+    private val TAG = javaClass.simpleName
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(getToolbar())
         supportActionBar?.title = getString(R.string.app_name)
+        Log.d(TAG, "onCreate")
     }
 
     protected fun getToolbar(): Toolbar {
