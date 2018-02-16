@@ -30,7 +30,7 @@ class TagDialogAdapter(private val callback: TagDialogCallback,
         fun setItem(tag: RoomTags){
 
             itemView.text_tag.text = tag.tag
-            itemView.text_posts.text = "${tag.comments}"
+            itemView.text_posts.text = "${tag.posts}"
 
             itemView.setOnClickListener {
                 callback.onTagSelected(tag.tag)
