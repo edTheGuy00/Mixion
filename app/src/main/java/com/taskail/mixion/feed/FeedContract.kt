@@ -1,5 +1,6 @@
 package com.taskail.mixion.feed
 
+import android.view.View
 import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
 import com.taskail.mixion.data.models.SteemDiscussion
@@ -33,6 +34,10 @@ interface FeedContract {
         fun sortBy(sortBy: String)
 
         fun getByTag(tag: String)
+
+        fun getDtube(): (android.view.View?) -> Boolean
+
+        fun getDmania(): (android.view.View?) -> Boolean
 
         fun getMyFeed()
 

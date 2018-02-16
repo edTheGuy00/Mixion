@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.*
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.builders.footer
@@ -19,6 +20,7 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.dialog.TAG_DIALOG
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
@@ -165,29 +167,69 @@ class FeedFragment : Fragment(),
             actionBarDrawerToggleAnimated = true
             rootViewRes = R.id.drawerContainer
 
-            primaryItem(R.string.home) { iicon = FontAwesome.Icon.faw_home }
-            expandableItem("Sort") {
-                secondaryItem(R.string.filter_new) { iicon = FontAwesome.Icon.faw_star }
-                secondaryItem(R.string.filter_hot) { iicon = FontAwesome.Icon.faw_fire }
-                secondaryItem(R.string.filter_trending) { iicon = FontAwesome.Icon.faw_font_awesome }
-                secondaryItem(R.string.filter_promoted) { iicon = FontAwesome.Icon.faw_money }
+            primaryItem(R.string.home) {
+                iicon = FontAwesome.Icon.faw_home
+                onClick(sortFeed(getString(R.string.myFeed)))
             }
+            expandableItem(R.string.sort) {
+                selectable = false
 
-            primaryItem(R.string.browse_tags).withSelectable(false)
-            sectionHeader(R.string.app_name)
-            secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }.withSelectable(false)
-            secondaryItem(R.string.feed_back) { iicon = FontAwesome.Icon.faw_sticky_note }.withSelectable(false)
-            secondaryItem(R.string.github) { iicon = FontAwesome.Icon.faw_github }.withSelectable(false)
-            if (User.userIsLoggedIn){
-                footer {
-                    primaryItem (User.getUserName()!!, getString(R.string.logout)).withSelectable(false)
+                secondaryItem(R.string.filter_new) {
+                    iicon = FontAwesome.Icon.faw_star
+                    onClick(sortFeed(getString(R.string.filter_new)))
+                }
+                secondaryItem(R.string.filter_hot) {
+                    iicon = FontAwesome.Icon.faw_fire
+                    onClick(sortFeed(getString(R.string.filter_hot)))
+                }
+                secondaryItem(R.string.filter_trending) {
+                    iicon = FontAwesome.Icon.faw_font_awesome
+                    onClick(sortFeed(getString(R.string.filter_new)))
+                }
+                secondaryItem(R.string.filter_promoted) {
+                    iicon = FontAwesome.Icon.faw_money
+                    onClick(sortFeed(getString(R.string.filter_promoted)))
                 }
             }
 
-            onItemClick { view, position, drawerItem ->
-                //result.closeDrawer() // don't close on expandable clicked
-                handleDrawerClicks(position)
-                return@onItemClick true
+            expandableItem(R.string.quick_links) {
+                selectable = false
+                secondaryItem(R.string.d_tube) {
+                    iicon = FontAwesome.Icon.faw_play_circle
+                    onClick(presenter.getDtube())
+                }
+                secondaryItem(R.string.d_mania) {
+                    iicon = FontAwesome.Icon.faw_smile_o
+                    onClick(presenter.getDmania())
+                }
+
+            }
+
+            primaryItem(R.string.browse_tags) {
+                selectable = false
+                onClick(openDialog(TAG_DIALOG))
+            }
+            sectionHeader(R.string.app_name)
+            secondaryItem(R.string.about) {
+                iicon = FontAwesome.Icon.faw_info_circle
+                selectable = false
+            }
+            secondaryItem(R.string.feed_back) {
+                iicon = FontAwesome.Icon.faw_sticky_note
+                selectable = false
+            }
+            secondaryItem(R.string.github) {
+                iicon = FontAwesome.Icon.faw_github
+                selectable = false
+            }
+            if (User.userIsLoggedIn){
+                footer {
+                    primaryItem (User.getUserName()!!, getString(R.string.logout)) {
+                        selectable = false
+                        onClick(logoutUser())
+
+                    }
+                }
             }
         }
 
@@ -196,13 +238,38 @@ class FeedFragment : Fragment(),
         }
     }
 
+    private fun sortFeed(sort: String): (View?) -> Boolean = {
+        Log.d(TAG, "sorting feed by $sort" )
+        when (sort){
+            getString(R.string.myFeed) -> presenter.getMyFeed()
+            else -> presenter.sortBy(sort)
+        }
+        false
+    }
+
+    private fun openDialog(dialog: Int): (View?) -> Boolean = {
+        when (dialog){
+            TAG_DIALOG -> getCallback()?.onTagDialogRequested()
+        }
+        false
+    }
+
+    private fun logoutUser(): (View?) -> Boolean = {
+        result.removeAllStickyFooterItems()
+        getCallback()?.logoutUser()
+        false
+    }
 
     /**
      * this Will only be called when the user logs in.
      */
     override fun userHasLoggedIn() {
         val drawerItem: IDrawerItem<*, *>
-        drawerItem = PrimaryDrawerItemKt().primaryItem (User.getUserName()!!, getString(R.string.logout)).withSelectable(false)
+        drawerItem = PrimaryDrawerItemKt()
+                .primaryItem (User.getUserName()!!, getString(R.string.logout)){
+                    selectable = false
+                    onClick(logoutUser())
+                }
         result.addStickyFooterItem(drawerItem)
     }
 
@@ -216,18 +283,4 @@ class FeedFragment : Fragment(),
         }
     }
 
-    private fun handleDrawerClicks( position: Int ){
-        when (position){
-            0 -> presenter.getMyFeed()
-            1 -> presenter.sortBy("New")
-            2 -> presenter.sortBy("Hot")
-            3 -> presenter.sortBy("Trending")
-            4 -> presenter.sortBy("Promoted")
-            5 -> getCallback()?.onTagDialogRequested()
-            -1 -> {
-                result.removeAllStickyFooterItems()
-                getCallback()?.logoutUser()
-            }
-        }
-    }
 }

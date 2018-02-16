@@ -1,5 +1,7 @@
 package com.taskail.mixion.feed
 
+import android.util.Log
+import android.view.View
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
@@ -12,6 +14,8 @@ import java.util.*
 class FeedPresenter(val feedView: FeedContract.View,
                     val steemitRepository: SteemitRepository) :
         FeedContract.Presenter {
+
+    val TAG = javaClass.simpleName
 
     var sortBy = "Trending"
 
@@ -190,6 +194,16 @@ class FeedPresenter(val feedView: FeedContract.View,
 
         })
 
+    }
+
+    override fun getDtube(): (View?) -> Boolean = {
+        Log.d(TAG, "Fetch dTube posts")
+        false
+    }
+
+    override fun getDmania(): (View?) -> Boolean = {
+        Log.d(TAG, "Fetch dMania posts")
+        false
     }
 
     private fun getUserName(): String?{

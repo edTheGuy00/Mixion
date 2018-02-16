@@ -5,6 +5,7 @@
     <string name="github">Github</string>
     <string name="bookmark">Bookmarks</string>
     <string name="home">Home</string>
+    <string name="sort">Sort</string>
     <string name="profile">Profile</string>
     <string name="asksteem">AskSteem</string>
     <string name="chat">Chat</string>
@@ -15,6 +16,10 @@
     <string name="filter_hot">Hot</string>
     <string name="filter_trending">Trending</string>
     <string name="filter_promoted">Promoted</string>
+    <string name="myFeed">My Feed</string>
+    <string name="quick_links">Quick Links</string>
+    <string name="d_tube">dTube</string>
+    <string name="d_mania">dMania</string>
     <string name="browse_tags">Browse By Tags</string>
     <string name="tags">Tags</string>
     <string name="resteem">Re-Steem</string>
