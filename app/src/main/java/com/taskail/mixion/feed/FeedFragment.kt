@@ -12,6 +12,7 @@ import co.zsmb.materialdrawerkt.builders.footer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.PrimaryDrawerItemKt
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
+import co.zsmb.materialdrawerkt.draweritems.expandable.expandableItem
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
@@ -165,10 +166,13 @@ class FeedFragment : Fragment(),
             rootViewRes = R.id.drawerContainer
 
             primaryItem(R.string.home) { iicon = FontAwesome.Icon.faw_home }
-            primaryItem(R.string.filter_new) { iicon = FontAwesome.Icon.faw_sticky_note }
-            primaryItem(R.string.filter_hot) { iicon = FontAwesome.Icon.faw_fire }
-            primaryItem(R.string.filter_trending) { iicon = FontAwesome.Icon.faw_font_awesome }
-            primaryItem(R.string.filter_promoted) { iicon = FontAwesome.Icon.faw_money }
+            expandableItem("Sort") {
+                secondaryItem(R.string.filter_new) { iicon = FontAwesome.Icon.faw_star }
+                secondaryItem(R.string.filter_hot) { iicon = FontAwesome.Icon.faw_fire }
+                secondaryItem(R.string.filter_trending) { iicon = FontAwesome.Icon.faw_font_awesome }
+                secondaryItem(R.string.filter_promoted) { iicon = FontAwesome.Icon.faw_money }
+            }
+
             primaryItem(R.string.browse_tags).withSelectable(false)
             sectionHeader(R.string.app_name)
             secondaryItem(R.string.about) { iicon = FontAwesome.Icon.faw_info_circle }.withSelectable(false)
@@ -181,7 +185,7 @@ class FeedFragment : Fragment(),
             }
 
             onItemClick { view, position, drawerItem ->
-                result.closeDrawer()
+                //result.closeDrawer() // don't close on expandable clicked
                 handleDrawerClicks(position)
                 return@onItemClick true
             }

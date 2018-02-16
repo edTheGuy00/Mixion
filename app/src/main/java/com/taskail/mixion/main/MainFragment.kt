@@ -206,7 +206,7 @@ class MainFragment : Fragment(),
     }
 
     override fun onDestroy() {
-        User.performLogout()
+        //User.performLogout()
         clearDisposables()
         super.onDestroy()
     }
