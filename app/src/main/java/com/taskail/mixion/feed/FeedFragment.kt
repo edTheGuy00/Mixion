@@ -53,8 +53,6 @@ class FeedFragment : Fragment(),
         fun requestToAddNewPost()
     }
 
-    private val feedCallBack = FeedCallBack()
-
     override fun showFeed() {
         feed_loading_indicator.visibility = View.GONE
         adapter.notifyDataSetChanged()
@@ -107,7 +105,9 @@ class FeedFragment : Fragment(),
 
         discussionFromResponse = ArrayList<SteemDiscussion>()
 
-        adapter = FeedRVAdapter(discussionFromResponse, feedCallBack)
+        adapter = FeedRVAdapter(discussionFromResponse, {
+            getCallback()?.openDiscussionRequested(it)
+        })
 
         return view
     }
@@ -282,12 +282,6 @@ class FeedFragment : Fragment(),
 
     private fun getCallback(): Callback? {
         return getCallback(this, Callback::class.java)
-    }
-
-    private inner class FeedCallBack : FeedRVAdapter.FeedAdapterCallBack{
-        override fun onDiscussionSelected(discussion: SteemDiscussion) {
-            getCallback()?.openDiscussionRequested(discussion)
-        }
     }
 
 }

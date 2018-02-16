@@ -17,10 +17,10 @@ import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
  *Created by ed on 1/24/18.
  */
 class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
-                    private val callBack: FeedAdapterCallBack) :
+                    private val discussionSelected: (SteemDiscussion) -> Unit) :
         RecyclerView.Adapter<FeedRVAdapter.FeedViewHolder>() {
 
-    class FeedViewHolder(itemView : View, private val callBack: FeedAdapterCallBack) :
+    class FeedViewHolder(itemView : View, private val discussionSelected: (SteemDiscussion) -> Unit) :
             RecyclerView.ViewHolder(itemView){
 
         fun setSteemDiscussion(discussion: SteemDiscussion){
@@ -38,7 +38,7 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
                         .into(itemView.preview_image)
 
                 itemView.setOnClickListener {
-                    callBack.onDiscussionSelected(this)
+                    discussionSelected(this)
                 }
             }
 
@@ -52,7 +52,7 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FeedViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.cardview_steem_post,
                 parent, false)
-        return FeedRVAdapter.FeedViewHolder(itemView, callBack)
+        return FeedRVAdapter.FeedViewHolder(itemView, discussionSelected)
     }
 
     override fun getItemCount(): Int {
