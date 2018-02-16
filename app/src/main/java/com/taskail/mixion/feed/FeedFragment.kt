@@ -18,9 +18,11 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.taskail.mixion.ABOUT_PAGE
+import com.taskail.mixion.DONATE
 import com.taskail.mixion.R
+import com.taskail.mixion.TAG_DIALOG
 import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.dialog.TAG_DIALOG
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
@@ -161,6 +163,15 @@ class FeedFragment : Fragment(),
 
         })
 
+        fab.setOnClickListener {
+            getCallback()?.requestToAddNewPost()
+        }
+
+        prepareDrawerNavigation(savedInstanceState)
+    }
+
+    private fun prepareDrawerNavigation(savedInstanceState: Bundle?){
+
         result = drawer {
             savedInstance = savedInstanceState
             toolbar = this@FeedFragment.getCallback()?.getDrawerToolbar()!!
@@ -207,20 +218,18 @@ class FeedFragment : Fragment(),
 
             primaryItem(R.string.browse_tags) {
                 selectable = false
-                onClick(openDialog(TAG_DIALOG))
+                onClick(miscItemsClicked(TAG_DIALOG))
             }
             sectionHeader(R.string.app_name)
             secondaryItem(R.string.about) {
                 iicon = FontAwesome.Icon.faw_info_circle
                 selectable = false
+                onClick(miscItemsClicked(ABOUT_PAGE))
             }
-            secondaryItem(R.string.feed_back) {
-                iicon = FontAwesome.Icon.faw_sticky_note
+            secondaryItem(R.string.donate) {
+                iicon = FontAwesome.Icon.faw_money
                 selectable = false
-            }
-            secondaryItem(R.string.github) {
-                iicon = FontAwesome.Icon.faw_github
-                selectable = false
+                onClick(miscItemsClicked(DONATE))
             }
             if (User.userIsLoggedIn){
                 footer {
@@ -232,14 +241,10 @@ class FeedFragment : Fragment(),
                 }
             }
         }
-
-        fab.setOnClickListener {
-            getCallback()?.requestToAddNewPost()
-        }
     }
 
     private fun sortFeed(sort: String): (View?) -> Boolean = {
-        Log.d(TAG, "sorting feed by $sort" )
+        Log.i(TAG, "sorting feed by $sort" )
         when (sort){
             getString(R.string.myFeed) -> presenter.getMyFeed()
             else -> presenter.sortBy(sort)
@@ -247,9 +252,11 @@ class FeedFragment : Fragment(),
         false
     }
 
-    private fun openDialog(dialog: Int): (View?) -> Boolean = {
-        when (dialog){
+    private fun miscItemsClicked(item: Int): (View?) -> Boolean = {
+        when (item){
             TAG_DIALOG -> getCallback()?.onTagDialogRequested()
+            ABOUT_PAGE -> Log.d(TAG, "About clicked")
+            DONATE -> Log.d(TAG, "Donation Clicked")
         }
         false
     }

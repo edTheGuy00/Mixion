@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.dialog_tags.*
  *Created by ed on 1/26/18.
  */
 
-const val TAG_DIALOG = 189
-
 class TagDialog(context: Context?,
                 private val repository: SteemitRepository,
                 private val func: (String) -> Unit) :
