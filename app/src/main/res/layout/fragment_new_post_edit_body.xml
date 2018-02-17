@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:showIn="@layout/activity_create_post">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tag_chip_recyclerView"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"/>
+
     <ScrollView
         android:id="@+id/edit_body_scrollView"
         android:layout_width="match_parent"
