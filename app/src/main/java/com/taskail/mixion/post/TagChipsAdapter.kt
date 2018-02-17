@@ -1,11 +1,14 @@
 package com.taskail.mixion.post
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.taskail.mixion.R
+import com.taskail.mixion.dialog.EnterTagDialog
 import com.taskail.mixion.post.TagChipsAdapter.TagsViewHolder
 import kotlinx.android.synthetic.main.layout_chip_tags.view.*
 
@@ -13,11 +16,11 @@ import kotlinx.android.synthetic.main.layout_chip_tags.view.*
  *Created by ed on 2/16/18.
  */
 
-class TagChipsAdapter : RecyclerView.Adapter<TagsViewHolder>() {
+class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsViewHolder>() {
 
     var tags = mutableListOf<String>()
 
-    class TagsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class TagsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         fun setTag(tag: String, position: Int, remove: (Int) -> Unit){
             itemView.chip_tag.text = tag
@@ -29,14 +32,23 @@ class TagChipsAdapter : RecyclerView.Adapter<TagsViewHolder>() {
             }
         }
 
-        fun setAddNewTag(add: (String) -> Unit) {
+        fun setAddNewTag(addTag: (String) -> Unit) {
             itemView.chip_tag.setText(R.string.add_tags)
             itemView.chip_action.setImageResource(R.drawable.ic_add_12dp)
 
             itemView.setOnClickListener {
-                add("steemit")
+                if (tags.size < 5)
+                    showDialog(addTag)
+                else
+                    Toast.makeText(context, "Only 5 Tags Allowed", Toast.LENGTH_LONG).show()
             }
         }
+
+    }
+
+    private fun showDialog(add: (String) -> Unit){
+        EnterTagDialog(context, add)
+                .show()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TagsViewHolder {

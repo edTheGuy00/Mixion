@@ -33,7 +33,7 @@ class EditPostFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_new_post_edit_body, container, false)
 
-        tagsAdapter = TagChipsAdapter()
+        tagsAdapter = TagChipsAdapter(context!!)
 
         return view
     }

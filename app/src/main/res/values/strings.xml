@@ -39,4 +39,6 @@
     <string name="preview">Preview</string>
     <string name="chip_action">Chip Action</string>
     <string name="add_tags">Add tags</string>
+    <string name="enter_tag">Enter Tag</string>
+    <string name="submit">Submit</string>
 </resources>
