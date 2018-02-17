@@ -1,8 +1,9 @@
 package com.taskail.mixion.dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatDialog
+import android.view.WindowManager
 import com.taskail.mixion.R
 import com.taskail.mixion.ui.TextInputValidator
 import kotlinx.android.synthetic.main.dialog_enter_tag.*
@@ -12,10 +13,12 @@ import kotlinx.android.synthetic.main.dialog_enter_tag.*
  */
 
 class EnterTagDialog(context: Context,
-                     private val addTag: (String) -> Unit) : AppCompatDialog(context){
+                     private val addTag: (String) -> Unit) :
+        Dialog(context){
 
     init {
         setContentView(R.layout.dialog_enter_tag)
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.taskail.mixion.R
 import com.taskail.mixion.dialog.EnterTagDialog
 import com.taskail.mixion.post.TagChipsAdapter.TagsViewHolder
+import com.taskail.mixion.utils.showSoftKeyboard
 import kotlinx.android.synthetic.main.layout_chip_tags.view.*
 
 /**
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.layout_chip_tags.view.*
  */
 
 class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsViewHolder>() {
+
+    val TAG = javaClass.simpleName
 
     var tags = mutableListOf<String>()
 
@@ -27,7 +30,7 @@ class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsV
             itemView.chip_action.setImageResource(R.drawable.ic_trashcan_delete_12dp)
 
             itemView.setOnClickListener {
-                Log.d("Chip Adapter", "Delete this tag")
+                Log.d(TAG, "Delete this tag")
                 remove(position.minus(1))
             }
         }
@@ -49,6 +52,7 @@ class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsV
     private fun showDialog(add: (String) -> Unit){
         EnterTagDialog(context, add)
                 .show()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TagsViewHolder {
@@ -65,16 +69,20 @@ class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsV
                     {
                         if (tags.size < 5){
                         tags.add(it)
-                                .also { this.notifyDataSetChanged() }
+                                .also {
+                                    this.notifyDataSetChanged()
+                                }
                         } else {
-                            Log.d("Chip recycler", "reached limit")
+                            Log.i(TAG, "reached limit")
                         }
                     })
             else -> holder?.setTag(tags[position.minus(1)],
                     position,
                     {
                         tags.removeAt(it)
-                                .also { this.notifyDataSetChanged() }
+                                .also {
+                                    this.notifyDataSetChanged()
+                                }
                     })
         }
     }
