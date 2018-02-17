@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/categoriesChipLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="10dp"
+    android:background="@drawable/chip_shape"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/categoriesChipText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        tools:text="Tag"
+        android:textSize="14sp"/>
+
+    <ImageView
+        android:id="@+id/chip_action"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="6dp"
+        android:src="@drawable/ic_trashcan_delete_12dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/chip_action" />
+
+</LinearLayout>
