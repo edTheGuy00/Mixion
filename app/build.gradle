@@ -68,13 +68,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
-    compile ('com.rocketchat.core:rocketchat-core:0.7.1.9') {
-        exclude group :'org.json', module: 'json'
-    }
-
-    implementation 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
-    implementation 'id.zelory:compressor:2.1.0'
-
     implementation 'org.jsoup:jsoup:1.11.2'
     implementation 'com.github.PierfrancescoSoffritti:AndroidYouTubePlayer:4.1.4'
 

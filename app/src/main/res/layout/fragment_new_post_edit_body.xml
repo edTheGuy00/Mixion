@@ -21,7 +21,7 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
-        <com.taskail.mixion.markortexteditor.highlighter.HighlightingEditor
+        <com.taskail.mixion.ui.markortexteditor.highlighter.HighlightingEditor
             android:id="@+id/document__fragment__edit__highlighting_editor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

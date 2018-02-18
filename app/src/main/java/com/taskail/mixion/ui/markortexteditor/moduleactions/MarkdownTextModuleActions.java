@@ -3,7 +3,7 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor.moduleactions;
+package com.taskail.mixion.ui.markortexteditor.moduleactions;
 
 import android.app.Activity;
 import android.text.Editable;

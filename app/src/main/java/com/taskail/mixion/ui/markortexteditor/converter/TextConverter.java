@@ -3,10 +3,9 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor.converter;
+package com.taskail.mixion.ui.markortexteditor.converter;
 
 import android.content.Context;
-import android.webkit.WebView;
 
 
 @SuppressWarnings("WeakerAccess")

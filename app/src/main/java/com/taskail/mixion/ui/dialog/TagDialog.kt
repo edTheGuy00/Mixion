@@ -1,4 +1,4 @@
-package com.taskail.mixion.dialog
+package com.taskail.mixion.ui.dialog
 
 import android.content.Context
 import android.os.Bundle

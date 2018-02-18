@@ -3,7 +3,7 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor.highlighter;
+package com.taskail.mixion.ui.markortexteditor.highlighter;
 
 import android.content.Context;
 import android.os.Handler;

@@ -1,4 +1,4 @@
-package com.taskail.mixion.markortexteditor.highlighter
+package com.taskail.mixion.ui.markortexteditor.highlighter
 
 import java.util.regex.Pattern
 

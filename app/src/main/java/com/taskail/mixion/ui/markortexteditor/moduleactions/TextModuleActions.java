@@ -3,7 +3,7 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor.moduleactions;
+package com.taskail.mixion.ui.markortexteditor.moduleactions;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
 import com.taskail.mixion.R;
-import com.taskail.mixion.markortexteditor.highlighter.HighlightingEditor;
+import com.taskail.mixion.ui.markortexteditor.highlighter.HighlightingEditor;
 
 
 @SuppressWarnings("WeakerAccess")

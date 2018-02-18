@@ -1,4 +1,4 @@
-package com.taskail.mixion.dialog
+package com.taskail.mixion.ui.dialog
 
 import android.support.v7.widget.RecyclerView.ViewHolder
 import android.support.v7.widget.RecyclerView.Adapter
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.data.source.local.RoomTags
-import com.taskail.mixion.dialog.TagDialogAdapter.ItemVH
-import com.taskail.mixion.dialog.TagDialog.TagDialogCallback
+import com.taskail.mixion.ui.dialog.TagDialogAdapter.ItemVH
+import com.taskail.mixion.ui.dialog.TagDialog.TagDialogCallback
 import kotlinx.android.synthetic.main.items_dialog_tags.view.*
 
 /**

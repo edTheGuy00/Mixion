@@ -6,8 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.taskail.mixion.R
-import com.taskail.mixion.markortexteditor.highlighter.HighlightingEditor
-import com.taskail.mixion.markortexteditor.TextFormat
+import com.taskail.mixion.ui.markortexteditor.highlighter.HighlightingEditor
+import com.taskail.mixion.ui.markortexteditor.TextFormat
 import kotlinx.android.synthetic.main.fragment_new_post_edit_body.*
 
 /**

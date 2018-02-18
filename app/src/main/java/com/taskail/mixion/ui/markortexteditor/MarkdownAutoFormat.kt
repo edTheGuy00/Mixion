@@ -1,8 +1,8 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.ui.markortexteditor
 
 import android.text.InputFilter
 import android.text.Spanned
-import com.taskail.mixion.markortexteditor.highlighter.MarkdownHighlighterPattern
+import com.taskail.mixion.ui.markortexteditor.highlighter.MarkdownHighlighterPattern
 import java.lang.NumberFormatException
 
 /**

@@ -1,4 +1,4 @@
-package com.taskail.mixion.markortexteditor.highlighter
+package com.taskail.mixion.ui.markortexteditor.highlighter
 
 import android.text.TextPaint
 import android.text.style.UnderlineSpan

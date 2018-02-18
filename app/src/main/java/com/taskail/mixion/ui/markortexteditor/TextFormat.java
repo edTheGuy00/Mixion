@@ -3,16 +3,16 @@
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.
  */
-package com.taskail.mixion.markortexteditor;
+package com.taskail.mixion.ui.markortexteditor;
 
 import android.app.Activity;
 
-import com.taskail.mixion.markortexteditor.converter.MarkdownTextConverter;
-import com.taskail.mixion.markortexteditor.converter.TextConverter;
-import com.taskail.mixion.markortexteditor.highlighter.Highlighter;
-import com.taskail.mixion.markortexteditor.highlighter.MarkdownHighlighter;
-import com.taskail.mixion.markortexteditor.moduleactions.MarkdownTextModuleActions;
-import com.taskail.mixion.markortexteditor.moduleactions.TextModuleActions;
+import com.taskail.mixion.ui.markortexteditor.converter.MarkdownTextConverter;
+import com.taskail.mixion.ui.markortexteditor.converter.TextConverter;
+import com.taskail.mixion.ui.markortexteditor.highlighter.Highlighter;
+import com.taskail.mixion.ui.markortexteditor.highlighter.MarkdownHighlighter;
+import com.taskail.mixion.ui.markortexteditor.moduleactions.MarkdownTextModuleActions;
+import com.taskail.mixion.ui.markortexteditor.moduleactions.TextModuleActions;
 
 
 public class TextFormat {

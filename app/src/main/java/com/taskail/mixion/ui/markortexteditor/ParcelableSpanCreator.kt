@@ -1,4 +1,4 @@
-package com.taskail.mixion.markortexteditor
+package com.taskail.mixion.ui.markortexteditor
 
 import android.text.ParcelableSpan
 import java.util.regex.Matcher

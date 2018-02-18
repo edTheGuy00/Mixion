@@ -1,4 +1,4 @@
-package com.taskail.mixion.markortexteditor.highlighter
+package com.taskail.mixion.ui.markortexteditor.highlighter
 
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -7,7 +7,7 @@ import android.text.Editable
 import android.text.ParcelableSpan
 import android.text.style.TextAppearanceSpan
 import android.util.TypedValue
-import com.taskail.mixion.markortexteditor.ParcelableSpanCreator
+import com.taskail.mixion.ui.markortexteditor.ParcelableSpanCreator
 import java.util.regex.Matcher
 
 /**

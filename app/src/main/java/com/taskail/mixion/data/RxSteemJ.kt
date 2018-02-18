@@ -1,4 +1,4 @@
-package com.taskail.mixion.steemJ
+package com.taskail.mixion.data
 
 import android.util.Log
 import eu.bittrade.libs.steemj.SteemJ
@@ -17,7 +17,7 @@ import java.util.ArrayList
  *Created by ed on 2/4/18.
  */
 
-class SteemJAPI (private val steemJDisposable: CompositeDisposable) {
+class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
 
     var steemJ: SteemJ? = null
     val steemJConfig = SteemJConfig.getInstance()

@@ -3,8 +3,6 @@ package com.taskail.mixion.post
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -12,7 +10,7 @@ import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.myNewPermLink
 import com.taskail.mixion.profile.User
-import com.taskail.mixion.steemJ.SteemJAPI
+import com.taskail.mixion.data.RxSteemJ
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -33,7 +31,7 @@ class CreatePostActivity : BaseActivity() {
 
     private lateinit var fragment: EditPostFragment
     private lateinit var disposable: CompositeDisposable
-    private lateinit var steemJ: SteemJAPI
+    private lateinit var steemJ: RxSteemJ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +40,11 @@ class CreatePostActivity : BaseActivity() {
         supportActionBar?.setHomeAsUpIndicator(getDrawable(R.drawable.ic_arrow_back))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        
+//        createPostTitle.setOnFocusChangeListener { view, b ->  }
 
         disposable = CompositeDisposable()
-        steemJ = SteemJAPI(disposable)
+        steemJ = RxSteemJ(disposable)
         steemJ.setupPostingUser(User.getUserName()!!, User.getUserKey()!!)
         steemJ.connecToSteemit()
         fragment = supportFragmentManager.findFragmentById(R.id.postBodyContainer) as EditPostFragment

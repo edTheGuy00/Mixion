@@ -15,7 +15,7 @@ import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.local.MixionDatabase
 import com.taskail.mixion.data.source.remote.*
-import com.taskail.mixion.dialog.TagDialog
+import com.taskail.mixion.ui.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
@@ -23,7 +23,7 @@ import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
-import com.taskail.mixion.steemJ.SteemJAPI
+import com.taskail.mixion.data.RxSteemJ
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.utils.getCallback
@@ -35,7 +35,7 @@ import io.reactivex.disposables.CompositeDisposable
  */
 
 var steemitRepository: SteemitRepository? = null
-var steemJAPI: SteemJAPI? = null
+var steemJAPI: RxSteemJ? = null
 
 class MainFragment : Fragment(),
         BackPressedHandler,
