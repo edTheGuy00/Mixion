@@ -114,6 +114,8 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:${versions.room}"
     implementation "com.google.guava:guava:$guavaVersion"
 
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+
     implementation "com.atlassian.commonmark:commonmark:${versions.commonmark}"
     implementation "com.atlassian.commonmark:commonmark-ext-gfm-strikethrough:${versions.commonmark}"
     implementation "com.atlassian.commonmark:commonmark-ext-gfm-tables:${versions.commonmark}"

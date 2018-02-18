@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
+    android:id="@+id/loginMainLayout"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -53,6 +54,18 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/login"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"/>
+
+        <TextView
+            android:id="@+id/qrCodeBtn"
+            style="@style/App.Button.Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:layout_marginTop="50dp"
+            android:drawableStart="@drawable/qrcode"
+            android:text="@string/scan_qr"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"/>
 

@@ -41,4 +41,10 @@
     <string name="add_tags">Add tags</string>
     <string name="enter_tag">Enter Tag</string>
     <string name="submit">Submit</string>
+    <string name="scan_qr">Scan QR Code</string>
+    <string name="ok">OK</string>
+
+    <string name="permissions_not_granted">Permissions were not granted.</string>
+    <string name="permission_camera_rationale">Camera permission is needed to scan QR code.</string>
+    <string name="wrong_qr_code_explanation">Wrong QR Code, Click on the QR code to expand the correct QR code</string>
 </resources>

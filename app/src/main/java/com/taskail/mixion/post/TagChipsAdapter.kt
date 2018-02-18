@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.taskail.mixion.R
 import com.taskail.mixion.dialog.EnterTagDialog
 import com.taskail.mixion.post.TagChipsAdapter.TagsViewHolder
-import com.taskail.mixion.utils.showSoftKeyboard
 import kotlinx.android.synthetic.main.layout_chip_tags.view.*
 
 /**
