@@ -43,6 +43,10 @@
     <string name="submit">Submit</string>
     <string name="scan_qr">Scan QR Code</string>
     <string name="ok">OK</string>
+    <string name="something_wrong">Something went wrong</string>
+    <string name="blank_title_error">Title cannot be blank</string>
+    <string name="blank_body_error">Discussion Body cannot be blank</string>
+    <string name="no_tags_error">Enter at least 1 tag</string>
 
     <string name="permissions_not_granted">Permissions were not granted.</string>
     <string name="permission_camera_rationale">Camera permission is needed to scan QR code.</string>

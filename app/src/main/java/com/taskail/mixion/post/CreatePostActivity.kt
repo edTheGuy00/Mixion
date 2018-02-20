@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
@@ -32,6 +33,7 @@ class CreatePostActivity : BaseActivity() {
     private lateinit var fragment: EditPostFragment
     private lateinit var disposable: CompositeDisposable
     private lateinit var steemJ: RxSteemJ
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,17 +60,37 @@ class CreatePostActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
-            R.id.action_post -> postIt(fragment.getBody())
+            R.id.action_post -> checkAndPost()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun postIt(body: String){
-        disposable.add(steemJ.sendPost(getPostTitle(), body, arrayOf("steemit", "mixion"))
+    private fun checkAndPost(){
+        if (getPostTitle().isNotEmpty()){
+
+            if (fragment.getBody().isNotEmpty()) {
+
+                if (fragment.getTags().isNotEmpty()) {
+                    postIt(fragment.getBody(), getPostTitle(), fragment.getTags())
+
+                } else {
+                    Toast.makeText(this, R.string.no_tags_error, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, R.string.blank_body_error, Toast.LENGTH_SHORT).show()
+            }
+
+        } else {
+            Toast.makeText(this, R.string.blank_title_error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun postIt(body: String, title: String, tags: Array<String>){
+        disposable.add(steemJ.sendPost(title, body, tags)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError{
-                    Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.something_wrong, Toast.LENGTH_SHORT).show()
                 }
                 .subscribe{
                     postedSuccessfully(it)

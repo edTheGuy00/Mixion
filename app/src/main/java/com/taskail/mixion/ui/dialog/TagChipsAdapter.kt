@@ -1,4 +1,4 @@
-package com.taskail.mixion.post
+package com.taskail.mixion.ui.dialog
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.taskail.mixion.R
-import com.taskail.mixion.ui.dialog.EnterTagDialog
-import com.taskail.mixion.post.TagChipsAdapter.TagsViewHolder
+import com.taskail.mixion.ui.dialog.TagChipsAdapter.TagsViewHolder
 import kotlinx.android.synthetic.main.layout_chip_tags.view.*
 
 /**
