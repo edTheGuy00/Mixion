@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/postingMainLayout"
     tools:context=".post.CreatePostActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -57,6 +58,16 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
+    <ProgressBar
+        android:id="@+id/submit_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:layout_marginTop="-7dp"
+        android:layout_gravity="top"
+        android:max="10000"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
     <fragment
         android:id="@+id/postBodyContainer"
