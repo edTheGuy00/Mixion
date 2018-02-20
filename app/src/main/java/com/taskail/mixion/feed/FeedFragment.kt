@@ -195,7 +195,7 @@ class FeedFragment : Fragment(),
                 }
                 secondaryItem(R.string.filter_trending) {
                     iicon = FontAwesome.Icon.faw_font_awesome
-                    onClick(sortFeed(getString(R.string.filter_new)))
+                    onClick(sortFeed(getString(R.string.filter_trending)))
                 }
                 secondaryItem(R.string.filter_promoted) {
                     iicon = FontAwesome.Icon.faw_money
