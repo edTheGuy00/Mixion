@@ -11,24 +11,33 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.apache.commons.lang3.tuple.ImmutablePair
+import org.bitcoinj.core.AddressFormatException
 import java.util.ArrayList
 
 /**
  *Created by ed on 2/4/18.
  */
 
+val steemJConfig = SteemJConfig.getInstance()
+
+fun setupSteemJUserSuccess(userName: String, postingKey: String): Boolean{
+    val privateKeys: ArrayList<ImmutablePair<PrivateKeyType, String>> = ArrayList()
+    privateKeys.add(ImmutablePair(PrivateKeyType.POSTING, postingKey))
+
+    steemJConfig.defaultAccount = AccountName(userName)
+    return try {
+        steemJConfig.privateKeyStorage.addAccount(steemJConfig.defaultAccount, privateKeys)
+        true
+
+    } catch (e: AddressFormatException){
+        Log.e("SteemJ Login", "invalid Key")
+        false
+    }
+}
+
 class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
 
     var steemJ: SteemJ? = null
-    val steemJConfig = SteemJConfig.getInstance()
-
-    fun setupPostingUser(userName: String, postingKey: String){
-        val privateKeys: ArrayList<ImmutablePair<PrivateKeyType, String>> = ArrayList()
-        privateKeys.add(ImmutablePair(PrivateKeyType.POSTING, postingKey))
-
-        steemJConfig.defaultAccount = AccountName(userName)
-        steemJConfig.privateKeyStorage.addAccount(steemJConfig.defaultAccount, privateKeys)
-    }
 
     fun connecToSteemit(){
         steemJDisposable.add(initSteemJ()

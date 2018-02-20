@@ -21,6 +21,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
 import android.view.View
 import com.taskail.mixion.ACTIVITY_REQUEST_QR_CODE_SCANNER
+import com.taskail.mixion.data.setupSteemJUserSuccess
 import com.taskail.mixion.postingKey
 
 
@@ -57,7 +58,7 @@ class LoginActivity : BaseActivity() {
             val user = login_username_text.editText?.text.toString()
             val key = login_key_input.editText?.text.toString()
 
-            storeAndSetUserCredentials(user, key)
+            verifyUserCredentials(user, key)
         }
 
         qrCodeBtn.setOnClickListener {
@@ -65,10 +66,18 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+    private fun verifyUserCredentials(user: String, key: String){
+        if (setupSteemJUserSuccess(user, key)){
+            storeAndSetUserCredentials(user, key)
+        } else {
+            Toast.makeText(this, R.string.invalid_posting_key, Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun storeAndSetUserCredentials(user: String, key: String){
         keystoreCompat.storeSecret("${user};${key}", {
-            Log.d("KeyStoreCompat", "Storing credentials failed")
-            Toast.makeText(this, "Unable to securely store key, Make sure your device is secured with PIN/password or pattern", Toast.LENGTH_LONG).show()
+            Log.e("KeyStoreCompat", "Storing credentials failed")
+            Toast.makeText(this, R.string.storing_key_error, Toast.LENGTH_LONG).show()
         }, {
             User.storeUser(user, key)
             User.userIsLoggedIn = true

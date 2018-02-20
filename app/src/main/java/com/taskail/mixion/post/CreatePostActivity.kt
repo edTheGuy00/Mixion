@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.myNewPermLink
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.data.RxSteemJ
+import com.taskail.mixion.data.setupSteemJUserSuccess
 import com.taskail.mixion.utils.hideSoftKeyboard
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -32,6 +34,8 @@ class CreatePostActivity : BaseActivity() {
 
         val POSTED_SUCCESSFULLY = 23
     }
+
+    val TAG = javaClass.simpleName
 
     private lateinit var fragment: EditPostFragment
     private lateinit var disposable: CompositeDisposable
@@ -54,8 +58,12 @@ class CreatePostActivity : BaseActivity() {
 
         disposable = CompositeDisposable()
         steemJ = RxSteemJ(disposable)
-        steemJ.setupPostingUser(User.getUserName()!!, User.getUserKey()!!)
-        steemJ.connecToSteemit()
+        if (setupSteemJUserSuccess(User.getUserName()!!, User.getUserKey()!!)) {
+            steemJ.connecToSteemit()
+        } else {
+            Log.wtf(TAG, "hmmm...")
+            finish()
+        }
         fragment = supportFragmentManager.findFragmentById(R.id.postBodyContainer) as EditPostFragment
     }
 
