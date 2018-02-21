@@ -1,7 +1,6 @@
 package com.taskail.mixion.login
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,10 +14,8 @@ import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.ui.TextInputValidator
 import kotlinx.android.synthetic.main.activity_login.*
-import com.taskail.mixion.main.MainActivity
-import android.R.string.ok
+import android.app.AlertDialog
 import android.support.design.widget.Snackbar
-import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
 import android.view.View
 import com.taskail.mixion.ACTIVITY_REQUEST_QR_CODE_SCANNER
 import com.taskail.mixion.data.setupSteemJUserSuccess
@@ -62,7 +59,7 @@ class LoginActivity : BaseActivity() {
         }
 
         qrCodeBtn.setOnClickListener {
-            openQrCodeScanner()
+            showQrInfoDialog()
         }
     }
 
@@ -84,6 +81,15 @@ class LoginActivity : BaseActivity() {
             setResult(RESUlT_LOGIN_OK)
             finish()
         })
+    }
+
+    private fun showQrInfoDialog(){
+        AlertDialog.Builder(this)
+                .setTitle(R.string.steemit_qrcode_instructions_title)
+                .setMessage(R.string.steemit_qrcode_instructions)
+                .setPositiveButton(R.string.ok) { _, _ -> openQrCodeScanner() }
+                .create()
+                .show()
     }
 
     private fun openQrCodeScanner(){

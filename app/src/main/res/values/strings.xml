@@ -53,4 +53,11 @@
     <string name="permissions_not_granted">Permissions were not granted.</string>
     <string name="permission_camera_rationale">Camera permission is needed to scan QR code.</string>
     <string name="wrong_qr_code_explanation">Wrong QR Code, Click on the QR code to expand the correct QR code</string>
+    <string name="steemit_qrcode_instructions_title">Steemit QR Code Instructions</string>
+    <string name="steemit_qrcode_instructions">Go to your Steemit.com account
+        \n 1. Click on "wallet"
+        \n 2. Click on "Permissions"
+        \n 3. For your posting key, click on "show private key"
+        \n 4. Click on the small QR code icon
+        \n 5. Point the camera and it will automatically capture your Posting key and fill out the key field</string>
 </resources>
