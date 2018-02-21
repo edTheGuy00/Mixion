@@ -57,7 +57,7 @@
     <string name="steemit_qrcode_instructions">Go to your Steemit.com account
         \n 1. Click on "wallet"
         \n 2. Click on "Permissions"
-        \n 3. For your posting key, click on "show private key"
+        \n 3. Click on "show private key" next to POSTING
         \n 4. Click on the small QR code icon
-        \n 5. Point the camera and it will automatically capture your Posting key and fill out the key field</string>
+        \n 5. Point the camera at the expanded QR code, your key will be automatically captured</string>
 </resources>
