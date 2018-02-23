@@ -196,14 +196,14 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     }
 
-    override fun getDtube(): (View?) -> Boolean = {
+    override fun getDtube(){
         Log.d(TAG, "Fetch dTube posts")
-        false
+
     }
 
-    override fun getDmania(): (View?) -> Boolean = {
+    override fun getDmania(){
         Log.d(TAG, "Fetch dMania posts")
-        false
+
     }
 
     private fun getUserName(): String?{

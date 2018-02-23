@@ -18,10 +18,7 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
-import com.taskail.mixion.ABOUT_PAGE
-import com.taskail.mixion.DONATE
-import com.taskail.mixion.R
-import com.taskail.mixion.TAG_DIALOG
+import com.taskail.mixion.*
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.profile.User
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
@@ -182,38 +179,31 @@ class FeedFragment : Fragment(),
                 iicon = FontAwesome.Icon.faw_home
                 onClick(sortFeed(getString(R.string.myFeed)))
             }
-            expandableItem(R.string.sort) {
-                selectable = false
-
-                secondaryItem(R.string.filter_new) {
-                    iicon = FontAwesome.Icon.faw_star
-                    onClick(sortFeed(getString(R.string.filter_new)))
-                }
-                secondaryItem(R.string.filter_hot) {
-                    iicon = FontAwesome.Icon.faw_fire
-                    onClick(sortFeed(getString(R.string.filter_hot)))
-                }
-                secondaryItem(R.string.filter_trending) {
-                    iicon = FontAwesome.Icon.faw_font_awesome
-                    onClick(sortFeed(getString(R.string.filter_trending)))
-                }
-                secondaryItem(R.string.filter_promoted) {
-                    iicon = FontAwesome.Icon.faw_money
-                    onClick(sortFeed(getString(R.string.filter_promoted)))
-                }
+            secondaryItem(R.string.filter_new) {
+                iicon = FontAwesome.Icon.faw_star
+                onClick(sortFeed(getString(R.string.filter_new)))
+            }
+            secondaryItem(R.string.filter_hot) {
+                iicon = FontAwesome.Icon.faw_fire
+                onClick(sortFeed(getString(R.string.filter_hot)))
+            }
+            secondaryItem(R.string.filter_trending) {
+                iicon = FontAwesome.Icon.faw_font_awesome
+                onClick(sortFeed(getString(R.string.filter_trending)))
+            }
+            secondaryItem(R.string.filter_promoted) {
+                iicon = FontAwesome.Icon.faw_money
+                onClick(sortFeed(getString(R.string.filter_promoted)))
             }
 
-            expandableItem(R.string.quick_links) {
-                selectable = false
-                secondaryItem(R.string.d_tube) {
-                    iicon = FontAwesome.Icon.faw_play_circle
-                    onClick(presenter.getDtube())
-                }
-                secondaryItem(R.string.d_mania) {
-                    iicon = FontAwesome.Icon.faw_smile_o
-                    onClick(presenter.getDmania())
-                }
-
+            sectionHeader(R.string.quick_links)
+            secondaryItem(R.string.d_tube) {
+                iicon = FontAwesome.Icon.faw_play_circle
+                onClick(quickLinks(DTBUE))
+            }
+            secondaryItem(R.string.d_mania) {
+                iicon = FontAwesome.Icon.faw_smile_o
+                onClick(quickLinks(DMANIA))
             }
 
             primaryItem(R.string.browse_tags) {
@@ -249,6 +239,15 @@ class FeedFragment : Fragment(),
             getString(R.string.myFeed) -> presenter.getMyFeed()
             else -> presenter.sortBy(sort)
         }
+        false
+    }
+
+    private fun quickLinks(get: Int): (View?) -> Boolean = {
+        when (get) {
+            DTBUE -> presenter.getDtube()
+            DMANIA -> presenter.getDmania()
+        }
+
         false
     }
 

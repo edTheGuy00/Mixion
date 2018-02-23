@@ -14,3 +14,6 @@ const val DONATE = 191
 
 const val myNewPermLink = "myNewPermLink"
 const val postingKey = "postingKey"
+
+const val DTBUE = 44
+const val DMANIA = 45

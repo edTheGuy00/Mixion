@@ -35,9 +35,9 @@ interface FeedContract {
 
         fun getByTag(tag: String)
 
-        fun getDtube(): (android.view.View?) -> Boolean
+        fun getDtube()
 
-        fun getDmania(): (android.view.View?) -> Boolean
+        fun getDmania()
 
         fun getMyFeed()
 
