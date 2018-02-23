@@ -41,9 +41,11 @@ var steemJAPI: RxSteemJ? = null
 class MainFragment : Fragment(),
         BackPressedHandler,
         FeedFragment.Callback,
-        SearchFragment.Callback {
+        SearchFragment.Callback,
+        ProfileFragment.Callback{
 
     val TAG = "MainFragment"
+    var openedFragment = MAIN_FRAGMENT
 
     private val keystoreCompat by lazy { (activity?.application as MixionApplication).keyStoreCompat }
 
@@ -179,21 +181,21 @@ class MainFragment : Fragment(),
             fragment = SearchFragment.newInstance().apply {
                 SearchPresenter(this, getAskSteemRepo())
             }
-            childFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_main_container, fragment)
-                    .commitNow()
+            openChildFragment(fragment)
+            openedFragment = SEARCH_FRAGMENT
         }
-
-        getCallback()?.onChildFragmentOpen()
-
     }
 
     private fun openUserProfile() {
         var fragment: Fragment? = profileFragment()
         if (fragment == null){
             fragment = ProfileFragment.newInstance()
+            openChildFragment(fragment)
+            openedFragment = PROFILE_FRAGMENT
         }
+    }
+
+    private fun openChildFragment(fragment: Fragment){
         childFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_main_container, fragment)
@@ -205,6 +207,13 @@ class MainFragment : Fragment(),
     override fun onSearchClosed() {
         childFragmentManager.beginTransaction().remove(searchFragment()).commitNowAllowingStateLoss()
         getCallback()?.onChildFragmentClosed()
+        openedFragment = MAIN_FRAGMENT
+    }
+
+    override fun onProfileClose() {
+        childFragmentManager.beginTransaction().remove(profileFragment()).commitNowAllowingStateLoss()
+        getCallback()?.onChildFragmentClosed()
+        openedFragment = MAIN_FRAGMENT
     }
 
     override fun onSearchResultSelected(author: String, permlink: String) {
@@ -288,7 +297,11 @@ class MainFragment : Fragment(),
     }
 
     override fun onBackPressed(): Boolean {
-        val fragment = searchFragment()
+        val fragment = when (openedFragment) {
+            SEARCH_FRAGMENT -> searchFragment() as BackPressedHandler
+            PROFILE_FRAGMENT -> profileFragment() as BackPressedHandler
+            else -> null
+        }
         if (fragment != null && fragment.onBackPressed()) {
             return true
         }

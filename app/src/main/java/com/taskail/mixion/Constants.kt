@@ -17,3 +17,7 @@ const val postingKey = "postingKey"
 
 const val DTBUE = 44
 const val DMANIA = 45
+
+const val MAIN_FRAGMENT = 1
+const val SEARCH_FRAGMENT = 2
+const val PROFILE_FRAGMENT = 3
