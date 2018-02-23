@@ -24,6 +24,7 @@ import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.data.RxSteemJ
+import com.taskail.mixion.profile.ProfileFragment
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.utils.getCallback
@@ -47,8 +48,8 @@ class MainFragment : Fragment(),
     private val keystoreCompat by lazy { (activity?.application as MixionApplication).keyStoreCompat }
 
     interface Callback{
-        fun onSearchOpen()
-        fun onSearchClosed()
+        fun onChildFragmentOpen()
+        fun onChildFragmentClosed()
         fun getDatabase(): MixionDatabase?
         fun getMainToolbar(): Toolbar
         fun setToolbarTitle(title: String)
@@ -56,7 +57,7 @@ class MainFragment : Fragment(),
 
     override fun onAccountRequested() {
         if (User.userIsLoggedIn){
-            // start user profile
+            openUserProfile()
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_PROFILE)
         }
@@ -168,6 +169,10 @@ class MainFragment : Fragment(),
         return childFragmentManager.findFragmentById(R.id.fragment_main_container) as SearchFragment?
     }
 
+    private fun profileFragment(): ProfileFragment? {
+        return childFragmentManager.findFragmentById(R.id.fragment_main_container) as ProfileFragment?
+    }
+
     override fun onSearchRequested() {
         var fragment: Fragment? = searchFragment()
         if (fragment == null) {
@@ -180,13 +185,26 @@ class MainFragment : Fragment(),
                     .commitNow()
         }
 
-        getCallback()?.onSearchOpen()
+        getCallback()?.onChildFragmentOpen()
 
+    }
+
+    private fun openUserProfile() {
+        var fragment: Fragment? = profileFragment()
+        if (fragment == null){
+            fragment = ProfileFragment.newInstance()
+        }
+        childFragmentManager
+                .beginTransaction()
+                .add(R.id.fragment_main_container, fragment)
+                .commitNow()
+
+        getCallback()?.onChildFragmentOpen()
     }
 
     override fun onSearchClosed() {
         childFragmentManager.beginTransaction().remove(searchFragment()).commitNowAllowingStateLoss()
-        getCallback()?.onSearchClosed()
+        getCallback()?.onChildFragmentClosed()
     }
 
     override fun onSearchResultSelected(author: String, permlink: String) {
@@ -270,8 +288,8 @@ class MainFragment : Fragment(),
     }
 
     override fun onBackPressed(): Boolean {
-        val searchFragment = searchFragment()
-        if (searchFragment != null && searchFragment.onBackPressed()) {
+        val fragment = searchFragment()
+        if (fragment != null && fragment.onBackPressed()) {
             return true
         }
 

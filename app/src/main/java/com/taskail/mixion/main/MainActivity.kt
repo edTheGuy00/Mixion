@@ -39,11 +39,11 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
 
     }
 
-    override fun onSearchOpen() {
+    override fun onChildFragmentOpen() {
         hideToolbar()
     }
 
-    override fun onSearchClosed() {
+    override fun onChildFragmentClosed() {
         showToolbar()
     }
 
