@@ -1,16 +1,14 @@
 package com.taskail.mixion.search
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.taskail.mixion.BackPressedHandler
+import com.taskail.mixion.BaseFragment
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.Result
 import com.taskail.mixion.utils.*
@@ -20,8 +18,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
  *Created by ed on 1/29/18.
  */
 
-class SearchFragment : Fragment(),
-        BackPressedHandler,
+class SearchFragment : BaseFragment(),
         SearchContract.View,
         SearchAdapter.SearchAdapterCallback {
 
@@ -35,11 +32,6 @@ class SearchFragment : Fragment(),
         @JvmStatic fun newInstance(): SearchFragment{
             return SearchFragment()
         }
-    }
-
-    interface Callback{
-        fun onSearchClosed()
-        fun onSearchResultSelected(author: String, permlink: String)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -93,7 +85,7 @@ class SearchFragment : Fragment(),
     }
 
     override fun onItemSelected(author: String, permlink: String) {
-        callback()?.onSearchResultSelected(author, permlink)
+        searchItemSelected(author, permlink)
     }
 
     override fun noResultsFound() {
@@ -116,23 +108,8 @@ class SearchFragment : Fragment(),
     }
 
     override fun onBackPressed() : Boolean {
-        closeSearchFragment()
+        closeFragment(searchContainer)
         return true
-    }
-
-    private fun closeSearchFragment(){
-        searchContainer.fadeOutAnimation(object : FadeOutCallBack{
-            override fun onAnimationEnd() {
-                val callback = callback()
-                callback?.onSearchClosed()
-            }
-        })
-
-        view?.hideSoftKeyboard()
-    }
-
-    private fun callback(): Callback? {
-        return getCallback(this, Callback::class.java)
     }
 
     override fun onDestroyView() {

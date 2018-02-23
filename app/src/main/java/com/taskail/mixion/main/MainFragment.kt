@@ -41,11 +41,9 @@ var steemJAPI: RxSteemJ? = null
 class MainFragment : Fragment(),
         BackPressedHandler,
         FeedFragment.Callback,
-        SearchFragment.Callback,
-        ProfileFragment.Callback{
+        BaseFragment.Callback{
 
     val TAG = "MainFragment"
-    var openedFragment = MAIN_FRAGMENT
 
     private val keystoreCompat by lazy { (activity?.application as MixionApplication).keyStoreCompat }
 
@@ -59,7 +57,7 @@ class MainFragment : Fragment(),
 
     override fun onAccountRequested() {
         if (User.userIsLoggedIn){
-            openUserProfile()
+            openFragment(ProfileFragment.newInstance())
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_PROFILE)
         }
@@ -167,53 +165,35 @@ class MainFragment : Fragment(),
         }).show()
     }
 
-    private fun searchFragment(): SearchFragment? {
-        return childFragmentManager.findFragmentById(R.id.fragment_main_container) as SearchFragment?
+    private fun childFragment(): BaseFragment? {
+        return childFragmentManager.findFragmentById(R.id.fragment_main_container) as BaseFragment?
     }
 
-    private fun profileFragment(): ProfileFragment? {
-        return childFragmentManager.findFragmentById(R.id.fragment_main_container) as ProfileFragment?
+    private fun openFragment(fragToOpen: Fragment) {
+        var fragment: Fragment? = childFragment()
+        if (fragment == null){
+            fragment = fragToOpen
+
+            childFragmentManager
+                    .beginTransaction()
+                    .add(R.id.fragment_main_container, fragment)
+                    .commitNow()
+
+            getCallback()?.onChildFragmentOpen()
+        }
+
     }
 
     override fun onSearchRequested() {
-        var fragment: Fragment? = searchFragment()
-        if (fragment == null) {
-            fragment = SearchFragment.newInstance().apply {
-                SearchPresenter(this, getAskSteemRepo())
-            }
-            openChildFragment(fragment)
-            openedFragment = SEARCH_FRAGMENT
-        }
+
+        openFragment(SearchFragment.newInstance().apply {
+            SearchPresenter(this, getAskSteemRepo())
+        })
     }
 
-    private fun openUserProfile() {
-        var fragment: Fragment? = profileFragment()
-        if (fragment == null){
-            fragment = ProfileFragment.newInstance()
-            openChildFragment(fragment)
-            openedFragment = PROFILE_FRAGMENT
-        }
-    }
-
-    private fun openChildFragment(fragment: Fragment){
-        childFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_main_container, fragment)
-                .commitNow()
-
-        getCallback()?.onChildFragmentOpen()
-    }
-
-    override fun onSearchClosed() {
-        childFragmentManager.beginTransaction().remove(searchFragment()).commitNowAllowingStateLoss()
+    override fun onFragmentClosed() {
+        childFragmentManager.beginTransaction().remove(childFragment()).commitNowAllowingStateLoss()
         getCallback()?.onChildFragmentClosed()
-        openedFragment = MAIN_FRAGMENT
-    }
-
-    override fun onProfileClose() {
-        childFragmentManager.beginTransaction().remove(profileFragment()).commitNowAllowingStateLoss()
-        getCallback()?.onChildFragmentClosed()
-        openedFragment = MAIN_FRAGMENT
     }
 
     override fun onSearchResultSelected(author: String, permlink: String) {
@@ -297,11 +277,7 @@ class MainFragment : Fragment(),
     }
 
     override fun onBackPressed(): Boolean {
-        val fragment = when (openedFragment) {
-            SEARCH_FRAGMENT -> searchFragment() as BackPressedHandler
-            PROFILE_FRAGMENT -> profileFragment() as BackPressedHandler
-            else -> null
-        }
+        val fragment = childFragment()
         if (fragment != null && fragment.onBackPressed()) {
             return true
         }
