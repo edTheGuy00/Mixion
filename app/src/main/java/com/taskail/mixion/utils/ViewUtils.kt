@@ -1,3 +1,4 @@
+@file:JvmName("ViewUtils")
 package com.taskail.mixion.utils
 
 import android.animation.Animator
@@ -33,6 +34,29 @@ fun View.fadeOutAnimation(callback: FadeOutCallBack){
                 }
             })
 }
+
+fun isNavBarOnBottom(context: Context): Boolean {
+    val res = context.resources
+    val cfg = context.resources.configuration
+    val dm = res.displayMetrics
+    val canMove = dm.widthPixels != dm.heightPixels && cfg.smallestScreenWidthDp < 600
+    return !canMove || dm.widthPixels < dm.heightPixels
+}
+
+fun View.setPaddingTop(paddingTop: Int) {
+    this.setPaddingRelative(this.paddingStart,
+            paddingTop,
+            this.paddingEnd,
+            this.paddingBottom)
+}
+
+fun View.setPaddingBottom(paddingBottom: Int) {
+    this.setPaddingRelative(this.paddingStart,
+            this.paddingTop,
+            this.paddingEnd,
+            paddingBottom)
+}
+
 
 interface FadeOutCallBack{
     fun onAnimationEnd()

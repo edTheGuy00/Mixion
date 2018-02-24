@@ -24,6 +24,7 @@ import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.data.RxSteemJ
+import com.taskail.mixion.profile.ProfileActivity
 import com.taskail.mixion.profile.ProfileFragment
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
@@ -57,7 +58,8 @@ class MainFragment : Fragment(),
 
     override fun onAccountRequested() {
         if (User.userIsLoggedIn){
-            openFragment(ProfileFragment.newInstance())
+            //openFragment(ProfileFragment.newInstance())
+            startActivity(ProfileActivity.newIntent(context!!))
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_PROFILE)
         }
