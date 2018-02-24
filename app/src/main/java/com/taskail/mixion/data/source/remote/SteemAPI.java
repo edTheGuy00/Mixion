@@ -17,6 +17,9 @@ public interface SteemAPI {
     @GET("get_discussions_by_feed")
     Observable<SteemDiscussion[]> getUserFeed(@Query("query") String userNameLimit);
 
+    @GET("get_discussions_by_blog")
+    Observable<SteemDiscussion[]> getUserBlog(@Query("query") String userNameLimit);
+
     @GET("get_discussions_by_trending")
     Observable<SteemDiscussion[]> getTrendingDiscussions(@Query("query") String tagLimit);
 

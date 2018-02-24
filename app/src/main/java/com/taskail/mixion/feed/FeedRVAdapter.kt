@@ -45,10 +45,6 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
         }
     }
 
-    interface FeedAdapterCallBack{
-        fun onDiscussionSelected(discussion: SteemDiscussion)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FeedViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.cardview_steem_post,
                 parent, false)

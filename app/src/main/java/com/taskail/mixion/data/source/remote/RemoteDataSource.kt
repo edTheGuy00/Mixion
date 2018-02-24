@@ -29,6 +29,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         fetchOnDisposable(callback, getMoreUserFeed(startAuthor, startPermLink))
     }
 
+    override fun getUserBlog(user: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
+        fetchOnDisposable(callback, getUserBlog(user))
+    }
+
     override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
 
         when(sortBy){
@@ -78,6 +82,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
     private fun getMoreUserFeed(startAuthor: String, startPermLink: String): Observable<Array<SteemDiscussion>>{
         return steemAPI.getUserFeed("{\"tag\":\"$tag\",\"limit\":\"$loadCount\", \"start_author\":\"$startAuthor\", \"start_permlink\":\"$startPermLink\"}")
+    }
+
+    private fun getUserBlog(user: String): Observable<Array<SteemDiscussion>>{
+        return steemAPI.getUserBlog("{\"tag\":\"$user\",\"limit\":\"$loadCount\"}")
     }
 
     private fun getNew(): Observable<Array<SteemDiscussion>> {

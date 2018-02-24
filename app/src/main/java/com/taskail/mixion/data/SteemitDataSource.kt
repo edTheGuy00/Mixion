@@ -19,6 +19,8 @@ interface SteemitDataSource {
 
         fun getUserFeed(callback: DataLoadedCallback<SteemDiscussion>)
 
+        fun getUserBlog(user: String, callback: DataLoadedCallback<SteemDiscussion>)
+
         fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
 
         fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
