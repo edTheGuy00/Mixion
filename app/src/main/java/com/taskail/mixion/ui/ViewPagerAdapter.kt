@@ -1,4 +1,4 @@
-package com.taskail.mixion.main
+package com.taskail.mixion.ui
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
