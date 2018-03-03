@@ -40,7 +40,6 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var blogView: ProfileContract.BlogView
-
     companion object {
         @JvmStatic fun newIntent(context: Context): Intent {
             return Intent(context, ProfileActivity::class.java)
