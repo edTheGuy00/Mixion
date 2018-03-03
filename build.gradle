@@ -1,15 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.20'
+    ext.kotlin_version = '1.2.30'
     ext.versions = [
             'compileSdk'    : 27,
             'targetSdk'     : 27,
-            'buildTools'    : '27.0.2',
+            'buildTools'    : '27.0.3',
             'glide'         : '4.4.0',
-            'kotlin'        : '1.2.21',
+            'kotlin'        : '1.2.30',
             'retrofit'      : '2.3.0',
-            'supportLibrary': '27.0.2',
+            'supportLibrary': '27.1.0',
             'room'          : '1.0.0',
             'jackson'       : '2.9.1',
             'commonmark'    : '0.10.0'
