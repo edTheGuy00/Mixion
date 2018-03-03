@@ -40,8 +40,6 @@ class LoginActivity : BaseActivity() {
 
     private val REQUEST_CAMERA = 0
 
-    private val keystoreCompat by lazy { (application as MixionApplication).keyStoreCompat }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -76,8 +74,7 @@ class LoginActivity : BaseActivity() {
             Log.e("KeyStoreCompat", "Storing credentials failed")
             Toast.makeText(this, R.string.storing_key_error, Toast.LENGTH_LONG).show()
         }, {
-            User.storeUser(user, key)
-            User.userIsLoggedIn = true
+            loginUser(user, key)
             setResult(RESUlT_LOGIN_OK)
             finish()
         })

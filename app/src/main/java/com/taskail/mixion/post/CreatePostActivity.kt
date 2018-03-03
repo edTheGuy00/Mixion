@@ -57,12 +57,26 @@ class CreatePostActivity : BaseActivity() {
 //        createPostTitle.setOnFocusChangeListener { view, b ->  }
 
         disposable = CompositeDisposable()
-        steemJ = RxSteemJ(disposable)
-        if (setupSteemJUserSuccess(User.getUserName()!!, User.getUserKey()!!)) {
-            steemJ.connecToSteemit()
-        } else {
-            Log.wtf(TAG, "hmmm...")
-            finish()
+
+        if (confirmUserLoggedIn())
+        {
+            steemJ = RxSteemJ(disposable)
+            if (steemJUserReady())
+            {
+                steemJ.connecToSteemit()
+            }
+            else
+            {
+                when (setupSteemJUserSuccess(getUserName(), getUserKey()))
+                {
+                    true -> steemJ.connecToSteemit()
+                    false -> Log.e("Setup SteemJ", "Something went wrong")
+                }
+
+            }
+        } else
+        {
+
         }
         fragment = supportFragmentManager.findFragmentById(R.id.postBodyContainer) as EditPostFragment
     }

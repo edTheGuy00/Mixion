@@ -25,11 +25,13 @@ fun setupSteemJUserSuccess(userName: String, postingKey: String): Boolean{
     privateKeys.add(ImmutablePair(PrivateKeyType.POSTING, postingKey))
 
     steemJConfig.defaultAccount = AccountName(userName)
-    return try {
+    return try
+    {
         steemJConfig.privateKeyStorage.addAccount(steemJConfig.defaultAccount, privateKeys)
         true
 
-    } catch (e: AddressFormatException){
+    } catch (e: AddressFormatException)
+    {
         Log.e("SteemJ Login", "invalid Key")
         false
     }
