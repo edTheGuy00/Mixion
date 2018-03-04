@@ -38,8 +38,8 @@ class TagDialogAdapter(private val callback: TagDialogCallback,
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemVH {
-        val itemView = LayoutInflater.from(parent?.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemVH {
+        val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.items_dialog_tags,
                         parent, false)
 
@@ -50,7 +50,7 @@ class TagDialogAdapter(private val callback: TagDialogCallback,
         return tags.size
     }
 
-    override fun onBindViewHolder(holder: ItemVH?, position: Int) {
-        holder?.setItem(tags[position])
+    override fun onBindViewHolder(holder: ItemVH, position: Int) {
+        holder.setItem(tags[position])
     }
 }

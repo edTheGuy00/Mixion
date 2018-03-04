@@ -45,8 +45,8 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FeedViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.cardview_steem_post,
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cardview_steem_post,
                 parent, false)
         return FeedRVAdapter.FeedViewHolder(itemView, discussionSelected)
     }
@@ -55,8 +55,8 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
         return steemDiscussion.size
     }
 
-    override fun onBindViewHolder(holder: FeedViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val discussion = steemDiscussion[position]
-        holder?.setSteemDiscussion(discussion)
+        holder.setSteemDiscussion(discussion)
     }
 }

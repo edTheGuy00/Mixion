@@ -55,18 +55,18 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType){
             R.layout.layout_discussion_details -> DiscussionViewHolder(discussionLayout)
-            R.layout.card_comments -> CommentViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_comments,
+            R.layout.card_comments -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_comments,
                     parent, false))
-            R.layout.item_no_comments -> SimpleViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.item_no_comments,
+            R.layout.item_no_comments -> SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_no_comments,
                     parent, false))
-            R.layout.item_loading -> SimpleViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.item_loading,
+            R.layout.item_loading -> SimpleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_loading,
                     parent, false))
             else -> {
-                CommentViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_comments,
+                CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_comments,
                         parent, false))
             }
         }
@@ -103,7 +103,7 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
         return count
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)){
                 R.layout.card_comments -> (holder as CommentViewHolder).setComment(comments[position-1])
         }

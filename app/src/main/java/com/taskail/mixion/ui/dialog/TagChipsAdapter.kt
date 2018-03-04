@@ -53,17 +53,17 @@ class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsV
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TagsViewHolder {
-        val itemView = LayoutInflater.from(parent?.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagsViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_chip_tags,
                         parent, false)
 
         return TagsViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: TagsViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: TagsViewHolder, position: Int) {
         when (position){
-            0 -> holder?.setAddNewTag(
+            0 -> holder.setAddNewTag(
                     {
                         if (tags.size < 5){
                         tags.add(it)
@@ -74,7 +74,7 @@ class TagChipsAdapter(private val context: Context) : RecyclerView.Adapter<TagsV
                             Log.i(TAG, "reached limit")
                         }
                     })
-            else -> holder?.setTag(tags[position.minus(1)],
+            else -> holder.setTag(tags[position.minus(1)],
                     position,
                     {
                         tags.removeAt(it)

@@ -41,8 +41,8 @@ class SearchAdapter(private val results: List<Result>,
         fun onItemSelected(author: String, permlink: String)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ResultViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.item_search_result,
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_search_result,
                 parent, false)
         return SearchAdapter.ResultViewHolder(itemView, callback)
     }
@@ -51,7 +51,7 @@ class SearchAdapter(private val results: List<Result>,
         return results.size
     }
 
-    override fun onBindViewHolder(holder: ResultViewHolder?, position: Int) {
-        holder?.setResult(results[position])
+    override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
+        holder.setResult(results[position])
     }
 }
