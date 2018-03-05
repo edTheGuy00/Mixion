@@ -60,4 +60,19 @@
         \n 3. Click on "show private key" next to POSTING
         \n 4. Click on the small QR code icon
         \n 5. Point the camera at the expanded QR code, your key will be automatically captured</string>
+
+    <plurals name="follower_count">
+        <item quantity="zero">no followers</item>
+        <item quantity="one">%s follower</item>
+        <item quantity="other">%s followers</item>
+    </plurals>
+    <plurals name="following_count">
+        <item quantity="zero">following nobody</item>
+        <item quantity="other">%s following</item>
+    </plurals>
+    <plurals name="post_count">
+        <item quantity="zero">no posts</item>
+        <item quantity="one">%s post</item>
+        <item quantity="other">%s posts</item>
+    </plurals>
 </resources>

@@ -21,14 +21,14 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7">
 
                 <ImageView
                     android:id="@+id/avatar"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="@dimen/spacing_micro"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -49,10 +49,67 @@
                     android:paddingEnd="@dimen/padding_normal"
                     android:paddingBottom="@dimen/spacing_normal"
                     android:textSize="20sp"
+                    android:textColor="@color/white"
                     app:lineHeightHint="28sp"
                     tools:text="steem-mixion" />
 
+                <com.taskail.mixion.ui.BaselineGridTextView
+                    android:id="@+id/user_about"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/padding_normal"
+                    android:paddingTop="@dimen/padding_normal"
+                    android:paddingEnd="@dimen/padding_normal"
+                    android:textAppearance="@style/TextAppearance.DiscussionDescription"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/user_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Adventurer, Android Developer" />
 
+                <com.taskail.mixion.ui.BaselineGridTextView
+                    android:id="@+id/followers_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/user_about"
+                    app:layout_constraintEnd_toStartOf="@+id/posts_count"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    android:paddingTop="@dimen/padding_large"
+                    android:paddingBottom="@dimen/padding_large"
+                    android:drawableTop="@drawable/ic_followers_24dp"
+                    android:background="@null"
+                    tools:text="130 followers"
+                    style="@style/Widget.CustomButton.InlineActionButton" />
+
+                <com.taskail.mixion.ui.BaselineGridTextView
+                    android:id="@id/posts_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/followers_count"
+                    app:layout_constraintTop_toBottomOf="@id/user_about"
+                    app:layout_constraintEnd_toStartOf="@+id/following_count"
+                    app:layout_constraintHorizontal_weight="1"
+                    android:paddingTop="@dimen/padding_large"
+                    android:paddingBottom="@dimen/padding_large"
+                    android:drawableTop="@drawable/ic_view_list_24dp"
+                    tools:text="13 posts"
+                    style="@style/Widget.CustomButton.InlineActionButton" />
+
+                <com.taskail.mixion.ui.BaselineGridTextView
+                    android:id="@id/following_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/posts_count"
+                    app:layout_constraintTop_toBottomOf="@id/user_about"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    android:paddingTop="@dimen/padding_large"
+                    android:paddingBottom="@dimen/padding_large"
+                    android:drawableTop="@drawable/ic_following_24dp"
+                    android:background="@null"
+                    tools:text="1,000 following"
+                    style="@style/Widget.CustomButton.InlineActionButton" />
 
             </android.support.constraint.ConstraintLayout>
 
