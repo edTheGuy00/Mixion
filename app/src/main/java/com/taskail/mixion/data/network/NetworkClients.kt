@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.source.remote
+package com.taskail.mixion.data.network
 
 import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient
@@ -13,7 +13,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 const val baseUrl = "https://api.steemjs.com/"
 
-const val insteemUrl = "https://steemql.insteem.com/graphql"
+const val insteemUrl = "https://steemql.insteem.com/"
 
 const val askSteemUrl = "https://api.asksteem.com/"
 

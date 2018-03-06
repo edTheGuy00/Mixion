@@ -1,0 +1,22 @@
+query getUserDetails($user: String!){
+  user(username: $user){
+    profile {
+      name
+      profile_image
+      about
+      website
+    }
+    post_count
+    created
+    balance
+    sbd_balance
+    voting_power
+    savings_balance
+    reputation
+
+  }
+  _getFollowCount(username: $user){
+    follower_count
+    following_count
+  }
+}
