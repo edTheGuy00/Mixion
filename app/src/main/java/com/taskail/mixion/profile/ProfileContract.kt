@@ -1,6 +1,5 @@
 package com.taskail.mixion.profile
 
-import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
 import com.taskail.mixion.data.models.SteemDiscussion
 import java.util.ArrayList
@@ -20,7 +19,17 @@ interface ProfileContract {
         fun showMoreFeed(previousSize: Int, newSize: Int)
     }
 
-    interface Presenter : BasePresenter {
+    interface WalletView: BaseView<Presenter>{
+
+    }
+
+    interface MentionsView: BaseView<Presenter>{
+
+    }
+
+    interface Presenter {
+
+        fun getUserBlog()
 
         fun openDiscussion(discussion: SteemDiscussion)
     }

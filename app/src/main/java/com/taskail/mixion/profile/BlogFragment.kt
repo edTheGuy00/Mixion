@@ -44,7 +44,7 @@ class BlogFragment: Fragment(), ProfileContract.BlogView {
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
 
-        presenter.start()
+        presenter.getUserBlog()
     }
 
     override fun showFeed() {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.data.SteemitDataSource
@@ -26,7 +27,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     private val TAG = javaClass.simpleName
 
-    override fun start() {
+    override fun getUserBlog() {
         steemitRepository?.remoteRepository?.getUserBlog(getUserName(), object :
                 SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
             override fun onDataLoaded(list: List<SteemDiscussion>) {
@@ -50,8 +51,10 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var blogView: ProfileContract.BlogView
+    private lateinit var walletView: ProfileContract.WalletView
+    private lateinit var mentionsView: ProfileContract.MentionsView
     private lateinit var disposable: CompositeDisposable
-    private lateinit var user: String
+//    private lateinit var user: String
 
     companion object
     {
@@ -69,6 +72,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
         setupViewPager()
         setupUserInfo()
+
     }
 
     private fun setupViewPager() {
@@ -78,6 +82,17 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
         viewPagerAdapter.addFragment(blogFragment, "Blog").also {
             blogView.presenter = this
         }
+        val walletFragment = WalletFragment()
+        walletView = walletFragment
+        viewPagerAdapter.addFragment(walletFragment, "Wallet").also {
+            walletView.presenter = this
+        }
+        val mentionsFragment = MentionsFragment()
+        mentionsView = mentionsFragment
+        viewPagerAdapter.addFragment(mentionsFragment, "Mentions").also {
+            mentionsView.presenter = this
+        }
+
 
         profileViewPager.adapter = viewPagerAdapter
         tabs.setupWithViewPager(profileViewPager)
@@ -94,6 +109,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
                             setFollowingCount(it._getFollowCount()?.following_count())
                             setPostCount(it.user()?.post_count())
                             user_name.text = it.user()?.profile()?.name()
+                            setBio(it.user()?.profile()?.about())
                         },
                         {
                             Log.e(TAG, it.message)
@@ -122,6 +138,22 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
             posts_count.text = resources.getQuantityString(R.plurals.post_count,
                     count,
                     NumberFormat.getInstance().format(count))
+    }
+    private fun setBio(bio: String?)
+    {
+        if (!bio.isNullOrEmpty())
+        {
+            user_about.text = bio
+        }
+        else
+        {
+            user_about.visibility = View.GONE
+        }
+    }
+
+    override fun onDestroy() {
+        disposable.clear()
+        super.onDestroy()
     }
 
 }
