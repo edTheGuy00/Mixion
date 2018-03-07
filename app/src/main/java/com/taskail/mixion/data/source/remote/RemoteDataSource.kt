@@ -4,6 +4,7 @@ import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
+import com.taskail.mixion.data.network.SteemAPI
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

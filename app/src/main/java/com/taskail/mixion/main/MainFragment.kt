@@ -24,9 +24,7 @@ import com.taskail.mixion.profile.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.data.RxSteemJ
-import com.taskail.mixion.data.network.askSteemUrl
-import com.taskail.mixion.data.network.baseUrl
-import com.taskail.mixion.data.network.getRetrofitClient
+import com.taskail.mixion.data.network.*
 import com.taskail.mixion.profile.ProfileActivity
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent

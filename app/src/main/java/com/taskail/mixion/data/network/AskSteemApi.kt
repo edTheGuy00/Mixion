@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.source.remote
+package com.taskail.mixion.data.network
 
 import com.taskail.mixion.data.models.AskSteemResult
 import io.reactivex.Observable
@@ -19,4 +19,10 @@ interface AskSteemApi {
     fun askMore(
             @Query("q") searchTerm: String,
             @Query("pg") page: Int?): Observable<AskSteemResult>
+
+    @GET("search")
+    fun getUserMentions(@Query("q") author: String,
+                        @Query(value = "sort_by") sort: String,
+                        @Query(value = "order") order: String,
+                        @Query("pg") page: Int): Observable<AskSteemResult>
 }

@@ -1,6 +1,7 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.models.AskSteemResult
+import com.taskail.mixion.data.network.AskSteemApi
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

@@ -1,5 +1,6 @@
 package com.taskail.mixion.data
 
+import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.SteemDiscussion
 
 /**
@@ -8,9 +9,17 @@ import com.taskail.mixion.data.models.SteemDiscussion
 
 interface UserDataSource {
 
+    fun getUserBlog(user: String, callback: DataLoadedCallback<SteemDiscussion>)
+
+    fun getUserMentions(user: String, callback: UserMentionsCallback)
+
     interface Remote
     {
-        fun getUserBlog(user: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>)
+        var loadCount: Int
+
+        fun getUserBlog(user: String, callback: DataLoadedCallback<SteemDiscussion>)
+
+        fun getUserMentions(user: String, callback: UserMentionsCallback)
     }
 
     interface Local
@@ -18,5 +27,17 @@ interface UserDataSource {
         fun getUserBlog()
     }
 
+    interface DataLoadedCallback <T>{
 
+        fun onDataLoaded(array: Array<T>)
+
+        fun onLoadError(error: Throwable)
+    }
+
+    interface UserMentionsCallback{
+
+        fun onDataLoaded(askSteemResult: AskSteemResult)
+
+        fun onLoadError(error: Throwable)
+    }
 }

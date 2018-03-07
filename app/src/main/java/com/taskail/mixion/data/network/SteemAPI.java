@@ -1,6 +1,5 @@
-package com.taskail.mixion.data.source.remote;
+package com.taskail.mixion.data.network;
 
-import com.taskail.mixion.data.models.AskSteemResult;
 import com.taskail.mixion.data.models.ContentReply;
 import com.taskail.mixion.data.models.SteemDiscussion;
 import com.taskail.mixion.data.models.Tags;
