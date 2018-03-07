@@ -45,12 +45,12 @@
 
     </FrameLayout>
 
-    <ImageView
+    <!---ImageView
         android:id="@+id/askSteemLogo"
         android:layout_marginTop="@dimen/padding_normal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/ask_steem_logo"/>
+        android:src="@drawable/ask_steem_logo"/-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/searchRecyclerView"

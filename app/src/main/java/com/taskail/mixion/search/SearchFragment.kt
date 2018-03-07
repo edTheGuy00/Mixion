@@ -39,7 +39,6 @@ class SearchFragment : BaseFragment(),
 
         searchAdapter = SearchAdapter(results, this)
 
-        //TODO - BUG - figure out why askSteemLogo image allows click event to backstack
         return view
     }
 
@@ -97,15 +96,15 @@ class SearchFragment : BaseFragment(),
     }
 
     override fun setResults() {
-        hideLogo()
+//        hideLogo()
         searchAdapter.notifyDataSetChanged()
     }
 
-    private fun hideLogo(){
-        if (askSteemLogo.visibility != View.GONE) {
-            askSteemLogo.visibility = View.GONE
-        }
-    }
+//    private fun hideLogo(){
+//        if (askSteemLogo.visibility != View.GONE) {
+//            askSteemLogo.visibility = View.GONE
+//        }
+//    }
 
     override fun onBackPressed() : Boolean {
         closeFragment(searchContainer)
