@@ -12,6 +12,7 @@
         android:name=".MixionApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Mixion">
         <activity android:name=".main.MainActivity"
             android:windowSoftInputMode="adjustNothing"
