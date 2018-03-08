@@ -17,8 +17,8 @@ android {
         applicationId "com.taskail.mixion"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 8
-        versionName "1.0.1-beta-2"
+        versionCode 9
+        versionName "1.0.1-beta-3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
