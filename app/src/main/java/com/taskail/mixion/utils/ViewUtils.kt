@@ -4,7 +4,9 @@ package com.taskail.mixion.utils
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
+import android.graphics.Outline
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
 
 /**
@@ -33,6 +35,15 @@ fun View.fadeOutAnimation(callback: FadeOutCallBack){
                     callback.onAnimationEnd()
                 }
             })
+}
+
+val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
+    override fun getOutline(view: View, outline: Outline) {
+        outline.setOval(view.paddingLeft,
+                view.paddingTop,
+                view.width - view.paddingRight,
+                view.height - view.paddingBottom)
+    }
 }
 
 fun isNavBarOnBottom(context: Context): Boolean {

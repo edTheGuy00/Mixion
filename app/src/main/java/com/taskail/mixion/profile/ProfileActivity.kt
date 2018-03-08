@@ -14,7 +14,6 @@ import com.taskail.mixion.data.models.Result
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.network.getUserProfile
 import com.taskail.mixion.getUserRepo
-import com.taskail.mixion.steemdiscussion.DiscussionDetailsActivity
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.ui.ViewPagerAdapter
@@ -94,6 +93,9 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        setSupportActionBar(profileToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         disposable = CompositeDisposable()
 

@@ -62,7 +62,7 @@
     </style>
 
     <style name="TextAppearance.DiscussionDescription" parent="@android:style/TextAppearance.Material.Subhead">
-    <item name="android:textColor">@color/text_secondary_dark</item>
+    <!--item name="android:textColor">@color/text_secondary_dark</item-->
     <item name="android:letterSpacing">0.01</item>
     <item name="lineHeightHint">24sp</item>
     </style>

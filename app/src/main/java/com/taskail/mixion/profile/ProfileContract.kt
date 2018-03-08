@@ -1,6 +1,5 @@
 package com.taskail.mixion.profile
 
-import android.content.res.Resources
 import android.widget.ImageView
 import android.widget.TextView
 import com.taskail.mixion.BaseView
