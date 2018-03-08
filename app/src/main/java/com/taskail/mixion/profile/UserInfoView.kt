@@ -2,7 +2,9 @@ package com.taskail.mixion.profile
 
 import android.content.res.Resources
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.taskail.mixion.R
 import java.text.NumberFormat
 
@@ -54,6 +56,15 @@ class UserInfoView(val resources: Resources): ProfileContract.UserInfoView {
             textView.text = name
         } else {
             textView.text = userName
+        }
+    }
+
+    override fun setProfileImage(image: String?, imageView: ImageView) {
+
+        if (image != null) {
+            Glide.with(imageView.context)
+                    .load(image)
+                    .into(imageView)
         }
     }
 

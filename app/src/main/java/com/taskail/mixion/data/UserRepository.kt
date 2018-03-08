@@ -19,4 +19,23 @@ class UserRepository(
         remoteDataSource.getUserMentions(user, callback)
     }
 
+    companion object {
+        private var INSTANCE: UserRepository? = null
+
+        /**
+         * Returns the single instance of this class, creating it if necessary.
+         */
+        @JvmStatic
+        fun getInstance( remoteRepository: RemoteUserDataSource):
+                UserRepository{
+            return INSTANCE ?: UserRepository(remoteRepository).apply {
+                INSTANCE = this
+            }
+        }
+
+        @JvmStatic
+        fun destroyInstance(){
+            INSTANCE = null
+        }
+    }
 }

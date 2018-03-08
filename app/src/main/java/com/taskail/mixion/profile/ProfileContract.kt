@@ -1,8 +1,10 @@
 package com.taskail.mixion.profile
 
 import android.content.res.Resources
+import android.widget.ImageView
 import android.widget.TextView
 import com.taskail.mixion.BaseView
+import com.taskail.mixion.data.models.Result
 import com.taskail.mixion.data.models.SteemDiscussion
 import java.util.ArrayList
 
@@ -34,6 +36,12 @@ interface ProfileContract {
 
     interface MentionsView: BaseView<Presenter>{
 
+        var results: ArrayList<Result>
+
+        fun setResults()
+
+        fun noResultsFound()
+
     }
 
     interface UserInfoView{
@@ -47,12 +55,18 @@ interface ProfileContract {
         fun setBio(textView: TextView, about: String?)
 
         fun setUserName(textView: TextView, name: String?, userName: String)
+
+        fun setProfileImage(image: String?, imageView: ImageView)
     }
 
     interface Presenter {
 
         fun getUserBlog()
 
+        fun getUserMentions()
+
         fun openDiscussion(discussion: SteemDiscussion)
+
+        fun onMentionsItemSelected(author: String, permlink: String)
     }
 }
