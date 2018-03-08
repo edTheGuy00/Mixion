@@ -1,4 +1,4 @@
-package com.taskail.mixion.profile
+package com.taskail.mixion
 
 /**
  *Created by ed on 2/4/18.

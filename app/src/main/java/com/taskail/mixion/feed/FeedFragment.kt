@@ -13,14 +13,13 @@ import co.zsmb.materialdrawerkt.builders.footer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.PrimaryDrawerItemKt
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
-import co.zsmb.materialdrawerkt.draweritems.expandable.expandableItem
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.taskail.mixion.*
 import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.profile.User
+import com.taskail.mixion.User
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
 import kotlinx.android.synthetic.main.fragment_feed.*

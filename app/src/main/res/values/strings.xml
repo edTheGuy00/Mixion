@@ -1,4 +1,7 @@
 <resources>
+    <string name="steem">STEEM</string>
+    <string name="steem_dollars">STEEM DOLLARS</string>
+    <string name="savings">SAVINGS</string>
     <string name="app_name">Mixion</string>
     <string name="feed">Feed</string>
     <string name="feed_back">Feedback</string>
@@ -60,7 +63,13 @@
         \n 3. Click on "show private key" next to POSTING
         \n 4. Click on the small QR code icon
         \n 5. Point the camera at the expanded QR code, your key will be automatically captured</string>
+    
+    <string name="steem_description">Tradeable tokens that may be transferred anywhere at anytime.
+        Steem can be converted to STEEM POWER in a process called powering up.</string>
 
+    <string name="steem_dollars_description">Tokens worth about $1.00 of STEEM, currently collecting 0% APR.</string>
+
+    <string name="savings_description">Balance subject to 3 day withdraw waiting period,STEEM DOLLARS currently collecting 0% APR.</string>
     <plurals name="follower_count">
         <item quantity="zero">no followers</item>
         <item quantity="one">%s follower</item>

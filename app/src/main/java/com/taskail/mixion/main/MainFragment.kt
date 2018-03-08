@@ -20,7 +20,7 @@ import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.post.CreatePostActivity
-import com.taskail.mixion.profile.User
+import com.taskail.mixion.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
 import com.taskail.mixion.data.RxSteemJ

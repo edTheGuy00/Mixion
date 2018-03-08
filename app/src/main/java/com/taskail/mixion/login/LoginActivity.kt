@@ -8,10 +8,8 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.util.Log
 import android.widget.Toast
-import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
-import com.taskail.mixion.profile.User
 import com.taskail.mixion.ui.TextInputValidator
 import kotlinx.android.synthetic.main.activity_login.*
 import android.app.AlertDialog

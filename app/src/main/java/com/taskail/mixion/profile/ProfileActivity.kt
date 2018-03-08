@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import com.taskail.mixion.GetUserDetailsQuery
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.data.SteemitDataSource
@@ -17,7 +17,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.layout_user_info.*
-import java.text.NumberFormat
 
 /**
  *Created by ed on 2/23/18.
@@ -54,6 +53,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
     private lateinit var walletView: ProfileContract.WalletView
     private lateinit var mentionsView: ProfileContract.MentionsView
     private lateinit var disposable: CompositeDisposable
+    private lateinit var infoView: ProfileContract.UserInfoView
 //    private lateinit var user: String
 
     companion object
@@ -70,9 +70,10 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         disposable = CompositeDisposable()
 
+        infoView = UserInfoView(resources)
+
         setupViewPager()
         setupUserInfo()
-
     }
 
     private fun setupViewPager() {
@@ -105,49 +106,29 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                         {
-                            setFollowerCount(it._getFollowCount()?.follower_count())
-                            setFollowingCount(it._getFollowCount()?.following_count())
-                            setPostCount(it.user()?.post_count())
-                            user_name.text = it.user()?.profile()?.name()
-                            setBio(it.user()?.profile()?.about())
+                            updateUi(it)
                         },
                         {
                             Log.e(TAG, it.message)
                         }))
     }
 
-    private fun setFollowerCount(count: Int?)
-    {
-        if (count != null)
-            followers_count.text = resources.getQuantityString(R.plurals.follower_count,
-                    count,
-                    NumberFormat.getInstance().format(count))
-    }
+    private fun updateUi(data: GetUserDetailsQuery.Data) {
 
-    private fun setFollowingCount(count: Int?)
-    {
-        if (count != null)
-            following_count.text = resources.getQuantityString(R.plurals.following_count,
-                    count,
-                    NumberFormat.getInstance().format(count))
-    }
+        with(data) {
+            with(infoView){
+                setFollowerCount(followers_count, _getFollowCount()?.follower_count())
+                setFollowingCount(following_count, _getFollowCount()?.following_count())
+                setPostCount(posts_count, user()?.post_count())
+                setBio(user_about, user()?.profile()?.about())
+                setUserName(user_name, user()?.profile()?.name(), getUserName())
+            }
 
-    private fun setPostCount(count: Int?)
-    {
-        if (count != null)
-            posts_count.text = resources.getQuantityString(R.plurals.post_count,
-                    count,
-                    NumberFormat.getInstance().format(count))
-    }
-    private fun setBio(bio: String?)
-    {
-        if (!bio.isNullOrEmpty())
-        {
-            user_about.text = bio
-        }
-        else
-        {
-            user_about.visibility = View.GONE
+
+            walletView.setSteemBalance(user()?.balance())
+            walletView.setSteemDollars(user()?.sbd_balance())
+            walletView.setSavingsBalance(user()?.savings_balance())
+            walletView.setWallet()
         }
     }
 

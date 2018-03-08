@@ -1,11 +1,10 @@
 package com.taskail.mixion.feed
 
 import android.util.Log
-import android.view.View
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.profile.User
+import com.taskail.mixion.User
 import java.util.*
 
 /**

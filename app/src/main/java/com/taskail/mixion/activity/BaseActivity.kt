@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import com.taskail.mixion.MixionApplication
 import com.taskail.mixion.data.steemJConfig
-import com.taskail.mixion.profile.User
+import com.taskail.mixion.User
 import cz.koto.keystorecompat.base.utility.runSinceLollipop
 
 /**

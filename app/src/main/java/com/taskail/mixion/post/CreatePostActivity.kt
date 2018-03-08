@@ -13,7 +13,6 @@ import android.widget.Toast
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.myNewPermLink
-import com.taskail.mixion.profile.User
 import com.taskail.mixion.data.RxSteemJ
 import com.taskail.mixion.data.setupSteemJUserSuccess
 import com.taskail.mixion.utils.hideSoftKeyboard
