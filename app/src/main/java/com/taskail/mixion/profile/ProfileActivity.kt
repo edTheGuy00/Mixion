@@ -33,15 +33,18 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
     private val TAG = javaClass.simpleName
 
     override fun getUserBlog() {
-        userRepository.getUserBlog(getUserName(), object : UserDataSource.DataLoadedCallback<SteemDiscussion> {
-            override fun onDataLoaded(array: Array<SteemDiscussion>) {
-                blogView.discussionFromResponse.addAll(array)
-                blogView.showFeed()
-            }
 
-            override fun onLoadError(error: Throwable) {
-            }
-        })
+        if (mentionsView.results.isNotEmpty()) {
+            userRepository.getUserBlog(getUserName(), object : UserDataSource.DataLoadedCallback<SteemDiscussion> {
+                override fun onDataLoaded(array: Array<SteemDiscussion>) {
+                    blogView.discussionFromResponse.addAll(array)
+                    blogView.showFeed()
+                }
+
+                override fun onLoadError(error: Throwable) {
+                }
+            })
+        }
     }
 
     override fun getUserMentions() {
