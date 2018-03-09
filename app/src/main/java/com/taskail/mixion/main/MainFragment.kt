@@ -58,7 +58,6 @@ class MainFragment : Fragment(),
 
     override fun onAccountRequested() {
         if (User.userIsLoggedIn){
-            //openFragment(ProfileFragment.newInstance())
             startActivity(ProfileActivity.myProfile(context!!))
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_PROFILE)
@@ -71,6 +70,10 @@ class MainFragment : Fragment(),
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_POST)
         }
+    }
+
+    override fun onDonateRequested() {
+        openFragment(DonateFragment.newInstance())
     }
 
     override fun getDrawerToolbar(): Toolbar? {

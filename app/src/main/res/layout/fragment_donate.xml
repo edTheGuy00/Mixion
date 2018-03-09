@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/donateContainer"
+    android:visibility="gone"
+    android:background="@color/md_grey_800"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:visibility="visible">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:elevation="4dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/donateToolbar"
+            app:title="@string/donate"
+            app:titleTextColor="@color/light_grey"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/padding_normal"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="@string/donation"
+            android:gravity="center"
+            android:fontFamily="@font/vidaloka"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/paypalImg"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_paypal"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/bitcoinImg"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_bitcoin"
+            android:scaleType="centerCrop"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <ImageView
+            android:id="@+id/etherImg"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="150dp"
+            android:scaleType="centerInside"
+            android:layout_height="150dp"
+            android:src="@drawable/ether_logo"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

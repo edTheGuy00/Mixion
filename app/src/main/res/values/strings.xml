@@ -58,6 +58,14 @@
     <string name="permission_camera_rationale">Camera permission is needed to scan QR code.</string>
     <string name="wrong_qr_code_explanation">Wrong QR Code, Click on the QR code to expand the correct QR code</string>
     <string name="steemit_qrcode_instructions_title">Steemit QR Code Instructions</string>
+    <string name="donation">Support the development of Mixion by buying the developer a cup of coffee :)</string>
+    <string name="donate_bitcoin">Send Bitcoin</string>
+    <string name="only_bitcoin">Only send Bitcoin (BTC) to this address</string>
+    <string name="copy_bitcoin_address">Copy BTC address</string>
+    <string name="donate_ether">Send Ether</string>
+    <string name="only_ether">Only send Ether (ETH) to this address</string>
+    <string name="copy_ether_address">Copy ETH address</string>
+    <string name="address_saved">Address Saved to Clipboard</string>
     <string name="steemit_qrcode_instructions">Go to your Steemit.com account
         \n 1. Click on "wallet"
         \n 2. Click on "Permissions"

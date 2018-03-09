@@ -47,6 +47,7 @@ class FeedFragment : Fragment(),
         fun setToolbarTitle(title: String)
         fun logoutUser()
         fun requestToAddNewPost()
+        fun onDonateRequested()
     }
 
     override fun showFeed() {
@@ -254,7 +255,7 @@ class FeedFragment : Fragment(),
         when (item){
             TAG_DIALOG -> getCallback()?.onTagDialogRequested()
             ABOUT_PAGE -> Log.d(TAG, "About clicked")
-            DONATE -> Log.d(TAG, "Donation Clicked")
+            DONATE -> getCallback()?.onDonateRequested()
         }
         false
     }
