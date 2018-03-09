@@ -41,6 +41,7 @@
         <activity android:name=".login.QrCodeScanner"/>
 
         <activity android:name=".profile.ProfileActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MaterialDrawerTheme">
 
         </activity>
