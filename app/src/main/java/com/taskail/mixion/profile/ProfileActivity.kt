@@ -34,37 +34,39 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     override fun getUserBlog() {
 
-        if (mentionsView.results.isNotEmpty()) {
-            userRepository.getUserBlog(getUserName(), object : UserDataSource.DataLoadedCallback<SteemDiscussion> {
-                override fun onDataLoaded(array: Array<SteemDiscussion>) {
-                    blogView.discussionFromResponse.addAll(array)
-                    blogView.showFeed()
-                }
-
-                override fun onLoadError(error: Throwable) {
-                }
-            })
-        }
-    }
-
-    override fun getUserMentions() {
-        userRepository.getUserMentions(getUserName(), object : UserDataSource.UserMentionsCallback {
-            override fun onDataLoaded(askSteemResult: AskSteemResult) {
-                if (askSteemResult.results.size > 0) {
-
-                    mentionsView.results.addAll(askSteemResult.results)
-                    mentionsView.setResults()
-                } else if (askSteemResult.hits == 0){
-
-                    mentionsView.noResultsFound()
-                }
+        userRepository.getUserBlog(getUserName(), object : UserDataSource.DataLoadedCallback<SteemDiscussion> {
+            override fun onDataLoaded(array: Array<SteemDiscussion>) {
+                blogView.discussionFromResponse.addAll(array)
+                blogView.showFeed()
             }
 
             override fun onLoadError(error: Throwable) {
-
             }
-
         })
+
+    }
+
+    override fun getUserMentions() {
+
+        if (mentionsView.results.isNotEmpty()) {
+            userRepository.getUserMentions(getUserName(), object : UserDataSource.UserMentionsCallback {
+                override fun onDataLoaded(askSteemResult: AskSteemResult) {
+                    if (askSteemResult.results.size > 0) {
+
+                        mentionsView.results.addAll(askSteemResult.results)
+                        mentionsView.setResults()
+                    } else if (askSteemResult.hits == 0) {
+
+                        mentionsView.noResultsFound()
+                    }
+                }
+
+                override fun onLoadError(error: Throwable) {
+
+                }
+
+            })
+        }
     }
 
     override fun onMentionsItemSelected(author: String, permlink: String) {
