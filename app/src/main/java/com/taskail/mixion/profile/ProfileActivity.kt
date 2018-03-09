@@ -48,7 +48,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     override fun getUserMentions() {
 
-        if (mentionsView.results.isNotEmpty()) {
+        if (mentionsView.results.isEmpty()) {
             userRepository.getUserMentions(getUserName(), object : UserDataSource.UserMentionsCallback {
                 override fun onDataLoaded(askSteemResult: AskSteemResult) {
                     if (askSteemResult.results.size > 0) {
