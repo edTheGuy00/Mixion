@@ -3,21 +3,20 @@ package com.taskail.mixion.steemdiscussion
 import `in`.uncod.android.bypass.Bypass
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.util.TypedValue
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
+import com.taskail.mixion.ui.ElasticDragDismissFrameLayout
 import com.taskail.mixion.utils.*
 import com.taskail.mixion.utils.html2md.HTML2Md
-import com.taskail.mixion.utils.steemitutils.*
+import kotlinx.android.synthetic.main.activity_discussion_details.*
 
 /**Created by ed on 10/6/17.
  */
@@ -46,6 +45,8 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
     private lateinit var discussionsView: DiscussionContract.View
 
+    private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
+
     override fun start() {
 
     }
@@ -59,7 +60,24 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
         discussionsView.presenter = this
 
+        chromeFader = object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
+
+            override fun onDragDismissed() {
+                finish()
+            }
+        }
+
         handleIntent(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity_discussions_container.addListener(chromeFader)
+    }
+
+    override fun onPause() {
+        activity_discussions_container.removeListener(chromeFader)
+        super.onPause()
     }
 
     private fun handleIntent(@NonNull intent: Intent) {
