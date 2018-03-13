@@ -16,6 +16,10 @@ import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.ui.ElasticDragDismissFrameLayout
 import com.taskail.mixion.utils.*
 import com.taskail.mixion.utils.html2md.HTML2Md
+import com.taskail.mixion.utils.steemitutils.getFirstImgFromJsonMeta
+import com.taskail.mixion.utils.steemitutils.getVideo480Hash
+import com.taskail.mixion.utils.steemitutils.getVideoUrl
+import com.taskail.mixion.utils.steemitutils.isFromDtube
 import kotlinx.android.synthetic.main.activity_discussion_details.*
 
 /**Created by ed on 10/6/17.
@@ -120,6 +124,15 @@ class DiscussionDetailsActivity : AppCompatActivity(),
             loadComments(discussion.author, discussion.permlink)
         } else {
             discussionsView.noComments()
+        }
+
+        if (discussion.body.isFromDtube()){
+            val img = discussion.body.getFirstImgFromJsonMeta()
+            val hash = getVideo480Hash(discussion.jsonMetadata)
+            if (!hash.isNullOrBlank()) {
+                val videoUrl = getVideoUrl(hash!!)
+                discussionsView.displayDtube(img, videoUrl)
+            }
         }
     }
 

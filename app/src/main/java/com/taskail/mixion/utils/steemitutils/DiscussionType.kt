@@ -13,13 +13,6 @@ fun String.isFromDmania(): Boolean{
     return this.startsWith("<center>")
 }
 
-/**
- * detect whether the post is from dtube,
- * 95% of the time they will begin as such..
- */
 
-fun String.isFromDtube(): Boolean{
-    return this.startsWith("<center><a href='https://d.")
-}
 
 //TODO - detect more types to better provide a body parser

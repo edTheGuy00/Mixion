@@ -16,7 +16,7 @@ interface DiscussionContract {
 
         fun displayBtnInfo(votes: String, payout: String, user: String, timeAgo: String)
 
-        fun displayDtube()
+        fun displayDtube(videoImg: String?, videoHash: String?)
 
         fun displayYoutube(videoId: String)
 

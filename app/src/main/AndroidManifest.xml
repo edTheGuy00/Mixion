@@ -26,7 +26,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="com.taskail.mixion.steemdiscussion.DiscussionDetailsActivity">
+        <activity android:name="com.taskail.mixion.steemdiscussion.DiscussionDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
 
         </activity>
 
