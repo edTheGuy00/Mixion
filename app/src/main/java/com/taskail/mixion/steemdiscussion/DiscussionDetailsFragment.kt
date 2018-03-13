@@ -9,9 +9,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.jzvd.JZVideoPlayer
 import cn.jzvd.JZVideoPlayerStandard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.utils.ImageSpanTarget
@@ -24,7 +26,7 @@ import kotlinx.android.synthetic.main.layout_discussion_details.view.*
  */
 
 class DiscussionDetailsFragment : Fragment(),
-        DiscussionContract.View {
+        DiscussionContract.View{
 
     override lateinit var presenter: DiscussionContract.Presenter
 
@@ -82,15 +84,14 @@ class DiscussionDetailsFragment : Fragment(),
 
     }
 
+    override fun onBackPressed(): Boolean {
+        return JZVideoPlayer.backPress()
+    }
+
     override fun onPause() {
         super.onPause()
         JZVideoPlayerStandard.releaseAllVideos()
     }
-
-    override fun onActivityFinish() {
-        JZVideoPlayerStandard.backPress()
-    }
-
 
     override fun displayYoutube(videoId: String) {
         //TODO - extract youtube id, setup player

@@ -153,9 +153,11 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         })
     }
 
-    override fun finish() {
-        discussionsView.onActivityFinish()
-        super.finish()
+    override fun onBackPressed() {
+        if (discussionsView.onBackPressed()){
+            return
+        }
+        super.onBackPressed()
     }
 
     private fun getBypass(): Bypass{

@@ -107,7 +107,7 @@ class FeedPresenter(val feedView: FeedContract.View,
              override fun onDataLoaded(array: Array<SteemDiscussion>) {
                  feedView.discussionFromResponse.addAll(array)
                  feedView.showFeed()
-                 feedView.showFeedType("My Feed")
+                 setToolbarTitle("My Feed")
              }
 
              override fun onLoadError(error: Throwable) {
@@ -125,7 +125,7 @@ class FeedPresenter(val feedView: FeedContract.View,
             override fun onDataLoaded(array: Array<SteemDiscussion>) {
                 feedView.discussionFromResponse.addAll(array)
                 feedView.showFeed()
-                feedView.showFeedType(sortBy)
+                setToolbarTitle(sortBy)
             }
 
             override fun onLoadError(error: Throwable) {
@@ -196,8 +196,8 @@ class FeedPresenter(val feedView: FeedContract.View,
     }
 
     override fun getDtube(){
-        Log.d(TAG, "Fetch dTube posts")
-
+        getByTag("dtube")
+        setToolbarTitle("dtube")
     }
 
     override fun getDmania(){
@@ -208,6 +208,14 @@ class FeedPresenter(val feedView: FeedContract.View,
     private fun getUserName(): String?{
         var user: String? = null
         return user ?: User.getUserName().apply { user = this }
+    }
+    
+    private fun setToolbarTitle(title: String){
+        if (steemitRepository.remoteRepository.tag == "dtube"){
+            feedView.showFeedType("$sortBy @ Dtube")
+        } else {
+            feedView.showFeedType(title)
+        }
     }
 
     /**

@@ -26,8 +26,7 @@ interface DiscussionContract {
 
         fun noComments()
 
-        fun onActivityFinish()
-
+        fun onBackPressed(): Boolean
     }
 
     interface Presenter: BasePresenter{
