@@ -13,7 +13,9 @@
     android:clipToPadding="false"
     android:background="@android:color/transparent">
 
-    <com.taskail.mixion.ui.FourThreeView
+    <View
+        android:layout_height="250dp"
+        android:layout_width="match_parent"
         android:id="@+id/spacer"
         android:visibility="gone"/>
 

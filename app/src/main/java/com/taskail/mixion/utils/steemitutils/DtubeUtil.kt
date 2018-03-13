@@ -29,7 +29,7 @@ fun getVideoUrl(hash: String): String {
     return "https://" + canonicalGateway(hash) + "/ipfs/" + hash
 }
 
-fun getVideo480Hash(json: String) : String? {
+fun getVideoHash(json: String) : String? {
     var mainObject: JSONObject? = null
     try {
         mainObject = JSONObject(json)
@@ -62,7 +62,11 @@ fun getVideo480Hash(json: String) : String? {
     var hash: String? = null
     try {
         hash = if (content != null) {
-            content.getString("videohash")
+            if (content.has("video480hash")){
+                content.getString("video480hash")
+            } else {
+                content.getString("videohash")
+            }
         } else {
             null
         }
@@ -72,4 +76,5 @@ fun getVideo480Hash(json: String) : String? {
 
     return hash
 }
+
 

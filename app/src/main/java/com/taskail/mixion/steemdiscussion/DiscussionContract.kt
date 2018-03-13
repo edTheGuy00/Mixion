@@ -16,7 +16,7 @@ interface DiscussionContract {
 
         fun displayBtnInfo(votes: String, payout: String, user: String, timeAgo: String)
 
-        fun displayDtube(videoImg: String?, videoHash: String?)
+        fun displayDtube(videoImg: String?, videoUrl: String?)
 
         fun displayYoutube(videoId: String)
 
@@ -25,6 +25,8 @@ interface DiscussionContract {
         fun displayComments(commentsFromResponse: Array<ContentReply>)
 
         fun noComments()
+
+        fun onActivityFinish()
 
     }
 

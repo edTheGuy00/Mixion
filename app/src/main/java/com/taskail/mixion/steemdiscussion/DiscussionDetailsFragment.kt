@@ -2,11 +2,9 @@ package com.taskail.mixion.steemdiscussion
 
 import `in`.uncod.android.bypass.Bypass
 import `in`.uncod.android.bypass.style.ImageLoadingSpan
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -72,20 +70,25 @@ class DiscussionDetailsFragment : Fragment(),
         discussionAdapter.noComments()
     }
 
-    override fun displayDtube(videoImg: String?, videoHash: String?) {
+    override fun displayDtube(videoImg: String?, videoUrl: String?) {
         titleAndDescriptionLayout.spacer.visibility = View.VISIBLE
         videoPlayerHolder.visibility = View.VISIBLE
 
         videoPlayer = JZVideoPlayerStandard(context)
         videoPlayerHolder.addView(videoPlayer)
 
-        videoPlayer?.setUp(videoHash, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL)
+
+        videoPlayer?.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL)
 
     }
 
     override fun onPause() {
         super.onPause()
-        videoPlayer?.release()
+        JZVideoPlayerStandard.releaseAllVideos()
+    }
+
+    override fun onActivityFinish() {
+        JZVideoPlayerStandard.backPress()
     }
 
 
