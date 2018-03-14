@@ -2,6 +2,7 @@ package com.taskail.mixion
 
 import android.app.Application
 import android.util.Log
+import com.taskail.mixion.steemJ.setupSteemJUserSuccess
 import cz.koto.keystorecompat.base.utility.runSinceLollipop
 import cz.koto.keystorecompat.elplus.KeystoreCompat
 import cz.koto.keystorecompat.elplus.compat.KeystoreCompatConfig
@@ -15,6 +16,8 @@ var appInstance: MixionApplication? = null
 class MixionApplication : Application() {
 
     lateinit var keyStoreCompat: KeystoreCompat
+
+    private val TAG = javaClass.simpleName
 
     override fun onCreate() {
         super.onCreate()
@@ -32,11 +35,23 @@ class MixionApplication : Application() {
                 keyStoreCompat.loadSecretAsString({ decryptResults ->
                     decryptResults.split(';').let {
                         User.storeUser(it[0], it[1])
+                        Log.i(TAG, "${it[0]} has been loaded")
+                        initSteemJConfig(it[0], it[1])
                     }
                 }, {
-                    Log.d("Error", it.message)
+                    Log.d(TAG, it.message)
                 }, User.forceLockScreenFlag)
             }
+        }
+    }
+
+    private fun initSteemJConfig(user: String, key: String) {
+        if (setupSteemJUserSuccess(user, key)) {
+            Log.i(TAG, "config setupSuccess")
+        } else {
+            Log.e(TAG, "Unable to setup SteemJConfig")
+            User.performLogout()
+            keyStoreCompat.clearCredentials()
         }
     }
 

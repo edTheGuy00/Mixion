@@ -12,4 +12,11 @@ interface SteemJCallback {
 
         fun onError(e: Throwable)
     }
+
+    interface SimpleCallback {
+
+        fun onComplete()
+
+        fun onError()
+    }
 }

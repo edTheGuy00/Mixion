@@ -31,12 +31,16 @@ object RxSteemJManager {
         steemJ?.createPost(title, body, tags, callback)
     }
 
-    fun upvote(author: String, permLink: String, percentage: Short) {
-        steemJ?.upvote(author, permLink, percentage)
+    fun upvote(author: String, permLink: String, percentage: Short, callback: SteemJCallback.SimpleCallback) {
+        steemJ?.upvote(author, permLink, percentage, callback)
     }
 
-    fun follow(userToFollow: String) {
-        steemJ?.follow(userToFollow)
+    fun follow(userToFollow: String, callback: SteemJCallback.SimpleCallback) {
+        steemJ?.follow(userToFollow, callback)
+    }
+
+    fun comment(author: String, permLink: String, body: String, tags: Array<String>, callback: SteemJCallback.CreatePostCallBack) {
+        steemJ?.comment(author, permLink, body, tags, callback)
     }
 
     fun ensureSteemJActive() {
