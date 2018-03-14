@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.User
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
-import com.taskail.mixion.data.RxSteemJ
 import com.taskail.mixion.data.network.*
 import com.taskail.mixion.profile.ProfileActivity
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
@@ -37,7 +35,6 @@ import io.reactivex.disposables.CompositeDisposable
  */
 
 var steemitRepository: SteemitRepository? = null
-var steemJAPI: RxSteemJ? = null
 
 class MainFragment : Fragment(),
         BackPressedHandler,
@@ -91,7 +88,6 @@ class MainFragment : Fragment(),
     private lateinit var localDisposable: CompositeDisposable
     private lateinit var steemJDisposable: CompositeDisposable
     private lateinit var askSteemDisposable: CompositeDisposable
-    private var steemitAPI: SteemAPI? = null
     private var askSteemApi: AskSteemApi? = null
     private lateinit var feedPresenter: FeedPresenter
 
@@ -115,10 +111,10 @@ class MainFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (keystoreCompat.hasSecretLoadable()){
-            getCredentials()
-            User.userIsLoggedIn = true
-        }
+//        if (keystoreCompat.hasSecretLoadable()){
+//            getCredentials()
+//            User.userIsLoggedIn = true
+//        }
 
         val feedFragment = FeedFragment.getInstance().apply {
             feedPresenter = FeedPresenter(this, getRepository())
@@ -242,17 +238,17 @@ class MainFragment : Fragment(),
         }
     }
 
-    private fun getCredentials(){
-        runSinceLollipop {
-            keystoreCompat.loadSecretAsString({ decryptResults ->
-                decryptResults.split(';').let {
-                    User.storeUser(it[0], it[1])
-                }
-            }, {
-                Log.d("Error", it.message)
-            }, User.forceLockScreenFlag)
-        }
-    }
+//    private fun getCredentials(){
+//        runSinceLollipop {
+//            keystoreCompat.loadSecretAsString({ decryptResults ->
+//                decryptResults.split(';').let {
+//                    User.storeUser(it[0], it[1])
+//                }
+//            }, {
+//                Log.d("Error", it.message)
+//            }, User.forceLockScreenFlag)
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode){

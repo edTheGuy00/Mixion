@@ -283,4 +283,8 @@ class FeedFragment : Fragment(),
         return getCallback(this, Callback::class.java)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
 }

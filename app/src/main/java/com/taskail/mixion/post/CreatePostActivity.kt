@@ -11,10 +11,10 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.taskail.mixion.R
+import com.taskail.mixion.User
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.myNewPermLink
-import com.taskail.mixion.data.RxSteemJ
-import com.taskail.mixion.data.setupSteemJUserSuccess
+import com.taskail.mixion.steemJ.*
 import com.taskail.mixion.utils.hideSoftKeyboard
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_create_post.*
 /**
  *Created by ed on 2/7/18.
  */
-class CreatePostActivity : BaseActivity() {
+class CreatePostActivity : BaseActivity(), SteemJComponent {
 
     companion object {
         @JvmStatic fun newIntent(context: Context): Intent {
@@ -34,11 +34,27 @@ class CreatePostActivity : BaseActivity() {
         val POSTED_SUCCESSFULLY = 23
     }
 
+    /**
+     * called in onResume
+     */
+    override fun startComponent() {
+        if (User.userIsLoggedIn){
+            RxSteemJManager.ensureSteemJActive()
+            RxSteemJManager.createPostIsActive = true
+        }
+    }
+
+    /**
+     * called in onDestroy
+     */
+    override fun destroyComponent() {
+        RxSteemJManager.createPostIsActive = false
+        RxSteemJManager.removeActive()
+    }
+
     val TAG = javaClass.simpleName
 
     private lateinit var fragment: EditPostFragment
-    private lateinit var disposable: CompositeDisposable
-    private lateinit var steemJ: RxSteemJ
     private lateinit var progressBar: ProgressBar
     private var isLoading = false
 
@@ -55,29 +71,23 @@ class CreatePostActivity : BaseActivity() {
         
 //        createPostTitle.setOnFocusChangeListener { view, b ->  }
 
-        disposable = CompositeDisposable()
 
-        if (confirmUserLoggedIn())
+        if (!confirmUserLoggedIn())
         {
-            steemJ = RxSteemJ(disposable)
-            if (steemJUserReady())
-            {
-                steemJ.connecToSteemit()
+            if (keystoreCompat.hasSecretLoadable()) {
+                redoLogIn()
+            } else {
+                Log.e(TAG, "No Key or user Found")
+                // A User Who isn't logged in shouldn't be here
+                finish()
             }
-            else
-            {
-                when (setupSteemJUserSuccess(getUserName(), getUserKey()))
-                {
-                    true -> steemJ.connecToSteemit()
-                    false -> Log.e("Setup SteemJ", "Something went wrong")
-                }
-
-            }
-        } else
-        {
-
         }
         fragment = supportFragmentManager.findFragmentById(R.id.postBodyContainer) as EditPostFragment
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startComponent()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -115,16 +125,16 @@ class CreatePostActivity : BaseActivity() {
     }
 
     private fun postIt(body: String, title: String, tags: Array<String>){
-        disposable.add(steemJ.sendPost(title, body, tags)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError{
-                    Toast.makeText(this, R.string.something_wrong, Toast.LENGTH_SHORT).show()
-                }
-                .subscribe{
-                    postedSuccessfully(it)
-                })
+        RxSteemJManager.createPost(title, body, tags, object : SteemJCallback.CreatePostCallBack {
+            override fun onSuccess(permLink: String) {
+                postedSuccessfully(permLink)
+            }
 
+            override fun onError(e: Throwable) {
+
+            }
+
+        })
     }
 
     private fun setLoadingUi(){
@@ -165,7 +175,7 @@ class CreatePostActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        disposable.clear()
+        destroyComponent()
         super.onDestroy()
     }
 }

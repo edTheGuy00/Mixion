@@ -1,6 +1,8 @@
 package com.taskail.mixion
 
 import android.app.Application
+import android.util.Log
+import cz.koto.keystorecompat.base.utility.runSinceLollipop
 import cz.koto.keystorecompat.elplus.KeystoreCompat
 import cz.koto.keystorecompat.elplus.compat.KeystoreCompatConfig
 
@@ -20,6 +22,22 @@ class MixionApplication : Application() {
 
         keyStoreCompat = KeystoreCompat.getInstance(this, KeyStoreConfig())
 
+        checkUser()
+    }
+
+    private fun checkUser(){
+
+        if (keyStoreCompat.hasSecretLoadable()) {
+            runSinceLollipop {
+                keyStoreCompat.loadSecretAsString({ decryptResults ->
+                    decryptResults.split(';').let {
+                        User.storeUser(it[0], it[1])
+                    }
+                }, {
+                    Log.d("Error", it.message)
+                }, User.forceLockScreenFlag)
+            }
+        }
     }
 
     inner class KeyStoreConfig: KeystoreCompatConfig(){

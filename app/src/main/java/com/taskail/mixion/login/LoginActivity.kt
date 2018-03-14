@@ -16,7 +16,7 @@ import android.app.AlertDialog
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.taskail.mixion.ACTIVITY_REQUEST_QR_CODE_SCANNER
-import com.taskail.mixion.data.setupSteemJUserSuccess
+import com.taskail.mixion.steemJ.setupSteemJUserSuccess
 import com.taskail.mixion.postingKey
 
 

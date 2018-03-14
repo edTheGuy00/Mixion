@@ -42,5 +42,7 @@ interface FeedContract {
         fun getMyFeed()
 
         fun fetchMore(lastPostLocation: Int)
+
+        fun onDestroy()
     }
 }

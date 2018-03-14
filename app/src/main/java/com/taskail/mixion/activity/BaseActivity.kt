@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import com.taskail.mixion.MixionApplication
-import com.taskail.mixion.data.steemJConfig
+import com.taskail.mixion.steemJ.steemJConfig
 import com.taskail.mixion.User
 import cz.koto.keystorecompat.base.utility.runSinceLollipop
 
@@ -16,12 +16,16 @@ abstract class BaseActivity: AppCompatActivity() {
 
     protected val keystoreCompat by lazy { (application as MixionApplication).keyStoreCompat }
 
+    private val TAG = javaClass.simpleName
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
+
+        Log.d(TAG, "creates")
 
     }
 
