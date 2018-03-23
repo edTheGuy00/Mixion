@@ -48,6 +48,7 @@ class FeedFragment : Fragment(),
         fun logoutUser()
         fun requestToAddNewPost()
         fun onDonateRequested()
+        fun onDraftsRequested()
     }
 
     override fun showFeed() {
@@ -211,6 +212,11 @@ class FeedFragment : Fragment(),
                 onClick(miscItemsClicked(TAG_DIALOG))
             }
             sectionHeader(R.string.app_name)
+            secondaryItem(R.string.drafts) {
+                iicon = FontAwesome.Icon.faw_newspaper_o
+                selectable = false
+                onClick(miscItemsClicked(DRAFTS_PAGE))
+            }
             secondaryItem(R.string.about) {
                 iicon = FontAwesome.Icon.faw_info_circle
                 selectable = false
@@ -256,6 +262,7 @@ class FeedFragment : Fragment(),
             TAG_DIALOG -> getCallback()?.onTagDialogRequested()
             ABOUT_PAGE -> Log.d(TAG, "About clicked")
             DONATE -> getCallback()?.onDonateRequested()
+            DRAFTS_PAGE -> getCallback()?.onDraftsRequested()
         }
         false
     }

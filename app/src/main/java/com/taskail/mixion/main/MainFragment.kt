@@ -73,6 +73,10 @@ class MainFragment : Fragment(),
         openFragment(DonateFragment.newInstance())
     }
 
+    override fun onDraftsRequested() {
+        openFragment(DraftsFragment.newInstance())
+    }
+
     override fun getDrawerToolbar(): Toolbar? {
         return getCallback()?.getMainToolbar()
     }
