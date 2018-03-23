@@ -1,5 +1,9 @@
 package com.taskail.mixion.steemJ
 
+import com.taskail.mixion.DISCUSSION_STEEMJ_USER
+import com.taskail.mixion.FEED_STEEMJ_USER
+import com.taskail.mixion.CREATE_POST_STEEMJ_USER
+import com.taskail.mixion.PROFILE_STEEMJ_USER
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -14,9 +18,10 @@ object RxSteemJManager {
 
     private var steemJ: RxSteemJ? = null
 
-    var feedIsActive = false
-    var profileIsActive = false
-    var createPostIsActive = false
+    private var feedIsActive = false
+    private var profileIsActive = false
+    private var createPostIsActive = false
+    private var discussionIsActive = false
 
     private fun startSteemJ(){
 
@@ -43,13 +48,35 @@ object RxSteemJManager {
         steemJ?.comment(author, permLink, body, tags, callback)
     }
 
-    fun ensureSteemJActive() {
+    private fun ensureSteemJActive() {
         if (steemJ == null){
             startSteemJ()
         }
     }
 
-    fun removeActive() {
+    fun registerSteemJUser(user: Int) {
+        ensureSteemJActive()
+        when (user) {
+            FEED_STEEMJ_USER -> feedIsActive = true
+            DISCUSSION_STEEMJ_USER -> discussionIsActive = true
+            CREATE_POST_STEEMJ_USER -> createPostIsActive = true
+            PROFILE_STEEMJ_USER -> profileIsActive = true
+        }
+
+    }
+
+    fun deregisterSteemJUser(user: Int) {
+        when (user) {
+            FEED_STEEMJ_USER -> feedIsActive = false
+            DISCUSSION_STEEMJ_USER -> discussionIsActive = false
+            CREATE_POST_STEEMJ_USER -> createPostIsActive = false
+            PROFILE_STEEMJ_USER -> profileIsActive = false
+        }
+
+        removeActive()
+    }
+
+    private fun removeActive() {
         if (!feedIsActive && !profileIsActive && !createPostIsActive) {
             disposable?.clear()
         }

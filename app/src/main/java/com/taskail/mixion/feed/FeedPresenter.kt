@@ -1,12 +1,12 @@
 package com.taskail.mixion.feed
 
 import android.util.Log
+import com.taskail.mixion.FEED_STEEMJ_USER
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.User
 import com.taskail.mixion.steemJ.RxSteemJManager
-import com.taskail.mixion.steemJ.SteemJComponent
 import java.util.*
 
 /**
@@ -14,7 +14,7 @@ import java.util.*
  */
 class FeedPresenter(val feedView: FeedContract.View,
                     val steemitRepository: SteemitRepository) :
-        FeedContract.Presenter, SteemJComponent {
+        FeedContract.Presenter {
 
     val TAG = javaClass.simpleName
 
@@ -30,23 +30,15 @@ class FeedPresenter(val feedView: FeedContract.View,
      */
     override fun start() {
         firstCall()
-        startComponent()
-    }
-
-    override fun onDestroy() {
-        destroyComponent()
-    }
-
-    override fun startComponent() {
-        if (User.userIsLoggedIn){
-            RxSteemJManager.ensureSteemJActive()
-            RxSteemJManager.feedIsActive = true
+        if (User.userIsLoggedIn) {
+            RxSteemJManager.registerSteemJUser(FEED_STEEMJ_USER)
         }
     }
 
-    override fun destroyComponent() {
-        RxSteemJManager.feedIsActive = false
-        RxSteemJManager.removeActive()
+    override fun onDestroy() {
+        if (User.userIsLoggedIn) {
+            RxSteemJManager.deregisterSteemJUser(FEED_STEEMJ_USER)
+        }
     }
 
     /**

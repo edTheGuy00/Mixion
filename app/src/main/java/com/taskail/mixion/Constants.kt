@@ -12,6 +12,10 @@ const val TAG_DIALOG = 189
 const val ABOUT_PAGE = 190
 const val DRAFTS_PAGE = 192
 const val DONATE = 191
+const val FEED_STEEMJ_USER = 1
+const val PROFILE_STEEMJ_USER = 2
+const val CREATE_POST_STEEMJ_USER = 3
+const val DISCUSSION_STEEMJ_USER = 4
 
 const val myNewPermLink = "myNewPermLink"
 const val postingKey = "postingKey"

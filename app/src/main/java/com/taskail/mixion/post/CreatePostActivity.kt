@@ -10,21 +10,19 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.taskail.mixion.CREATE_POST_STEEMJ_USER
 import com.taskail.mixion.R
 import com.taskail.mixion.User
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.myNewPermLink
 import com.taskail.mixion.steemJ.*
 import com.taskail.mixion.utils.hideSoftKeyboard
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_post.*
 
 /**
  *Created by ed on 2/7/18.
  */
-class CreatePostActivity : BaseActivity(), SteemJComponent {
+class CreatePostActivity : BaseActivity() {
 
     companion object {
         @JvmStatic fun newIntent(context: Context): Intent {
@@ -32,24 +30,6 @@ class CreatePostActivity : BaseActivity(), SteemJComponent {
         }
 
         val POSTED_SUCCESSFULLY = 23
-    }
-
-    /**
-     * called in onResume
-     */
-    override fun startComponent() {
-        if (User.userIsLoggedIn){
-            RxSteemJManager.ensureSteemJActive()
-            RxSteemJManager.createPostIsActive = true
-        }
-    }
-
-    /**
-     * called in onDestroy
-     */
-    override fun destroyComponent() {
-        RxSteemJManager.createPostIsActive = false
-        RxSteemJManager.removeActive()
     }
 
     val TAG = javaClass.simpleName
@@ -87,7 +67,9 @@ class CreatePostActivity : BaseActivity(), SteemJComponent {
 
     override fun onResume() {
         super.onResume()
-        startComponent()
+        if (User.userIsLoggedIn) {
+            RxSteemJManager.registerSteemJUser(CREATE_POST_STEEMJ_USER)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -175,7 +157,9 @@ class CreatePostActivity : BaseActivity(), SteemJComponent {
     }
 
     override fun onDestroy() {
-        destroyComponent()
+        if (User.userIsLoggedIn) {
+            RxSteemJManager.deregisterSteemJUser(CREATE_POST_STEEMJ_USER)
+        }
         super.onDestroy()
     }
 }
