@@ -11,7 +11,8 @@ import io.reactivex.schedulers.Schedulers
  *
  * This class is responsible for all data in the Local database
  */
-class LocalDataSource(val tagsDao: TagsDao,
+class LocalDataSource(val draftsDao: DraftsDao,
+                      val tagsDao: TagsDao,
                       val disposable: CompositeDisposable) : SteemitDataSource.Local {
 
     /**
@@ -54,13 +55,41 @@ class LocalDataSource(val tagsDao: TagsDao,
                 }))
     }
 
+    override fun getDrafts(callback: SteemitDataSource.DataLoadedCallback<Drafts>) {
+        disposable.add(getDraftsFromDatabase(draftsDao)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    callback.onDataLoaded(it)
+                }, {
+                    callback.onLoadError(it)
+                }))
+    }
+
+    override fun saveDraft(draft: Drafts) {
+        disposable.add(insertDraft(draftsDao, draft)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.d("Save Draft", "Success")
+                }))
+    }
+
+    override fun deleteDraft(id: String) {
+        disposable.add(deleteDraft(draftsDao, id)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d("Delete Tags", "Success")
+                }))
+    }
+
     companion object {
         private var INSTANCE: LocalDataSource? = null
 
         @JvmStatic
-        fun getInstance(tagsDao: TagsDao, disposable: CompositeDisposable) : LocalDataSource{
+        fun getInstance(draftsDao: DraftsDao, tagsDao: TagsDao, disposable: CompositeDisposable) : LocalDataSource{
 
-            return INSTANCE ?: LocalDataSource(tagsDao, disposable).apply {
+            return INSTANCE ?: LocalDataSource(draftsDao, tagsDao, disposable).apply {
                 INSTANCE = this
             }
         }

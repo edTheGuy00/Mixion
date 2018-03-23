@@ -38,3 +38,34 @@ fun deleteTags(@NonNull tagsDao: TagsDao) : Completable{
         emitter.onComplete()
     }
 }
+
+@NonNull
+fun getDraftsFromDatabase(@NonNull draftsDao: DraftsDao): Observable<List<Drafts>>{
+
+    return Observable.create { emitter ->
+
+        val drafts = draftsDao.getDrafts()
+
+        if (drafts.isNotEmpty()){
+            emitter.onNext(drafts)
+        } else{
+            emitter.onError(Exception("Data Not Available"))
+        }
+    }
+}
+
+@NonNull
+fun insertDraft(@NonNull draftsDao: DraftsDao, @NonNull draft: Drafts) : Completable{
+    return Completable.create{e ->
+        draftsDao.insertDraft(draft)
+        e.onComplete()
+    }
+}
+
+@NonNull
+fun deleteDraft(@NonNull draftsDao: DraftsDao, id: String) : Completable{
+    return Completable.create { emitter ->
+        draftsDao.deleteById(id)
+        emitter.onComplete()
+    }
+}

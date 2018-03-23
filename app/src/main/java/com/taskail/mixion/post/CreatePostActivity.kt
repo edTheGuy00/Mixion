@@ -34,6 +34,8 @@ class CreatePostActivity : BaseActivity() {
 
     val TAG = javaClass.simpleName
 
+    private var posted = false
+
     private lateinit var fragment: EditPostFragment
     private lateinit var progressBar: ProgressBar
     private var isLoading = false
@@ -113,7 +115,7 @@ class CreatePostActivity : BaseActivity() {
             }
 
             override fun onError(e: Throwable) {
-
+                posted = false
             }
 
         })
@@ -142,6 +144,7 @@ class CreatePostActivity : BaseActivity() {
     }
 
     private fun postedSuccessfully(permLink: String){
+        posted = true
         val intent = Intent().putExtra(myNewPermLink, permLink)
         setResult(POSTED_SUCCESSFULLY, intent)
         finish()
@@ -161,5 +164,8 @@ class CreatePostActivity : BaseActivity() {
             RxSteemJManager.deregisterSteemJUser(CREATE_POST_STEEMJ_USER)
         }
         super.onDestroy()
+        if (!posted) {
+            // save to drafts
+        }
     }
 }
