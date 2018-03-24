@@ -1,6 +1,5 @@
 package com.taskail.mixion.steemJ
 
-import android.util.Log
 import eu.bittrade.libs.steemj.SteemJ
 import eu.bittrade.libs.steemj.base.models.AccountName
 import eu.bittrade.libs.steemj.base.models.Permlink
@@ -25,18 +24,16 @@ import io.reactivex.schedulers.Schedulers
 
 class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
 
-    private val TAG= javaClass.simpleName
-
     var steemJ: SteemJ? = null
 
-    fun connecToSteemit(){
+    fun connecToSteemit(callback: SteemJCallback.SimpleCallback){
         steemJDisposable.add(initSteemJ()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { Log.d(TAG, "Connected")
+                        { callback.onComplete()
                         },
-                        { Log.e(TAG, it.message)
+                        { callback.onError(it)
                         }
                 )
         )
@@ -65,7 +62,7 @@ class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
                     callback.onComplete()
                 }
                 .doOnError{
-                    callback.onError()
+                    callback.onError(it)
                 }.subscribe())
     }
 
@@ -77,7 +74,7 @@ class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
                     callback.onComplete()
                 }
                 .doOnError{
-                    callback.onError()
+                    callback.onError(it)
                 }.subscribe())
     }
 

@@ -17,6 +17,6 @@ interface SteemJCallback {
 
         fun onComplete()
 
-        fun onError()
+        fun onError(e: Throwable)
     }
 }
