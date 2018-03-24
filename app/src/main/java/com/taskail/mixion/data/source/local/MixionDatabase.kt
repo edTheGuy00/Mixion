@@ -28,6 +28,7 @@ abstract class MixionDatabase : RoomDatabase() {
                         context.applicationContext,
                         MixionDatabase::class.java,
                         "Mixion.db")
+                        .fallbackToDestructiveMigration()
                         .build().apply {
                     INSTANCE = this
                 }

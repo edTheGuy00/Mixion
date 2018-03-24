@@ -169,7 +169,7 @@ class CreatePostActivity : BaseActivity() {
     }
 
     private fun saveDraft(draft: Drafts) {
-        steemitRepository?.localRepository?.draftsDao?.insertDraft(draft)
+        steemitRepository?.localRepository?.saveDraft(draft)
     }
 
     private fun setLoadingUi(){
