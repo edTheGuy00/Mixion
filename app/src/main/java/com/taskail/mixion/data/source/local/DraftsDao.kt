@@ -16,6 +16,8 @@ import android.arch.persistence.room.Query
 
     @Query("SELECT * FROM Drafts") fun getDrafts(): List<Drafts>
 
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertDraft(draft: Drafts)
 
 

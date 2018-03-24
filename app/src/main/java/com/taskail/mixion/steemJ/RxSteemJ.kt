@@ -33,13 +33,13 @@ class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
         steemJDisposable.add(initSteemJ()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete{
-                    Log.d(TAG, "Connected")
-                }
-                .doOnError{
-                    Log.d(TAG, it.message)
-                }
-                .subscribe())
+                .subscribe(
+                        { Log.d(TAG, "Connected")
+                        },
+                        { Log.e(TAG, it.message)
+                        }
+                )
+        )
     }
 
     fun createPost(title: String, body: String, tags: Array<String>,

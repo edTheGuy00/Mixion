@@ -35,6 +35,7 @@ class MixionApplication : Application() {
                 keyStoreCompat.loadSecretAsString({ decryptResults ->
                     decryptResults.split(';').let {
                         User.storeUser(it[0], it[1])
+                        User.userIsLoggedIn = true
                         Log.i(TAG, "${it[0]} has been loaded")
                         initSteemJConfig(it[0], it[1])
                     }

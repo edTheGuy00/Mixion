@@ -8,12 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.*
-import com.taskail.mixion.data.source.remote.AskSteemRepository
 import com.taskail.mixion.data.SteemitRepository
 import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.local.MixionDatabase
-import com.taskail.mixion.data.source.remote.*
 import com.taskail.mixion.ui.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
 import com.taskail.mixion.feed.FeedPresenter
@@ -92,7 +89,6 @@ class MainFragment : Fragment(),
     private lateinit var localDisposable: CompositeDisposable
     private lateinit var steemJDisposable: CompositeDisposable
     private lateinit var askSteemDisposable: CompositeDisposable
-    private var askSteemApi: AskSteemApi? = null
     private lateinit var feedPresenter: FeedPresenter
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -137,30 +133,13 @@ class MainFragment : Fragment(),
     }
 
     private fun getRepository(): SteemitRepository{
-        return steemitRepository ?: SteemitRepository.getInstance(createRemoteRepo(), createLocalRepo()).apply {
+        return steemitRepository ?: getMixionRepository(
+                remoteDisposable,
+                localDisposable,
+                getCallback()?.getDatabase()?.draftsDao()!!,
+                getCallback()?.getDatabase()?.tagsDao()!!
+        ).apply {
             steemitRepository = this
-        }
-    }
-
-    private fun createRemoteRepo() : RemoteDataSource {
-        return RemoteDataSource.getInstance(remoteDisposable, createSteemApi())
-    }
-
-    private fun createLocalRepo(): LocalDataSource {
-        return LocalDataSource.getInstance(getCallback()?.getDatabase()?.tagsDao()!!, localDisposable)
-    }
-
-    private fun createSteemApi() : SteemAPI {
-        return getRetrofitClient(baseUrl).create(SteemAPI::class.java)
-    }
-
-    private fun getAskSteemRepo() : AskSteemRepository {
-        return AskSteemRepository.getInstance(askSteemDisposable, createAskSteemApi())
-    }
-
-    private fun createAskSteemApi() : AskSteemApi {
-        return askSteemApi ?: getRetrofitClient(askSteemUrl).create(AskSteemApi::class.java).apply {
-            askSteemApi = this
         }
     }
 
@@ -192,7 +171,7 @@ class MainFragment : Fragment(),
     override fun onSearchRequested() {
 
         openFragment(SearchFragment.newInstance().apply {
-            SearchPresenter(this, getAskSteemRepo())
+            SearchPresenter(this, getAskSteemRepo(askSteemDisposable))
         })
     }
 

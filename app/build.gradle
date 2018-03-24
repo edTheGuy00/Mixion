@@ -111,6 +111,8 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.8'
 
+    implementation 'com.google.code.gson:gson:2.8.2'
+
     implementation "com.atlassian.commonmark:commonmark:${versions.commonmark}"
     implementation "com.atlassian.commonmark:commonmark-ext-gfm-strikethrough:${versions.commonmark}"
     implementation "com.atlassian.commonmark:commonmark-ext-gfm-tables:${versions.commonmark}"
