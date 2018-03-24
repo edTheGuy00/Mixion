@@ -14,6 +14,8 @@ import com.taskail.mixion.CREATE_POST_STEEMJ_USER
 import com.taskail.mixion.R
 import com.taskail.mixion.User
 import com.taskail.mixion.activity.BaseActivity
+import com.taskail.mixion.data.source.local.Drafts
+import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.myNewPermLink
 import com.taskail.mixion.steemJ.*
 import com.taskail.mixion.utils.hideSoftKeyboard
@@ -64,7 +66,9 @@ class CreatePostActivity : BaseActivity() {
                 finish()
             }
         }
-        fragment = supportFragmentManager.findFragmentById(R.id.postBodyContainer) as EditPostFragment
+        fragment = supportFragmentManager
+                .findFragmentById(R.id.postBodyContainer)
+                as EditPostFragment
     }
 
     override fun onResume() {
@@ -108,6 +112,40 @@ class CreatePostActivity : BaseActivity() {
         }
     }
 
+    private fun checkAndSave(){
+        if (getPostTitle().isNotEmpty()){
+
+            if (fragment.getBody().isNotEmpty()) {
+
+                if (fragment.getTags().isNotEmpty()) {
+
+                    val draft = Drafts(getPostTitle(), fragment.getBody(), getListOfTags())
+                    saveDraft(draft)
+
+                } else {
+                    val draft = Drafts(getPostTitle(), fragment.getBody(), emptyList())
+                    saveDraft(draft)
+                }
+
+            }
+
+            // do nothing
+
+        }
+    }
+
+    private fun getListOfTags(): List<String> {
+
+        var list = emptyList<String>()
+
+        for (tag in fragment.getTags()) {
+
+            list = listOf(tag)
+        }
+
+        return list
+    }
+
     private fun postIt(body: String, title: String, tags: Array<String>){
         RxSteemJManager.createPost(title, body, tags, object : SteemJCallback.CreatePostCallBack {
             override fun onSuccess(permLink: String) {
@@ -116,9 +154,22 @@ class CreatePostActivity : BaseActivity() {
 
             override fun onError(e: Throwable) {
                 posted = false
+                Toast.makeText(this@CreatePostActivity,
+                        "Unable to post, Saving to drafts",
+                        Toast.LENGTH_SHORT)
+                        .show()
+
+                val draft = Drafts(title, body, getListOfTags())
+                saveDraft(draft)
+
+                finish()
             }
 
         })
+    }
+
+    private fun saveDraft(draft: Drafts) {
+        steemitRepository?.localRepository?.draftsDao?.insertDraft(draft)
     }
 
     private fun setLoadingUi(){
@@ -163,9 +214,10 @@ class CreatePostActivity : BaseActivity() {
         if (User.userIsLoggedIn) {
             RxSteemJManager.deregisterSteemJUser(CREATE_POST_STEEMJ_USER)
         }
-        super.onDestroy()
         if (!posted) {
-            // save to drafts
+            checkAndSave()
         }
+
+        super.onDestroy()
     }
 }

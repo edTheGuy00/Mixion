@@ -13,7 +13,7 @@ import java.util.*
 data class Drafts @JvmOverloads constructor(
 
         @ColumnInfo(name = "tag") var title: String = "",
-        @ColumnInfo(name = "summary") var summary: String = "",
+        @ColumnInfo(name = "body") var body: String = "",
         @ColumnInfo(name = "tags") var tags:  List<String> = emptyList(),
         @PrimaryKey @ColumnInfo(name = "entryid") var id: String = UUID.randomUUID().toString()
 ) {

@@ -1,4 +1,4 @@
-package com.taskail.mixion.main
+package com.taskail.mixion.fragment
 
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.taskail.mixion.BaseFragment
 import com.taskail.mixion.R
 import com.taskail.mixion.utils.*
 import kotlinx.android.synthetic.main.fragment_donate.*

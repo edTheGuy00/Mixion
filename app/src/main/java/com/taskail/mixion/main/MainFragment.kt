@@ -17,9 +17,11 @@ import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.User
+import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
-import com.taskail.mixion.data.network.*
+import com.taskail.mixion.fragment.DonateFragment
+import com.taskail.mixion.fragment.DraftsFragment
 import com.taskail.mixion.profile.ProfileActivity
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent

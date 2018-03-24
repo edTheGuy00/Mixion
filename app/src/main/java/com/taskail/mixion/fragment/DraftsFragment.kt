@@ -1,10 +1,9 @@
-package com.taskail.mixion.main
+package com.taskail.mixion.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.taskail.mixion.BaseFragment
 import com.taskail.mixion.R
 import com.taskail.mixion.data.source.local.MixionDatabase
 import com.taskail.mixion.utils.*

@@ -8,7 +8,7 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.taskail.mixion.BaseFragment
+import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.Result
 import com.taskail.mixion.utils.*
