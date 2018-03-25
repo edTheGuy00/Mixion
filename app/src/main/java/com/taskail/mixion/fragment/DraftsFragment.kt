@@ -45,16 +45,20 @@ class DraftsFragment : BaseFragment(){
         draftsRecycler.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
 
-        adapter  = DraftsAdapter(emptyList(), {
-            draftItemSelected(it)
-        })
+        adapter  = DraftsAdapter(mutableListOf(),
+                {
+                    draftItemSelected(it)
+                },
+                {
+                    draftId, position -> deleteDraft(draftId, position)
+                })
 
         draftsRecycler.adapter = adapter
 
         steemitRepository?.localRepository?.getDrafts(object :
                 SteemitDataSource.DataLoadedCallback<Drafts>{
             override fun onDataLoaded(list: List<Drafts>) {
-                adapter.drafts = list
+                adapter.drafts = list.toMutableList()
             }
 
             override fun onDataLoaded(array: Array<Drafts>) {
@@ -65,6 +69,15 @@ class DraftsFragment : BaseFragment(){
             }
 
         })
+
+    }
+
+    private fun deleteDraft (id: String, pos: Int) {
+        steemitRepository?.localRepository?.deleteDraft(id)
+
+        adapter.drafts.removeAt(pos)
+
+        adapter.notifyDataSetChanged()
 
     }
 

@@ -12,12 +12,13 @@ import kotlinx.android.synthetic.main.item_draft.view.*
 /**
  *Created by ed on 1/26/18.
  */
-class DraftsAdapter(drafts: List<Drafts>,
-                    private val openDraft: (Drafts) -> Unit) :
+class DraftsAdapter(drafts: MutableList<Drafts>,
+                    private val openDraft: (Drafts) -> Unit,
+                    private val deleteDraft: (String, Int) -> Unit) :
 
         Adapter<DraftsAdapter.ItemVH>() {
 
-    var drafts: List<Drafts> = drafts
+    var drafts: MutableList<Drafts> = drafts
 
     set(loadedTags) {
         field = loadedTags
@@ -27,14 +28,21 @@ class DraftsAdapter(drafts: List<Drafts>,
     class ItemVH(itemView: View) :
             ViewHolder(itemView){
 
-        fun setItem(drafts: Drafts,
-                    openDraft: (Drafts) -> Unit){
+        fun setItem(draft: Drafts,
+                    position: Int,
+                    openDraft: (Drafts) -> Unit,
+                    deleteDraft: (String, Int) -> Unit){
 
             with(itemView) {
-                title.text = drafts.title
-                summary.text = drafts.body
+                title.text = draft.title
+                summary.text = draft.body
                 setOnClickListener {
-                    openDraft(drafts)
+                    openDraft(draft)
+                }
+
+                setOnLongClickListener {
+                    deleteDraft(draft.id, position)
+                    return@setOnLongClickListener true
                 }
             }
 
@@ -56,6 +64,6 @@ class DraftsAdapter(drafts: List<Drafts>,
     }
 
     override fun onBindViewHolder(holder: ItemVH, position: Int) {
-        holder.setItem(drafts[position], openDraft)
+        holder.setItem(drafts[position], position, openDraft, deleteDraft)
     }
 }
