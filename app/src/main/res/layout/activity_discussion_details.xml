@@ -24,6 +24,7 @@
         android:paddingEnd="@dimen/spacing_medium"
         android:background="@color/light_grey"
         android:layout_gravity="bottom"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <EditText
