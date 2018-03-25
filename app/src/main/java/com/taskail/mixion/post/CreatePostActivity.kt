@@ -45,6 +45,8 @@ class CreatePostActivity : BaseActivity() {
     private var saved = false
     private var isFromDraft = false
 
+    private lateinit var draft: Drafts
+
     private lateinit var fragment: EditPostFragment
     private lateinit var progressBar: ProgressBar
     private var isLoading = false
@@ -77,13 +79,16 @@ class CreatePostActivity : BaseActivity() {
                 .findFragmentById(R.id.postBodyContainer)
                 as EditPostFragment
 
-        handleIntent(intent)
+        if (intent.hasExtra(openDraftIntent)) {
+            handleIntent(intent)
+        }
     }
 
     private fun handleIntent(intent: Intent) {
         val draft = intent.extras[openDraftIntent]
         if (draft != null) {
             setupDraft(draft as Drafts)
+            this.draft = draft
             isFromDraft = true
         }
 
@@ -143,12 +148,27 @@ class CreatePostActivity : BaseActivity() {
 
                 if (fragment.getTags().isNotEmpty()) {
 
-                    val draft = Drafts(getPostTitle(), fragment.getBody(), getListOfTags())
-                    saveDraft(draft)
+                    if (isFromDraft){
+                        draft.title = getPostTitle()
+                        draft.body = fragment.getBody()
+                        draft.tags = getListOfTags()
+                        saveDraft(draft)
+                    } else {
+                        val draft = Drafts(getPostTitle(), fragment.getBody(), getListOfTags())
+
+                        saveDraft(draft)
+                    }
 
                 } else {
-                    val draft = Drafts(getPostTitle(), fragment.getBody(), emptyList())
-                    saveDraft(draft)
+                    if (isFromDraft){
+                        draft.title = getPostTitle()
+                        draft.body = fragment.getBody()
+                        draft.tags = emptyList()
+                        saveDraft(draft)
+                    } else {
+                        val draft = Drafts(getPostTitle(), fragment.getBody(), emptyList())
+                        saveDraft(draft)
+                    }
                 }
 
             }
@@ -183,8 +203,15 @@ class CreatePostActivity : BaseActivity() {
                         Toast.LENGTH_SHORT)
                         .show()
 
-                val draft = Drafts(title, body, getListOfTags())
-                saveDraft(draft)
+                if (isFromDraft){
+                    draft.title = title
+                    draft.body = body
+                    draft.tags = tags.toList()
+                    saveDraft(draft)
+                } else {
+                    val draft = Drafts(title, body, getListOfTags())
+                    saveDraft(draft)
+                }
 
                 finish()
             }
@@ -196,6 +223,7 @@ class CreatePostActivity : BaseActivity() {
 
         if (isFromDraft) {
             steemitRepository?.localRepository?.updateDraft(draft)
+
         } else {
             steemitRepository?.localRepository?.saveDraft(draft)
         }
@@ -251,6 +279,10 @@ class CreatePostActivity : BaseActivity() {
         }
         if (!posted && !saved) {
             checkAndSave()
+            Toast.makeText(this@CreatePostActivity,
+                    "Saving to drafts",
+                    Toast.LENGTH_SHORT)
+                    .show()
         }
 
         super.onDestroy()

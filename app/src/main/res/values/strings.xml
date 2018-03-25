@@ -45,6 +45,7 @@
     <string name="add_tags">Add tags</string>
     <string name="enter_tag">Enter Tag</string>
     <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
     <string name="scan_qr">Scan QR Code</string>
     <string name="ok">OK</string>
     <string name="no_mentions">You aren\'t mentioned anywhere</string>
@@ -59,6 +60,7 @@
     <string name="permission_camera_rationale">Camera permission is needed to scan QR code.</string>
     <string name="wrong_qr_code_explanation">Wrong QR Code, Click on the QR code to expand the correct QR code</string>
     <string name="steemit_qrcode_instructions_title">Steemit QR Code Instructions</string>
+    <string name="delete_draft">Delete This Draft?</string>
     <string name="donation">Support the development of Mixion by buying the developer a cup of coffee :)</string>
     <string name="donate_bitcoin">Send Bitcoin</string>
     <string name="only_bitcoin">Only send Bitcoin (BTC) to this address</string>

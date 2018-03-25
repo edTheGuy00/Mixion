@@ -1,5 +1,7 @@
 package com.taskail.mixion.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -73,12 +75,19 @@ class DraftsFragment : BaseFragment(){
     }
 
     private fun deleteDraft (id: String, pos: Int) {
-        steemitRepository?.localRepository?.deleteDraft(id)
 
-        adapter.drafts.removeAt(pos)
-
-        adapter.notifyDataSetChanged()
-
+        AlertDialog.Builder(this.context)
+                .setTitle(R.string.delete_draft)
+                .setPositiveButton(R.string.ok) { _, _ ->
+                    steemitRepository?.localRepository?.deleteDraft(id)
+                    adapter.drafts.removeAt(pos)
+                    adapter.notifyDataSetChanged()
+                }
+                .setNegativeButton(R.string.cancel) {
+                    onClick: DialogInterface, _: Int -> onClick.cancel()
+                }
+                .create()
+                .show()
     }
 
     override fun onBackPressed(): Boolean {
