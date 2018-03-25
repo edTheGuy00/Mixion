@@ -63,6 +63,14 @@ fun insertDraft(@NonNull draftsDao: DraftsDao, @NonNull draft: Drafts) : Complet
 }
 
 @NonNull
+fun updateDraft(@NonNull draftsDao: DraftsDao, @NonNull draft: Drafts) : Completable{
+    return Completable.create{e ->
+        draftsDao.insertDraft(draft)
+        e.onComplete()
+    }
+}
+
+@NonNull
 fun deleteDraft(@NonNull draftsDao: DraftsDao, id: String) : Completable{
     return Completable.create { emitter ->
         draftsDao.deleteById(id)

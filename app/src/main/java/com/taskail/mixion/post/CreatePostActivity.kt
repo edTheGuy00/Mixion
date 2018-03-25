@@ -42,6 +42,8 @@ class CreatePostActivity : BaseActivity() {
     val TAG = javaClass.simpleName
 
     private var posted = false
+    private var saved = false
+    private var isFromDraft = false
 
     private lateinit var fragment: EditPostFragment
     private lateinit var progressBar: ProgressBar
@@ -82,6 +84,7 @@ class CreatePostActivity : BaseActivity() {
         val draft = intent.extras[openDraftIntent]
         if (draft != null) {
             setupDraft(draft as Drafts)
+            isFromDraft = true
         }
 
     }
@@ -190,7 +193,14 @@ class CreatePostActivity : BaseActivity() {
     }
 
     private fun saveDraft(draft: Drafts) {
-        steemitRepository?.localRepository?.saveDraft(draft)
+
+        if (isFromDraft) {
+            steemitRepository?.localRepository?.updateDraft(draft)
+        } else {
+            steemitRepository?.localRepository?.saveDraft(draft)
+        }
+
+        saved = true
     }
 
     private fun setLoadingUi(){
@@ -239,7 +249,7 @@ class CreatePostActivity : BaseActivity() {
         if (User.userIsLoggedIn) {
             RxSteemJManager.deregisterSteemJUser(CREATE_POST_STEEMJ_USER)
         }
-        if (!posted) {
+        if (!posted && !saved) {
             checkAndSave()
         }
 

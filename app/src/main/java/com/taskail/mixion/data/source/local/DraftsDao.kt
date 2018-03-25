@@ -1,10 +1,6 @@
 package com.taskail.mixion.data.source.local
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
-
+import android.arch.persistence.room.*
 
 
 /**
@@ -19,6 +15,8 @@ import android.arch.persistence.room.Query
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertDraft(draft: Drafts)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE) fun updateDraft(draft: Drafts): Int
 
 
     /**

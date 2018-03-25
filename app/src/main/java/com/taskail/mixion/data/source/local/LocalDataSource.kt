@@ -15,6 +15,8 @@ class LocalDataSource(val draftsDao: DraftsDao,
                       val tagsDao: TagsDao,
                       val disposable: CompositeDisposable) : SteemitDataSource.Local {
 
+    private val TAG = javaClass.simpleName
+
     /**
      * get the tags from the local database
      */
@@ -39,7 +41,7 @@ class LocalDataSource(val draftsDao: DraftsDao,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.d("Save Tag", "Success")
+                    Log.d(TAG, "Save Tag Success")
                 }))
 
     }
@@ -51,7 +53,7 @@ class LocalDataSource(val draftsDao: DraftsDao,
         disposable.add(deleteTags(tagsDao)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("Delete Tags", "Success")
+                    Log.d(TAG, " Delete tag Success")
                 }))
     }
 
@@ -71,7 +73,16 @@ class LocalDataSource(val draftsDao: DraftsDao,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.d("Save Draft", "Success")
+                    Log.d(TAG, "Save Draft Success")
+                }))
+    }
+
+    override fun updateDraft(draft: Drafts) {
+        disposable.add(updateDraft(draftsDao, draft)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.d(TAG, "Update Draft Success")
                 }))
     }
 
@@ -79,7 +90,7 @@ class LocalDataSource(val draftsDao: DraftsDao,
         disposable.add(deleteDraft(draftsDao, id)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("Delete Tags", "Success")
+                    Log.d(TAG, "Delete Draft Success")
                 }))
     }
 

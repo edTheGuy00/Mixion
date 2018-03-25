@@ -47,6 +47,8 @@ interface SteemitDataSource {
 
         fun saveDraft(draft: Drafts)
 
+        fun updateDraft(draft: Drafts)
+
         fun deleteDraft(id: String)
     }
 
