@@ -10,13 +10,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.taskail.mixion.CREATE_POST_STEEMJ_USER
-import com.taskail.mixion.R
-import com.taskail.mixion.User
+import com.taskail.mixion.*
 import com.taskail.mixion.activity.BaseActivity
 import com.taskail.mixion.data.source.local.Drafts
 import com.taskail.mixion.main.steemitRepository
-import com.taskail.mixion.myNewPermLink
 import com.taskail.mixion.steemJ.*
 import com.taskail.mixion.utils.hideSoftKeyboard
 import kotlinx.android.synthetic.main.activity_create_post.*
@@ -31,7 +28,15 @@ class CreatePostActivity : BaseActivity() {
             return Intent(context, CreatePostActivity::class.java)
         }
 
-        val POSTED_SUCCESSFULLY = 23
+        fun openDraft(context: Context,
+                      draft: Drafts):
+                Intent {
+            return Intent(context, CreatePostActivity::class.java)
+                    .putExtra(openDraftIntent, draft)
+
+        }
+
+        const val POSTED_SUCCESSFULLY = 23
     }
 
     val TAG = javaClass.simpleName
@@ -69,6 +74,22 @@ class CreatePostActivity : BaseActivity() {
         fragment = supportFragmentManager
                 .findFragmentById(R.id.postBodyContainer)
                 as EditPostFragment
+
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val draft = intent.extras[openDraftIntent]
+        if (draft != null) {
+            setupDraft(draft as Drafts)
+        }
+
+    }
+
+    private fun setupDraft(draft: Drafts) {
+        setPostTitle(draft.title)
+        fragment.setBody(draft.body)
+        fragment.setTags(draft.tags.toMutableList())
     }
 
     override fun onResume() {
@@ -203,6 +224,10 @@ class CreatePostActivity : BaseActivity() {
 
     private fun getPostTitle(): String{
         return createPostTitle.text.toString()
+    }
+
+    private fun setPostTitle(title: String) {
+        createPostTitle.setText(title)
     }
 
     private fun displaySnackBar(msg: Int){

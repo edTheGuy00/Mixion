@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.source.local.Drafts
-import com.taskail.mixion.data.source.local.MixionDatabase
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
 import kotlinx.android.synthetic.main.fragment_drafts.*
@@ -46,7 +45,9 @@ class DraftsFragment : BaseFragment(){
         draftsRecycler.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
 
-        adapter  = DraftsAdapter(emptyList())
+        adapter  = DraftsAdapter(emptyList(), {
+            draftItemSelected(it)
+        })
 
         draftsRecycler.adapter = adapter
 

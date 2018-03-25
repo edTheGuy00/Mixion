@@ -3,6 +3,7 @@ package com.taskail.mixion.fragment
 import android.support.v4.app.Fragment
 import android.view.View
 import com.taskail.mixion.BackPressedHandler
+import com.taskail.mixion.data.source.local.Drafts
 import com.taskail.mixion.utils.FadeOutCallBack
 import com.taskail.mixion.utils.fadeOutAnimation
 import com.taskail.mixion.utils.getCallback
@@ -15,6 +16,7 @@ abstract class BaseFragment: Fragment(), BackPressedHandler {
     interface Callback {
         fun onFragmentClosed()
         fun onSearchResultSelected(author: String, permlink: String)
+        fun onDraftOpenRequested(draft: Drafts)
     }
 
     protected fun closeFragment(view: View) {
@@ -24,6 +26,10 @@ abstract class BaseFragment: Fragment(), BackPressedHandler {
                 callback?.onFragmentClosed()
             }
         })
+    }
+
+    protected fun draftItemSelected(draft: Drafts) {
+        callback()?.onDraftOpenRequested(draft)
     }
 
     protected fun searchItemSelected(author: String, permlink: String){

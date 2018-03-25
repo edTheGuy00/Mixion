@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.item_draft.view.*
 /**
  *Created by ed on 1/26/18.
  */
-class DraftsAdapter(drafts: List<Drafts> ) :
+class DraftsAdapter(drafts: List<Drafts>,
+                    private val openDraft: (Drafts) -> Unit) :
+
         Adapter<DraftsAdapter.ItemVH>() {
 
     var drafts: List<Drafts> = drafts
@@ -22,14 +24,21 @@ class DraftsAdapter(drafts: List<Drafts> ) :
         notifyDataSetChanged()
     }
 
-    class ItemVH(itemView: View) : ViewHolder(itemView){
+    class ItemVH(itemView: View) :
+            ViewHolder(itemView){
 
-        fun setItem(drafts: Drafts){
+        fun setItem(drafts: Drafts,
+                    openDraft: (Drafts) -> Unit){
 
             with(itemView) {
                 title.text = drafts.title
                 summary.text = drafts.body
+                setOnClickListener {
+                    openDraft(drafts)
+                }
             }
+
+
 
         }
     }
@@ -47,6 +56,6 @@ class DraftsAdapter(drafts: List<Drafts> ) :
     }
 
     override fun onBindViewHolder(holder: ItemVH, position: Int) {
-        holder.setItem(drafts[position])
+        holder.setItem(drafts[position], openDraft)
     }
 }

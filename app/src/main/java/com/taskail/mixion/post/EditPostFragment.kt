@@ -68,7 +68,15 @@ class EditPostFragment : Fragment(){
         return hlEditor.text.toString()
     }
 
+    fun setBody(body: String) {
+        hlEditor.setText(body)
+    }
+
     fun getTags(): Array<String>{
         return tagsAdapter.tags.toTypedArray()
+    }
+
+    fun setTags(tags: MutableList<String>) {
+        tagsAdapter.tags = tags
     }
 }

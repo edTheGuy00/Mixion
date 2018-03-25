@@ -17,6 +17,7 @@ import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.User
+import com.taskail.mixion.data.source.local.Drafts
 import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter
@@ -66,6 +67,10 @@ class MainFragment : Fragment(),
         } else {
             startActivityForResult(LoginActivity.newIntent(context!!), ACTIVITY_REQUEST_LOGIN_TO_POST)
         }
+    }
+
+    override fun onDraftOpenRequested(draft: Drafts) {
+        startActivity(CreatePostActivity.openDraft(context!!, draft))
     }
 
     override fun onDonateRequested() {

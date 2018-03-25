@@ -19,6 +19,7 @@ const val DISCUSSION_STEEMJ_USER = 4
 
 const val myNewPermLink = "myNewPermLink"
 const val postingKey = "postingKey"
+const val openDraftIntent = "openDraft"
 
 const val DTBUE = 44
 const val DMANIA = 45
