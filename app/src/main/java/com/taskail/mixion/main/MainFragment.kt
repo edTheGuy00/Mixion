@@ -17,6 +17,7 @@ import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.User
+import com.taskail.mixion.data.models.ActiveVote
 import com.taskail.mixion.data.source.local.Drafts
 import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.search.SearchFragment
@@ -29,6 +30,8 @@ import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.utils.getCallback
 import cz.koto.keystorecompat.base.utility.runSinceLollipop
 import io.reactivex.disposables.CompositeDisposable
+import com.taskail.mixion.steemdiscussion.LikesBottomSheet
+
 
 /**
  *Created by ed on 1/19/18.
@@ -87,6 +90,11 @@ class MainFragment : Fragment(),
 
     override fun setToolbarTitle(title: String) {
         getCallback()?.setToolbarTitle(title)
+    }
+
+    override fun onLikesBtnClicked(likes: List<ActiveVote>) {
+        val bottomSheetDialogFragment = LikesBottomSheet()
+        bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.getTag())
     }
 
     override fun getDrawerContainer(): Int {

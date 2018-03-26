@@ -1,11 +1,13 @@
 package com.taskail.mixion.feed
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.taskail.mixion.R
+import com.taskail.mixion.data.models.ActiveVote
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.utils.GetTimeAgo
 import com.taskail.mixion.utils.steemitutils.getFeedSummary
@@ -17,10 +19,13 @@ import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
  *Created by ed on 1/24/18.
  */
 class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
-                    private val discussionSelected: (SteemDiscussion) -> Unit) :
+                    private val discussionSelected: (SteemDiscussion) -> Unit,
+                    private val likesBtnClicked: (List<ActiveVote>) -> Unit) :
         RecyclerView.Adapter<FeedRVAdapter.FeedViewHolder>() {
 
-    class FeedViewHolder(itemView : View, private val discussionSelected: (SteemDiscussion) -> Unit) :
+    class FeedViewHolder(itemView : View,
+                         private val discussionSelected: (SteemDiscussion) -> Unit,
+                         private val likesBtnClicked: (List<ActiveVote>) -> Unit) :
             RecyclerView.ViewHolder(itemView){
 
         fun setSteemDiscussion(discussion: SteemDiscussion){
@@ -40,6 +45,11 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
                 itemView.setOnClickListener {
                     discussionSelected(this)
                 }
+
+                itemView.likes_btn.setOnClickListener {
+                    Log.d("ADAPTER", "like button clicked")
+                    likesBtnClicked(activeVotes)
+                }
             }
 
         }
@@ -48,7 +58,9 @@ class FeedRVAdapter(private val steemDiscussion: List<SteemDiscussion>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cardview_steem_post,
                 parent, false)
-        return FeedRVAdapter.FeedViewHolder(itemView, discussionSelected)
+        return FeedRVAdapter.FeedViewHolder(itemView,
+                discussionSelected,
+                likesBtnClicked)
     }
 
     override fun getItemCount(): Int {

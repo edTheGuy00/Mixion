@@ -20,6 +20,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.taskail.mixion.*
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.User
+import com.taskail.mixion.data.models.ActiveVote
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -49,6 +50,7 @@ class FeedFragment : Fragment(),
         fun requestToAddNewPost()
         fun onDonateRequested()
         fun onDraftsRequested()
+        fun onLikesBtnClicked(likes: List<ActiveVote>)
     }
 
     override fun showFeed() {
@@ -105,6 +107,8 @@ class FeedFragment : Fragment(),
 
         adapter = FeedRVAdapter(discussionFromResponse, {
             getCallback()?.openDiscussionRequested(it)
+        }, {
+            getCallback()?.onLikesBtnClicked(it)
         })
 
         return view

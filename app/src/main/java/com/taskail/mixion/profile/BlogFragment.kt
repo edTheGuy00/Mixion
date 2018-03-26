@@ -31,6 +31,8 @@ class BlogFragment: Fragment(), ProfileContract.BlogView {
 
         adapter = FeedRVAdapter(discussionFromResponse, {
             presenter.openDiscussion(it)
+        },{
+
         })
         return view
     }
