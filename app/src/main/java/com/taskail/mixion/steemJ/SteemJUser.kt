@@ -1,11 +1,11 @@
 package com.taskail.mixion.steemJ
 
 import android.util.Log
+import eu.bittrade.crypto.core.AddressFormatException
 import eu.bittrade.libs.steemj.base.models.AccountName
 import eu.bittrade.libs.steemj.configuration.SteemJConfig
 import eu.bittrade.libs.steemj.enums.PrivateKeyType
 import org.apache.commons.lang3.tuple.ImmutablePair
-import org.bitcoinj.core.AddressFormatException
 import java.util.ArrayList
 
 /**
