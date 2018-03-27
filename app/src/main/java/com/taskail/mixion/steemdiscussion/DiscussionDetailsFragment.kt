@@ -48,10 +48,21 @@ class DiscussionDetailsFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout)
+        discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout,
+                {
+                    a, b -> openComment(a, b)
+                })
 
         discussion_comments.itemAnimator = DefaultItemAnimator()
         discussion_comments.adapter = discussionAdapter
+
+    }
+
+    private fun openComment(author: String, body: String) {
+        val bottomSheetDialogFragment = CommentsBottomSheet
+                .newInstance(author, body)
+        bottomSheetDialogFragment.show(childFragmentManager,
+                bottomSheetDialogFragment.tag)
 
     }
 

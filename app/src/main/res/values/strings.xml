@@ -34,6 +34,7 @@
     <string name="upvotes">Upvotes</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="replies">Replies</string>
     <string name="login_username_hint">Username</string>
     <string name="posting_key">Posting Key</string>
     <string name="login">Login</string>

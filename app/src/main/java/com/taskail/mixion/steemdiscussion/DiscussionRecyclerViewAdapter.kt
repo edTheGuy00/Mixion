@@ -2,7 +2,6 @@ package com.taskail.mixion.steemdiscussion
 
 import android.support.annotation.NonNull
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,13 @@ import com.taskail.mixion.R
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.utils.steemitutils.getFeedSummary
 import kotlinx.android.synthetic.main.card_comments.view.*
+import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
 
 /**
  *Created by ed on 1/27/18.
  */
-class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View) :
+class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View,
+                                    private val commentClick: (String, String) -> Unit) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var isLoading = true
@@ -27,11 +28,20 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
 
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        fun setComment(comment: ContentReply){
+        fun setComment(comment: ContentReply,
+                       commentClick: (String, String) -> Unit){
 
             with(comment){
                 itemView.userName.text = author
                 itemView.commentBody.text = body.getFeedSummary()
+
+                itemView.payout.text = pendingPayoutValue.replace("SBD", "")
+                itemView.votes_count.text = netVotes.toString()
+                itemView.replies_count.text = children.toString()
+
+                itemView.setOnClickListener {
+                    commentClick(author, body)
+                }
             }
         }
 
@@ -105,7 +115,9 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)){
-                R.layout.card_comments -> (holder as CommentViewHolder).setComment(comments[position-1])
+                R.layout.card_comments -> (holder as CommentViewHolder)
+                        .setComment(comments[position-1],
+                                commentClick)
         }
     }
 }
