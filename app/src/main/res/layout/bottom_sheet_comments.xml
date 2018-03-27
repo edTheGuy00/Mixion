@@ -16,7 +16,7 @@
         android:elevation="6dp">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/likesToolbar"
+            android:id="@+id/repliesToolbar"
             app:title="@string/replies"
             app:titleTextColor="@color/light_grey"
             android:layout_width="match_parent"

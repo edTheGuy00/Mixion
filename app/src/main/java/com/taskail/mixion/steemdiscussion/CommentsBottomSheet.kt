@@ -49,6 +49,9 @@ class CommentsBottomSheet: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        repliesToolbar.setNavigationOnClickListener {
+            dismiss()
+        }
 
         val author = arguments?.getString(AUTHOR)
         val body = arguments?.getString(BODY)
