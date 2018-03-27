@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*
  *Created by ed on 1/27/18.
  */
 class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View,
-                                    private val commentClick: (String, String) -> Unit) :
+                                    private val commentClick: (String, String, String) -> Unit) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var isLoading = true
@@ -29,7 +29,7 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View,
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         fun setComment(comment: ContentReply,
-                       commentClick: (String, String) -> Unit){
+                       commentClick: (String, String, String) -> Unit){
 
             with(comment){
                 itemView.userName.text = author
@@ -40,7 +40,7 @@ class DiscussionRecyclerViewAdapter(@NonNull private val discussionLayout: View,
                 itemView.replies_count.text = children.toString()
 
                 itemView.setOnClickListener {
-                    commentClick(author, body)
+                    commentClick(author, body, permlink)
                 }
             }
         }

@@ -50,7 +50,7 @@ class DiscussionDetailsFragment : Fragment(),
 
         discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout,
                 {
-                    a, b -> openComment(a, b)
+                    a, b, p -> openComment(a, b, p)
                 })
 
         discussion_comments.itemAnimator = DefaultItemAnimator()
@@ -58,9 +58,9 @@ class DiscussionDetailsFragment : Fragment(),
 
     }
 
-    private fun openComment(author: String, body: String) {
+    private fun openComment(author: String, body: String, permlink: String) {
         val bottomSheetDialogFragment = CommentsBottomSheet
-                .newInstance(author, body)
+                .newInstance(author, body, permlink)
         bottomSheetDialogFragment.show(childFragmentManager,
                 bottomSheetDialogFragment.tag)
 
