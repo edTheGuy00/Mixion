@@ -31,6 +31,7 @@
         android:layout_below="@+id/toolbar_frame"
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:background="@color/md_grey_300"
         android:layout_height="wrap_content">
 
         <TextView
@@ -39,7 +40,7 @@
             android:layout_marginStart="3dp"
             android:fontFamily="@font/vidaloka"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             tools:text="UserName"
             android:layout_height="wrap_content" />
@@ -47,7 +48,7 @@
         <TextView
             android:padding="4dp"
             android:id="@+id/commentBody"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah "/>
@@ -59,16 +60,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <LinearLayout
+    <LinearLayout android:orientation="horizontal"
+        android:id="@+id/input_bar"
+        android:background="@color/light_grey"
+        android:padding="5dp"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:padding="@dimen/spacing_medium"
         android:layout_height="wrap_content">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+        <android.support.v7.widget.CardView
+            android:id="@+id/lyt_thread"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1.0"
+            app:cardBackgroundColor="@color/light_grey"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+            <EditText
+                android:id="@+id/commentInput"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </android.support.v7.widget.CardView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_send"
+            android:src="@drawable/ic_send_24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
     </LinearLayout>
 
 </RelativeLayout>

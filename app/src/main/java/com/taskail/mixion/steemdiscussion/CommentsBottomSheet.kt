@@ -51,6 +51,9 @@ class CommentsBottomSheet: BottomSheetDialogFragment() {
     private fun setParentComment(author: String?, body: String?) {
         userName.text = author
         commentBody.text = body
+
+        commentInput.hint = "reply to $author"
+
     }
 
 }
