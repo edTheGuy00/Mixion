@@ -14,6 +14,8 @@ import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.ui.ElasticDragDismissFrameLayout
+import com.taskail.mixion.ui.animation.DismissableAnimation
+import com.taskail.mixion.ui.animation.RevealAnimationSettings
 import com.taskail.mixion.utils.*
 import com.taskail.mixion.utils.html2md.HTML2Md
 import com.taskail.mixion.utils.steemitutils.getFirstImgFromJsonMeta
@@ -21,6 +23,9 @@ import com.taskail.mixion.utils.steemitutils.getVideoHash
 import com.taskail.mixion.utils.steemitutils.getVideoUrl
 import com.taskail.mixion.utils.steemitutils.isFromDtube
 import kotlinx.android.synthetic.main.activity_discussion_details.*
+import com.taskail.mixion.ui.animation.DismissableAnimation.OnDismissedListener
+
+
 
 /**Created by ed on 10/6/17.
  */
@@ -50,6 +55,9 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     private lateinit var discussionsView: DiscussionContract.View
 
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
+
+    private var replyFragment: CreateReplyFragment? = null
+    private var replyFragmentIsOpen = false
 
     override fun start() {
 
@@ -82,6 +90,16 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     override fun onPause() {
         activity_discussions_container.removeListener(chromeFader)
         super.onPause()
+    }
+
+    override fun revealReplyFragment(revealSettings: RevealAnimationSettings) {
+        replyFragment = CreateReplyFragment.newInstance(revealSettings)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, replyFragment)
+                .commit()
+
+        replyFragmentIsOpen = true
     }
 
     private fun handleIntent(@NonNull intent: Intent) {
@@ -156,8 +174,26 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     override fun onBackPressed() {
         if (discussionsView.onBackPressed()){
             return
+        } else if (replyFragmentIsOpen) {
+            (replyFragment as DismissableAnimation)
+                    .dismiss(object :
+                    DismissableAnimation.OnDismissedListener {
+                override
+                fun onDismissed() {
+                    supportFragmentManager
+                            .beginTransaction()
+                            .remove(replyFragment)
+                            .commitAllowingStateLoss()
+                }
+            })
+
+            replyFragmentIsOpen = false
+
+            return
         }
         super.onBackPressed()
+
+
     }
 
     private fun getBypass(): Bypass{

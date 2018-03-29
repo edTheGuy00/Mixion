@@ -17,25 +17,9 @@
         android:layout="@layout/fragment_steem_discussion"
         tools:layout="@layout/fragment_steem_discussion" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:paddingStart="@dimen/spacing_medium"
-        android:orientation="horizontal"
-        android:paddingEnd="@dimen/spacing_medium"
-        android:background="@color/light_grey"
-        android:layout_gravity="bottom"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:hint="enter comment..."
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
 </com.taskail.mixion.ui.ElasticDragDismissFrameLayout>

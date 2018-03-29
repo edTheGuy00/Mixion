@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.ContentReply
+import com.taskail.mixion.ui.animation.RevealAnimationSettings
 import com.taskail.mixion.utils.ImageSpanTarget
 import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
@@ -32,6 +33,8 @@ class DiscussionDetailsFragment : Fragment(),
 
     private lateinit var titleAndDescriptionLayout: View
 
+    private lateinit var fragmentContainer: View
+
     private var videoPlayer: JZVideoPlayerStandard? = null
 
     lateinit var discussionAdapter: DiscussionRecyclerViewAdapter
@@ -42,11 +45,14 @@ class DiscussionDetailsFragment : Fragment(),
         titleAndDescriptionLayout = layoutInflater.inflate(R.layout.layout_discussion_details,
                 discussion_comments, false)
 
+        fragmentContainer = view.findViewById(R.id.fragmentContainer)
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout,
                 {
@@ -56,6 +62,22 @@ class DiscussionDetailsFragment : Fragment(),
         discussion_comments.itemAnimator = DefaultItemAnimator()
         discussion_comments.adapter = discussionAdapter
 
+        fabComment.setOnClickListener {
+            presenter.revealReplyFragment(constructRevealSettings())
+        }
+    }
+
+    private fun constructRevealSettings(): RevealAnimationSettings {
+        val fabX = (fabComment.x + fabComment.width   /2).toInt()
+        val fabY = (fabComment.y + fabComment.height / 2).toInt()
+
+        val containerW = fragmentContainer.width
+        val containerH = fragmentContainer.height
+
+        return RevealAnimationSettings(fabX,
+                fabY,
+                containerW,
+                containerH)
     }
 
     private fun openComment(author: String, body: String, permlink: String) {

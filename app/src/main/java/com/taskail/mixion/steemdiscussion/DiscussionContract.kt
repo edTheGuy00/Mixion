@@ -4,6 +4,7 @@ import `in`.uncod.android.bypass.Bypass
 import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
 import com.taskail.mixion.data.models.ContentReply
+import com.taskail.mixion.ui.animation.RevealAnimationSettings
 
 /**
  *Created by ed on 1/28/18.
@@ -31,6 +32,6 @@ interface DiscussionContract {
 
     interface Presenter: BasePresenter{
 
-
+        fun revealReplyFragment(revealSettings: RevealAnimationSettings)
     }
 }
