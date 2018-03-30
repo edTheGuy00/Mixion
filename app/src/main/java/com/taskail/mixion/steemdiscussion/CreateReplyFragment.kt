@@ -1,5 +1,6 @@
 package com.taskail.mixion.steemdiscussion
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -13,13 +14,21 @@ import com.taskail.mixion.ui.animation.registerCircularRevealAnimation
 import com.taskail.mixion.ui.animation.startCircularExitAnimation
 import com.taskail.mixion.ui.markortexteditor.TextFormat
 import com.taskail.mixion.ui.markortexteditor.highlighter.HighlightingEditor
+import com.taskail.mixion.utils.hideSoftKeyboard
 import kotlinx.android.synthetic.main.fragment_create_reply.*
 
 /**
  *Created by ed on 3/29/18.
  */
 
-class CreateReplyFragment : Fragment(), DismissableAnimation {
+class CreateReplyFragment :
+        Fragment(),
+        DiscussionContract.ReplyView,
+        DismissableAnimation {
+
+    override lateinit var presenter: DiscussionContract.Presenter
+
+    lateinit var title: String
 
     companion object {
 
@@ -34,9 +43,9 @@ class CreateReplyFragment : Fragment(), DismissableAnimation {
         }
     }
 
-    lateinit var textFormat: TextFormat
-    lateinit var textModuleActionBar: ViewGroup
-    lateinit var hlEditor: HighlightingEditor
+    private lateinit var textFormat: TextFormat
+    private lateinit var textModuleActionBar: ViewGroup
+    private lateinit var hlEditor: HighlightingEditor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_reply, container, false)
@@ -50,6 +59,7 @@ class CreateReplyFragment : Fragment(), DismissableAnimation {
         return  view
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,8 +69,24 @@ class CreateReplyFragment : Fragment(), DismissableAnimation {
         setupHlEditor()
 
         backBtn.setOnClickListener {
-            // dismiss this fragment
+            presenter.dismissReplyFragment()
         }
+
+        replyTitle.text = "RE: $title"
+
+        publishButton.setOnClickListener {
+            if (!hlEditor.text.isNullOrEmpty()) {
+                publishComment(getContent())
+            }
+        }
+    }
+
+    private fun publishComment(content: String) {
+        presenter.postDiscussionreply(content)
+    }
+
+    private fun getContent(): String {
+        return hlEditor.text.toString()
     }
 
     private fun setupHlEditor(){
@@ -80,6 +106,7 @@ class CreateReplyFragment : Fragment(), DismissableAnimation {
                 object : DismissableAnimation.OnDismissedListener {
                     override fun onDismissed() {
                         listner.onDismissed()
+                        view?.hideSoftKeyboard()
                     }
 
                 })

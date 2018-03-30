@@ -34,12 +34,20 @@ interface DiscussionContract {
 
     }
 
+    interface ReplyView : BaseView<Presenter> {
+
+    }
+
     interface Presenter: BasePresenter{
 
         fun revealReplyFragment(revealSettings: RevealAnimationSettings)
 
+        fun dismissReplyFragment()
+
         fun openCommentThread(author: String, body: String, permlink: String)
 
-        fun postReply(author: String, permlink: String, content: String)
+        fun postCommentReply(author: String, permlink: String, content: String)
+
+        fun postDiscussionreply(content: String)
     }
 }

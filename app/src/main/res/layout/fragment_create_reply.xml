@@ -10,6 +10,7 @@
     <LinearLayout
         android:id="@+id/back_wrapper"
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:elevation="9dp">
@@ -26,13 +27,22 @@
             android:background="@drawable/mid_grey_ripple" />
 
         <TextView
+            android:layout_weight="2"
             android:id="@+id/replyTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_normal"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             tools:text="RE: sindonsdfoih"/>
+
+        <Button
+            android:id="@+id/publishButton"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/primary_dark"
+            android:layout_width="wrap_content"
+            android:text="@string/publish"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -63,6 +73,7 @@
             android:textCursorDrawable="@drawable/cursor_accent"
             android:textSize="21sp"
             tools:ignore="UnusedAttribute" />
+
 
     </ScrollView>
 

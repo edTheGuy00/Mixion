@@ -25,7 +25,6 @@ import com.taskail.mixion.utils.steemitutils.getVideoHash
 import com.taskail.mixion.utils.steemitutils.getVideoUrl
 import com.taskail.mixion.utils.steemitutils.isFromDtube
 import kotlinx.android.synthetic.main.activity_discussion_details.*
-import kotlinx.android.synthetic.main.bottom_sheet_comments.*
 
 
 /**Created by ed on 10/6/17.
@@ -56,6 +55,10 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     private lateinit var discussionsView: DiscussionContract.MainView
 
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
+
+    private lateinit var discussionTitle: String
+    private lateinit var discussionAuthor: String
+    private lateinit var discussionPermlink: String
 
     private var replyFragment: CreateReplyFragment? = null
     private var replyFragmentIsOpen = false
@@ -95,6 +98,10 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
     override fun revealReplyFragment(revealSettings: RevealAnimationSettings) {
         replyFragment = CreateReplyFragment.newInstance(revealSettings)
+                .apply {
+                    title = discussionTitle
+            presenter = this@DiscussionDetailsActivity
+        }
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container, replyFragment)
@@ -131,7 +138,10 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     }
 
     private fun setDiscussion(discussion: SteemDiscussion) {
-        discussionsView.displayTitle(discussion.title)
+        discussionTitle = discussion.title
+        discussionAuthor = discussion.author
+        discussionPermlink = discussion.permlink
+        discussionsView.displayTitle(discussionTitle)
         discussionsView.displayBtnInfo(discussion.netVotes.toString(),
                 discussion.pendingPayoutValue.replace("SBD", ""),
                 discussion.author,
@@ -140,7 +150,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         val newbody = HTML2Md.convert(discussion.body)
         discussionsView.displayMarkdownBody(newbody, getBypass())
         if (discussion.children > 0){
-            loadComments(discussion.author, discussion.permlink)
+            loadComments(discussionAuthor, discussionPermlink)
         } else {
             discussionsView.noComments()
         }
@@ -184,44 +194,59 @@ class DiscussionDetailsActivity : AppCompatActivity(),
                 bottomSheetDialogFragment.tag)
     }
 
-    override fun postReply(author: String, permlink: String, content: String) {
+    override fun postDiscussionreply(content: String) {
+        postReply(discussionAuthor, discussionPermlink, content)
+    }
+
+    override fun postCommentReply(author: String, permlink: String, content: String) {
+        postReply(author, permlink, content)
+    }
+
+    private fun postReply(author: String, permlink: String, content: String) {
         val tags = arrayOf("mixion", "test")
         RxSteemJManager.comment(author, permlink, content, tags,
                 object : SteemJCallback.CreatePostCallBack {
                     override fun onSuccess(permLink: String) {
-
+                        if (replyFragmentIsOpen) {
+                            closeReplyFragment()
+                        }
                     }
 
                     override fun onError(e: Throwable) {
-                        btn_send.isClickable = true
+
                     }
 
                 })
+    }
+
+    override fun dismissReplyFragment() {
+        closeReplyFragment()
+    }
+
+    private fun closeReplyFragment() {
+        (replyFragment as DismissableAnimation)
+                .dismiss(object :
+                        DismissableAnimation.OnDismissedListener {
+                    override
+                    fun onDismissed() {
+                        supportFragmentManager
+                                .beginTransaction()
+                                .remove(replyFragment)
+                                .commitAllowingStateLoss()
+                    }
+                })
+
+        replyFragmentIsOpen = false
     }
 
     override fun onBackPressed() {
         if (discussionsView.onBackPressed()){
             return
         } else if (replyFragmentIsOpen) {
-            (replyFragment as DismissableAnimation)
-                    .dismiss(object :
-                    DismissableAnimation.OnDismissedListener {
-                override
-                fun onDismissed() {
-                    supportFragmentManager
-                            .beginTransaction()
-                            .remove(replyFragment)
-                            .commitAllowingStateLoss()
-                }
-            })
-
-            replyFragmentIsOpen = false
-
+            closeReplyFragment()
             return
         }
         super.onBackPressed()
-
-
     }
 
     private fun getBypass(): Bypass{

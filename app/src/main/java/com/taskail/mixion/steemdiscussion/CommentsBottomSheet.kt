@@ -46,7 +46,7 @@ class CommentsBottomSheet: BottomSheetDialogFragment(), DiscussionContract.Botto
 
         btn_send.setOnClickListener {
             if (!commentInput.text.isNullOrEmpty()){
-                presenter.postReply(commentAuthor, commentPermLink, commentInput.text.toString())
+                presenter.postCommentReply(commentAuthor, commentPermLink, commentInput.text.toString())
 
                 btn_send.isClickable = false
             }
