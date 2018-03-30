@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.steemJ.RxSteemJManager
-import com.taskail.mixion.steemJ.SteemJCallback
+import com.taskail.mixion.User
 import kotlinx.android.synthetic.main.bottom_sheet_comments.*
 
 
@@ -52,13 +51,16 @@ class CommentsBottomSheet: BottomSheetDialogFragment(), DiscussionContract.Botto
             }
         }
 
+        if (!User.userIsLoggedIn){
+            input_bar.visibility = View.GONE
+        }
+
         setParentComment()
     }
 
     private fun setParentComment() {
         userName.text = commentAuthor
         commentBody.text = commentContent
-
         commentInput.hint = "reply to $commentAuthor"
     }
 

@@ -14,6 +14,7 @@ import cn.jzvd.JZVideoPlayerStandard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.taskail.mixion.R
+import com.taskail.mixion.User
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
 import com.taskail.mixion.utils.ImageSpanTarget
@@ -61,8 +62,12 @@ class DiscussionDetailsFragment : Fragment(),
         discussion_comments.itemAnimator = DefaultItemAnimator()
         discussion_comments.adapter = discussionAdapter
 
-        fabComment.setOnClickListener {
-            presenter.revealReplyFragment(constructRevealSettings())
+        if (User.userIsLoggedIn) {
+            fabComment.setOnClickListener {
+                presenter.revealReplyFragment(constructRevealSettings())
+            }
+        } else {
+            fabComment.hide()
         }
     }
 
