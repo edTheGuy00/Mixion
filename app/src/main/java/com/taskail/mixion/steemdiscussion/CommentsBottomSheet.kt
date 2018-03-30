@@ -15,28 +15,19 @@ import kotlinx.android.synthetic.main.bottom_sheet_comments.*
  *Created by ed on 3/26/18.
  */
 
-class CommentsBottomSheet: BottomSheetDialogFragment() {
+class CommentsBottomSheet: BottomSheetDialogFragment(), DiscussionContract.BottomSheetView {
+
+    override lateinit var presenter: DiscussionContract.Presenter
 
     companion object {
 
-        const val AUTHOR = "author"
-        const val BODY = "body"
-        const val PERMLINK = "permlink"
-
-        fun newInstance(author: String,
-                        body: String,
-                        permLink: String): CommentsBottomSheet {
-            val bundle = Bundle()
-            bundle.putString(AUTHOR, author)
-            bundle.putString(BODY, body)
-            bundle.putString(PERMLINK, permLink)
-            val fragment = CommentsBottomSheet()
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(): CommentsBottomSheet {
+            return CommentsBottomSheet()
         }
     }
 
     lateinit var commentAuthor: String
+    lateinit var commentContent: String
     lateinit var commentPermLink: String
 
 
@@ -53,45 +44,22 @@ class CommentsBottomSheet: BottomSheetDialogFragment() {
             dismiss()
         }
 
-        val author = arguments?.getString(AUTHOR)
-        val body = arguments?.getString(BODY)
-        val permlink = arguments?.getString(PERMLINK)
-
-        if (author != null && body != null && permlink != null) {
-            setParentComment(author, body)
-            commentAuthor = author
-            commentPermLink = permlink
-        }
-
         btn_send.setOnClickListener {
             if (!commentInput.text.isNullOrEmpty()){
-                postReply(commentInput.text.toString())
+                presenter.postReply(commentAuthor, commentPermLink, commentInput.text.toString())
 
                 btn_send.isClickable = false
             }
         }
+
+        setParentComment()
     }
 
-    private fun setParentComment(author: String?, body: String?) {
-        userName.text = author
-        commentBody.text = body
+    private fun setParentComment() {
+        userName.text = commentAuthor
+        commentBody.text = commentContent
 
-        commentInput.hint = "reply to $author"
-    }
-
-    private fun postReply(content: String) {
-        val tags = arrayOf("mixion", "test")
-        RxSteemJManager.comment(commentAuthor, commentPermLink, content, tags,
-                object : SteemJCallback.CreatePostCallBack {
-                    override fun onSuccess(permLink: String) {
-                        dismiss()
-                    }
-
-                    override fun onError(e: Throwable) {
-                        btn_send.isClickable = true
-                    }
-
-                })
+        commentInput.hint = "reply to $commentAuthor"
     }
 
 }

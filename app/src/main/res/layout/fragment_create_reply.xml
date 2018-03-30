@@ -1,6 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/back_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="9dp">
+
+        <!-- animate alpha in DribbleShot#enterAnimation
+             margins push out parent for the borderless ripple -->
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginEnd="@dimen/padding_normal"
+            android:layout_marginBottom="@dimen/padding_normal"
+            android:src="@drawable/ic_arrow_back_black"
+            android:background="@drawable/mid_grey_ripple" />
+
+        <TextView
+            android:id="@+id/replyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_normal"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:text="RE: sindonsdfoih"/>
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:id="@+id/edit_body_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <com.taskail.mixion.ui.markortexteditor.highlighter.HighlightingEditor
+            android:id="@+id/document__fragment__edit__highlighting_editor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:fontFamily="sans-serif-light"
+            android:gravity="top"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingBottom="120dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/dark_grey"
+            android:textCursorDrawable="@drawable/cursor_accent"
+            android:textSize="21sp"
+            tools:ignore="UnusedAttribute" />
+
+    </ScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/edit_post_action_bar_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:elevation="2dp"
+        android:paddingTop="4dp">
+
+        <LinearLayout
+            android:id="@+id/edit_post_action_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+</LinearLayout>

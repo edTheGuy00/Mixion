@@ -13,7 +13,6 @@ import cn.jzvd.JZVideoPlayer
 import cn.jzvd.JZVideoPlayerStandard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
-import com.taskail.mixion.BackPressedHandler
 import com.taskail.mixion.R
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
@@ -27,7 +26,7 @@ import kotlinx.android.synthetic.main.layout_discussion_details.view.*
  */
 
 class DiscussionDetailsFragment : Fragment(),
-        DiscussionContract.View{
+        DiscussionContract.MainView{
 
     override lateinit var presenter: DiscussionContract.Presenter
 
@@ -37,7 +36,7 @@ class DiscussionDetailsFragment : Fragment(),
 
     private var videoPlayer: JZVideoPlayerStandard? = null
 
-    lateinit var discussionAdapter: DiscussionRecyclerViewAdapter
+    private lateinit var discussionAdapter: DiscussionRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_steem_discussion, container, false)
@@ -56,7 +55,7 @@ class DiscussionDetailsFragment : Fragment(),
 
         discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout,
                 {
-                    a, b, p -> openComment(a, b, p)
+                    author, body, permLink -> presenter.openCommentThread(author, body, permLink)
                 })
 
         discussion_comments.itemAnimator = DefaultItemAnimator()
@@ -78,14 +77,6 @@ class DiscussionDetailsFragment : Fragment(),
                 fabY,
                 containerW,
                 containerH)
-    }
-
-    private fun openComment(author: String, body: String, permlink: String) {
-        val bottomSheetDialogFragment = CommentsBottomSheet
-                .newInstance(author, body, permlink)
-        bottomSheetDialogFragment.show(childFragmentManager,
-                bottomSheetDialogFragment.tag)
-
     }
 
     override fun displayTitle(title: String) {

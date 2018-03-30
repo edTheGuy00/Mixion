@@ -11,6 +11,9 @@ import com.taskail.mixion.ui.animation.DismissableAnimation
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
 import com.taskail.mixion.ui.animation.registerCircularRevealAnimation
 import com.taskail.mixion.ui.animation.startCircularExitAnimation
+import com.taskail.mixion.ui.markortexteditor.TextFormat
+import com.taskail.mixion.ui.markortexteditor.highlighter.HighlightingEditor
+import kotlinx.android.synthetic.main.fragment_create_reply.*
 
 /**
  *Created by ed on 3/29/18.
@@ -31,6 +34,10 @@ class CreateReplyFragment : Fragment(), DismissableAnimation {
         }
     }
 
+    lateinit var textFormat: TextFormat
+    lateinit var textModuleActionBar: ViewGroup
+    lateinit var hlEditor: HighlightingEditor
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_reply, container, false)
 
@@ -41,6 +48,26 @@ class CreateReplyFragment : Fragment(), DismissableAnimation {
                 ContextCompat.getColor(context!!, R.color.white))
 
         return  view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        textModuleActionBar = edit_post_action_bar
+        textFormat = TextFormat.getFormat(TextFormat.FORMAT_MARKDOWN, activity)
+        hlEditor = document__fragment__edit__highlighting_editor
+        setupHlEditor()
+
+        backBtn.setOnClickListener {
+            // dismiss this fragment
+        }
+    }
+
+    private fun setupHlEditor(){
+        hlEditor.setHighlighter(textFormat.highlighter)
+        textFormat.textModuleActions
+                .setHighlightingEditor(hlEditor)
+                .appendTextModuleActionsToBar(textModuleActionBar)
     }
 
 

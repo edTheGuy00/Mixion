@@ -11,7 +11,7 @@ import com.taskail.mixion.ui.animation.RevealAnimationSettings
  */
 interface DiscussionContract {
 
-    interface View : BaseView<Presenter> {
+    interface MainView : BaseView<Presenter> {
 
         fun displayTitle(title: String)
 
@@ -30,8 +30,16 @@ interface DiscussionContract {
         fun onBackPressed(): Boolean
     }
 
+    interface BottomSheetView : BaseView<Presenter> {
+
+    }
+
     interface Presenter: BasePresenter{
 
         fun revealReplyFragment(revealSettings: RevealAnimationSettings)
+
+        fun openCommentThread(author: String, body: String, permlink: String)
+
+        fun postReply(author: String, permlink: String, content: String)
     }
 }

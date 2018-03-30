@@ -13,6 +13,8 @@ import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
+import com.taskail.mixion.steemJ.RxSteemJManager
+import com.taskail.mixion.steemJ.SteemJCallback
 import com.taskail.mixion.ui.ElasticDragDismissFrameLayout
 import com.taskail.mixion.ui.animation.DismissableAnimation
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
@@ -23,8 +25,7 @@ import com.taskail.mixion.utils.steemitutils.getVideoHash
 import com.taskail.mixion.utils.steemitutils.getVideoUrl
 import com.taskail.mixion.utils.steemitutils.isFromDtube
 import kotlinx.android.synthetic.main.activity_discussion_details.*
-import com.taskail.mixion.ui.animation.DismissableAnimation.OnDismissedListener
-
+import kotlinx.android.synthetic.main.bottom_sheet_comments.*
 
 
 /**Created by ed on 10/6/17.
@@ -52,7 +53,7 @@ fun loadDiscussionIntent(context: Context, author: String, permlink: String): In
 class DiscussionDetailsActivity : AppCompatActivity(),
         DiscussionContract.Presenter {
 
-    private lateinit var discussionsView: DiscussionContract.View
+    private lateinit var discussionsView: DiscussionContract.MainView
 
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
 
@@ -68,7 +69,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         setContentView(R.layout.activity_discussion_details)
 
         discussionsView = supportFragmentManager
-                .findFragmentById(R.id.discussion_details_fragment) as DiscussionContract.View
+                .findFragmentById(R.id.discussion_details_fragment) as DiscussionContract.MainView
 
         discussionsView.presenter = this
 
@@ -169,6 +170,33 @@ class DiscussionDetailsActivity : AppCompatActivity(),
             }
 
         })
+    }
+
+    override fun openCommentThread(author: String, body: String, permlink: String) {
+        val bottomSheetDialogFragment = CommentsBottomSheet
+                .newInstance().apply {
+                    presenter = this@DiscussionDetailsActivity
+                    commentAuthor = author
+                    commentContent = body
+                    commentPermLink = permlink
+                }
+        bottomSheetDialogFragment.show(supportFragmentManager,
+                bottomSheetDialogFragment.tag)
+    }
+
+    override fun postReply(author: String, permlink: String, content: String) {
+        val tags = arrayOf("mixion", "test")
+        RxSteemJManager.comment(author, permlink, content, tags,
+                object : SteemJCallback.CreatePostCallBack {
+                    override fun onSuccess(permLink: String) {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        btn_send.isClickable = true
+                    }
+
+                })
     }
 
     override fun onBackPressed() {
