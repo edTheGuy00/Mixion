@@ -38,6 +38,8 @@ class DiscussionDetailsFragment : Fragment(),
 
     private var videoPlayer: JZVideoPlayerStandard? = null
 
+    private var jzVideOpen = false
+
     private lateinit var discussionAdapter: DiscussionRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -109,18 +111,26 @@ class DiscussionDetailsFragment : Fragment(),
         videoPlayer = JZVideoPlayerStandard(context)
         videoPlayerHolder.addView(videoPlayer)
 
+        jzVideOpen = true
+
 
         videoPlayer?.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL)
 
     }
 
     override fun onBackPressed(): Boolean {
-        return JZVideoPlayer.backPress()
+        return if (jzVideOpen) {
+            JZVideoPlayer.backPress()
+        } else {
+            false
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        JZVideoPlayerStandard.releaseAllVideos()
+        if (jzVideOpen) {
+            JZVideoPlayerStandard.releaseAllVideos()
+        }
     }
 
     override fun displayYoutube(videoId: String) {
