@@ -203,6 +203,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     }
 
     private fun postReply(author: String, permlink: String, content: String) {
+        discussionsView.displayToast(getString(R.string.submitting_comment))
         val tags = arrayOf("mixion", "test")
         RxSteemJManager.comment(author, permlink, content, tags,
                 object : SteemJCallback.CreatePostCallBack {
@@ -210,6 +211,7 @@ class DiscussionDetailsActivity : AppCompatActivity(),
                         if (replyFragmentIsOpen) {
                             closeReplyFragment()
                         }
+
                     }
 
                     override fun onError(e: Throwable) {

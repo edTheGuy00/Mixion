@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import cn.jzvd.JZVideoPlayer
 import cn.jzvd.JZVideoPlayerStandard
 import com.bumptech.glide.Glide
@@ -124,6 +125,10 @@ class DiscussionDetailsFragment : Fragment(),
 
     override fun displayYoutube(videoId: String) {
         //TODO - extract youtube id, setup player
+    }
+
+    override fun displayToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun displayBtnInfo(votes: String, payout: String, user: String, timeAgo: String) {

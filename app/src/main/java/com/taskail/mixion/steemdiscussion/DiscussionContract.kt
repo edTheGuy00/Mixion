@@ -13,6 +13,8 @@ interface DiscussionContract {
 
     interface MainView : BaseView<Presenter> {
 
+        fun displayToast(message: String)
+
         fun displayTitle(title: String)
 
         fun displayBtnInfo(votes: String, payout: String, user: String, timeAgo: String)
