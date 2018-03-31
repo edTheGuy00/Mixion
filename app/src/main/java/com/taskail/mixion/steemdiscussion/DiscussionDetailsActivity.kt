@@ -211,11 +211,10 @@ class DiscussionDetailsActivity : AppCompatActivity(),
                         if (replyFragmentIsOpen) {
                             closeReplyFragment()
                         }
-
                     }
 
                     override fun onError(e: Throwable) {
-
+                        // TODO - handle error
                     }
 
                 })

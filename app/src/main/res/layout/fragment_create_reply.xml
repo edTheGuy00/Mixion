@@ -12,8 +12,10 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="9dp">
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/light_grey"
+        android:elevation="1dp">
 
         <!-- animate alpha in DribbleShot#enterAnimation
              margins push out parent for the borderless ripple -->
@@ -72,6 +74,8 @@
             android:textColor="@color/dark_grey"
             android:textCursorDrawable="@drawable/cursor_accent"
             android:textSize="21sp"
+            android:hint="@string/enter_comment"
+            android:textColorHint="@color/md_grey_500"
             tools:ignore="UnusedAttribute" />
 
 
@@ -80,6 +84,7 @@
     <HorizontalScrollView
         android:id="@+id/edit_post_action_bar_scrollView"
         android:layout_width="match_parent"
+        android:background="@color/light_grey"
         android:layout_height="46dp"
         android:elevation="2dp"
         android:paddingTop="4dp">
