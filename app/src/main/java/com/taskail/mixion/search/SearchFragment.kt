@@ -58,6 +58,7 @@ class SearchFragment : BaseFragment(),
         searchRecyclerView.addOnScrollListener( object : EndlessRecyclerViewScrollListener(layoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView?) {
                 presenter.askMore()
+                toggleLoading()
             }
 
             override fun scrollAction(dx: Int, dy: Int) {
@@ -71,7 +72,7 @@ class SearchFragment : BaseFragment(),
             if (query != null) {
                 presenter.askSteem(query)
                 view?.hideSoftKeyboard()
-
+                toggleLoading()
                 //TODO - set a loading indicator
             }
             return true
@@ -89,6 +90,7 @@ class SearchFragment : BaseFragment(),
 
     override fun noResultsFound() {
         //TODO - add no results message
+        toggleLoading()
     }
 
     override fun cleanResults() {
@@ -98,6 +100,18 @@ class SearchFragment : BaseFragment(),
     override fun setResults() {
 //        hideLogo()
         searchAdapter.notifyDataSetChanged()
+        toggleLoading()
+    }
+
+    private fun toggleLoading(){
+        if (isLoading())
+            searchLoadingIndicator.visibility = View.GONE
+        else
+            searchLoadingIndicator.visibility = View.VISIBLE
+    }
+
+    private fun isLoading(): Boolean {
+        return searchLoadingIndicator.visibility == View.VISIBLE
     }
 
 //    private fun hideLogo(){
