@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/searchContainer"
@@ -11,6 +11,8 @@
     tools:visibility="visible">
 
     <FrameLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
@@ -53,6 +55,7 @@
         android:src="@drawable/ask_steem_logo"/-->
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/toolbarContainer"
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,4 +63,24 @@
         android:scrollbars="vertical"
         android:scrollbarStyle="insideOverlay"/>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/searchLoadingIndicator"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="end|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_filter_list_black_24dp"
+        android:layout_margin="@dimen/fab_margin" />
+
+</RelativeLayout>
