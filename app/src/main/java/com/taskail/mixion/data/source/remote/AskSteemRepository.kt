@@ -22,7 +22,7 @@ class AskSteemRepository(private val disposable: CompositeDisposable,
     }
 
     private fun askSteem(term: String) : Observable<AskSteemResult> {
-        return askSteemApi.askSteem(term)
+        return askSteemApi.askSteem(term, "created", "desc")
     }
 
     private fun askMore(term: String, page: Int) : Observable<AskSteemResult> {

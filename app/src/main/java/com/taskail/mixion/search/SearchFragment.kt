@@ -1,10 +1,13 @@
 package com.taskail.mixion.search
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : BaseFragment(),
         SearchContract.View,
         SearchAdapter.SearchAdapterCallback {
+
+    val TAG = javaClass.simpleName
 
     override lateinit var presenter: SearchContract.Presenter
 
@@ -65,6 +70,33 @@ class SearchFragment : BaseFragment(),
 
             }
         })
+
+        fabSortSearch.setOnClickListener {
+            openSortDialog()
+        }
+    }
+
+    private fun openSortDialog() {
+        val sortItems = context?.resources?.getStringArray(R.array.sort_search)
+        AlertDialog
+                .Builder(context)
+                .setTitle(R.string.sort_by)
+                .setSingleChoiceItems(sortItems, -1, {
+                    dialogInterface, i -> handeDialogSlection(dialogInterface, i)
+                })
+                .create()
+                .show()
+    }
+
+    private fun handeDialogSlection(dialogInterface: DialogInterface, position: Int){
+
+        when (position) {
+            0 -> Log.d(TAG, "sort newest")
+            1 -> Log.d(TAG, "sort oldest")
+            2 -> Log.d(TAG, "sort comments")
+            3 -> Log.d(TAG, "sort votes")
+        }
+        dialogInterface.dismiss()
     }
 
     private inner class QueryTextChangeListener : SearchView.OnQueryTextListener{

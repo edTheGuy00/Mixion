@@ -10,6 +10,12 @@ import retrofit2.http.Query
  */
 interface AskSteemApi {
 
+    @GET("search")
+    fun askSteem(@Query("q") author: String,
+                        @Query(value = "sort_by") sort: String,
+                        @Query(value = "order") order: String,
+                        @Query("pg") page: Int = 1): Observable<AskSteemResult>
+
     //call using ("search+" + term)
     @GET("search")
     fun askSteem(@Query("q") searchTerm: String): Observable<AskSteemResult>

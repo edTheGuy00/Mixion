@@ -5,6 +5,7 @@
     <string name="app_name">Mixion</string>
     <string name="feed">Feed</string>
     <string name="feed_back">Feedback</string>
+    <string name="sort_by">Sort By</string>
     <string name="github">Github</string>
     <string name="donate">Donate</string>
     <string name="bookmark">Bookmarks</string>
@@ -101,4 +102,10 @@
         <item quantity="one">%s post</item>
         <item quantity="other">%s posts</item>
     </plurals>
+    <string-array name="sort_search">
+        <item>Newest</item>
+        <item>Oldest</item>
+        <item>Most Comments</item>
+        <item>Most Votes</item>
+    </string-array>
 </resources>
