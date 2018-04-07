@@ -19,7 +19,10 @@ class SearchPresenter (
 
     private var hasMore = false
     private var currentQuery = ""
+    private var sort = "created"
+    private var order = "desc"
     private var currentPage = 0
+    private var queryPage = 1
 
     init {
         searchView.presenter = this
@@ -33,6 +36,16 @@ class SearchPresenter (
     override fun askSteem(query: String) {
         if (query != currentQuery) {
             currentQuery = query
+            handleSearchRequest()
+        }
+    }
+
+    override fun sortBy(sort: String, order: String) {
+        if (this.sort == sort && this.order == order){
+            return
+        } else {
+            this.sort = sort
+            this.order = order
             handleSearchRequest()
         }
     }
@@ -57,13 +70,16 @@ class SearchPresenter (
 
     private fun performSearch(){
 
-        repository.askSteem(currentQuery, object : AskSteemData.AskSteemCallback {
+        searchView.toggleLoading()
+
+        repository.askSteem(currentQuery, sort, order, queryPage, object : AskSteemData.AskSteemCallback {
             override fun onDataLoaded(askSteemResult: AskSteemResult) {
                 handleResults(askSteemResult)
+                searchView.toggleLoading()
             }
 
             override fun onLoadError(error: Throwable) {
-
+                searchView.toggleLoading()
             }
         })
 
@@ -90,16 +106,8 @@ class SearchPresenter (
 
     override fun askMore() {
         if (hasMore){
-            repository.askMore(currentQuery, nextPage(), object : AskSteemData.AskSteemCallback {
-                override fun onDataLoaded(askSteemResult: AskSteemResult) {
-                    handleResults(askSteemResult)
-                }
-
-                override fun onLoadError(error: Throwable) {
-                    //TODO - handle error
-                }
-            })
-
+            queryPage = nextPage()
+            performSearch()
         }
     }
 }

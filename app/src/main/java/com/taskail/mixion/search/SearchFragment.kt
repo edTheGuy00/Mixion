@@ -63,7 +63,6 @@ class SearchFragment : BaseFragment(),
         searchRecyclerView.addOnScrollListener( object : EndlessRecyclerViewScrollListener(layoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView?) {
                 presenter.askMore()
-                toggleLoading()
             }
 
             override fun scrollAction(dx: Int, dy: Int) {
@@ -82,19 +81,19 @@ class SearchFragment : BaseFragment(),
                 .Builder(context)
                 .setTitle(R.string.sort_by)
                 .setSingleChoiceItems(sortItems, -1, {
-                    dialogInterface, i -> handeDialogSlection(dialogInterface, i)
+                    dialogInterface, i -> handleDialogSelection(dialogInterface, i)
                 })
                 .create()
                 .show()
     }
 
-    private fun handeDialogSlection(dialogInterface: DialogInterface, position: Int){
+    private fun handleDialogSelection(dialogInterface: DialogInterface, position: Int){
 
         when (position) {
-            0 -> Log.d(TAG, "sort newest")
-            1 -> Log.d(TAG, "sort oldest")
-            2 -> Log.d(TAG, "sort comments")
-            3 -> Log.d(TAG, "sort votes")
+            0 -> presenter.sortBy("created", "desc")
+            1 -> presenter.sortBy("created", "asc")
+            2 -> presenter.sortBy("children", "desc")
+            3 -> presenter.sortBy("net_votes", "desc")
         }
         dialogInterface.dismiss()
     }
@@ -104,7 +103,6 @@ class SearchFragment : BaseFragment(),
             if (query != null) {
                 presenter.askSteem(query)
                 view?.hideSoftKeyboard()
-                toggleLoading()
                 //TODO - set a loading indicator
             }
             return true
@@ -122,7 +120,6 @@ class SearchFragment : BaseFragment(),
 
     override fun noResultsFound() {
         //TODO - add no results message
-        toggleLoading()
     }
 
     override fun cleanResults() {
@@ -132,10 +129,9 @@ class SearchFragment : BaseFragment(),
     override fun setResults() {
 //        hideLogo()
         searchAdapter.notifyDataSetChanged()
-        toggleLoading()
     }
 
-    private fun toggleLoading(){
+    override fun toggleLoading(){
         if (isLoading())
             searchLoadingIndicator.visibility = View.GONE
         else

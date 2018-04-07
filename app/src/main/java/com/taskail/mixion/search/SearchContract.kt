@@ -20,9 +20,13 @@ interface SearchContract {
 
         fun noResultsFound()
 
+        fun toggleLoading()
+
     }
 
     interface Presenter : BasePresenter{
+
+        fun sortBy(sort: String, order: String)
 
         fun askSteem(query: String)
 

@@ -13,20 +13,13 @@ import io.reactivex.schedulers.Schedulers
 class AskSteemRepository(private val disposable: CompositeDisposable,
                          private val askSteemApi: AskSteemApi) : AskSteemData {
 
-    override fun askSteem(term: String, callback: AskSteemData.AskSteemCallback) {
-        fetchOnDisposable(callback, askSteem(term))
+    override fun askSteem(term: String, sort: String, order: String, page: Int, callback: AskSteemData.AskSteemCallback) {
+        fetchOnDisposable(callback, askSteem(term, sort, order, page))
     }
 
-    override fun askMore(term: String, page: Int, callback: AskSteemData.AskSteemCallback) {
-        fetchOnDisposable(callback, askMore(term, page))
-    }
 
-    private fun askSteem(term: String) : Observable<AskSteemResult> {
-        return askSteemApi.askSteem(term, "created", "desc")
-    }
-
-    private fun askMore(term: String, page: Int) : Observable<AskSteemResult> {
-        return askSteemApi.askMore(term, page)
+    private fun askSteem(term: String, sort: String, order: String, page: Int) : Observable<AskSteemResult> {
+        return askSteemApi.askSteem(term, sort, order, page)
     }
 
     private fun fetchOnDisposable(callback: AskSteemData.AskSteemCallback,

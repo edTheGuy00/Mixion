@@ -14,7 +14,6 @@ interface AskSteemData {
         fun onLoadError(error: Throwable)
     }
 
-    fun askSteem(term: String, callback: AskSteemCallback)
+    fun askSteem(term: String, sort: String, order: String, page: Int, callback: AskSteemCallback)
 
-    fun askMore(term: String, page: Int, callback: AskSteemCallback)
 }
