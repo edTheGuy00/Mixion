@@ -33,6 +33,8 @@ class SearchFragment : BaseFragment(),
 
     lateinit var searchAdapter: SearchAdapter
 
+    private var fabIsVisible = true
+
     companion object {
         @JvmStatic fun newInstance(): SearchFragment{
             return SearchFragment()
@@ -66,7 +68,13 @@ class SearchFragment : BaseFragment(),
             }
 
             override fun scrollAction(dx: Int, dy: Int) {
-
+                if (dy > 0 && fabIsVisible) {
+                    fabIsVisible = false
+                    fabSortSearch.hide()
+                } else if (dy < 0 && !fabIsVisible) {
+                    fabIsVisible = true
+                    fabSortSearch.show()
+                }
             }
         })
 
@@ -103,7 +111,6 @@ class SearchFragment : BaseFragment(),
             if (query != null) {
                 presenter.askSteem(query)
                 view?.hideSoftKeyboard()
-                //TODO - set a loading indicator
             }
             return true
         }
