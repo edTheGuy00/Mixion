@@ -34,6 +34,8 @@ interface DiscussionContract {
 
     interface BottomSheetView : BaseView<Presenter> {
 
+        fun displayComments(commentsFromResponse: Array<ContentReply>)
+
     }
 
     interface ReplyView : BaseView<Presenter> {
@@ -46,7 +48,7 @@ interface DiscussionContract {
 
         fun dismissReplyFragment()
 
-        fun openCommentThread(author: String, body: String, permlink: String)
+        fun openCommentThread(author: String, body: String, permlink: String, hasReplies: Boolean)
 
         fun postCommentReply(author: String, permlink: String, content: String)
 

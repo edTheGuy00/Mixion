@@ -59,7 +59,7 @@ class DiscussionDetailsFragment : Fragment(),
 
         discussionAdapter = DiscussionRecyclerViewAdapter(titleAndDescriptionLayout,
                 {
-                    author, body, permLink -> presenter.openCommentThread(author, body, permLink)
+                    author, body, permLink, replies -> presenter.openCommentThread(author, body, permLink, replies)
                 })
 
         discussion_comments.itemAnimator = DefaultItemAnimator()

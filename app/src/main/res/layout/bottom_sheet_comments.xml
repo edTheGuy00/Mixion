@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -25,40 +24,13 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:padding="8dp"
-        android:id="@+id/parent_comment"
-        android:layout_below="@+id/toolbar_frame"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@color/md_grey_300"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/userName"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="3dp"
-            android:fontFamily="@font/vidaloka"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_width="wrap_content"
-            tools:text="UserName"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:padding="4dp"
-            android:id="@+id/commentBody"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah "/>
-    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/draftsRecycler"
-        android:layout_below="@+id/parent_comment"
+        android:layout_below="@+id/toolbar_frame"
+        android:id="@+id/commentsRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     <LinearLayout android:orientation="horizontal"
         android:id="@+id/input_bar"

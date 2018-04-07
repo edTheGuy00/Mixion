@@ -54,6 +54,8 @@ class DiscussionDetailsActivity : AppCompatActivity(),
 
     private lateinit var discussionsView: DiscussionContract.MainView
 
+    private lateinit var commentsView: DiscussionContract.BottomSheetView
+
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
 
     private lateinit var discussionTitle: String
@@ -182,16 +184,39 @@ class DiscussionDetailsActivity : AppCompatActivity(),
         })
     }
 
-    override fun openCommentThread(author: String, body: String, permlink: String) {
+    override fun openCommentThread(author: String, body: String, permlink: String, hasReplies: Boolean) {
         val bottomSheetDialogFragment = CommentsBottomSheet
                 .newInstance().apply {
                     presenter = this@DiscussionDetailsActivity
                     commentAuthor = author
                     commentContent = body
                     commentPermLink = permlink
+                    if (hasReplies) {
+                        this.hasReplies = true
+                        loadCommentReplies(author, permlink)
+                    }
+
+                    commentsView = this
                 }
         bottomSheetDialogFragment.show(supportFragmentManager,
                 bottomSheetDialogFragment.tag)
+    }
+
+    private fun loadCommentReplies(author: String, permlink: String) {
+        steemitRepository?.remoteRepository?.getComments(author, permlink, object :
+                SteemitDataSource.DataLoadedCallback<ContentReply> {
+            override fun onDataLoaded(list: List<ContentReply>) {
+                // Not needed, remove and fix this
+            }
+
+            override fun onDataLoaded(array: Array<ContentReply>) {
+                commentsView.displayComments(array)
+            }
+
+            override fun onLoadError(error: Throwable) {
+            }
+
+        })
     }
 
     override fun postDiscussionreply(content: String) {
