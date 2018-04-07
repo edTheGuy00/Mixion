@@ -29,7 +29,7 @@ class RemoteUserDataSource(private val disposable: CompositeDisposable,
     }
 
     private fun getUserMentions(user: String): Observable<AskSteemResult>{
-        return userMentions.getUserMentions(author = "\"\\@$user\"-author:$user",
+        return userMentions.askSteem(author = "\"\\@$user\"-author:$user",
                 sort = "created",
                 order = "desc",
                 page = 1)

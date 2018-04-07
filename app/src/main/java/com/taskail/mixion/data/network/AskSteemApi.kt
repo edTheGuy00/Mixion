@@ -16,19 +16,4 @@ interface AskSteemApi {
                         @Query(value = "order") order: String,
                         @Query("pg") page: Int = 1): Observable<AskSteemResult>
 
-    //call using ("search+" + term)
-    @GET("search")
-    fun askSteem(@Query("q") searchTerm: String): Observable<AskSteemResult>
-
-    //call using ("search+" + term, page)
-    @GET("search")
-    fun askMore(
-            @Query("q") searchTerm: String,
-            @Query("pg") page: Int?): Observable<AskSteemResult>
-
-    @GET("search")
-    fun getUserMentions(@Query("q") author: String,
-                        @Query(value = "sort_by") sort: String,
-                        @Query(value = "order") order: String,
-                        @Query("pg") page: Int): Observable<AskSteemResult>
 }
