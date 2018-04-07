@@ -127,7 +127,7 @@ class SearchFragment : BaseFragment(),
     }
 
     override fun setResults() {
-//        hideLogo()
+        hideLogo()
         searchAdapter.notifyDataSetChanged()
     }
 
@@ -142,11 +142,11 @@ class SearchFragment : BaseFragment(),
         return searchLoadingIndicator.visibility == View.VISIBLE
     }
 
-//    private fun hideLogo(){
-//        if (askSteemLogo.visibility != View.GONE) {
-//            askSteemLogo.visibility = View.GONE
-//        }
-//    }
+    private fun hideLogo(){
+        if (askSteemLogo.visibility != View.GONE) {
+            askSteemLogo.visibility = View.GONE
+        }
+    }
 
     override fun onBackPressed() : Boolean {
         closeFragment(searchContainer)
