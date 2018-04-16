@@ -1,5 +1,6 @@
 package com.taskail.mixion.data.network
 
+import com.taskail.mixion.data.models.AccountVotes
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
@@ -44,4 +45,6 @@ interface SteemAPI {
     @GET("get_trending_tags")
     fun getTags(@Query("afterTag") afterTag: String, @Query("limit") limit: Int?): Observable<Array<Tags>>
 
+    @GET("get_account_votes")
+    fun getAccountVotes(@Query("voter") voter: String): Observable<Array<AccountVotes>>
 }

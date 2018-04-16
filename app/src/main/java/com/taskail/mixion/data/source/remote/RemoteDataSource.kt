@@ -1,6 +1,7 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
+import com.taskail.mixion.data.models.AccountVotes
 import com.taskail.mixion.data.models.ContentReply
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
@@ -77,6 +78,12 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         fetchOnDisposable(callBack, getDiscussion(author, permlink))
     }
 
+    override fun getAccountVotes(user: String,
+                                 response: (Array<AccountVotes>) -> Unit,
+                                 error: (Throwable) -> Unit) {
+        getOnDisposable(steemAPI.getAccountVotes(user), response, error)
+    }
+
     private fun getUserFeed(): Observable<Array<SteemDiscussion>>{
         return steemAPI.getUserFeed("{\"tag\":\"$tag\",\"limit\":\"$loadCount\"}")
     }
@@ -144,6 +151,19 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
                         { callback.onLoadError(it) }))
     }
 
+
+    private fun <T> getOnDisposable(observable: Observable <T>,
+                                        response: (T) -> Unit,
+                                        error: (Throwable) -> Unit) {
+
+        disposable.add(observable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        { response(it) },
+                        { error(it) }))
+
+    }
     private fun fetchOnDisposable(callback: SteemitDataSource.DiscussionLoadedCallBack,
                                   observable: Observable<SteemDiscussion>){
 
