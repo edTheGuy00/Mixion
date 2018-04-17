@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.TypedValue
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
@@ -51,6 +52,8 @@ fun loadDiscussionIntent(context: Context, author: String, permlink: String): In
 
 class DiscussionDetailsActivity : AppCompatActivity(),
         DiscussionContract.Presenter {
+
+    private val TAG = javaClass.simpleName
 
     private lateinit var discussionsView: DiscussionContract.MainView
 
@@ -128,14 +131,10 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     }
 
     private fun loadDiscussion(author: String, permlink: String) {
-        steemitRepository?.getDiscussion(author, permlink, object : SteemitDataSource.DiscussionLoadedCallBack {
-            override fun onDataLoaded(discussion: SteemDiscussion) {
-                setDiscussion(discussion)
-            }
-
-            override fun onLoadError(error: Throwable) {
-                //TODO - add loading error
-            }
+        steemitRepository?.getDiscussion(author, permlink, {
+            setDiscussion(it)
+        }, {
+            Log.e(TAG, it.message)
         })
     }
 
@@ -168,20 +167,13 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     }
 
     private fun loadComments(author: String, permlink: String){
-        steemitRepository?.remoteRepository?.getComments(author, permlink, object :
-                SteemitDataSource.DataLoadedCallback<ContentReply> {
-            override fun onDataLoaded(list: List<ContentReply>) {
-                // Not needed, remove and fix this
-            }
-
-            override fun onDataLoaded(array: Array<ContentReply>) {
-                discussionsView.displayComments(array)
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
-
-        })
+        steemitRepository?.remoteRepository?.getComments(author, permlink,
+                {
+                    discussionsView.displayComments(it)
+                },
+                {
+                    Log.e(TAG, it.message)
+                })
     }
 
     override fun openCommentThread(author: String, body: String, permlink: String, hasReplies: Boolean) {
@@ -203,20 +195,14 @@ class DiscussionDetailsActivity : AppCompatActivity(),
     }
 
     private fun loadCommentReplies(author: String, permlink: String) {
-        steemitRepository?.remoteRepository?.getComments(author, permlink, object :
-                SteemitDataSource.DataLoadedCallback<ContentReply> {
-            override fun onDataLoaded(list: List<ContentReply>) {
-                // Not needed, remove and fix this
-            }
-
-            override fun onDataLoaded(array: Array<ContentReply>) {
-                commentsView.displayComments(array)
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
-
-        })
+        steemitRepository?.remoteRepository?.getComments(author, permlink,
+                {
+                    commentsView.displayComments(it)
+                },
+                {
+                    Log.e(TAG, it.message)
+                }
+        )
     }
 
     override fun postDiscussionreply(content: String) {

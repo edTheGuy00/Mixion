@@ -54,8 +54,8 @@ class SteemitRepository(
     /**
      * This get's a single discussion.
      */
-    override fun getDiscussion(author: String, permlink: String, callBack: SteemitDataSource.DiscussionLoadedCallBack) {
-        remoteRepository.getDiscussion(callBack, author, permlink)
+    override fun getDiscussion(author: String, permlink: String, response: (SteemDiscussion) -> Unit, error: (Throwable) -> Unit) {
+        remoteRepository.getDiscussion(author, permlink, response, error)
     }
 
     /**

@@ -44,9 +44,14 @@ interface SteemitDataSource {
         fun getTags(response: (Array<Tags>) -> Unit,
                     error: (Throwable) -> Unit)
 
-        fun getDiscussion(callBack: DiscussionLoadedCallBack, author: String, permlink: String)
+        fun getDiscussion(author: String, permlink: String,
+                          response: (SteemDiscussion) -> Unit,
+                          error: (Throwable) -> Unit)
 
-        fun getComments(author: String, permlink: String, callback: DataLoadedCallback<ContentReply>)
+        fun getComments(author: String,
+                        permlink: String,
+                        response: (Array<ContentReply>) -> Unit,
+                        error: (Throwable) -> Unit)
 
         fun getAccountVotes(user: String,
                             response: (Array<AccountVotes>) -> Unit,
@@ -62,7 +67,8 @@ interface SteemitDataSource {
 
         fun deleteTags()
 
-        fun getDrafts(callback: DataLoadedCallback<Drafts>)
+        fun getDrafts(response: (List<Drafts>) -> Unit,
+                      error: (Throwable) -> Unit)
 
         fun saveDraft(draft: Drafts)
 
@@ -79,7 +85,9 @@ interface SteemitDataSource {
                     response: (Array<SteemDiscussion>) -> Unit,
                     error: (Throwable) -> Unit)
 
-    fun getDiscussion(author: String, permlink: String, callBack: DiscussionLoadedCallBack)
+    fun getDiscussion(author: String, permlink: String,
+                      response: (SteemDiscussion) -> Unit,
+                      error: (Throwable) -> Unit)
 
     fun getTags(response: (List<RoomTags>) -> Unit,
                 error: (Throwable) -> Unit)
@@ -101,20 +109,4 @@ interface SteemitDataSource {
                     startPermLink: String,
                     response: (Array<SteemDiscussion>) -> Unit,
                     error: (Throwable) -> Unit)
-
-    interface DataLoadedCallback<T>{
-
-        fun onDataLoaded(list: List<T>)
-
-        fun onDataLoaded(array: Array<T>)
-
-        fun onLoadError(error: Throwable)
-    }
-
-    interface DiscussionLoadedCallBack{
-
-        fun onDataLoaded(discussion: SteemDiscussion)
-
-        fun onLoadError(error: Throwable)
-    }
 }

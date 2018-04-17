@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,20 +58,14 @@ class DraftsFragment : BaseFragment(){
 
         draftsRecycler.adapter = adapter
 
-        steemitRepository?.localRepository?.getDrafts(object :
-                SteemitDataSource.DataLoadedCallback<Drafts>{
-            override fun onDataLoaded(list: List<Drafts>) {
-                adapter.drafts = list.toMutableList()
-            }
-
-            override fun onDataLoaded(array: Array<Drafts>) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
-
-        })
+        steemitRepository?.localRepository?.getDrafts(
+                {
+                    adapter.drafts = it.toMutableList()
+                },
+                {
+                    Log.e(TAG, it.message)
+                }
+        )
 
     }
 

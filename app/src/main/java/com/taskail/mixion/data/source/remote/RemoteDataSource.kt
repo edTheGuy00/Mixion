@@ -77,12 +77,12 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         getOnDisposable(getTags(), response, error)
     }
 
-    override fun getComments(author: String, permlink: String, callback: SteemitDataSource.DataLoadedCallback<ContentReply>) {
-        fetchOnDisposable(callback, getComments(author, permlink))
+    override fun getComments(author: String, permlink: String, response: (Array<ContentReply>) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getComments(author, permlink), response, error)
     }
 
-    override fun getDiscussion(callBack: SteemitDataSource.DiscussionLoadedCallBack, author: String, permlink: String) {
-        fetchOnDisposable(callBack, getDiscussion(author, permlink))
+    override fun getDiscussion(author: String, permlink: String, response: (SteemDiscussion) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getDiscussion(author, permlink), response, error)
     }
 
     override fun getAccountVotes(user: String,
@@ -147,21 +147,9 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
         return steemAPI.getContentReplies(author, permlink)
     }
 
-    private fun <T> fetchOnDisposable(callback: SteemitDataSource.DataLoadedCallback<T>,
-                                  observable: Observable<Array<T>>){
-
-        disposable.add(observable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { callback.onDataLoaded(it)},
-                        { callback.onLoadError(it) }))
-    }
-
-
     private fun <T> getOnDisposable(observable: Observable <T>,
-                                        response: (T) -> Unit,
-                                        error: (Throwable) -> Unit) {
+                                    response: (T) -> Unit,
+                                    error: (Throwable) -> Unit) {
 
         disposable.add(observable
                 .observeOn(AndroidSchedulers.mainThread())
@@ -175,17 +163,6 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
                         }
                 )
         )
-
-    }
-    private fun fetchOnDisposable(callback: SteemitDataSource.DiscussionLoadedCallBack,
-                                  observable: Observable<SteemDiscussion>){
-
-        disposable.add(observable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { callback.onDataLoaded(it)},
-                        { callback.onLoadError(it) }))
 
     }
 
