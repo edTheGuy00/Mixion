@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.SteemitDataSource
-import com.taskail.mixion.data.source.local.Drafts
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.utils.*
 import kotlinx.android.synthetic.main.fragment_drafts.*

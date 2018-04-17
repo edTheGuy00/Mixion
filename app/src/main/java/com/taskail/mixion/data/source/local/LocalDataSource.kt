@@ -2,6 +2,8 @@ package com.taskail.mixion.data.source.local
 
 import android.util.Log
 import com.taskail.mixion.data.SteemitDataSource
+import com.taskail.mixion.data.models.Drafts
+import com.taskail.mixion.data.models.RoomTags
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

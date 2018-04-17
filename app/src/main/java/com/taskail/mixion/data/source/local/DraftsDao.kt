@@ -1,6 +1,7 @@
 package com.taskail.mixion.data.source.local
 
 import android.arch.persistence.room.*
+import com.taskail.mixion.data.models.Drafts
 
 
 /**

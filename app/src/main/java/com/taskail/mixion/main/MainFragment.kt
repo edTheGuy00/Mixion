@@ -18,7 +18,7 @@ import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.User
 import com.taskail.mixion.data.models.ActiveVote
-import com.taskail.mixion.data.source.local.Drafts
+import com.taskail.mixion.data.models.Drafts
 import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter

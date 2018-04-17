@@ -1,8 +1,8 @@
 package com.taskail.mixion.data
 
 import com.taskail.mixion.data.models.*
-import com.taskail.mixion.data.source.local.Drafts
-import com.taskail.mixion.data.source.local.RoomTags
+import com.taskail.mixion.data.models.Drafts
+import com.taskail.mixion.data.models.RoomTags
 
 /**
  *Created by ed on 1/24/18.

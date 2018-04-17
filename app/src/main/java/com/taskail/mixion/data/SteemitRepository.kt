@@ -5,7 +5,7 @@ import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
 import com.taskail.mixion.data.source.local.LocalDataSource
-import com.taskail.mixion.data.source.local.RoomTags
+import com.taskail.mixion.data.models.RoomTags
 import com.taskail.mixion.data.source.remote.RemoteDataSource
 import java.util.*
 

@@ -6,9 +6,7 @@ import android.support.v7.app.AppCompatDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.taskail.mixion.R
-import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
-import com.taskail.mixion.data.source.local.RoomTags
 import kotlinx.android.synthetic.main.dialog_tags.*
 
 /**
