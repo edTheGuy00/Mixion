@@ -1,10 +1,8 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
-import com.taskail.mixion.data.models.AccountVotes
-import com.taskail.mixion.data.models.ContentReply
-import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.data.models.Tags
+import com.taskail.mixion.data.models.*
+import com.taskail.mixion.data.network.AskSteemApi
 import com.taskail.mixion.data.network.SteemAPI
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,22 +15,36 @@ import io.reactivex.schedulers.Schedulers
  * This class is responsible for all Network data
  */
 class RemoteDataSource(private val disposable: CompositeDisposable,
+                       private val askSteemApi: AskSteemApi,
                        private val steemAPI: SteemAPI) :
         SteemitDataSource.Remote{
 
     override lateinit var tag: String
     override var loadCount: Int = 10
 
-    override fun getUserFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
-        fetchOnDisposable(callback, getUserFeed())
+    override fun getUserFeed(response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getUserFeed(), response, error)
+    }
+
+    override fun getUserMentions(user: String,
+                                 response: (AskSteemResult) -> Unit,
+                                 error: (Throwable) -> Unit) {
+        getOnDisposable(getUserMentions(user), response, error)
+    }
+
+    private fun getUserMentions(user: String): Observable<AskSteemResult>{
+        return askSteemApi.askSteem(author = "\"\\@$user\"-author:$user",
+                sort = "created",
+                order = "desc",
+                page = 1)
     }
 
     override fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
         fetchOnDisposable(callback, getMoreUserFeed(startAuthor, startPermLink))
     }
 
-    override fun getUserBlog(user: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
-        fetchOnDisposable(callback, getUserBlog(user))
+    override fun getUserBlog(user: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getUserBlog(user), response, error)
     }
 
     override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
@@ -160,8 +172,14 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
-                        { response(it) },
-                        { error(it) }))
+                        {
+                            response(it)
+                        },
+                        {
+                            error(it)
+                        }
+                )
+        )
 
     }
     private fun fetchOnDisposable(callback: SteemitDataSource.DiscussionLoadedCallBack,
@@ -181,9 +199,10 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
 
         @JvmStatic
         fun getInstance(disposable: CompositeDisposable,
-                        steemAPI: SteemAPI) : RemoteDataSource{
+                        steemAPI: SteemAPI,
+                        askSteemApi: AskSteemApi) : RemoteDataSource{
 
-            return INSTANCE ?: RemoteDataSource(disposable, steemAPI).apply {
+            return INSTANCE ?: RemoteDataSource(disposable, askSteemApi, steemAPI).apply {
                 INSTANCE = this
             }
         }

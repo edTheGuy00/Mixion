@@ -1,6 +1,7 @@
 package com.taskail.mixion.data
 
 import com.google.common.collect.Lists
+import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.models.Tags
 import com.taskail.mixion.data.source.local.LocalDataSource
@@ -20,16 +21,23 @@ class SteemitRepository(
         val localRepository: LocalDataSource
         ) : SteemitDataSource {
 
-    /**
-     * at this moment we are only querying remote for the users feed,
-     * caching of the users feed may be implemented in the future
-     */
-    override fun getUserFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
-        remoteRepository.getUserFeed(callback)
+    override fun getUserFeed(response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        remoteRepository.getUserFeed(response, error)
     }
 
     override fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
         remoteRepository.getMoreUserFeed(startAuthor, startPermLink, callback)
+    }
+
+    override fun getUserMentions(user: String,
+                                 response: (AskSteemResult) -> Unit,
+                                 error: (Throwable) -> Unit) {
+
+        remoteRepository.getUserMentions(user, response, error)
+    }
+
+    override fun getUserBlog(user: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        remoteRepository.getUserBlog(user, response, error)
     }
 
     /**

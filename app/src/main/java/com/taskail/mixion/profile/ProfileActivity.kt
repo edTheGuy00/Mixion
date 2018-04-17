@@ -7,13 +7,10 @@ import android.util.Log
 import com.taskail.mixion.GetUserDetailsQuery
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
-import com.taskail.mixion.data.UserDataSource
-import com.taskail.mixion.data.UserRepository
-import com.taskail.mixion.data.models.AskSteemResult
 import com.taskail.mixion.data.models.Result
 import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.data.network.getUserProfile
-import com.taskail.mixion.getUserRepo
+import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent
 import com.taskail.mixion.steemdiscussion.openDiscussionIntent
 import com.taskail.mixion.ui.ViewPagerAdapter
@@ -34,14 +31,11 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     override fun getUserBlog() {
 
-        userRepository.getUserBlog(getUserName(), object : UserDataSource.DataLoadedCallback<SteemDiscussion> {
-            override fun onDataLoaded(array: Array<SteemDiscussion>) {
-                blogView.discussionFromResponse.addAll(array)
-                blogView.showFeed()
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
+        steemitRepository?.getUserBlog(getUserName(), {
+            blogView.discussionFromResponse.addAll(it)
+            blogView.showFeed()
+        }, {
+            Log.e(TAG, it.message)
         })
 
     }
@@ -49,21 +43,17 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
     override fun getUserMentions() {
 
         if (mentionsView.results.isEmpty()) {
-            userRepository.getUserMentions(getUserName(), object : UserDataSource.UserMentionsCallback {
-                override fun onDataLoaded(askSteemResult: AskSteemResult) {
-                    if (askSteemResult.results.size > 0) {
+            steemitRepository?.getUserMentions(getUserName(), {
 
-                        mentionsView.results.addAll(askSteemResult.results)
-                        mentionsView.setResults()
-                    } else if (askSteemResult.hits == 0) {
+                if (it.results.size > 0) {
 
-                        mentionsView.noResultsFound()
-                    }
+                    mentionsView.results.addAll(it.results)
+                    mentionsView.setResults()
+                } else if (it.hits == 0) {
+
+                    mentionsView.noResultsFound()
                 }
-
-                override fun onLoadError(error: Throwable) {
-
-                }
+            }, {
 
             })
         }
@@ -83,7 +73,6 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
     private lateinit var mentionsView: ProfileContract.MentionsView
     private lateinit var disposable: CompositeDisposable
     private lateinit var infoView: ProfileContract.UserInfoView
-    private lateinit var userRepository: UserRepository
     var results = ArrayList<Result>()
 //    private lateinit var user: String
 
@@ -103,8 +92,6 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
         supportActionBar?.setDisplayShowTitleEnabled(false)
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         disposable = CompositeDisposable()
-
-        userRepository = getUserRepo(disposable)
 
         infoView = UserInfoView(resources)
 
@@ -172,7 +159,6 @@ class ProfileActivity : BaseActivity(), ProfileContract.Presenter{
 
     override fun onDestroy() {
         disposable.clear()
-        UserRepository.destroyInstance()
         super.onDestroy()
     }
 

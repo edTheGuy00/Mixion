@@ -111,19 +111,12 @@ class FeedPresenter(val feedView: FeedContract.View,
     }
 
     private fun fetchUserFeed(){
-         steemitRepository.getUserFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
-             override fun onDataLoaded(list: List<SteemDiscussion>) {
-             }
-
-             override fun onDataLoaded(array: Array<SteemDiscussion>) {
-                 feedView.discussionFromResponse.addAll(array)
-                 feedView.showFeed()
-                 setToolbarTitle("My Feed")
-             }
-
-             override fun onLoadError(error: Throwable) {
-             }
-
+         steemitRepository.getUserFeed({
+             feedView.discussionFromResponse.addAll(it)
+             feedView.showFeed()
+             setToolbarTitle("My Feed")
+         }, {
+             Log.e(TAG, it.message)
          })
     }
 

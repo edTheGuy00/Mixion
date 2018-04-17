@@ -1,14 +1,12 @@
 package com.taskail.mixion
 
 import com.taskail.mixion.data.SteemitRepository
-import com.taskail.mixion.data.UserRepository
 import com.taskail.mixion.data.network.*
 import com.taskail.mixion.data.source.local.DraftsDao
 import com.taskail.mixion.data.source.local.LocalDataSource
 import com.taskail.mixion.data.source.local.TagsDao
 import com.taskail.mixion.data.source.remote.AskSteemRepository
 import com.taskail.mixion.data.source.remote.RemoteDataSource
-import com.taskail.mixion.data.source.remote.RemoteUserDataSource
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -26,7 +24,7 @@ fun getMixionRepository(remoteDisposable: CompositeDisposable,
 }
 
 private fun createRemoteRepo(disposable: CompositeDisposable) : RemoteDataSource {
-    return RemoteDataSource.getInstance(disposable, createSteemApi())
+    return RemoteDataSource.getInstance(disposable, createSteemApi(), createAskSteemApi())
 }
 
 private fun createLocalRepo(draftsDao: DraftsDao, tagsDao: TagsDao, disposable: CompositeDisposable): LocalDataSource {
@@ -39,14 +37,6 @@ private fun createSteemApi() : SteemAPI {
 
 fun getAskSteemRepo(disposable: CompositeDisposable) : AskSteemRepository {
     return AskSteemRepository.getInstance(disposable, createAskSteemApi())
-}
-
-fun getUserRepo(disposable: CompositeDisposable): UserRepository {
-    return UserRepository.getInstance(createRemoteUserRepo(disposable))
-}
-
-private fun createRemoteUserRepo(disposable: CompositeDisposable): RemoteUserDataSource{
-    return RemoteUserDataSource(disposable, createAskSteemApi(), createSteemApi())
 }
 
 private fun createAskSteemApi() : AskSteemApi {

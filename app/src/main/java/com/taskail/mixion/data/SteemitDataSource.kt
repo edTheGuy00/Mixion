@@ -15,9 +15,16 @@ interface SteemitDataSource {
 
         var loadCount: Int
 
-        fun getUserFeed(callback: DataLoadedCallback<SteemDiscussion>)
+        fun getUserFeed(response: (Array<SteemDiscussion>) -> Unit,
+                        error: (Throwable) -> Unit)
 
-        fun getUserBlog(user: String, callback: DataLoadedCallback<SteemDiscussion>)
+        fun getUserBlog(user: String,
+                        response: (Array<SteemDiscussion>) -> Unit,
+                        error: (Throwable) -> Unit)
+
+        fun getUserMentions(user: String,
+                            response: (AskSteemResult) -> Unit,
+                            error: (Throwable) -> Unit)
 
         fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
 
@@ -53,11 +60,20 @@ interface SteemitDataSource {
         fun deleteDraft(id: String)
     }
 
+    fun getUserMentions(user: String,
+                        response: (AskSteemResult) -> Unit,
+                        error: (Throwable) -> Unit)
+
+    fun getUserBlog(user: String,
+                    response: (Array<SteemDiscussion>) -> Unit,
+                    error: (Throwable) -> Unit)
+
     fun getDiscussion(author: String, permlink: String, callBack: DiscussionLoadedCallBack)
 
     fun getTags(callback: DataLoadedCallback<RoomTags>)
 
-    fun getUserFeed(callback: DataLoadedCallback<SteemDiscussion>)
+    fun getUserFeed(response: (Array<SteemDiscussion>) -> Unit,
+                    error: (Throwable) -> Unit)
 
     fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
 
