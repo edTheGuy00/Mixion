@@ -1,6 +1,6 @@
 package com.taskail.mixion.data.network
 
-import com.taskail.mixion.data.models.AskSteemResult
+import com.taskail.mixion.data.models.remote.AskSteemResult
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -3,8 +3,8 @@ package com.taskail.mixion.search
 import android.util.Log
 import com.taskail.mixion.data.source.remote.AskSteemData
 import com.taskail.mixion.data.source.remote.AskSteemRepository
-import com.taskail.mixion.data.models.AskSteemResult
-import com.taskail.mixion.data.models.Result
+import com.taskail.mixion.data.models.remote.AskSteemResult
+import com.taskail.mixion.data.models.remote.Result
 import java.util.ArrayList
 
 /**

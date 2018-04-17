@@ -1,12 +1,11 @@
 package com.taskail.mixion.search
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.Result
+import com.taskail.mixion.data.models.remote.Result
 import com.taskail.mixion.utils.GetTimeAgo
 import kotlinx.android.synthetic.main.item_search_result.view.*
 

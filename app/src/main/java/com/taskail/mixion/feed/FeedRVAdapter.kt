@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.ActiveVote
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.ActiveVote
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.utils.GetTimeAgo
 import com.taskail.mixion.utils.steemitutils.getFeedSummary
 import com.taskail.mixion.utils.steemitutils.getFirstImgFromJsonMeta

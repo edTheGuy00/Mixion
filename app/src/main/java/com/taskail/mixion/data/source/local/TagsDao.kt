@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.taskail.mixion.data.models.RoomTags
+import com.taskail.mixion.data.models.local.RoomTags
 
 /**
  *Created by ed on 1/26/18.

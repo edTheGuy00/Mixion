@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.models
+package com.taskail.mixion.data.models.local
 
 /**
  *Created by ed on 3/7/18.

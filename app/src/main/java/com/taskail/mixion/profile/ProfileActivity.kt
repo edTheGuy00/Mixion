@@ -7,8 +7,8 @@ import android.util.Log
 import com.taskail.mixion.GetUserDetailsQuery
 import com.taskail.mixion.R
 import com.taskail.mixion.activity.BaseActivity
-import com.taskail.mixion.data.models.Result
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.Result
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.data.network.getUserProfile
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.steemdiscussion.loadDiscussionIntent

@@ -3,8 +3,8 @@ package com.taskail.mixion.profile
 import android.widget.ImageView
 import android.widget.TextView
 import com.taskail.mixion.BaseView
-import com.taskail.mixion.data.models.Result
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.Result
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import java.util.ArrayList
 
 /**

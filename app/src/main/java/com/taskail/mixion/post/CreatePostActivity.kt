@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.taskail.mixion.*
 import com.taskail.mixion.activity.BaseActivity
-import com.taskail.mixion.data.models.Drafts
+import com.taskail.mixion.data.models.local.Drafts
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.steemJ.*
 import com.taskail.mixion.utils.hideSoftKeyboard

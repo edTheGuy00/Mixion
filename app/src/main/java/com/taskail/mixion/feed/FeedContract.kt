@@ -1,9 +1,8 @@
 package com.taskail.mixion.feed
 
-import android.view.View
 import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import java.util.ArrayList
 
 /**

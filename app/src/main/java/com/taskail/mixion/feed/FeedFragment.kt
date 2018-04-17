@@ -18,9 +18,9 @@ import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.taskail.mixion.*
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.User
-import com.taskail.mixion.data.models.ActiveVote
+import com.taskail.mixion.data.models.remote.ActiveVote
 import com.taskail.mixion.utils.EndlessRecyclerViewScrollListener
 import com.taskail.mixion.utils.getCallback
 import kotlinx.android.synthetic.main.fragment_feed.*

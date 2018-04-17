@@ -10,9 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.TypedValue
 import com.taskail.mixion.R
-import com.taskail.mixion.data.SteemitDataSource
-import com.taskail.mixion.data.models.ContentReply
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.steemJ.RxSteemJManager
 import com.taskail.mixion.steemJ.SteemJCallback

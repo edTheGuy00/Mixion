@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.ContentReply
+import com.taskail.mixion.data.models.remote.ContentReply
 import com.taskail.mixion.utils.steemitutils.getFeedSummary
 import kotlinx.android.synthetic.main.card_comments.view.*
 import kotlinx.android.synthetic.main.layout_bottom_card_buttons.view.*

@@ -2,7 +2,7 @@ package com.taskail.mixion.search
 
 import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
-import com.taskail.mixion.data.models.Result
+import com.taskail.mixion.data.models.remote.Result
 import java.util.ArrayList
 
 /**

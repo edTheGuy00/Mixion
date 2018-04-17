@@ -7,13 +7,12 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.Result
+import com.taskail.mixion.data.models.remote.Result
 import com.taskail.mixion.utils.*
 import kotlinx.android.synthetic.main.fragment_search.*
 

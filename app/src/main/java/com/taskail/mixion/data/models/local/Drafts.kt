@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.models
+package com.taskail.mixion.data.models.local
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity

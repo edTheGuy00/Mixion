@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.*
 import com.taskail.mixion.data.SteemitRepository
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.data.source.local.MixionDatabase
 import com.taskail.mixion.ui.dialog.TagDialog
 import com.taskail.mixion.feed.FeedFragment
@@ -17,8 +17,8 @@ import com.taskail.mixion.feed.FeedPresenter
 import com.taskail.mixion.login.LoginActivity
 import com.taskail.mixion.post.CreatePostActivity
 import com.taskail.mixion.User
-import com.taskail.mixion.data.models.ActiveVote
-import com.taskail.mixion.data.models.Drafts
+import com.taskail.mixion.data.models.remote.ActiveVote
+import com.taskail.mixion.data.models.local.Drafts
 import com.taskail.mixion.fragment.BaseFragment
 import com.taskail.mixion.search.SearchFragment
 import com.taskail.mixion.search.SearchPresenter

@@ -5,7 +5,6 @@ import `in`.uncod.android.bypass.style.ImageLoadingSpan
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.taskail.mixion.R
 import com.taskail.mixion.User
-import com.taskail.mixion.data.models.ContentReply
+import com.taskail.mixion.data.models.remote.ContentReply
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
 import com.taskail.mixion.utils.ImageSpanTarget
 import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText

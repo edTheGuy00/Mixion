@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.models;
+package com.taskail.mixion.data.models.remote;
 
 import java.util.HashMap;
 import java.util.List;

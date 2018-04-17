@@ -1,8 +1,8 @@
 package com.taskail.mixion.data.source.local
 
 import android.support.annotation.NonNull
-import com.taskail.mixion.data.models.Drafts
-import com.taskail.mixion.data.models.RoomTags
+import com.taskail.mixion.data.models.local.Drafts
+import com.taskail.mixion.data.models.local.RoomTags
 import io.reactivex.Completable
 import io.reactivex.Observable
 

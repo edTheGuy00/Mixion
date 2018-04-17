@@ -1,7 +1,7 @@
 package com.taskail.mixion.data.source.remote
 
 import com.taskail.mixion.data.SteemitDataSource
-import com.taskail.mixion.data.models.*
+import com.taskail.mixion.data.models.remote.*
 import com.taskail.mixion.data.network.AskSteemApi
 import com.taskail.mixion.data.network.SteemAPI
 import io.reactivex.Observable

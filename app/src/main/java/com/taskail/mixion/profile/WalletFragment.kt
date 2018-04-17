@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.Wallet
+import com.taskail.mixion.data.models.local.Wallet
 import kotlinx.android.synthetic.main.fragment_wallet.*
 
 

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.Drafts
+import com.taskail.mixion.data.models.local.Drafts
 import kotlinx.android.synthetic.main.item_draft.view.*
 
 /**

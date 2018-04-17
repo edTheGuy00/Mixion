@@ -1,9 +1,9 @@
 package com.taskail.mixion.data.network
 
-import com.taskail.mixion.data.models.AccountVotes
-import com.taskail.mixion.data.models.ContentReply
-import com.taskail.mixion.data.models.SteemDiscussion
-import com.taskail.mixion.data.models.Tags
+import com.taskail.mixion.data.models.remote.AccountVotes
+import com.taskail.mixion.data.models.remote.ContentReply
+import com.taskail.mixion.data.models.remote.SteemDiscussion
+import com.taskail.mixion.data.models.remote.Tags
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

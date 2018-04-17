@@ -3,7 +3,7 @@ package com.taskail.mixion.fragment
 import android.support.v4.app.Fragment
 import android.view.View
 import com.taskail.mixion.BackPressedHandler
-import com.taskail.mixion.data.models.Drafts
+import com.taskail.mixion.data.models.local.Drafts
 import com.taskail.mixion.utils.FadeOutCallBack
 import com.taskail.mixion.utils.fadeOutAnimation
 import com.taskail.mixion.utils.getCallback

@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.Result
+import com.taskail.mixion.data.models.remote.Result
 import com.taskail.mixion.search.SearchAdapter
 import kotlinx.android.synthetic.main.fragment_mentions.*
 import java.util.ArrayList

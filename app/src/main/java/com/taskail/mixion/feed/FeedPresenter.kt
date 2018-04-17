@@ -2,9 +2,7 @@ package com.taskail.mixion.feed
 
 import android.util.Log
 import com.taskail.mixion.FEED_STEEMJ_USER
-import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
-import com.taskail.mixion.data.models.SteemDiscussion
 import com.taskail.mixion.User
 import com.taskail.mixion.steemJ.RxSteemJManager
 import java.util.*

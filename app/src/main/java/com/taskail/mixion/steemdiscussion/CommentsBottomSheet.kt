@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
 import com.taskail.mixion.User
-import com.taskail.mixion.data.models.ContentReply
+import com.taskail.mixion.data.models.remote.ContentReply
 import kotlinx.android.synthetic.main.bottom_sheet_comments.*
 import kotlinx.android.synthetic.main.item_parent_comment.view.*
 

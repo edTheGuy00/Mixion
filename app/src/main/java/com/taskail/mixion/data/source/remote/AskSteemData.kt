@@ -1,6 +1,6 @@
 package com.taskail.mixion.data.source.remote
 
-import com.taskail.mixion.data.models.AskSteemResult
+import com.taskail.mixion.data.models.remote.AskSteemResult
 
 /**
  *Created by ed on 1/29/18.

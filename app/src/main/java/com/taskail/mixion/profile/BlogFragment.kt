@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.taskail.mixion.R
-import com.taskail.mixion.data.models.SteemDiscussion
+import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.feed.FeedRVAdapter
 import kotlinx.android.synthetic.main.fragment_blog.*
 import java.util.ArrayList

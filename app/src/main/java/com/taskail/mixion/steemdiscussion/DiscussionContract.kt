@@ -3,7 +3,7 @@ package com.taskail.mixion.steemdiscussion
 import `in`.uncod.android.bypass.Bypass
 import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
-import com.taskail.mixion.data.models.ContentReply
+import com.taskail.mixion.data.models.remote.ContentReply
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
 
 /**

@@ -1,4 +1,4 @@
-package com.taskail.mixion.data.models
+package com.taskail.mixion.data.models.remote
 import com.fasterxml.jackson.annotation.JsonProperty
 
 
