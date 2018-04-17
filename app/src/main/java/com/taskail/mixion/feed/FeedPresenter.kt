@@ -122,20 +122,13 @@ class FeedPresenter(val feedView: FeedContract.View,
 
     private fun fetch(){
 
-        steemitRepository.getFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion>{
-            override fun onDataLoaded(list: List<SteemDiscussion>) {
-            }
-
-            override fun onDataLoaded(array: Array<SteemDiscussion>) {
-                feedView.discussionFromResponse.addAll(array)
-                feedView.showFeed()
-                setToolbarTitle(sortBy)
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
-
-        }, sortBy)
+        steemitRepository.getFeed(sortBy, {
+            feedView.discussionFromResponse.addAll(it)
+            feedView.showFeed()
+            setToolbarTitle(sortBy)
+        }, {
+            Log.e(TAG, it.message)
+        })
 
     }
 
@@ -151,50 +144,34 @@ class FeedPresenter(val feedView: FeedContract.View,
 
         } else {
 
-            steemitRepository.getMoreFeed(object : SteemitDataSource.DataLoadedCallback<SteemDiscussion> {
-                override fun onDataLoaded(list: List<SteemDiscussion>) {
-                }
+            steemitRepository.getMoreFeed(sortBy, getStartAuthor(lastPostLocation),
+                    getStartPermlink(lastPostLocation), {
+                /**
+                 * Skip the first item from the returned list as it will be the same item
+                 * from the previous last item.
+                 */
+                Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(it, 1, 10))
 
-                override fun onDataLoaded(array: Array<SteemDiscussion>) {
-
-                    /**
-                     * Skip the first item from the returned list as it will be the same item
-                     * from the previous last item.
-                     */
-                    Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(array, 1, 10))
-
-                    feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
-                }
-
-                override fun onLoadError(error: Throwable) {
-                }
-
-            }, sortBy, getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation))
+                feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
+            }, {
+                Log.e(TAG, it.message)
+            })
         }
     }
 
     private fun getMoreUserFeed(lastPostLocation: Int){
 
-        steemitRepository.getMoreUserFeed(getStartAuthor(lastPostLocation), getStartPermlink(lastPostLocation),
-                object : SteemitDataSource.DataLoadedCallback<SteemDiscussion> {
-
-            override fun onDataLoaded(list: List<SteemDiscussion>) {
-            }
-
-            override fun onDataLoaded(array: Array<SteemDiscussion>) {
-
-                /**
-                 * Skip the first item from the returned list as it will be the same item
-                 * from the previous last item.
-                 */
-                Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(array, 1, 10))
-
-                feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
-
+        steemitRepository.getMoreUserFeed(getStartAuthor(lastPostLocation),
+                getStartPermlink(lastPostLocation),
+                {
+                    /**
+                     * Skip the first item from the returned list as it will be the same item
+                     * from the previous last item.
+                     */
+                    Collections.addAll(feedView.discussionFromResponse, *Arrays.copyOfRange(it, 1, 10))
+                    feedView.showMoreFeed(lastPostLocation, feedView.discussionFromResponse.size)
+                }, {
+            Log.e(TAG, it.message)
         })
 
     }

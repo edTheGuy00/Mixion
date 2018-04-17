@@ -25,8 +25,8 @@ class SteemitRepository(
         remoteRepository.getUserFeed(response, error)
     }
 
-    override fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
-        remoteRepository.getMoreUserFeed(startAuthor, startPermLink, callback)
+    override fun getMoreUserFeed(startAuthor: String, startPermLink: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        remoteRepository.getMoreUserFeed(startAuthor, startPermLink, response, error)
     }
 
     override fun getUserMentions(user: String,
@@ -43,15 +43,12 @@ class SteemitRepository(
     /**
      * It is sensible to only query the feed from remote
      */
-    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
-        remoteRepository.getFeed(callback, sortBy)
+    override fun getFeed(sortBy: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        remoteRepository.getFeed(sortBy, response, error)
     }
 
-    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>,
-                             sortBy: String,
-                             startAuthor: String, startPermLink: String) {
-
-        remoteRepository.getMoreFeed(callback, sortBy, startAuthor, startPermLink)
+    override fun getMoreFeed(sortBy: String, startAuthor: String, startPermLink: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        remoteRepository.getMoreFeed(sortBy, startAuthor, startPermLink, response, error)
     }
 
     /**
@@ -67,54 +64,31 @@ class SteemitRepository(
      * a method to update the local database once and a while.
      */
     var tagsInMemory: LinkedHashMap<String, RoomTags> = LinkedHashMap()
-    override fun getTags(callback: SteemitDataSource.DataLoadedCallback<RoomTags>) {
 
-        //Tags are still in memory, respond immediately
+    override fun getTags(response: (List<RoomTags>) -> Unit, error: (Throwable) -> Unit) {
         if (tagsInMemory.isNotEmpty()){
 
-            callback.onDataLoaded(ArrayList(tagsInMemory.values))
+            response(ArrayList(tagsInMemory.values))
         } else {
-            // Query the local storage if available. If not, query the network.
-
-            localRepository.getTags(object : SteemitDataSource.DataLoadedCallback<RoomTags>{
-
-                override fun onDataLoaded(list: List<RoomTags>) {
-                    refreshTagsInMemory(list)
-                    callback.onDataLoaded(list)
-                }
-
-                override fun onDataLoaded(array: Array<RoomTags>) {
-                    //Not needed...
-                }
-
-                override fun onLoadError(error: Throwable) {
-                    getTagsFromRemoteDataSource(callback)
-                }
-
+            localRepository.getTags({
+                refreshTagsInMemory(it)
+                response(it)
+            }, {
+                getTagsFromRemoteDataSource(response, error)
             })
         }
-
     }
 
     /**
      * Getting tags from remote API will only be called if the local database is empty
      */
-    private fun getTagsFromRemoteDataSource(callback: SteemitDataSource.DataLoadedCallback<RoomTags>){
+    private fun getTagsFromRemoteDataSource(response: (List<RoomTags>) -> Unit,
+                                            error: (Throwable) -> Unit){
 
-        remoteRepository.getTags(object : SteemitDataSource.DataLoadedCallback<Tags>{
-            override fun onDataLoaded(list: List<Tags>) {
-                //Not Needed...
-            }
-
-            override fun onDataLoaded(array: Array<Tags>) {
-                callback.onDataLoaded(handleRemoteToLocalTags(array))
-
-            }
-
-            override fun onLoadError(error: Throwable) {
-                callback.onLoadError(error)
-            }
-
+        remoteRepository.getTags({
+            response(handleRemoteToLocalTags(it))
+        }, {
+            error(it)
         })
     }
 

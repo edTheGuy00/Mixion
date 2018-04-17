@@ -26,13 +26,23 @@ interface SteemitDataSource {
                             response: (AskSteemResult) -> Unit,
                             error: (Throwable) -> Unit)
 
-        fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
+        fun getMoreUserFeed(startAuthor: String,
+                            startPermLink: String,
+                            response: (Array<SteemDiscussion>) -> Unit,
+                            error: (Throwable) -> Unit)
 
-        fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
+        fun getFeed(sortBy: String,
+                    response: (Array<SteemDiscussion>) -> Unit,
+                    error: (Throwable) -> Unit)
 
-        fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
+        fun getMoreFeed(sortBy: String,
+                        startAuthor: String,
+                        startPermLink: String,
+                        response: (Array<SteemDiscussion>) -> Unit,
+                        error: (Throwable) -> Unit)
 
-        fun getTags(callback: DataLoadedCallback<Tags>)
+        fun getTags(response: (Array<Tags>) -> Unit,
+                    error: (Throwable) -> Unit)
 
         fun getDiscussion(callBack: DiscussionLoadedCallBack, author: String, permlink: String)
 
@@ -45,7 +55,8 @@ interface SteemitDataSource {
 
     interface Local{
 
-        fun getTags(callback: DataLoadedCallback<RoomTags>)
+        fun getTags(response: (List<RoomTags>) -> Unit,
+                    error: (Throwable) -> Unit)
 
         fun saveTags(tags: RoomTags)
 
@@ -70,16 +81,26 @@ interface SteemitDataSource {
 
     fun getDiscussion(author: String, permlink: String, callBack: DiscussionLoadedCallBack)
 
-    fun getTags(callback: DataLoadedCallback<RoomTags>)
+    fun getTags(response: (List<RoomTags>) -> Unit,
+                error: (Throwable) -> Unit)
 
     fun getUserFeed(response: (Array<SteemDiscussion>) -> Unit,
                     error: (Throwable) -> Unit)
 
-    fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: DataLoadedCallback<SteemDiscussion>)
+    fun getMoreUserFeed(startAuthor: String,
+                        startPermLink: String,
+                        response: (Array<SteemDiscussion>) -> Unit,
+                        error: (Throwable) -> Unit)
 
-    fun getFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String)
+    fun getFeed(sortBy: String,
+                response: (Array<SteemDiscussion>) -> Unit,
+                error: (Throwable) -> Unit)
 
-    fun getMoreFeed(callback: DataLoadedCallback<SteemDiscussion>, sortBy: String, startAuthor: String, startPermLink: String)
+    fun getMoreFeed(sortBy: String,
+                    startAuthor: String,
+                    startPermLink: String,
+                    response: (Array<SteemDiscussion>) -> Unit,
+                    error: (Throwable) -> Unit)
 
     interface DataLoadedCallback<T>{
 

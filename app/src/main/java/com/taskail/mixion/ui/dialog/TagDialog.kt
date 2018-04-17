@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import com.taskail.mixion.R
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.SteemitRepository
@@ -18,6 +19,8 @@ class TagDialog(context: Context?,
                 private val repository: SteemitRepository,
                 private val func: (String) -> Unit) :
         AppCompatDialog(context) {
+
+    val TAG = javaClass.simpleName
 
     init {
         setContentView(R.layout.dialog_tags)
@@ -41,17 +44,10 @@ class TagDialog(context: Context?,
 
         recyclerView.adapter = adapter
 
-        repository.getTags(object : SteemitDataSource.DataLoadedCallback<RoomTags>{
-            override fun onDataLoaded(list: List<RoomTags>) {
-                adapter.tags = list
-            }
-
-            override fun onDataLoaded(array: Array<RoomTags>) {
-            }
-
-            override fun onLoadError(error: Throwable) {
-            }
-
+        repository.getTags({
+            adapter.tags = it
+        }, {
+            Log.e(TAG, it.message)
         })
     }
 

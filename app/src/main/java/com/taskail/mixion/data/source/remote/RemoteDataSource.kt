@@ -39,47 +39,42 @@ class RemoteDataSource(private val disposable: CompositeDisposable,
                 page = 1)
     }
 
-    override fun getMoreUserFeed(startAuthor: String, startPermLink: String, callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>) {
-        fetchOnDisposable(callback, getMoreUserFeed(startAuthor, startPermLink))
+    override fun getMoreUserFeed(startAuthor: String, startPermLink: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getMoreUserFeed(startAuthor, startPermLink), response, error)
     }
 
     override fun getUserBlog(user: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
         getOnDisposable(getUserBlog(user), response, error)
     }
 
-    override fun getFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>, sortBy: String) {
-
+    override fun getFeed(sortBy: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
         when(sortBy){
 
-            "New" -> fetchOnDisposable(callback, getNew())
+            "New" -> getOnDisposable(getNew(), response, error)
 
-            "Hot" -> fetchOnDisposable(callback, getHot())
+            "Hot" -> getOnDisposable(getHot(), response, error)
 
-            "Promoted" -> fetchOnDisposable(callback, getPromoted())
+            "Promoted" -> getOnDisposable(getPromoted(), response, error)
 
-            "Trending" -> fetchOnDisposable(callback, getTrending())
+            "Trending" -> getOnDisposable(getTrending(), response, error)
         }
     }
 
-    override fun getMoreFeed(callback: SteemitDataSource.DataLoadedCallback<SteemDiscussion>,
-                             sortBy: String,
-                             startAuthor: String,
-                             startPermLink: String) {
-
+    override fun getMoreFeed(sortBy: String, startAuthor: String, startPermLink: String, response: (Array<SteemDiscussion>) -> Unit, error: (Throwable) -> Unit) {
         when(sortBy){
 
-            "New" -> fetchOnDisposable(callback, getMoreNew(startAuthor, startPermLink))
+            "New" -> getOnDisposable(getMoreNew(startAuthor, startPermLink), response, error)
 
-            "Hot" -> fetchOnDisposable(callback, getMoreHot(startAuthor, startPermLink))
+            "Hot" -> getOnDisposable(getMoreHot(startAuthor, startPermLink), response, error)
 
-            "Promoted" -> fetchOnDisposable(callback, getMorePromoted(startAuthor, startPermLink))
+            "Promoted" -> getOnDisposable(getMorePromoted(startAuthor, startPermLink), response, error)
 
-            "Trending" -> fetchOnDisposable(callback, getMoreTrending(startAuthor, startPermLink))
+            "Trending" -> getOnDisposable(getMoreTrending(startAuthor, startPermLink), response, error)
         }
     }
 
-    override fun getTags(callback: SteemitDataSource.DataLoadedCallback<Tags>) {
-        fetchOnDisposable(callback, getTags())
+    override fun getTags(response: (Array<Tags>) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getTags(), response, error)
     }
 
     override fun getComments(author: String, permlink: String, callback: SteemitDataSource.DataLoadedCallback<ContentReply>) {

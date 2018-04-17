@@ -2,6 +2,7 @@ package com.taskail.mixion.data.source.local
 
 import android.util.Log
 import com.taskail.mixion.data.SteemitDataSource
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,16 +21,9 @@ class LocalDataSource(val draftsDao: DraftsDao,
     /**
      * get the tags from the local database
      */
-    override fun getTags(callback: SteemitDataSource.DataLoadedCallback<RoomTags>) {
 
-        disposable.add(getTagsFromDatabase(tagsDao)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    callback.onDataLoaded(it)
-                }, {
-                    callback.onLoadError(it)
-                }))
+    override fun getTags(response: (List<RoomTags>) -> Unit, error: (Throwable) -> Unit) {
+        getOnDisposable(getTagsFromDatabase(tagsDao), response, error)
     }
 
     /**
@@ -91,6 +85,19 @@ class LocalDataSource(val draftsDao: DraftsDao,
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     Log.d(TAG, "Delete Draft Success")
+                }))
+    }
+
+    private fun <T>getOnDisposable(observable: Observable<T>,
+                                   response: (T) -> Unit,
+                                   error: (Throwable) -> Unit) {
+        disposable.add(observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    response(it)
+                }, {
+                    error(it)
                 }))
     }
 
