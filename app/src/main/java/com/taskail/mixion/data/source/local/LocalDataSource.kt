@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
  */
 class LocalDataSource(val draftsDao: DraftsDao,
                       val tagsDao: TagsDao,
+                      val votesDao: VotesDao,
                       val disposable: CompositeDisposable) : SteemitDataSource.Local {
 
     private val TAG = javaClass.simpleName
@@ -111,9 +112,9 @@ class LocalDataSource(val draftsDao: DraftsDao,
         private var INSTANCE: LocalDataSource? = null
 
         @JvmStatic
-        fun getInstance(draftsDao: DraftsDao, tagsDao: TagsDao, disposable: CompositeDisposable) : LocalDataSource{
+        fun getInstance(draftsDao: DraftsDao, tagsDao: TagsDao, votesDao: VotesDao, disposable: CompositeDisposable) : LocalDataSource{
 
-            return INSTANCE ?: LocalDataSource(draftsDao, tagsDao, disposable).apply {
+            return INSTANCE ?: LocalDataSource(draftsDao, tagsDao, votesDao, disposable).apply {
                 INSTANCE = this
             }
         }

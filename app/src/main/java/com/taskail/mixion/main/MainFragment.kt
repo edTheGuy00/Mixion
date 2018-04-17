@@ -150,6 +150,7 @@ class MainFragment : Fragment(),
                 remoteDisposable,
                 localDisposable,
                 getCallback()?.getDatabase()?.draftsDao()!!,
+                getCallback()?.getDatabase()?.votesDao()!!,
                 getCallback()?.getDatabase()?.tagsDao()!!
         ).apply {
             steemitRepository = this
