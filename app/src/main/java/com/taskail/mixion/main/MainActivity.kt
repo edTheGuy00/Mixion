@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.taskail.mixion.activity.SingleFragmentToolbarActivity
 import com.taskail.mixion.data.source.local.MixionDatabase
+import com.taskail.mixion.services.DatabaseSync
 
 /**
  *Created by ed on 1/19/18.
@@ -35,6 +36,11 @@ class MainActivity : SingleFragmentToolbarActivity<MainFragment>(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(false)
 
+    }
+
+    override fun startSync() {
+        val sync = DatabaseSync.newSyncIntent(this)
+        this.startService(sync)
     }
 
     override fun onChildFragmentOpen() {

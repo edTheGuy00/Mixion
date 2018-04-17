@@ -54,6 +54,7 @@ class MainFragment : Fragment(),
         fun getDatabase(): MixionDatabase?
         fun getMainToolbar(): Toolbar
         fun setToolbarTitle(title: String)
+        fun startSync()
     }
 
     override fun onAccountRequested() {
@@ -135,6 +136,8 @@ class MainFragment : Fragment(),
             feedPresenter = FeedPresenter(this, getRepository())
         }
         switchToFragment(feedFragment)
+
+        getCallback()?.startSync()
     }
 
     private fun switchToFragment(fragment: Fragment, addToBackStack: Boolean = false){
