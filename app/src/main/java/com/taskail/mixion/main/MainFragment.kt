@@ -127,11 +127,6 @@ class MainFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        if (keystoreCompat.hasSecretLoadable()){
-//            getCredentials()
-//            User.userIsLoggedIn = true
-//        }
-
         val feedFragment = FeedFragment.getInstance().apply {
             feedPresenter = FeedPresenter(this, getRepository())
         }
@@ -238,18 +233,6 @@ class MainFragment : Fragment(),
             User.performLogout()
         }
     }
-
-//    private fun getCredentials(){
-//        runSinceLollipop {
-//            keystoreCompat.loadSecretAsString({ decryptResults ->
-//                decryptResults.split(';').let {
-//                    User.storeUser(it[0], it[1])
-//                }
-//            }, {
-//                Log.d("Error", it.message)
-//            }, User.forceLockScreenFlag)
-//        }
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode){
