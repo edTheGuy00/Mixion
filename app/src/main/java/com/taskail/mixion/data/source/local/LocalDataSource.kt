@@ -4,6 +4,7 @@ import android.util.Log
 import com.taskail.mixion.data.SteemitDataSource
 import com.taskail.mixion.data.models.local.Drafts
 import com.taskail.mixion.data.models.local.RoomTags
+import com.taskail.mixion.data.models.local.UserVotes
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,6 +41,18 @@ class LocalDataSource(val draftsDao: DraftsDao,
         }, {
             Log.e(TAG, it.message)
         })
+    }
+
+    override fun saveVote(vote: UserVotes) {
+        doOnCompletable(insertVote(votesDao, vote), {
+            Log.d(TAG, "Save vote Success")
+        }, {
+            Log.e(TAG, it.message)
+        })
+    }
+
+    override fun searchVotes(authorperm: String, response: (List<UserVotes>) -> Unit, error: (Throwable) -> Unit) {
+        doOnDisposable(searchVotesFromDatabase(votesDao, authorperm), response, error)
     }
 
     /**

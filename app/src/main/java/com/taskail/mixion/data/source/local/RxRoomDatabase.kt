@@ -3,6 +3,8 @@ package com.taskail.mixion.data.source.local
 import android.support.annotation.NonNull
 import com.taskail.mixion.data.models.local.Drafts
 import com.taskail.mixion.data.models.local.RoomTags
+import com.taskail.mixion.data.models.local.UserVotes
+import com.taskail.mixion.voteDoesNotExist
 import io.reactivex.Completable
 import io.reactivex.Observable
 
@@ -26,9 +28,32 @@ fun getTagsFromDatabase(@NonNull tagsDao: TagsDao): Observable<List<RoomTags>>{
 }
 
 @NonNull
+fun searchVotesFromDatabase(@NonNull votesDao: VotesDao, authorperm: String): Observable<List<UserVotes>>{
+
+    return Observable.create { emitter ->
+
+        val votes = votesDao.findVote(authorperm)
+
+        if (votes.isNotEmpty()){
+            emitter.onNext(votes)
+        } else{
+            emitter.onError(Exception(voteDoesNotExist))
+        }
+    }
+}
+
+@NonNull
 fun insertTag(@NonNull tagsDao: TagsDao, @NonNull tags: RoomTags) : Completable{
     return Completable.create{e ->
         tagsDao.insertTag(tags)
+        e.onComplete()
+    }
+}
+
+@NonNull
+fun insertVote(@NonNull votesDao: VotesDao, @NonNull userVotes: UserVotes) : Completable{
+    return Completable.create{e ->
+        votesDao.insertVotes(userVotes)
         e.onComplete()
     }
 }

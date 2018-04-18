@@ -2,6 +2,7 @@ package com.taskail.mixion.data
 
 import com.taskail.mixion.data.models.local.Drafts
 import com.taskail.mixion.data.models.local.RoomTags
+import com.taskail.mixion.data.models.local.UserVotes
 import com.taskail.mixion.data.models.remote.*
 
 /**
@@ -64,6 +65,12 @@ interface SteemitDataSource {
                     error: (Throwable) -> Unit)
 
         fun saveTags(tags: RoomTags)
+
+        fun saveVote(vote: UserVotes)
+
+        fun searchVotes(authorperm: String,
+                        response: (List<UserVotes>) -> Unit,
+                        error: (Throwable) -> Unit)
 
         fun deleteTags()
 

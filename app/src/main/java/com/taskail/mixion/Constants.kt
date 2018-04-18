@@ -21,5 +21,7 @@ const val myNewPermLink = "myNewPermLink"
 const val postingKey = "postingKey"
 const val openDraftIntent = "openDraft"
 
+const val voteDoesNotExist = "Vote Does Not Exist"
+
 const val DTBUE = 44
 const val DMANIA = 45
