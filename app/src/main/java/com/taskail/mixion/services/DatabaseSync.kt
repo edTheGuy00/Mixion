@@ -29,6 +29,7 @@ class DatabaseSync : IntentService("databaseSync") {
 
     override fun onHandleIntent(p0: Intent?) {
 
+        // TODO - check votes periodically, but not everytime the app is opened
         if (User.userIsLoggedIn) {
             getUserVotes()
         } else {
@@ -53,6 +54,10 @@ class DatabaseSync : IntentService("databaseSync") {
      * we need to convert them from an array of [AccountVotes] into a
      * list of [UserVotes] then we sort the list by date and insert into the database
      */
+
+    // TODO - check the votes in the database by data and only save those that are not in the database
+
+    // TODO - avoid deleting and inserting everytime
     private fun saveRemoteVotesToDatabase(votes: Array<AccountVotes>){
 
         steemitRepository?.localRepository?.deleteVotes()
