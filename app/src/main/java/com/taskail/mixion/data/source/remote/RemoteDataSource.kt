@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  *Created by ed on 1/24/18.
  *
- * This class is responsible for all Network data
+ * This class is responsible for all Network date
  */
 class RemoteDataSource(private val disposable: CompositeDisposable,
                        private val askSteemApi: AskSteemApi,

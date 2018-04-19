@@ -11,7 +11,7 @@ import java.util.*
 @Entity(tableName = "Votes")
 data class UserVotes(
         var authorperm: String,
-        var data: String,
+        var date: Long,
         @PrimaryKey var uId: String = UUID.randomUUID().toString()) {
 
     fun containsMatch(search: String): Boolean {

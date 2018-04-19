@@ -72,7 +72,12 @@ interface SteemitDataSource {
                         response: (List<UserVotes>) -> Unit,
                         error: (Throwable) -> Unit)
 
+        fun getVotes(response: (List<UserVotes>) -> Unit,
+                     error: (Throwable) -> Unit)
+
         fun deleteTags()
+
+        fun deleteVotes()
 
         fun getDrafts(response: (List<Drafts>) -> Unit,
                       error: (Throwable) -> Unit)

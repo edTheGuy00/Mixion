@@ -17,7 +17,7 @@ import com.taskail.mixion.utils.ArrayConverter
     (RoomTags::class),
     (Drafts::class),
     (UserVotes::class)
-], version = 2)
+], version = 3)
 @TypeConverters(ArrayConverter::class)
 abstract class MixionDatabase : RoomDatabase() {
 

@@ -2,6 +2,8 @@ package com.taskail.mixion.utils
 
 import org.jsoup.Jsoup
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -15,6 +17,14 @@ import java.util.regex.Pattern
 @Throws(IOException::class, IndexOutOfBoundsException::class)
 fun extractShortSummary(begin: Int, length: Int, s: String): String {
     return s.substring(begin, Math.min(s.length, length))
+}
+
+fun String.transformStringToTimeStamp(): Long {
+    val calendarToMil = Calendar.getInstance()
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT")
+    calendarToMil.time = simpleDateFormat.parse(this + "GMT")
+    return calendarToMil.timeInMillis
 }
 
 /**

@@ -59,6 +59,29 @@ fun insertVote(@NonNull votesDao: VotesDao, @NonNull userVotes: UserVotes) : Com
 }
 
 @NonNull
+fun getVotesFromDatabase(@NonNull votesDao: VotesDao): Observable<List<UserVotes>>{
+
+    return Observable.create { emitter ->
+
+        val votes = votesDao.getVotes()
+
+        if (votes.isNotEmpty()){
+            emitter.onNext(votes)
+        } else{
+            emitter.onError(Exception("Empty Database"))
+        }
+    }
+}
+
+@NonNull
+fun deleteVotesFromDatabase(@NonNull votesDao: VotesDao) : Completable{
+    return Completable.create { emitter ->
+        votesDao.deleteVotes()
+        emitter.onComplete()
+    }
+}
+
+@NonNull
 fun deleteTags(@NonNull tagsDao: TagsDao) : Completable{
     return Completable.create { emitter ->
         tagsDao.deleteTags()

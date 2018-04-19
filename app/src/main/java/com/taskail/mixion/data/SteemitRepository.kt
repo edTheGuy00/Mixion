@@ -12,7 +12,7 @@ import java.util.*
 /**
  *Created by ed on 1/24/18.
  *
- * This class is responsible for all data,
+ * This class is responsible for all date,
  * whether it is from the local database or the remote source, this class will
  * delegate where to query from.
  */

@@ -14,6 +14,8 @@ import com.taskail.mixion.data.models.local.UserVotes
 @Dao
 interface VotesDao {
 
+    @Query("SELECT * FROM Votes") fun getVotes(): List<UserVotes>
+
     @Query("SELECT * FROM Votes WHERE authorperm LIKE :authorperm") fun findVote(authorperm: String): List<UserVotes>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertVotes(vote: UserVotes)

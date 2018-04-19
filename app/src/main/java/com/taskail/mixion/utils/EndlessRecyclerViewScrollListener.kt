@@ -68,7 +68,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
 
         // If it isn’t currently loading, we check to see if we have breached
         // the visibleThreshold and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
+        // If we do need to reload some more date, we execute onLoadMore to fetch the date.
         // threshold should reflect how many total columns there are too
 
         // If the total item count is zero and the previous isn't, assume the
@@ -90,7 +90,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
 
         // If it isn’t currently loading, we check to see if we have breached
         // the visibleThreshold and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
+        // If we do need to reload some more date, we execute onLoadMore to fetch the date.
         // threshold should reflect how many total columns there are too
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
             currentPage++

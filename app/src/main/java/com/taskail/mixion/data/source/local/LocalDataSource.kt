@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  *Created by ed on 1/26/18.
  *
- * This class is responsible for all data in the Local database
+ * This class is responsible for all date in the Local database
  */
 class LocalDataSource(val draftsDao: DraftsDao,
                       val tagsDao: TagsDao,
@@ -53,6 +53,18 @@ class LocalDataSource(val draftsDao: DraftsDao,
 
     override fun searchVotes(authorperm: String, response: (List<UserVotes>) -> Unit, error: (Throwable) -> Unit) {
         doOnDisposable(searchVotesFromDatabase(votesDao, authorperm), response, error)
+    }
+
+    override fun getVotes(response: (List<UserVotes>) -> Unit, error: (Throwable) -> Unit) {
+        doOnDisposable(getVotesFromDatabase(votesDao), response, error)
+    }
+
+    override fun deleteVotes() {
+        doOnCompletable(deleteVotesFromDatabase(votesDao), {
+            Log.d(TAG, "deleted success")
+        }, {
+            Log.e(TAG, "")
+        })
     }
 
     /**
