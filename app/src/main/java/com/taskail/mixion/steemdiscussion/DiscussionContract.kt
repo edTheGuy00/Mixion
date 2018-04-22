@@ -13,6 +13,10 @@ interface DiscussionContract {
 
     interface MainView : BaseView<Presenter> {
 
+        fun setToVote(author: String, permLink: String)
+
+        fun setToUnVote(author: String, permLink: String)
+
         fun displayToast(message: String)
 
         fun displayTitle(title: String)
@@ -53,5 +57,6 @@ interface DiscussionContract {
         fun postCommentReply(author: String, permlink: String, content: String)
 
         fun postDiscussionreply(content: String)
+
     }
 }

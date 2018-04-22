@@ -71,6 +71,17 @@ object RxSteemJManager {
         }
     }
 
+    fun unvote(author: String,
+               permLink: String,
+               callback: SteemJCallback.SimpleCallback) {
+
+        if (connected) {
+            steemJ?.removeVote(author, permLink, callback)
+        } else {
+            callback.onError(Throwable("Unable to Connect to Steem node"))
+        }
+    }
+
     fun follow(userToFollow: String,
                callback: SteemJCallback.SimpleCallback) {
 

@@ -162,6 +162,26 @@ class DiscussionDetailsActivity : AppCompatActivity(),
                 discussionsView.displayDtube(img, videoUrl)
             }
         }
+
+        val authorPerm = "${discussion.author}/${discussion.permlink}"
+        checkUserHasVoted(authorPerm)
+    }
+
+    private fun checkUserHasVoted(authorPerm: String) {
+
+        steemitRepository?.localRepository?.searchVotes(authorPerm, {
+            Log.d(TAG, it[0].authorperm)
+            it.forEach {
+                if (it.containsMatch(authorPerm)) {
+                    Log.d(TAG, "matched with $authorPerm")
+                    discussionsView.setToUnVote(discussionAuthor, discussionPermlink)
+                }
+            }
+        }, {
+            Log.d(TAG, "no vote found")
+            discussionsView.setToVote(discussionAuthor, discussionPermlink)
+        })
+
     }
 
     private fun loadComments(author: String, permlink: String){

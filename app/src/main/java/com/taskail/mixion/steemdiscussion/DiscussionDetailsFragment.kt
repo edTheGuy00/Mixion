@@ -5,6 +5,7 @@ import `in`.uncod.android.bypass.style.ImageLoadingSpan
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +17,13 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.taskail.mixion.R
 import com.taskail.mixion.User
 import com.taskail.mixion.data.models.remote.ContentReply
+import com.taskail.mixion.steemJ.RxSteemJManager
+import com.taskail.mixion.steemJ.SteemJCallback
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
 import com.taskail.mixion.utils.ImageSpanTarget
 import com.taskail.mixion.utils.steemitutils.parseMarkdownAndSetText
 import kotlinx.android.synthetic.main.fragment_steem_discussion.*
+import kotlinx.android.synthetic.main.layout_discussion_details.*
 import kotlinx.android.synthetic.main.layout_discussion_details.view.*
 
 /**
@@ -38,6 +42,8 @@ class DiscussionDetailsFragment : Fragment(),
     private var videoPlayer: JZVideoPlayerStandard? = null
 
     private var jzVideOpen = false
+
+    private val TAG = javaClass.simpleName
 
     private lateinit var discussionAdapter: DiscussionRecyclerViewAdapter
 
@@ -70,6 +76,45 @@ class DiscussionDetailsFragment : Fragment(),
             }
         } else {
             fabComment.hide()
+        }
+
+
+
+        //presenter.getUpVoteButtonFunction()
+    }
+
+    override fun setToVote(author: String, permLink: String) {
+        titleAndDescriptionLayout.discussion_upvote_count.setOnClickListener {
+            RxSteemJManager.upvote(author, permLink, 100,object : SteemJCallback.SimpleCallback {
+                override fun onComplete() {
+                    Log.d(TAG, "Upvoted Success")
+                    titleAndDescriptionLayout.discussion_upvote_count.background = resources.getDrawable(R.color.colorAccent)
+
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(TAG, "something went wrong upvoting")
+                }
+
+            })
+        }
+    }
+
+    override fun setToUnVote(author: String, permLink: String) {
+        titleAndDescriptionLayout.discussion_upvote_count.background = resources.getDrawable(R.color.colorAccent)
+
+        titleAndDescriptionLayout.discussion_upvote_count.setOnClickListener {
+            RxSteemJManager.unvote(author, permLink, object : SteemJCallback.SimpleCallback {
+                override fun onComplete() {
+                    Log.d(TAG, "remove vote Success")
+                    titleAndDescriptionLayout.discussion_upvote_count.background = null
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(TAG, "something went wrong")
+                }
+
+            })
         }
     }
 
@@ -111,7 +156,6 @@ class DiscussionDetailsFragment : Fragment(),
         videoPlayerHolder.addView(videoPlayer)
 
         jzVideOpen = true
-
 
         videoPlayer?.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL)
 

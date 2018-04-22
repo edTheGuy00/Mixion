@@ -78,6 +78,18 @@ class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
                 }.subscribe())
     }
 
+    fun removeVote(author: String, permLink: String, callback: SteemJCallback.SimpleCallback) {
+        steemJDisposable.add(removeVoteOperation(author, permLink)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete{
+                    callback.onComplete()
+                }
+                .doOnError{
+                    callback.onError(it)
+                }.subscribe())
+    }
+
     fun comment(author: String, permLink: String, body: String, tags: Array<String>,
                 callback: SteemJCallback.CreatePostCallBack){
 
@@ -134,6 +146,21 @@ class RxSteemJ(private val steemJDisposable: CompositeDisposable) {
         return Completable.create {
             try {
                 steemJ?.vote(AccountName(author), Permlink(permLink), percentage)
+                it.onComplete()
+            } catch (e: SteemCommunicationException) {
+                it.onError(e)
+            } catch (e: SteemResponseException) {
+                it.onError(e)
+            } catch (e: SteemInvalidTransactionException){
+                it.onError(e)
+            }
+        }
+    }
+
+    private fun removeVoteOperation(author: String, permLink: String): Completable{
+        return Completable.create {
+            try {
+                steemJ?.cancelVote(AccountName(author), Permlink(permLink))
                 it.onComplete()
             } catch (e: SteemCommunicationException) {
                 it.onError(e)
