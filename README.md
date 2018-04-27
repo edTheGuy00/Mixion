@@ -8,9 +8,15 @@
 
 Please report via [GitHub issue](https://github.com/edTheGuy00/Mixion/issues) :)
 
-# Contributions
 
+## Clone this project 
+
+`git clone https://github.com/edTheGuy00/Mixion.git`
+
+Open it in Android Studio 3.0.0 or later
+
+# Contributions
 
 Please follow the [contributions document](https://github.com/edTheGuy00/Mixion/blob/dev/CONTRIBUTIONS.md) when contributing.
 
-
+If you are contributing please branch off of the dev branch.
