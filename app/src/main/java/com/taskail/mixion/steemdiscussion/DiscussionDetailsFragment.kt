@@ -88,9 +88,11 @@ class DiscussionDetailsFragment : Fragment(),
             RxSteemJManager.upvote(author, permLink, 100,object : SteemJCallback.SimpleCallback {
                 override fun onComplete() {
                     Log.d(TAG, "Upvoted Success")
+
+                    //TODO - this should only be called if the view is still visible
                     titleAndDescriptionLayout.discussion_upvote_count.background = resources.getDrawable(R.color.colorAccent)
 
-
+                    presenter.saveVote("$author/$permLink")
 
                 }
 
