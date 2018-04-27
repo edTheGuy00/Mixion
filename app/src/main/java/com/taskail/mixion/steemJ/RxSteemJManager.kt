@@ -17,6 +17,8 @@ object RxSteemJManager {
 
     private val TAG = javaClass.simpleName
 
+    //TODO - single disposable = bad practice, fix this
+
     private var disposable: CompositeDisposable? = null
 
     private var steemJ: RxSteemJ? = null

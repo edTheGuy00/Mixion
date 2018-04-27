@@ -90,6 +90,8 @@ class DiscussionDetailsFragment : Fragment(),
                     Log.d(TAG, "Upvoted Success")
                     titleAndDescriptionLayout.discussion_upvote_count.background = resources.getDrawable(R.color.colorAccent)
 
+
+
                 }
 
                 override fun onError(e: Throwable) {

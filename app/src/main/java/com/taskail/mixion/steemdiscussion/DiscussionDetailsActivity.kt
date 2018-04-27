@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.TypedValue
 import com.taskail.mixion.R
+import com.taskail.mixion.data.models.local.UserVotes
 import com.taskail.mixion.data.models.remote.SteemDiscussion
 import com.taskail.mixion.main.steemitRepository
 import com.taskail.mixion.steemJ.RxSteemJManager
@@ -182,6 +183,14 @@ class DiscussionDetailsActivity : AppCompatActivity(),
             discussionsView.setToVote(discussionAuthor, discussionPermlink)
         })
 
+    }
+
+    override fun saveVote(authorPerm: String) {
+
+        val now = System.currentTimeMillis()
+        val newVote = UserVotes(authorPerm, now)
+
+        steemitRepository?.localRepository?.saveVote(newVote)
     }
 
     private fun loadComments(author: String, permlink: String){

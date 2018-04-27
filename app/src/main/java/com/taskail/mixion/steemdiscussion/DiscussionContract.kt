@@ -3,6 +3,7 @@ package com.taskail.mixion.steemdiscussion
 import `in`.uncod.android.bypass.Bypass
 import com.taskail.mixion.BasePresenter
 import com.taskail.mixion.BaseView
+import com.taskail.mixion.data.models.local.UserVotes
 import com.taskail.mixion.data.models.remote.ContentReply
 import com.taskail.mixion.ui.animation.RevealAnimationSettings
 
@@ -47,6 +48,8 @@ interface DiscussionContract {
     }
 
     interface Presenter: BasePresenter{
+
+        fun saveVote(authorPerm: String)
 
         fun revealReplyFragment(revealSettings: RevealAnimationSettings)
 
